@@ -53,7 +53,7 @@ module.exports = {
 
     loaders: [
       {test: /\.sass$/, loader: "style!css!autoprefixer?browsers=last 2 version!sass?indentedSyntax"},
-      {test: /\.(png|jpe?g)$/, loader: 'url-loader?limit=8192'}
+      {test: /\.(png|jpe?g|eot|svg|ttf|woff|woff2|otf)$/, loader: 'url-loader?limit=8192'}
     ],
 
     noParse: /\.min\.js/

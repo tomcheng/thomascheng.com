@@ -34,7 +34,7 @@ export default React.createClass({
 
     return (
       <div className="piece">
-        <Carousel>
+        <Carousel decorators={customDecorators}>
           {this._getImages()}
         </Carousel>
         <h4 className="piece__title">{title}</h4>
@@ -43,3 +43,80 @@ export default React.createClass({
     );
   }
 });
+
+const customDecorators = [
+  {
+    component: React.createClass({
+      render() {
+        const buttonClasses = React.addons.classSet({
+          'carousel__button': true,
+          'carousel__button--is-disabled': this.props.currentSlide === 0
+        });
+        return (
+          <button
+            className={buttonClasses}
+            onClick={this.props.previousSlide}>
+            <i className='fa fa-long-arrow-left' />
+          </button>
+        )
+      }
+    }),
+    position: 'CenterLeft'
+  },
+  {
+    component: React.createClass({
+      render() {
+        const buttonClasses = React.addons.classSet({
+          'carousel__button': true,
+          'carousel__button--is-disabled': this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount
+        });
+        return (
+          <button
+            className={buttonClasses}
+            onClick={this.props.nextSlide}>
+            <i className='fa fa-long-arrow-right' />
+          </button>
+        )
+      }
+    }),
+    position: 'CenterRight'
+  },
+  {
+    component: React.createClass({
+      render() {
+        var self = this;
+        var indexes = this.getIndexes(self.props.slideCount, self.props.slidesToScroll);
+        return (
+          <ul className='carousel__indicators'>
+            {
+              indexes.map(function(index) {
+                const buttonClasses = React.addons.classSet({
+                  'carousel__indicator__button': true,
+                  'carousel__indicator__button--is-active': self.props.currentSlide === index
+                });
+                return (
+                  <li className='carousel__indicator' key={index}>
+                    <button
+                      className={buttonClasses}
+                      onClick={self.props.goToSlide.bind(null, index)}>
+                      &bull;
+                    </button>
+                  </li>
+                )
+              })
+            }
+          </ul>
+        )
+      },
+      getIndexes(count, inc) {
+        var arr = [];
+        for (var i = 0; i < count; i += inc) {
+          arr.push(i);
+        }
+        return arr;
+      }
+    }),
+    position: 'BottomCenter'
+  }
+
+];
