@@ -51,10 +51,28 @@ module.exports = {
       {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/}
     ],
 
-    loaders: [
-      {test: /\.sass$/, loader: "style!css!autoprefixer?browsers=last 2 version!sass?indentedSyntax"},
-      {test: /\.(png|jpe?g|eot|svg|ttf|woff|woff2|otf)$/, loader: 'url-loader?limit=8192'}
-    ],
+    loaders: [{
+      test: /\.sass$/,
+      loader: "style!css!autoprefixer?browsers=last 2 version!sass?indentedSyntax"
+    }, {
+      test: /\.(png|jpe?g)$/,
+      loader: 'url-loader?limit=8192'
+    }, {
+      test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+      loader: "url?limit=10000&mimetype=application/font-woff"
+    }, {
+      test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+      loader: "url?limit=10000&mimetype=application/font-woff"
+    }, {
+      test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+      loader: "url?limit=10000&mimetype=application/octet-stream"
+    }, {
+      test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+      loader: "file"
+    }, {
+      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+      loader: "url?limit=10000&mimetype=image/svg+xml"
+    }],
 
     noParse: /\.min\.js/
   }
