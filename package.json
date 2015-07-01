@@ -1,6 +1,6 @@
 {
   "name": "thomas-cheng-portfolio",
-  "version": "0.1",
+  "version": "1.0.0",
   "description": "Thomas Cheng's Portfolio",
   "main": "index.js",
   "scripts": {
