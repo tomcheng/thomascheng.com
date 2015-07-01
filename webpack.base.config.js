@@ -71,7 +71,7 @@ module.exports = {
       loader: "file"
     }, {
       test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-      loader: "url?limit=10000&mimetype=image/svg+xml"
+      loader: "url?limit=10000&minetype=image/svg+xml"
     }],
 
     noParse: /\.min\.js/
