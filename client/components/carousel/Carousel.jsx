@@ -16,9 +16,9 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      dragDirection: null,
       dragDistance: 0,
       isDragging: false,
-      isDraggingHorizontal: false,
       pane: 0,
       width: 0
     };
@@ -46,6 +46,7 @@ export default React.createClass({
     const imageCount = this.props.images.length;
 
     this.setState({
+      dragDirection: null,
       dragDistance: 0,
       isDragging: false,
       pane: Math.max(0, Math.min(imageCount - 1, pane))
@@ -66,31 +67,36 @@ export default React.createClass({
 
   _handlePan(evt) {
     const {eventType, deltaX, direction, preventDefault} = evt;
-    const {isDragging, isDraggingHorizontal} = this.state;
+    const {isDragging, dragDirection} = this.state;
+
+    if (dragDirection === 'vertical') return;
 
     if (eventType === EVENT_TYPES['release']) {
       this._handleRelease(evt);
-    } else if (isDragging) {
-      if (isDraggingHorizontal) {
-        preventDefault();
-        this.setState({
-          dragDistance: deltaX,
-          isDragging: true
-        });
-      }
+      return;
+    }
+
+    if (isDragging) {
+      preventDefault();
+      this.setState({
+        dragDistance: deltaX,
+        isDragging: true
+      });
     } else {
+      const dragDirection = (direction === DIRECTIONS['left'] || direction === DIRECTIONS['right']) ? 'horizontal' : 'vertical';
+
       this.setState({
         isDragging: true,
-        isDraggingHorizontal: direction === DIRECTIONS['left'] || direction === DIRECTIONS['right']
+        dragDirection: dragDirection
       });
     }
   },
 
   _handleRelease(evt) {
     const {deltaX, velocityX} = evt;
-    const {width, pane} = this.state;
+    const {width, pane, dragDirection} = this.state;
 
-    if (!isDraggingHorizontal) return;
+    if (dragDirection === 'vertical') return;
 
     if (Math.abs(deltaX) > width * 0.3) {
       if (deltaX < 0) {
