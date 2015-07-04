@@ -112,16 +112,17 @@ export default React.createClass({
   },
 
   render() {
+    const padding = 10;
     const {images} = this.props;
     const {width, pane, dragDistance, isDragging} = this.state;
     const imageCount = images.length;
     const paneOffset = -100 * pane / imageCount;
     let dragOffset = 100 * dragDistance / width / imageCount;
     if (pane === 0 && dragDistance > 0 || pane === imageCount - 1 && dragDistance < 0) {
-      dragOffset *= 0.4;
+      dragOffset *= 0.2;
     }
     const containerStyle = {
-      width: width * imageCount,
+      width: (width + padding) * imageCount,
       transform: "translate3d(" + (paneOffset + dragOffset) + "%, 0, 0) scale3d(1, 1, 1)"
     };
     const carouselListClasses = classNames({
@@ -145,7 +146,7 @@ export default React.createClass({
           <div className="carousel" style={{ width: width }}>
             <ul className={carouselListClasses} style={containerStyle}>
               {images.map((image, index) => (
-                <li key={index} className="carousel__item" style={{ width: width }}>
+                <li key={index} className="carousel__item" style={{ width: width + padding, paddingRight: padding }}>
                   <img className="carousel__image" src={image} />
                 </li>
               ))}
