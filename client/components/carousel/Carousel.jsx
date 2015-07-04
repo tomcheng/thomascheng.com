@@ -69,12 +69,12 @@ export default React.createClass({
     const {eventType, deltaX, direction, preventDefault} = evt;
     const {isDragging, dragDirection} = this.state;
 
-    if (dragDirection === 'vertical') return;
-
     if (eventType === EVENT_TYPES['release']) {
       this._handleRelease(evt);
       return;
     }
+
+    if (dragDirection === 'vertical') return;
 
     if (isDragging) {
       preventDefault();
@@ -95,7 +95,12 @@ export default React.createClass({
     const {width, pane, dragDirection} = this.state;
 
     if (dragDirection === 'vertical') {
-      this._stay();
+      this.setState({
+        dragDirection: null,
+        dragDistance: 0,
+        isDragging: false
+      });
+      return;
     }
 
     if (Math.abs(deltaX) > width * 0.3) {
