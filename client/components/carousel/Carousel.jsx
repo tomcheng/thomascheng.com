@@ -90,6 +90,8 @@ export default React.createClass({
     const {deltaX, velocityX} = evt;
     const {width, pane} = this.state;
 
+    if (!isDraggingHorizontal) return;
+
     if (Math.abs(deltaX) > width * 0.3) {
       if (deltaX < 0) {
         this._nextPane();
