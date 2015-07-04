@@ -94,11 +94,17 @@ export default React.createClass({
   },
 
   _handleRelease(evt) {
-    const {deltaX} = evt;
+    const {deltaX, velocityX} = evt;
     const {swipeActived, width} = this.state;
 
     if (Math.abs(deltaX) > width * 0.3 && !swipeActived) {
       if (deltaX < 0) {
+        this._nextPane();
+      } else {
+        this._prevPane();
+      }
+    } else if (Math.abs(velocityX) > 0.1) {
+      if (velocityX > 0) {
         this._nextPane();
       } else {
         this._prevPane();
@@ -134,7 +140,6 @@ export default React.createClass({
       <div>
         <HammerComponent
           vertical
-          onSwipe={this._handleSwipe}
           onPan={this._handlePan}
           options={{
             recognizers: {
