@@ -11,7 +11,7 @@ export default React.createClass({
     return {
       width: 0,
       pane: 0,
-      dragOffset: 0,
+      drag: 0,
       isDragging: false
     };
   },
@@ -35,8 +35,10 @@ export default React.createClass({
   },
 
   _setPane(pane) {
+    const imageCount = this.props.images.length;
+
     this.setState({
-      pane: pane
+      pane: Math.max(0, Math.min(imageCount - 1, pane))
     });
   },
 
@@ -55,13 +57,20 @@ export default React.createClass({
 
   _handlePan(event) {
     if (event.eventType === 4) { // release
+      if (Math.abs(event.deltaX) > this.state.width / 2) {
+        if (event.deltaX < 0) {
+          this._setPane(this.state.pane + 1);
+        } else {
+          this._setPane(this.state.pane - 1);
+        }
+      }
       this.setState({
-        dragOffset: 0,
+        drag: 0,
         isDragging: false
       });
     } else {
       this.setState({
-        dragOffset: event.deltaX,
+        drag: event.deltaX,
         isDragging: true
       });
     }
@@ -69,13 +78,16 @@ export default React.createClass({
 
   render() {
     const {images} = this.props;
-    const {width, pane, dragOffset, isDragging} = this.state;
+    const {width, pane, drag, isDragging} = this.state;
     const imageCount = images.length;
-    const containerOffsetPercentage = -100 * pane / imageCount
-                                      + 100 * dragOffset / width / imageCount;
+    const paneOffset = -100 * pane / imageCount;
+    let dragOffset = 100 * drag / width / imageCount;
+    if (pane === 0 && drag > 0 || pane === imageCount - 1 && drag < 0) {
+      dragOffset *= 0.4;
+    }
     const containerStyle = {
       width: width * imageCount,
-      transform: "translate3d(" + containerOffsetPercentage + "%, 0, 0) scale3d(1, 1, 1)"
+      transform: "translate3d(" + (paneOffset + dragOffset) + "%, 0, 0) scale3d(1, 1, 1)"
     };
     const carouselListClasses = classNames({
       'carousel__list': true,
