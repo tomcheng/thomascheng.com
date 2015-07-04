@@ -39,10 +39,8 @@ export default React.createClass({
           <div className="container">
             <div className="header__inner">
               <div dangerouslySetInnerHTML={{__html: svgTag}} />
-              <div className="header__content">
-                <div className="header__name">Thomas Cheng</div>
-                <div className="header__position">UI/UX Designer &amp; Front-End Developer</div>
-              </div>
+              <div className="header__name">Thomas Cheng</div>
+              <div className="header__position">UI/UX Designer &amp; Front-End Developer</div>
             </div>
           </div>
         </div>
