@@ -71,7 +71,7 @@ export default React.createClass({
           isDragging: false
         });
       } else {
-        if (Math.abs(deltaX) > this.state.width / 2) {
+        if (Math.abs(deltaX) > this.state.width * 0.3) {
           if (deltaX < 0) {
             this._setPane(this.state.pane + 1);
           } else {
@@ -138,7 +138,7 @@ export default React.createClass({
           options={{
             recognizers: {
               swipe: {
-                velocity: 0.4
+                velocity: 0.3
               }
             }
           }}>
