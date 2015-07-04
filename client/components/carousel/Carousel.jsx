@@ -139,7 +139,7 @@ export default React.createClass({
           options={{
             recognizers: {
               swipe: {
-                velocity: 0.3
+                velocity: 0.1
               }
             }
           }}>
