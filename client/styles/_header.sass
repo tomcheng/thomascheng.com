@@ -1,8 +1,7 @@
-$duration-exit: 0.15s
-$duration-enter: 3s
+$duration: 0.15s
 
 .header
-  +transition(box-shadow $duration-exit ease-in-out, background $duration-exit ease-in-out, color $duration-exit ease-in-out)
+  +transition(box-shadow $duration ease-in-out, background $duration ease-in-out, color $duration ease-in-out)
   background: $body-bg
   position: fixed
   top: 0
@@ -21,64 +20,67 @@ $duration-enter: 3s
     margin-bottom: 20px
 
 .header--scrolled
-  +transition-duration($duration-enter)
   box-shadow: 0 2px 3px rgba(0,0,0,0.18)
   background: rgba(255,255,255,0.92)
 
 .header__inner
-  +transition(padding $duration-exit ease-in-out, border $duration-exit ease-in-out)
+  +transition(all $duration ease-in-out)
   border-bottom: 1px solid #aaa
   padding: 15px 0
   position: relative
+  transform: translate3d(0, 0, 0)
 
   .header--scrolled &
-    +transition-duration($duration-enter)
     padding: 10px 0
     border: 0
+    transform: translate3d(0, 0, 0)
 
 .header__logo
-  +transition(transform $duration-exit ease-in-out)
+  +transition(transform $duration ease-in-out)
   float: left
   height: 34px
   left: 0
   position: absolute
   top: 15px
+  transform-origin: 0 -16px 0
+  transform: scale3d(1, 1, 1)
   width: 50px
-  transform-origin: 0 -16px
 
   .header--scrolled &
-    +transition-duration($duration-enter)
-    transform: scale(0.6)
+    transform: scale3d(0.6, 0.6, 1)
 
 .header__content
-  +transition(margin $duration-exit ease-in-out)
+  +transition(all $duration ease-in-out)
+  transform: translate3d(0, 0, 0)
   margin-left: 60px
 
   .header--scrolled &
-    +transition-duration($duration-enter)
+    transform: translate3d(0, 0, 0)
     margin-left: 38px
 
 .header__name
-  +transition(margin $duration-exit ease-in-out)
+  +transition(all $duration ease-in-out)
   margin-top: 4px
   font-weight: bold
+  transform: translate3d(0, 0, 0)
 
   .header--scrolled &
-    +transition-duration($duration-enter)
     margin-top: 2px
+    transform: translate3d(0, 0, 0)
 
 .header__position
-  +transition(height $duration-exit ease-in-out, opacity $duration-exit ease-in-out)
+  +transition(all $duration ease-in-out)
   color: $text-color-secondary
   font-style: italic
   font-size: $font-size-sm
   height: 16px
   line-height: 16px
+  transform: translate3d(0, 0, 0)
 
   .header--scrolled &
-    +transition-duration($duration-enter)
-    opacity: 0
     height: 0
+    opacity: 0
+    transform: translate3d(0, 0, 0)
 
 .header-spacer
   height: 90px
