@@ -50,7 +50,8 @@
     "webpack-dev-server": "1.9.0",
     "file-loader": "^0.8.4",
     "url-loader": "^0.5.6",
-    "nuka-carousel": "0.0.17"
+    "nuka-carousel": "0.0.17",
+    "react-hammerjs": "^0.2.2"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",

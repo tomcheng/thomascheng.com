@@ -1,34 +1,16 @@
-.carousel__button
-  border: 0
-  background: transparent
-  color: #fff
-  padding: 10px
-  outline: 0
-  cursor: pointer
-  font-size: 14px
+.carousel
+  overflow: hidden
+  width: 100%
 
-.carousel__button--is-disabled
-  opacity: 0.5
-
-.carousel__indicators
-  position: relative
-  margin: 0
-  top: 0
+.carousel__list
   padding: 0
+  &.animate
+    +transition(all 0.3s ease-in-out)
 
-.carousel__indicator
-  list-style-type: none
-  display: inline-block
+.carousel__item
+  list-style: none
+  float: left
 
-.carousel__indicator__button
-  border: 0
-  background-color: transparent
-  color: #fff
-  cursor: pointer
-  padding: 5px
-  outline: 0
-  font-size: 20px
-  opacity: 0.5
-
-.carousel__indicator__button--is-active
-  opacity: 1
+.carousel__image
+  pointer-events: none
+  width: 100%

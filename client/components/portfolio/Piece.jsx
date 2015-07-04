@@ -1,32 +1,34 @@
-import React from 'react/addons';
+import React from 'react';
+import classNames from 'classnames';
 
-import Carousel from 'nuka-carousel';
+import Carousel from 'components/carousel/Carousel.jsx';
 
 export default React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
     description: React.PropTypes.string,
     slug: React.PropTypes.string.isRequired,
-    images: React.PropTypes.number
+    imageCount: React.PropTypes.number
   },
 
   getDefaultProps() {
     return {
       description: '',
-      images: 1
+      imageCount: 1
     };
   },
 
   _getImages() {
-    const {slug, images} = this.props;
-    let imageObjects = [];
+    const {slug, imageCount} = this.props,
+          images = [];
 
-    for (let i = 0; i < images; i++) {
-      imageObjects.push(
-        <img key={i} src={require("images/" + slug + "-" + (i + 1) + ".jpg")} />
+    for (let i = 0; i < imageCount; i++) {
+      images.push(
+        require("images/" + slug + "-" + (i + 1) + ".jpg")
       );
     }
-    return imageObjects;
+
+    return images;
   },
 
   render() {
@@ -34,9 +36,8 @@ export default React.createClass({
 
     return (
       <div className="piece">
-        <Carousel decorators={customDecorators}>
-          {this._getImages()}
-        </Carousel>
+        <Carousel
+          images={this._getImages()} />
         <h4 className="piece__title">{title}</h4>
         <div className="piece__description">{description}</div>
       </div>
@@ -48,7 +49,7 @@ const customDecorators = [
   {
     component: React.createClass({
       render() {
-        const buttonClasses = React.addons.classSet({
+        const buttonClasses = classNames({
           'carousel__button': true,
           'carousel__button--is-disabled': this.props.currentSlide === 0
         });
@@ -66,7 +67,7 @@ const customDecorators = [
   {
     component: React.createClass({
       render() {
-        const buttonClasses = React.addons.classSet({
+        const buttonClasses = classNames({
           'carousel__button': true,
           'carousel__button--is-disabled': this.props.currentSlide + this.props.slidesToScroll >= this.props.slideCount
         });
@@ -90,7 +91,7 @@ const customDecorators = [
           <ul className='carousel__indicators'>
             {
               indexes.map(function(index) {
-                const buttonClasses = React.addons.classSet({
+                const buttonClasses = classNames({
                   'carousel__indicator__button': true,
                   'carousel__indicator__button--is-active': self.props.currentSlide === index
                 });
