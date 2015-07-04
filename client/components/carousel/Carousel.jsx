@@ -72,8 +72,8 @@ export default React.createClass({
   },
 
   _handlePan(evt) {
-    const {isDragging, isDraggingHorizontal, swipeActived} = this.state;
     const {eventType, deltaX, direction, preventDefault} = evt;
+    const {isDragging, isDraggingHorizontal, swipeActived} = this.state;
 
     if (eventType === EVENT_TYPES['release']) {
       this._handleRelease(evt);
@@ -95,8 +95,9 @@ export default React.createClass({
 
   _handleRelease(evt) {
     const {deltaX} = evt;
+    const {swipeActived, width} = this.state;
 
-    if (Math.abs(deltaX) > this.state.width * 0.3 && !swipeActived) {
+    if (Math.abs(deltaX) > width * 0.3 && !swipeActived) {
       if (deltaX < 0) {
         this._nextPane();
       } else {
