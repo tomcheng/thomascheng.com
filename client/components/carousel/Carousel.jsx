@@ -94,7 +94,14 @@ export default React.createClass({
     const {deltaX, velocityX} = evt;
     const {width, pane, dragDirection} = this.state;
 
-    if (dragDirection === 'vertical') return;
+    if (dragDirection === 'vertical') {
+      this.setState({
+        dragDirection: null,
+        dragDistance: 0,
+        isDragging: false
+      });
+      return;
+    }
 
     if (Math.abs(deltaX) > width * 0.3) {
       if (deltaX < 0) {
