@@ -4,7 +4,14 @@ import HammerComponent from 'react-hammerjs';
 
 export default React.createClass({
   propTypes: {
-    images: React.PropTypes.array.isRequired
+    images: React.PropTypes.array.isRequired,
+    padding: React.PropTypes.number
+  },
+
+  getDefaultProps() {
+    return {
+      padding: 10
+    };
   },
 
   getInitialState() {
@@ -44,18 +51,23 @@ export default React.createClass({
     });
   },
 
-  _handleSwipe(e) {
-    const {pane} = this.state;
+  _nextPane() {
+    this._setPane(this.state.pane + 1);
+  },
+
+  _prevPane() {
+    this._setPane(this.state.pane - 1);
+  },
+
+  _handleSwipe(evt) {
+    const {direction} = evt;
 
     this.setState({ swipeActived: true });
 
-    switch(e.direction) {
-      case 2: // left
-        this._setPane(pane + 1)
-        break;
-      case 4: // right
-        this._setPane(pane - 1)
-        break;
+    if (direction === DIRECTIONS['left']) {
+      this._nextPane();
+    } else if (direction === DIRECTIONS['right']) {
+      this._prevPane();
     }
   },
 
@@ -63,48 +75,30 @@ export default React.createClass({
     const {isDragging, isDraggingHorizontal, swipeActived} = this.state;
     const {eventType, deltaX, direction} = evt;
 
-    if (eventType === 4) { // release
-      if (swipeActived) {
-        this.setState({
-          swipeActived: false,
-          dragDistance: 0,
-          isDragging: false
-        });
-      } else {
-        if (Math.abs(deltaX) > this.state.width * 0.3) {
-          if (deltaX < 0) {
-            this._setPane(this.state.pane + 1);
-          } else {
-            this._setPane(this.state.pane - 1);
-          }
+    if (eventType === EVENT_TYPES['release']) {
+      if (Math.abs(deltaX) > this.state.width * 0.3 && !swipeActived) {
+        if (deltaX < 0) {
+          this._nextPane();
+        } else {
+          this._prevPane();
         }
-        this.setState({
-          dragDistance: 0,
-          isDragging: false
-        });
       }
-      return;
-    }
-
-    if (isDragging && isDraggingHorizontal) {
-      evt.preventDefault();
       this.setState({
-        dragDistance: deltaX,
-        isDragging: true
+        dragDistance: 0,
+        isDragging: false,
+        swipeActived: false
       });
-      return;
-    }
-
-    if (!isDragging) {
-      if (direction === 8 || direction === 16) {
+    } else if (!isDragging) {
+      this.setState({
+        isDragging: true,
+        isDraggingHorizontal: direction === DIRECTIONS['left'] || direction === DIRECTIONS['right']
+      });
+    } else {
+      if (isDraggingHorizontal) {
+        evt.preventDefault();
         this.setState({
-          isDragging: true,
-          isDraggingHorizontal: false
-        })
-      } else {
-        this.setState({
-          isDragging: true,
-          isDraggingHorizontal: true
+          dragDistance: deltaX,
+          isDragging: true
         });
       }
     }
@@ -112,8 +106,7 @@ export default React.createClass({
   },
 
   render() {
-    const padding = 10;
-    const {images} = this.props;
+    const {images, padding} = this.props;
     const {width, pane, dragDistance, isDragging} = this.state;
     const imageCount = images.length;
     const paneOffset = -100 * pane / imageCount;
@@ -157,3 +150,14 @@ export default React.createClass({
     );
   }
 });
+
+const DIRECTIONS = {
+  left: 2,
+  right: 4,
+  up: 8,
+  down: 16
+};
+
+const EVENT_TYPES = {
+  release: 4
+};
