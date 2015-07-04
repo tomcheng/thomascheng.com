@@ -60,6 +60,10 @@ export default React.createClass({
     this._setPane(this.state.pane - 1);
   },
 
+  _stay() {
+    this._setPane(this.state.pane);
+  },
+
   _handlePan(evt) {
     const {eventType, deltaX, direction, preventDefault} = evt;
     const {isDragging, isDraggingHorizontal} = this.state;
@@ -94,12 +98,20 @@ export default React.createClass({
       }
     } else if (Math.abs(velocityX) > 0.05) {
       if (velocityX > 0) {
-        this._nextPane();
+        if (deltaX < 0) {
+          this._nextPane();
+        } else {
+          this._stay();
+        }
       } else {
-        this._prevPane();
+        if (deltaX > 0) {
+          this._prevPane();
+        } else {
+          this._stay();
+        }
       }
     } else {
-      this._setPane(pane);
+      this._stay();
     }
   },
 
