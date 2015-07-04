@@ -84,7 +84,7 @@ export default React.createClass({
 
   _handleRelease(evt) {
     const {deltaX, velocityX} = evt;
-    const {width} = this.state;
+    const {width, pane} = this.state;
 
     if (Math.abs(deltaX) > width * 0.3) {
       if (deltaX < 0) {
@@ -98,6 +98,8 @@ export default React.createClass({
       } else {
         this._prevPane();
       }
+    } else {
+      this._setPane(pane);
     }
   },
 
