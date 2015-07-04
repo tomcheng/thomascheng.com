@@ -10,7 +10,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      padding: 10
+      padding: 8
     };
   },
 
@@ -126,8 +126,8 @@ export default React.createClass({
       transform: "translate3d(" + (paneOffset + dragOffset) + "%, 0, 0) scale3d(1, 1, 1)"
     };
     const carouselListClasses = classNames({
-      'carousel__list': true,
-      'animate': !isDragging
+      "carousel__list": true,
+      "animate": !isDragging
     });
 
     return (
@@ -150,6 +150,15 @@ export default React.createClass({
                   <img className="carousel__image" src={image} />
                 </li>
               ))}
+            </ul>
+            <ul className="carousel__indicators">
+              {images.map((image, index) => {
+                const indicatorClasses = classNames({
+                  "carousel__indicator": true,
+                  "is-active": index === pane
+                });
+                return <li key={index} className={indicatorClasses}>&bull;</li>;
+              })}
             </ul>
           </div>
         </HammerComponent>
