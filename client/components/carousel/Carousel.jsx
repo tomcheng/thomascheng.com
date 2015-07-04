@@ -20,7 +20,6 @@ export default React.createClass({
       isDragging: false,
       isDraggingHorizontal: false,
       pane: 0,
-      swipeActived: false,
       width: 0
     };
   },
@@ -47,6 +46,8 @@ export default React.createClass({
     const imageCount = this.props.images.length;
 
     this.setState({
+      dragDistance: 0,
+      isDragging: false,
       pane: Math.max(0, Math.min(imageCount - 1, pane))
     });
   },
@@ -59,21 +60,9 @@ export default React.createClass({
     this._setPane(this.state.pane - 1);
   },
 
-  _handleSwipe(evt) {
-    const {direction} = evt;
-
-    this.setState({ swipeActived: true });
-
-    if (direction === DIRECTIONS['left']) {
-      this._nextPane();
-    } else if (direction === DIRECTIONS['right']) {
-      this._prevPane();
-    }
-  },
-
   _handlePan(evt) {
     const {eventType, deltaX, direction, preventDefault} = evt;
-    const {isDragging, isDraggingHorizontal, swipeActived} = this.state;
+    const {isDragging, isDraggingHorizontal} = this.state;
 
     if (eventType === EVENT_TYPES['release']) {
       this._handleRelease(evt);
@@ -95,9 +84,9 @@ export default React.createClass({
 
   _handleRelease(evt) {
     const {deltaX, velocityX} = evt;
-    const {swipeActived, width} = this.state;
+    const {width} = this.state;
 
-    if (Math.abs(deltaX) > width * 0.3 && !swipeActived) {
+    if (Math.abs(deltaX) > width * 0.3) {
       if (deltaX < 0) {
         this._nextPane();
       } else {
@@ -110,12 +99,6 @@ export default React.createClass({
         this._prevPane();
       }
     }
-
-    this.setState({
-      dragDistance: 0,
-      isDragging: false,
-      swipeActived: false
-    });
   },
 
   render() {
