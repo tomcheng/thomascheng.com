@@ -73,36 +73,42 @@ export default React.createClass({
 
   _handlePan(evt) {
     const {isDragging, isDraggingHorizontal, swipeActived} = this.state;
-    const {eventType, deltaX, direction} = evt;
+    const {eventType, deltaX, direction, preventDefault} = evt;
 
     if (eventType === EVENT_TYPES['release']) {
-      if (Math.abs(deltaX) > this.state.width * 0.3 && !swipeActived) {
-        if (deltaX < 0) {
-          this._nextPane();
-        } else {
-          this._prevPane();
-        }
-      }
-      this.setState({
-        dragDistance: 0,
-        isDragging: false,
-        swipeActived: false
-      });
-    } else if (!isDragging) {
-      this.setState({
-        isDragging: true,
-        isDraggingHorizontal: direction === DIRECTIONS['left'] || direction === DIRECTIONS['right']
-      });
-    } else {
+      this._handleRelease(evt);
+    } else if (isDragging) {
       if (isDraggingHorizontal) {
-        evt.preventDefault();
+        preventDefault();
         this.setState({
           dragDistance: deltaX,
           isDragging: true
         });
       }
+    } else {
+      this.setState({
+        isDragging: true,
+        isDraggingHorizontal: direction === DIRECTIONS['left'] || direction === DIRECTIONS['right']
+      });
+    }
+  },
+
+  _handleRelease(evt) {
+    const {deltaX} = evt;
+
+    if (Math.abs(deltaX) > this.state.width * 0.3 && !swipeActived) {
+      if (deltaX < 0) {
+        this._nextPane();
+      } else {
+        this._prevPane();
+      }
     }
 
+    this.setState({
+      dragDistance: 0,
+      isDragging: false,
+      swipeActived: false
+    });
   },
 
   render() {
