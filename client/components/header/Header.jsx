@@ -36,11 +36,13 @@ export default React.createClass({
     return (
       <div>
         <div className={headerClasses}>
+          <div className="header__background" />
           <div className="container">
             <div className="header__inner">
               <div dangerouslySetInnerHTML={{__html: svgTag}} />
               <div className="header__name">Thomas Cheng</div>
               <div className="header__position">UI/UX Designer &amp; Front-End Developer</div>
+              <div className="header__border" />
             </div>
           </div>
         </div>
