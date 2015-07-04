@@ -83,11 +83,9 @@ export default React.createClass({
         isDragging: true
       });
     } else {
-      const dragDirection = (direction === DIRECTIONS['left'] || direction === DIRECTIONS['right']) ? 'horizontal' : 'vertical';
-
       this.setState({
         isDragging: true,
-        dragDirection: dragDirection
+        dragDirection: (direction === DIRECTIONS['left'] || direction === DIRECTIONS['right']) ? 'horizontal' : 'vertical'
       });
     }
   },
