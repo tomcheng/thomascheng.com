@@ -87,6 +87,7 @@ export default React.createClass({
     }
 
     if (isDragging && isDraggingHorizontal) {
+      evt.preventDefault();
       this.setState({
         dragDistance: deltaX,
         isDragging: true
@@ -137,7 +138,7 @@ export default React.createClass({
           options={{
             recognizers: {
               swipe: {
-                threshold: 0.5
+                threshold: 0.3
               }
             }
           }}>
