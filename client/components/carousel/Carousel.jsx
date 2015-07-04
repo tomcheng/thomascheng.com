@@ -130,7 +130,17 @@ export default React.createClass({
 
     return (
       <div>
-        <HammerComponent vertical onSwipe={this._handleSwipe} onPan={this._handlePan}>
+        <HammerComponent
+          vertical
+          onSwipe={this._handleSwipe}
+          onPan={this._handlePan}
+          options={{
+            recognizers: {
+              swipe: {
+                threshold: 0.5
+              }
+            }
+          }}>
           <div className="carousel" style={{ width: width }}>
             <ul className={carouselListClasses} style={containerStyle}>
               {images.map((image, index) => (
