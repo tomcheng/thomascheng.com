@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import $ from 'jquery';
 
 const topOffset = 20;
 
@@ -11,19 +12,25 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    document.addEventListener("scroll", this._onScroll);
+    document.addEventListener("scroll", this._handleScroll);
   },
 
   componentWillUnmount() {
-    document.removeEventListner("scroll", this._onScroll)
+    document.removeEventListner("scroll", this._handleScroll)
   },
 
-  _onScroll() {
+  _handleScroll() {
     const scrollTop = document.getElementsByTagName('body')[0].scrollTop
 
     this.setState({
       atTop: scrollTop < topOffset
     });
+  },
+
+  _handleClick() {
+    $('body').animate({
+      scrollTop: 0
+    }, 300, 'swing');
   },
 
   render() {
@@ -34,7 +41,7 @@ export default React.createClass({
     });
 
     return (
-      <div>
+      <div onClick={this._handleClick}>
         <div className={headerClasses}>
           <div className="header__background" />
           <div className="container">
