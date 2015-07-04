@@ -103,13 +103,7 @@ export default React.createClass({
       return;
     }
 
-    if (Math.abs(deltaX) > width * 0.3) {
-      if (deltaX < 0) {
-        this._nextPane();
-      } else {
-        this._prevPane();
-      }
-    } else if (Math.abs(velocityX) > 0.05) {
+    if (Math.abs(velocityX) > 0.05) {
       if (velocityX > 0) {
         if (deltaX < 0) {
           this._nextPane();
@@ -122,6 +116,12 @@ export default React.createClass({
         } else {
           this._stay();
         }
+      }
+    } else if (Math.abs(deltaX) > width * 0.3) {
+      if (deltaX < 0) {
+        this._nextPane();
+      } else {
+        this._prevPane();
       }
     } else {
       this._stay();
