@@ -92,7 +92,7 @@ export default React.createClass({
       } else {
         this._prevPane();
       }
-    } else if (Math.abs(velocityX) > 0.1) {
+    } else if (Math.abs(velocityX) > 0.05) {
       if (velocityX > 0) {
         this._nextPane();
       } else {
