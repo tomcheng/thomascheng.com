@@ -127,6 +127,14 @@ export default React.createClass({
     }
   },
 
+  _handleTap(evt) {
+    if (this.state.pane === this.props.images.length - 1) {
+      this._setPane(0);
+    } else {
+      this._nextPane();
+    }
+  },
+
   _getIndicators() {
     const {images} = this.props;
     const {pane} = this.state;
@@ -173,7 +181,8 @@ export default React.createClass({
       <div>
         <HammerComponent
           vertical
-          onPan={this._handlePan}>
+          onPan={this._handlePan}
+          onTap={this._handleTap}>
           <div className="carousel" style={{ width: width }}>
             <ul className={carouselListClasses} style={containerStyle}>
               {images.map((image, index) => (
