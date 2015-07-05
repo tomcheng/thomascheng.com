@@ -166,14 +166,10 @@ export default React.createClass({
     const {width, pane, dragDistance, isDragging, justDragged, justDraggedPast, justTapped} = this.state;
     const imageCount = images.length;
     let offset = - pane * width;
-    let scale = 1;
-    let origin = "50%";
 
     if (isDragging) {
       if (this._isDraggingPast()) {
-        offset += 0.03 * dragDistance;
-        scale = 1 - (0.00025 * Math.abs(dragDistance));
-        origin = dragDistance < 0 ? "0%" : "100%";
+        offset += 0.08 * dragDistance;
       } else {
         offset += dragDistance;
       }
@@ -191,11 +187,6 @@ export default React.createClass({
       "animate--tapped": justTapped
     });
 
-    const imageStyle = {
-      transformOrigin: origin + " 0% 0",
-      transform: "scale3d(" + scale + ", 1, 1)"
-    }
-
     return (
       <div>
         <HammerComponent
@@ -207,7 +198,7 @@ export default React.createClass({
             <ul className={listClasses} style={listStyle}>
               {images.map((image, index) => (
                 <li key={index} className="carousel__item" style={{ width: width }}>
-                  <img className="carousel__image" src={image} style={imageStyle} />
+                  <img className="carousel__image" src={image} />
                 </li>
               ))}
             </ul>
