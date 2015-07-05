@@ -20,6 +20,8 @@ export default React.createClass({
     };
   },
 
+  nextPane: 0,
+
   componentDidMount() {
     this._setDimensions();
 
