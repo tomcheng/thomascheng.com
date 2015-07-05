@@ -14,7 +14,7 @@ export default React.createClass({
       <div>
         {pieces.map((piece) => (
           <Piece
-            key={piece.id}
+            key={piece.slug}
             {...piece} />
         ))}
       </div>

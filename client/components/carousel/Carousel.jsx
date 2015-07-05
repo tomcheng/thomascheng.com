@@ -127,6 +127,25 @@ export default React.createClass({
     }
   },
 
+  _getIndicators() {
+    const {images} = this.props;
+    const {pane} = this.state;
+
+    if (images.length === 1) return null;
+
+    return (
+      <ul className="carousel__indicators">
+        {images.map((image, index) => {
+          const indicatorClasses = classNames({
+            "carousel__indicator": true,
+            "is-active": index === pane
+          });
+          return <li key={index} className={indicatorClasses}>&bull;</li>;
+        })}
+      </ul>
+    );
+  },
+
   render() {
     const {images} = this.props;
     const {width, pane, dragDistance, isDragging} = this.state;
@@ -163,15 +182,7 @@ export default React.createClass({
                 </li>
               ))}
             </ul>
-            <ul className="carousel__indicators">
-              {images.map((image, index) => {
-                const indicatorClasses = classNames({
-                  "carousel__indicator": true,
-                  "is-active": index === pane
-                });
-                return <li key={index} className={indicatorClasses}>&bull;</li>;
-              })}
-            </ul>
+            {this._getIndicators()}
           </div>
         </HammerComponent>
       </div>
