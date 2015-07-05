@@ -14,10 +14,12 @@ $carousel-padding: 0.5 * $grid-gutter-width
   margin: 0
   &.animate--dragged
     +transition(all 0.15s ease-out)
-  &.animate--dragged-past
+  &.animate--bounce-back
     +transition(all 0.18s cubic-bezier(1, 2, 0.63, 0.55))
   &.animate--tapped
     +transition(all 0.4s ease-in-out)
+  &.animate--return-to-start
+    +transition(all 0.8s cubic-bezier(0.53, -0.33, 0.7, 1))
 
 .carousel__item
   list-style: none

@@ -14,16 +14,16 @@ export default React.createClass({
       justDragged: false,
       justDraggedPast: false,
       justTapped: false,
+      justTappedAtEnd: false,
       isDragging: false,
       pane: 0,
       width: 0
     };
   },
 
-  nextPane: 0,
-
   componentDidMount() {
     this._setDimensions();
+    this._setNextPane(0);
 
     window.addEventListener('resize', this._setDimensions);
     window.addEventListener('orientationchange', this._setDimensions);
@@ -42,18 +42,22 @@ export default React.createClass({
     })
   },
 
-  _setPane(pane) {
+  _setNextPane(pane) {
     const imageCount = this.props.images.length;
 
     this.nextPane = Math.max(0, Math.min(imageCount - 1, pane))
   },
 
+  _getNextPane() {
+    return this.nextPane;
+  },
+
   _next() {
-    this._setPane(this.state.pane + 1);
+    this._setNextPane(this.state.pane + 1);
   },
 
   _prev() {
-    this._setPane(this.state.pane - 1);
+    this._setNextPane(this.state.pane - 1);
   },
 
   _isDraggingHorizontally() {
@@ -77,7 +81,8 @@ export default React.createClass({
       justDragged: true,
       justDraggedPast: this._isDraggingPast(),
       justTapped: false,
-      pane: this.nextPane
+      justTappedAtEnd: false,
+      pane: this._getNextPane()
     });
   },
 
@@ -129,7 +134,7 @@ export default React.createClass({
 
   _handleTap(evt) {
     if (this.state.pane === this.props.images.length - 1) {
-      this._setPane(0);
+      this._setNextPane(0);
     } else {
       this._next();
     }
@@ -138,7 +143,8 @@ export default React.createClass({
       justDragged: false,
       justDraggedPast: false,
       justTapped: true,
-      pane: this.nextPane
+      justTappedAtEnd: this._getNextPane() === 0,
+      pane: this._getNextPane()
     });
   },
 
@@ -163,7 +169,7 @@ export default React.createClass({
 
   render() {
     const {images} = this.props;
-    const {width, pane, dragDistance, isDragging, justDragged, justDraggedPast, justTapped} = this.state;
+    const {width, pane, dragDistance, isDragging, justDragged, justDraggedPast, justTapped, justTappedAtEnd} = this.state;
     const imageCount = images.length;
     let offset = - pane * width;
 
@@ -183,8 +189,9 @@ export default React.createClass({
     const listClasses = classNames({
       "carousel__list": true,
       "animate--dragged": justDragged && !justDraggedPast,
-      "animate--dragged-past": justDraggedPast,
-      "animate--tapped": justTapped
+      "animate--bounce-back": justDraggedPast,
+      "animate--tapped": justTapped && !justTappedAtEnd,
+      "animate--return-to-start": justTappedAtEnd
     });
 
     return (
