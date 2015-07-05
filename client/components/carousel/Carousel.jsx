@@ -4,14 +4,7 @@ import HammerComponent from 'react-hammerjs';
 
 export default React.createClass({
   propTypes: {
-    images: React.PropTypes.array.isRequired,
-    padding: React.PropTypes.number
-  },
-
-  getDefaultProps() {
-    return {
-      padding: 15
-    };
+    images: React.PropTypes.array.isRequired
   },
 
   getInitialState() {
@@ -129,22 +122,17 @@ export default React.createClass({
   },
 
   render() {
-    const {images, padding} = this.props;
+    const {images} = this.props;
     const {width, pane, dragDistance, isDragging} = this.state;
     const imageCount = images.length;
-    const paneOffset = -100 * pane / imageCount;
-    let dragOffset = 100 * dragDistance / width / imageCount;
+    const paneOffset = - pane * width;
+    let dragOffset = dragDistance;
     if (pane === 0 && dragDistance > 0 || pane === imageCount - 1 && dragDistance < 0) {
       dragOffset *= 0.2;
     }
     const containerStyle = {
       width: width * imageCount,
-      transform: "translate3d(" + (paneOffset + dragOffset) + "%, 0, 0) scale3d(1, 1, 1)"
-    };
-    const itemStyle = {
-      width: width,
-      paddingRight: padding,
-      paddingLeft: padding
+      transform: "translate3d(" + (paneOffset + dragOffset) + "px, 0, 0)"
     };
     const carouselListClasses = classNames({
       "carousel__list": true,
@@ -159,7 +147,7 @@ export default React.createClass({
           <div className="carousel" style={{ width: width }}>
             <ul className={carouselListClasses} style={containerStyle}>
               {images.map((image, index) => (
-                <li key={index} className="carousel__item" style={itemStyle}>
+                <li key={index} className="carousel__item" style={{ width: width }}>
                   <img className="carousel__image" src={image} />
                 </li>
               ))}
