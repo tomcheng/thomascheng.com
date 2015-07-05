@@ -171,8 +171,8 @@ export default React.createClass({
 
     if (isDragging) {
       if (this._isDraggingPast()) {
-        offset += 0.08 * dragDistance;
-        scale = 1 - (0.0001 * Math.abs(dragDistance));
+        offset += 0.03 * dragDistance;
+        scale = 1 - (0.00025 * Math.abs(dragDistance));
         origin = dragDistance < 0 ? "0%" : "100%";
       } else {
         offset += dragDistance;
@@ -192,7 +192,7 @@ export default React.createClass({
     });
 
     const imageStyle = {
-      transformOrigin: origin + ", 0%, 0%",
+      transformOrigin: origin + " 0% 0",
       transform: "scale3d(" + scale + ", 1, 1)"
     }
 
