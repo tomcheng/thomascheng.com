@@ -55,10 +55,10 @@ export default React.createClass({
     this._setPane(this.state.pane - 1);
   },
 
-  _isDraggingVertically() {
+  _isDraggingHorizontally() {
     const {dragDirection} = this.state;
 
-    return (dragDirection === DIRECTIONS['up'] || dragDirection === DIRECTIONS['down']);
+    return (dragDirection === DIRECTIONS['left'] || dragDirection === DIRECTIONS['right']);
   },
 
   _resetDrag() {
@@ -75,18 +75,13 @@ export default React.createClass({
     const {deltaX, direction, eventType, preventDefault} = evt;
     const {isDragging} = this.state;
 
-    if (eventType === EVENT_TYPES['release']) {
-      this._handleRelease(evt);
-      return;
-    }
-
-    if (this._isDraggingVertically()) return;
-
     if (isDragging) {
-      preventDefault();
-      this.setState({
-        dragDistance: deltaX
-      });
+      if (this._isDraggingHorizontally()) {
+        preventDefault();
+        this.setState({
+          dragDistance: deltaX
+        });
+      }
     } else {
       this.setState({
         dragDirection: direction,
@@ -95,26 +90,30 @@ export default React.createClass({
         justTapped: false
       });
     }
+
+    if (eventType === EVENT_TYPES['release']) {
+      this._handleDragRelease(evt);
+    }
   },
 
-  _handleRelease(evt) {
+  _handleDragRelease(evt) {
     const {deltaX, velocityX} = evt;
     const {width} = this.state;
 
-    this._resetDrag();
-
-    if (this._isDraggingVertically()) return;
-
-    if (Math.abs(velocityX) > 0.05) {
-      if (velocityX > 0 && deltaX < 0) this._nextPane();
-      if (velocityX < 0 && deltaX > 0) this._prevPane();
-    } else if (Math.abs(deltaX) > width * 0.3) {
-      if (deltaX < 0) {
-        this._nextPane();
-      } else {
-        this._prevPane();
+    if (this._isDraggingHorizontally()) {
+      if (Math.abs(velocityX) > 0.05) {
+        if (velocityX > 0 && deltaX < 0) this._nextPane();
+        if (velocityX < 0 && deltaX > 0) this._prevPane();
+      } else if (Math.abs(deltaX) > width * 0.3) {
+        if (deltaX < 0) {
+          this._nextPane();
+        } else {
+          this._prevPane();
+        }
       }
     }
+
+    this._resetDrag();
   },
 
   _handleTap(evt) {
