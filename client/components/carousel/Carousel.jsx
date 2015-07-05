@@ -164,26 +164,32 @@ export default React.createClass({
     const {width, pane, dragDistance, isDragging, justDragged, justDraggedPast, justTapped} = this.state;
     const imageCount = images.length;
     let offset = - pane * width;
+    let scale = 1;
 
     if (isDragging) {
       if (this._isDraggingPast()) {
         offset += 0.1 * dragDistance;
+        scale = 1 - (0.00005 * Math.abs(dragDistance));
       } else {
         offset += dragDistance;
       }
     }
 
-    const containerStyle = {
+    const listStyle = {
       width: width * imageCount,
       transform: "translate3d(" + offset + "px, 0, 0)"
     };
 
-    const carouselListClasses = classNames({
+    const listClasses = classNames({
       "carousel__list": true,
       "animate--dragged": justDragged && !justDraggedPast,
       "animate--dragged-past": justDraggedPast,
       "animate--tapped": justTapped
     });
+
+    const imageStyle = {
+      transform: "scale3d(" + scale + ", 1, 1)"
+    }
 
     return (
       <div>
@@ -193,10 +199,10 @@ export default React.createClass({
           onTap={this._handleTap}
           options={{recognizers:{tap:{time:500, threshold:10}}}}>
           <div className="carousel" style={{ width: width }}>
-            <ul className={carouselListClasses} style={containerStyle}>
+            <ul className={listClasses} style={listStyle}>
               {images.map((image, index) => (
                 <li key={index} className="carousel__item" style={{ width: width }}>
-                  <img className="carousel__image" src={image} />
+                  <img className="carousel__image" src={image} style={imageStyle} />
                 </li>
               ))}
             </ul>

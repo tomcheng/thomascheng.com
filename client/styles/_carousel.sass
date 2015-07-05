@@ -15,7 +15,7 @@ $carousel-padding: 0.5 * $grid-gutter-width
   &.animate--dragged
     +transition(all 0.15s ease-out)
   &.animate--dragged-past
-    +transition(all 0.15s cubic-bezier(1, 2, 0.63, 0.55))
+    +transition(all 0.2s cubic-bezier(1, 2, 0.63, 0.55))
   &.animate--tapped
     +transition(all 0.4s ease-in-out)
 
@@ -29,8 +29,12 @@ $carousel-padding: 0.5 * $grid-gutter-width
   pointer-events: none
   width: 100%
   height: 100%
+
   @media (max-width: $screen-xs-max)
     +border-radius(3px)
+
+  .animate--dragged-past &
+    +transition(all 0.15s ease-out)
 
 .carousel__indicators
   bottom: 0
