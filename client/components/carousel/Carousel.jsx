@@ -10,7 +10,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      padding: 8
+      padding: 15
     };
   },
 
@@ -138,8 +138,13 @@ export default React.createClass({
       dragOffset *= 0.2;
     }
     const containerStyle = {
-      width: (width + padding) * imageCount,
+      width: width * imageCount,
       transform: "translate3d(" + (paneOffset + dragOffset) + "%, 0, 0) scale3d(1, 1, 1)"
+    };
+    const itemStyle = {
+      width: width,
+      paddingRight: padding,
+      paddingLeft: padding
     };
     const carouselListClasses = classNames({
       "carousel__list": true,
@@ -161,7 +166,7 @@ export default React.createClass({
           <div className="carousel" style={{ width: width }}>
             <ul className={carouselListClasses} style={containerStyle}>
               {images.map((image, index) => (
-                <li key={index} className="carousel__item" style={{ width: width + padding, paddingRight: padding }}>
+                <li key={index} className="carousel__item" style={itemStyle}>
                   <img className="carousel__image" src={image} />
                 </li>
               ))}

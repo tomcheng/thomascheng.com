@@ -38,8 +38,10 @@ export default React.createClass({
       <div className="piece">
         <Carousel
           images={this._getImages()} />
-        <h4 className="piece__title">{title}</h4>
-        <div className="piece__description">{description}</div>
+        <div className="container">
+          <h4 className="piece__title">{title}</h4>
+          <div className="piece__description">{description}</div>
+        </div>
       </div>
     );
   }
