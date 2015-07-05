@@ -167,11 +167,13 @@ export default React.createClass({
     const imageCount = images.length;
     let offset = - pane * width;
     let scale = 1;
+    let origin = "50%";
 
     if (isDragging) {
       if (this._isDraggingPast()) {
-        offset += 0.1 * dragDistance;
-        scale = 1 - (0.00008 * Math.abs(dragDistance));
+        offset += 0.08 * dragDistance;
+        scale = 1 - (0.0001 * Math.abs(dragDistance));
+        origin = dragDistance < 0 ? "0%" : "100%";
       } else {
         offset += dragDistance;
       }
@@ -190,6 +192,7 @@ export default React.createClass({
     });
 
     const imageStyle = {
+      transformOrigin: origin + ", 0%, 0%",
       transform: "scale3d(" + scale + ", 1, 1)"
     }
 
