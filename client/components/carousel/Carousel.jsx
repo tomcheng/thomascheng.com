@@ -182,7 +182,8 @@ export default React.createClass({
         <HammerComponent
           vertical
           onPan={this._handlePan}
-          onTap={this._handleTap}>
+          onTap={this._handleTap}
+          options={{recognizers:{tap:{time:500, threshold:10}}}}>
           <div className="carousel" style={{ width: width }}>
             <ul className={carouselListClasses} style={containerStyle}>
               {images.map((image, index) => (
