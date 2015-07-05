@@ -167,7 +167,7 @@ export default React.createClass({
 
     if (isDragging) {
       if (this._isDraggingPast()) {
-        offset += 0.2 * dragDistance;
+        offset += 0.1 * dragDistance;
       } else {
         offset += dragDistance;
       }
