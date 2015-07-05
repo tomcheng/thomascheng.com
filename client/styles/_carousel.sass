@@ -1,3 +1,9 @@
+$carousel-padding: 0.5 * $grid-gutter-width
+
+.carousel-wrapper
+  @media (max-width: $screen-xs-max)
+    margin: 0 (-$carousel-padding)
+
 .carousel
   overflow: hidden
   position: relative
@@ -5,17 +11,22 @@
 
 .carousel__list
   padding: 0
+  margin: 0
   &.animate
     +transition(all 0.15s ease-out)
 
 .carousel__item
   list-style: none
   float: left
+  @media (max-width: $screen-xs-max)
+    padding: 0 $carousel-padding
 
 .carousel__image
   pointer-events: none
   width: 100%
-  +border-radius(3px)
+  height: 100%
+  @media (max-width: $screen-xs-max)
+    +border-radius(3px)
 
 .carousel__indicators
   bottom: 0

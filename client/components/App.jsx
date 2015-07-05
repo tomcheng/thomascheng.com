@@ -7,7 +7,7 @@ import {pieces} from "data/pieces.jsx";
 export default React.createClass({
   render() {
     return (
-      <div>
+      <div className="container">
         <Header />
         <PortfolioPieces
           pieces={pieces} />
