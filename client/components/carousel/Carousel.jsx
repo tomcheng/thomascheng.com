@@ -12,6 +12,7 @@ export default React.createClass({
       dragDirection: null,
       dragDistance: 0,
       justDragged: false,
+      justDraggedPast: false,
       justTapped: false,
       isDragging: false,
       pane: 0,
@@ -42,16 +43,14 @@ export default React.createClass({
   _setPane(pane) {
     const imageCount = this.props.images.length;
 
-    this.setState({
-      pane: Math.max(0, Math.min(imageCount - 1, pane))
-    });
+    this.nextPane = Math.max(0, Math.min(imageCount - 1, pane))
   },
 
-  _nextPane() {
+  _next() {
     this._setPane(this.state.pane + 1);
   },
 
-  _prevPane() {
+  _prev() {
     this._setPane(this.state.pane - 1);
   },
 
@@ -61,13 +60,22 @@ export default React.createClass({
     return (dragDirection === DIRECTIONS['left'] || dragDirection === DIRECTIONS['right']);
   },
 
+  _isDraggingPast() {
+    const {dragDistance, pane} = this.state;
+    const imageCount = this.props.images.length;
+
+    return pane === 0 && dragDistance > 0 || pane === imageCount - 1 && dragDistance < 0;
+  },
+
   _resetDrag() {
     this.setState({
       dragDirection: null,
       dragDistance: 0,
       isDragging: false,
       justDragged: true,
-      justTapped: false
+      justDraggedPast: this._isDraggingPast(),
+      justTapped: false,
+      pane: this.nextPane
     });
   },
 
@@ -87,6 +95,7 @@ export default React.createClass({
         dragDirection: direction,
         isDragging: true,
         justDragged: false,
+        justDraggedPast: false,
         justTapped: false
       });
     }
@@ -102,13 +111,13 @@ export default React.createClass({
 
     if (this._isDraggingHorizontally()) {
       if (Math.abs(velocityX) > 0.05) {
-        if (velocityX > 0 && deltaX < 0) this._nextPane();
-        if (velocityX < 0 && deltaX > 0) this._prevPane();
+        if (velocityX > 0 && deltaX < 0) this._next();
+        if (velocityX < 0 && deltaX > 0) this._prev();
       } else if (Math.abs(deltaX) > width * 0.3) {
         if (deltaX < 0) {
-          this._nextPane();
+          this._next();
         } else {
-          this._prevPane();
+          this._prev();
         }
       }
     }
@@ -120,12 +129,14 @@ export default React.createClass({
     if (this.state.pane === this.props.images.length - 1) {
       this._setPane(0);
     } else {
-      this._nextPane();
+      this._next();
     }
 
     this.setState({
       justDragged: false,
-      justTapped: true
+      justDraggedPast: false,
+      justTapped: true,
+      pane: this.nextPane
     });
   },
 
@@ -150,12 +161,12 @@ export default React.createClass({
 
   render() {
     const {images} = this.props;
-    const {width, pane, dragDistance, isDragging, justDragged, justTapped} = this.state;
+    const {width, pane, dragDistance, isDragging, justDragged, justDraggedPast, justTapped} = this.state;
     const imageCount = images.length;
     let offset = - pane * width;
 
     if (isDragging) {
-      if (pane === 0 && dragDistance > 0 || pane === imageCount - 1 && dragDistance < 0) {
+      if (this._isDraggingPast()) {
         offset += 0.2 * dragDistance;
       } else {
         offset += dragDistance;
@@ -169,7 +180,8 @@ export default React.createClass({
 
     const carouselListClasses = classNames({
       "carousel__list": true,
-      "animate--dragged": justDragged,
+      "animate--dragged": justDragged && !justDraggedPast,
+      "animate--dragged-past": justDraggedPast,
       "animate--tapped": justTapped
     });
 
