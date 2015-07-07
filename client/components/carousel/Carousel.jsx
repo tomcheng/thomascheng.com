@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import HammerComponent from 'react-hammerjs';
+import HammerComponent from 'components/common/Hammer.jsx';
 
 export default React.createClass({
   propTypes: {
@@ -148,6 +148,10 @@ export default React.createClass({
     });
   },
 
+  _handleDoubleTap(evt) {
+    console.log('double tap');
+  },
+
   _getIndicators() {
     const {images} = this.props;
     const {pane} = this.state;
@@ -200,7 +204,9 @@ export default React.createClass({
           vertical
           onPan={this._handlePan}
           onTap={this._handleTap}
-          options={{recognizers:{tap:{time:500, threshold:10}}}}>
+          onDoubleTap={this._handleDoubleTap}
+          options={{recognizers:{tap:{time:500, threshold:10}}}}
+          requireFailure={{ tap: 'doubletap' }}>
           <div className="carousel" style={{ width: width }}>
             <ul className={listClasses} style={listStyle}>
               {images.map((image, index) => (
