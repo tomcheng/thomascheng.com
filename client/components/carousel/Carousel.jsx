@@ -132,11 +132,13 @@ export default React.createClass({
   },
 
   _animateToPane(pane, velocity) {
+    const distanceToScroll = Math.abs(-this.state.width * pane - this.state.scrollPosition);
+    const duration = this._constrain(distanceToScroll/velocity, 250, 400);
     Animations.animate(
       'test',
       this.state.scrollPosition,
       -this.state.width * pane,
-      300,
+      duration,
       velocity,
       (pos) => {
         this.setState({
