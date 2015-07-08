@@ -69,7 +69,8 @@ const Animations = {
   },
 
   _getEasingFunction(v) {
-    return (t) => (v - 2)*t*t*t + (3 - 2*v)*t*t + v*t;
+      return (k) => --k * k * k + 1;
+//    return (t) => (v - 2)*t*t*t + (3 - 2*v)*t*t + v*t;
   }
 
 };
