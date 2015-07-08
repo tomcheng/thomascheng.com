@@ -8,7 +8,7 @@ export default React.createClass({
     this.hammer = new Hammer.Manager(React.findDOMNode(this), { recognizers: Hammer.defaults.preset });
 
     if (this.props.options) {
-      Object.keys(this.props.options).forEach(function(option) {
+      Object.keys(this.props.options).forEach(option => {
         if (option === 'recognizers') {
           Object.keys(this.props.options.recognizers).forEach(function(gesture) {
             var recognizer = this.hammer.get(gesture);
@@ -20,17 +20,15 @@ export default React.createClass({
           optionObj[key] = this.props.options[option];
           this.hammer.set(optionObj);
         }
-      }, this);
+      });
     }
 
     if (this.props.requireFailure) {
-      Object.keys(this.props.requireFailure).forEach(function(requirer) {
+      Object.keys(this.props.requireFailure).forEach(requirer => {
         var required = this.props.requireFailure[requirer];
-        console.log(requirer, required);
         this.hammer.get(requirer).requireFailure(required);
-      }, this);
+      });
     }
-    console.log(this.hammer);
 
     if (this.props.vertical) {
       this.hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });

@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import HammerComponent from 'components/common/Hammer.jsx';
+import Animations from 'utils/animations.jsx';
 
 export default React.createClass({
   propTypes: {
@@ -9,14 +10,12 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      animationOffset: 0,
       dragDirection: null,
       dragDistance: 0,
-      justDragged: false,
-      justDraggedPast: false,
-      justTapped: false,
-      justTappedAtEnd: false,
       isDragging: false,
       pane: 0,
+      scrollPosition: 0,
       width: 0
     };
   },
@@ -73,17 +72,8 @@ export default React.createClass({
     return pane === 0 && dragDistance > 0 || pane === imageCount - 1 && dragDistance < 0;
   },
 
-  _resetDrag() {
-    this.setState({
-      dragDirection: null,
-      dragDistance: 0,
-      isDragging: false,
-      justDragged: true,
-      justDraggedPast: this._isDraggingPast(),
-      justTapped: false,
-      justTappedAtEnd: false,
-      pane: this._getNextPane()
-    });
+  _constrain(value, min, max) {
+    return Math.min(Math.max(value, min), max);
   },
 
   _handlePan(evt) {
@@ -94,16 +84,13 @@ export default React.createClass({
       if (this._isDraggingHorizontally()) {
         preventDefault();
         this.setState({
-          dragDistance: deltaX
+          scrollPosition: -(this.state.pane * this.state.width) + deltaX
         });
       }
     } else {
       this.setState({
         dragDirection: direction,
-        isDragging: true,
-        justDragged: false,
-        justDraggedPast: false,
-        justTapped: false
+        isDragging: true
       });
     }
 
@@ -114,42 +101,56 @@ export default React.createClass({
 
   _handleDragRelease(evt) {
     const {deltaX, velocityX} = evt;
-    const {width} = this.state;
+    const {width, pane} = this.state;
+    let nextPane = pane;
 
     if (this._isDraggingHorizontally()) {
       if (Math.abs(velocityX) > 0.05) {
-        if (velocityX > 0 && deltaX < 0) this._next();
-        if (velocityX < 0 && deltaX > 0) this._prev();
+        if (velocityX > 0 && deltaX < 0) nextPane++;
+        if (velocityX < 0 && deltaX > 0) nextPane--;
       } else if (Math.abs(deltaX) > width * 0.3) {
         if (deltaX < 0) {
-          this._next();
+          nextPane++;
         } else {
-          this._prev();
+          nextPane--;
         }
       }
     }
 
-    this._resetDrag();
+    nextPane = this._constrain(nextPane, 0, this.props.images.length - 1);
+
+    this.setState({
+      isDragging: false,
+      pane: nextPane
+    });
+
+    this._animateToPane(nextPane);
+  },
+
+  _atLastPane() {
+    return this.state.pane === this.props.images.length - 1;
+  },
+
+  _animateToPane(pane) {
+    Animations.animate(
+      'test',
+      this.state.scrollPosition,
+      -this.state.width * pane,
+      300,
+      easings.sine.out,
+      (pos) => {
+        this.setState({
+          scrollPosition: pos
+        });
+      }
+    )
   },
 
   _handleTap(evt) {
-    if (this.state.pane === this.props.images.length - 1) {
-      this._setNextPane(0);
-    } else {
-      this._next();
-    }
+    const nextPane = this._atLastPane() ? 0 : this.state.pane + 1;
 
-    this.setState({
-      justDragged: false,
-      justDraggedPast: false,
-      justTapped: true,
-      justTappedAtEnd: this._getNextPane() === 0,
-      pane: this._getNextPane()
-    });
-  },
-
-  _handleDoubleTap(evt) {
-    console.log('double tap');
+    this.setState({ pane: nextPane });
+    this._animateToPane(nextPane);
   },
 
   _getIndicators() {
@@ -173,30 +174,13 @@ export default React.createClass({
 
   render() {
     const {images} = this.props;
-    const {width, pane, dragDistance, isDragging, justDragged, justDraggedPast, justTapped, justTappedAtEnd} = this.state;
+    const {width, pane, dragDistance, isDragging, scrollPosition} = this.state;
     const imageCount = images.length;
-    let offset = - pane * width;
-
-    if (isDragging) {
-      if (this._isDraggingPast()) {
-        offset += 0.08 * dragDistance;
-      } else {
-        offset += dragDistance;
-      }
-    }
 
     const listStyle = {
       width: width * imageCount,
-      transform: "translate3d(" + offset + "px, 0, 0)"
+      transform: "translate3d(" + scrollPosition + "px, 0, 0)"
     };
-
-    const listClasses = classNames({
-      "carousel__list": true,
-      "animate--dragged": justDragged && !justDraggedPast,
-      "animate--bounce-back": justDraggedPast,
-      "animate--tapped": justTapped && !justTappedAtEnd,
-      "animate--return-to-start": justTappedAtEnd
-    });
 
     return (
       <div>
@@ -204,11 +188,9 @@ export default React.createClass({
           vertical
           onPan={this._handlePan}
           onTap={this._handleTap}
-          onDoubleTap={this._handleDoubleTap}
-          options={{recognizers:{tap:{time:500, threshold:10}}}}
-          requireFailure={{ tap: 'doubletap' }}>
+          options={{recognizers:{tap:{time:500, threshold:2}}}}>
           <div className="carousel" style={{ width: width }}>
-            <ul className={listClasses} style={listStyle}>
+            <ul className='carousel__list' style={listStyle}>
               {images.map((image, index) => (
                 <li key={index} className="carousel__item" style={{ width: width }}>
                   <img className="carousel__image" src={image} />
@@ -233,3 +215,20 @@ const DIRECTIONS = {
 const EVENT_TYPES = {
   release: 4
 };
+
+const easings = {
+  sine: {
+    out: function(k) {
+      return Math.sin(k * (Math.PI / 2));
+    },
+    inOut: function(k) {
+      return - (Math.cos(Math.PI * k) - 1) / 2;
+    }
+  },
+  cubic: {
+    out: function(k) {
+      return --k * k * k + 1;
+    }
+  }
+};
+
