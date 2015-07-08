@@ -199,7 +199,6 @@ export default React.createClass({
                 </li>
               ))}
             </ul>
-            {this._getIndicators()}
           </div>
         </HammerComponent>
       </div>
