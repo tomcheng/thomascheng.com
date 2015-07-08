@@ -39,9 +39,10 @@ const Animations = {
     return new Date().getTime();
   },
 
-  animate(name, start, end, duration, easing, onUpdate, onComplete) {
+  animate(name, start, end, duration, velocity, onUpdate, onComplete) {
     const {animations} = this.props;
     const startTime = this._getCurrentTime();
+    const easing = this._getEasingFunction(velocity);
     var timePassed;
 
     this._registerStart(name);
@@ -65,7 +66,12 @@ const Animations = {
       }
     };
     animationLoop();
+  },
+
+  _getEasingFunction(v) {
+    return (t) => (v - 2)*t*t*t + (3 - 2*v)*t*t + v*t;
   }
+
 };
 
 export default Animations;

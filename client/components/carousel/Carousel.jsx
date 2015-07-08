@@ -124,20 +124,20 @@ export default React.createClass({
       pane: nextPane
     });
 
-    this._animateToPane(nextPane);
+    this._animateToPane(nextPane, Math.abs(velocityX));
   },
 
   _atLastPane() {
     return this.state.pane === this.props.images.length - 1;
   },
 
-  _animateToPane(pane) {
+  _animateToPane(pane, velocity) {
     Animations.animate(
       'test',
       this.state.scrollPosition,
       -this.state.width * pane,
       300,
-      easings.sine.out,
+      velocity,
       (pos) => {
         this.setState({
           scrollPosition: pos
@@ -150,7 +150,7 @@ export default React.createClass({
     const nextPane = this._atLastPane() ? 0 : this.state.pane + 1;
 
     this.setState({ pane: nextPane });
-    this._animateToPane(nextPane);
+    this._animateToPane(nextPane, 0);
   },
 
   _getIndicators() {
@@ -215,20 +215,3 @@ const DIRECTIONS = {
 const EVENT_TYPES = {
   release: 4
 };
-
-const easings = {
-  sine: {
-    out: function(k) {
-      return Math.sin(k * (Math.PI / 2));
-    },
-    inOut: function(k) {
-      return - (Math.cos(Math.PI * k) - 1) / 2;
-    }
-  },
-  cubic: {
-    out: function(k) {
-      return --k * k * k + 1;
-    }
-  }
-};
-
