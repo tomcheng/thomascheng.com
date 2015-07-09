@@ -39,10 +39,9 @@ const Animations = {
     return new Date().getTime();
   },
 
-  animate(name, start, end, duration, velocity, onUpdate, onComplete) {
+  animate(name, start, end, duration, easingFunction, onUpdate, onComplete) {
     const {animations} = this.props;
     const startTime = this._getCurrentTime();
-    const easing = this._getEasingFunction(velocity);
     var timePassed;
 
     this._registerStart(name);
@@ -60,19 +59,13 @@ const Animations = {
           return;
         }
 
-        onUpdate( (end - start) * easing(timePassed / duration) + start );
+        onUpdate( (end - start) * easingFunction(timePassed / duration) + start );
 
         animations[name].raf = window.requestAnimationFrame(animationLoop);
       }
     };
     animationLoop();
-  },
-
-  _getEasingFunction(v) {
-      return (k) => --k * k * k + 1;
-//    return (t) => (v - 2)*t*t*t + (3 - 2*v)*t*t + v*t;
   }
-
 };
 
 export default Animations;

@@ -56,13 +56,19 @@ export default React.createClass({
 
   _handlePan(evt) {
     const {deltaX, direction, eventType, preventDefault} = evt;
-    const {isDragging} = this.state;
+    const {isDragging, scrollPosition, width} = this.state;
 
     if (isDragging) {
       if (this._isDraggingHorizontally()) {
         preventDefault();
+        let dragOffset = deltaX;
+        if (scrollPosition + deltaX > 0 ||
+            scrollPosition + deltaX < -width * (this.props.images.length - 1)) {
+          dragOffset *= 0.15;
+        };
+
         this.setState({
-          scrollPosition: -(this.state.pane * this.state.width) + deltaX
+          scrollPosition: -(this.state.pane * this.state.width) + dragOffset
         });
       }
     } else {
@@ -79,7 +85,7 @@ export default React.createClass({
 
   _handleDragRelease(evt) {
     const {deltaX, velocityX} = evt;
-    const {width, pane} = this.state;
+    const {pane, scrollPosition, width} = this.state;
     let nextPane = pane;
 
     if (this._isDraggingHorizontally()) {
@@ -97,27 +103,28 @@ export default React.createClass({
 
     nextPane = this._constrain(nextPane, 0, this.props.images.length - 1);
 
+    const distanceToScroll = Math.abs(-width * nextPane - scrollPosition);
+    const speed = Math.abs(velocityX);
+    const duration = this._constrain(distanceToScroll/speed, 250, 400);
+
+    this._animateToPane(nextPane, duration);
     this.setState({
       isDragging: false,
       pane: nextPane
     });
-
-    this._animateToPane(nextPane, Math.abs(velocityX));
   },
 
   _atLastPane() {
     return this.state.pane === this.props.images.length - 1;
   },
 
-  _animateToPane(pane, velocity) {
-    const distanceToScroll = Math.abs(-this.state.width * pane - this.state.scrollPosition);
-    const duration = this._constrain(distanceToScroll/velocity, 250, 400);
+  _animateToPane(pane, duration) {
     Animations.animate(
-      'test',
+      'swipe',
       this.state.scrollPosition,
       -this.state.width * pane,
       duration,
-      velocity,
+      cubicOut,
       (pos) => {
         this.setState({
           scrollPosition: pos
@@ -129,8 +136,8 @@ export default React.createClass({
   _handleTap(evt) {
     const nextPane = this._atLastPane() ? 0 : this.state.pane + 1;
 
+    this._animateToPane(nextPane, 350);
     this.setState({ pane: nextPane });
-    this._animateToPane(nextPane, 0);
   },
 
   render() {
@@ -182,3 +189,5 @@ const DIRECTIONS = {
 const EVENT_TYPES = {
   release: 4
 };
+
+const cubicOut = (t) => --t * t * t + 1;
