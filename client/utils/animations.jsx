@@ -4,7 +4,7 @@ const Animations = {
     animationCount: 0
   },
 
-  _stop(name) {
+  stop(name) {
     const {animations} = this.props;
 
     if (animations[name]) {
@@ -20,7 +20,7 @@ const Animations = {
     const {animations} = this.props;
 
     if (animations[name]) {
-      this._stop(name);
+      this.stop(name);
     }
 
     if (!animations[name]) {
@@ -45,7 +45,7 @@ const Animations = {
         timePassed = this._getCurrentTime() - startTime;
 
         if (timePassed >= duration) {
-          this._stop(name);
+          this.stop(name);
           onUpdate(end);
           if (onComplete) {
             onComplete();
@@ -65,9 +65,9 @@ const Animations = {
     return this.props.animations;
   },
 
-  stopAllAnimations() {
+  stopAll() {
     Object.keys(this.props.animations).forEach(name => {
-      this._stop(name);
+      this.stop(name);
     });
   }
 };
