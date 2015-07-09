@@ -29,12 +29,6 @@ const Animations = {
     }
   },
 
-  _stopAllAnimations() {
-    Object.keys(this.props.animations).forEach(name => {
-      this._stop(name);
-    });
-  },
-
   _getCurrentTime() {
     return new Date().getTime();
   },
@@ -65,6 +59,16 @@ const Animations = {
       }
     };
     animationLoop();
+  },
+
+  getAnimations() {
+    return this.props.animations;
+  },
+
+  stopAllAnimations() {
+    Object.keys(this.props.animations).forEach(name => {
+      this._stop(name);
+    });
   }
 };
 

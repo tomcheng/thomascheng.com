@@ -16,6 +16,7 @@ export default React.createClass({
       isDragging: false,
       pane: 0,
       scrollPosition: 0,
+      scrollPositionAtDragStart: null,
       width: 0
     };
   },
@@ -63,7 +64,7 @@ export default React.createClass({
 
   _handlePan(evt) {
     const {deltaX, direction, eventType, preventDefault} = evt;
-    const {isDragging, scrollPosition, width} = this.state;
+    const {isDragging, scrollPosition, scrollPositionAtDragStart, width} = this.state;
 
     if (isDragging) {
       if (this._isDraggingHorizontally()) {
@@ -75,13 +76,16 @@ export default React.createClass({
         };
 
         this.setState({
-          scrollPosition: -(this.state.pane * this.state.width) + dragOffset
+          scrollPosition: scrollPositionAtDragStart + dragOffset
         });
       }
     } else {
+      Animations.stopAllAnimations();
+
       this.setState({
         dragDirection: direction,
-        isDragging: true
+        isDragging: true,
+        scrollPositionAtDragStart: scrollPosition
       });
     }
 
@@ -120,7 +124,8 @@ export default React.createClass({
 
     this.setState({
       isDragging: false,
-      pane: nextPane
+      pane: nextPane,
+      scrollPositionAtDragStart: null
     });
 
   },
