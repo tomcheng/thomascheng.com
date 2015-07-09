@@ -165,13 +165,15 @@ export default React.createClass({
 
   render() {
     const {description, images, title} = this.props;
-    const {width, pane, isDragging, scrollPosition} = this.state;
+    const {width, isDragging, scrollPosition} = this.state;
     const imageCount = images.length;
 
     const listStyle = {
       width: width * imageCount,
       transform: "translate3d(" + scrollPosition + "px, 0, 0)"
     };
+
+    const actualPane = this._constrain(Math.ceil(-scrollPosition / width + 0.5), 1, imageCount);
 
     return (
       <div className="carousel">
@@ -194,7 +196,7 @@ export default React.createClass({
         </div>
         <div className="carousel__info clearfix">
           <h4 className="carousel__info__title pull-left">{title}</h4>
-          <div className="carousel__info__counter pull-right">{pane + 1} of {imageCount}</div>
+          <div className="carousel__info__counter pull-right">{actualPane} of {imageCount}</div>
         </div>
         <div className="carousel__description">{description}</div>
       </div>
