@@ -96,6 +96,20 @@ export default React.createClass({
     return this._constrain(Math.floor(-scrollPosition / width + 0.5), 0, imageCount - 1);
   },
 
+  _getPrevPane() {
+    const {scrollPosition, width} = this.state;
+    const imageCount = this.props.images.length;
+
+    return this._constrain(Math.floor(-scrollPosition / width), 0, imageCount - 1);
+  },
+
+  _getNextPane() {
+    const {scrollPosition, width} = this.state;
+    const imageCount = this.props.images.length;
+
+    return this._constrain(Math.ceil(-scrollPosition / width), 0, imageCount - 1);
+  },
+
   _handleDragRelease(evt) {
     const {deltaX, velocityX} = evt;
     const {scrollPosition, width} = this.state;
@@ -107,10 +121,10 @@ export default React.createClass({
       if (this._isDraggingHorizontally()) {
         if (Math.abs(velocityX) > 0.05) {
           if (velocityX > 0) { // dragging towards next
-            nextPane = this._getCurrentPane() + 1;
+            nextPane = this._getNextPane();
           }
           if (velocityX < 0 && deltaX > 0) { // dragging towards prev
-            nextPane = this._getCurrentPane() - 1;
+            nextPane = this._getPrevPane();
           }
         }
       }
