@@ -70,8 +70,8 @@ export default React.createClass({
       if (this._isDraggingHorizontally()) {
         preventDefault();
         let dragOffset = deltaX;
-        if (scrollPosition + deltaX > 0 ||
-            scrollPosition + deltaX < -width * (this.props.images.length - 1)) {
+        if (scrollPositionAtDragStart + deltaX > 0 ||
+            scrollPositionAtDragStart + deltaX < -width * (this.props.images.length - 1)) {
           dragOffset *= 0.15;
         };
 
