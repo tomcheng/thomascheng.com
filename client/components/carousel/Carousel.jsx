@@ -93,7 +93,7 @@ export default React.createClass({
       let dragOffset = deltaX;
       if (scrollPositionAtDragStart + deltaX > 0 ||
           scrollPositionAtDragStart + deltaX < -width * (imageCount - 1)) {
-        dragOffset *= 0.15;
+        dragOffset *= 0.2;
       };
 
       this.setState({
@@ -146,7 +146,7 @@ export default React.createClass({
 
   },
 
-  _handleTap(evt) {
+  _advanceToNextPane(evt) {
     const imageCount = this.props.images.length,
           currentPane = this._getCurrentPane(),
           nextPane = currentPane === imageCount - 1 ? 0 : currentPane + 1;
@@ -174,7 +174,7 @@ export default React.createClass({
           <HammerComponent
             vertical
             onPan={this._handlePan}
-            onTap={this._handleTap}
+            onTap={this._advanceToNextPane}
             options={{recognizers:{tap:{time:500, threshold:2}}}}>
             <div className="carousel__frame" style={{ width: width }}>
               <ul className="carousel__list" style={listStyle}>
@@ -189,7 +189,9 @@ export default React.createClass({
         </div>
         <div className="carousel__info clearfix">
           <h4 className="carousel__info__title pull-left">{title}</h4>
-          <div className="carousel__info__counter pull-right">{this._getCurrentPane() + 1} of {imageCount}</div>
+          <div className="carousel__info__counter pull-right" onClick={this._advanceToNextPane}>
+            {this._getCurrentPane() + 1} of {imageCount}
+          </div>
         </div>
         <div className="carousel__description">{description}</div>
       </div>
