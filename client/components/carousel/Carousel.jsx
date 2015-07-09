@@ -14,7 +14,6 @@ export default React.createClass({
     return {
       dragDirection: null,
       isDragging: false,
-      pane: 0,
       scrollPosition: 0,
       scrollPositionAtDragStart: null,
       width: 0
@@ -39,10 +38,6 @@ export default React.createClass({
     this.setState({
       width: elem.offsetWidth
     })
-  },
-
-  _getNextPane() {
-    return this.nextPane;
   },
 
   _isDraggingHorizontally() {
@@ -94,23 +89,28 @@ export default React.createClass({
     }
   },
 
+  _getCurrentPane() {
+    const {scrollPosition, width} = this.state;
+    const imageCount = this.props.images.length;
+
+    return this._constrain(Math.floor(-scrollPosition / width + 0.5), 0, imageCount - 1);
+  },
+
   _handleDragRelease(evt) {
     const {deltaX, velocityX} = evt;
-    const {pane, scrollPosition, width} = this.state;
-    let nextPane = pane;
+    const {scrollPosition, width} = this.state;
+    let nextPane = this._getCurrentPane();
 
     if (this._isScrolledOutOfBounds()) {
       this._animateToPane(nextPane, 600, elasticOut);
     } else {
       if (this._isDraggingHorizontally()) {
         if (Math.abs(velocityX) > 0.05) {
-          if (velocityX > 0 && deltaX < 0) nextPane++;
-          if (velocityX < 0 && deltaX > 0) nextPane--;
-        } else if (Math.abs(deltaX) > width * 0.3) {
-          if (deltaX < 0) {
-            nextPane++;
-          } else {
-            nextPane--;
+          if (velocityX > 0) { // dragging towards next
+            nextPane = this._getCurrentPane() + 1;
+          }
+          if (velocityX < 0 && deltaX > 0) { // dragging towards prev
+            nextPane = this._getCurrentPane() - 1;
           }
         }
       }
@@ -124,14 +124,13 @@ export default React.createClass({
 
     this.setState({
       isDragging: false,
-      pane: nextPane,
       scrollPositionAtDragStart: null
     });
 
   },
 
   _atLastPane() {
-    return this.state.pane === this.props.images.length - 1;
+    return this._getCurrentPane() === this.props.images.length - 1;
   },
 
   _animateToPane(pane, duration, easing) {
@@ -152,15 +151,13 @@ export default React.createClass({
   },
 
   _handleTap(evt) {
-    const nextPane = this._atLastPane() ? 0 : this.state.pane + 1;
+    const nextPane = this._atLastPane() ? 0 : this._getCurrentPane() + 1;
 
     if (nextPane === 0) {
       this._animateToPane(nextPane, 150 * this.props.images.length, returnHome);
     } else {
       this._animateToPane(nextPane, 350, cubicInOut);
     }
-
-    this.setState({ pane: nextPane });
   },
 
   render() {
@@ -173,7 +170,7 @@ export default React.createClass({
       transform: "translate3d(" + scrollPosition + "px, 0, 0)"
     };
 
-    const actualPane = this._constrain(Math.ceil(-scrollPosition / width + 0.5), 1, imageCount);
+    const actualPane = this._getCurrentPane();
 
     return (
       <div className="carousel">
@@ -196,7 +193,7 @@ export default React.createClass({
         </div>
         <div className="carousel__info clearfix">
           <h4 className="carousel__info__title pull-left">{title}</h4>
-          <div className="carousel__info__counter pull-right">{actualPane} of {imageCount}</div>
+          <div className="carousel__info__counter pull-right">{actualPane + 1} of {imageCount}</div>
         </div>
         <div className="carousel__description">{description}</div>
       </div>
