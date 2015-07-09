@@ -5,10 +5,10 @@ import Carousel from 'components/carousel/Carousel.jsx';
 
 export default React.createClass({
   propTypes: {
-    title: React.PropTypes.string.isRequired,
     description: React.PropTypes.string,
+    imageCount: React.PropTypes.number,
     slug: React.PropTypes.string.isRequired,
-    imageCount: React.PropTypes.number
+    title: React.PropTypes.string.isRequired
   },
 
   getDefaultProps() {
@@ -35,13 +35,11 @@ export default React.createClass({
     const {title, description} = this.props;
 
     return (
-      <div className="piece">
-        <div className="carousel-wrapper">
-          <Carousel
-            images={this._getImages()} />
-        </div>
-        <h4 className="piece__title">{title}</h4>
-        <div className="piece__description">{description}</div>
+      <div style={{ marginBottom: 30}}>
+        <Carousel
+          images={this._getImages()}
+          title={title}
+          description={description} />
       </div>
     );
   }

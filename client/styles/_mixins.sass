@@ -1,20 +1,16 @@
+=clearfix
+  &:before,
+  &:after
+    content: " "
+    display: table
+  &:after
+    clear: both
+
 =transition($transition...)
   -moz-transition: $transition
   -o-transition: $transition
   -webkit-transition: $transition
   transition: $transition
-
-=transition-duration($duration...)
-  -moz-transition-property: $duration
-  -o-transition-property: $duration
-  -webkit-transition-property: $duration
-  transition-property: $duration
-
-=transition-timing-function($timing...)
-  -moz-transition-timing-function: $timing
-  -o-transition-timing-function: $timing
-  -webkit-transition-timing-function: $timing
-  transition-timing-function: $timing
 
 =border-radius($radius)
   -moz-border-radius: $radius

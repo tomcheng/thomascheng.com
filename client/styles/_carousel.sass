@@ -1,10 +1,10 @@
 $carousel-padding: 0.5 * $grid-gutter-width
 
-.carousel-wrapper
+.carousel__wrapper
   @media (max-width: $screen-xs-max)
     margin: 0 (-$carousel-padding)
 
-.carousel
+.carousel__frame
   overflow: hidden
   position: relative
   width: 100%
@@ -12,14 +12,6 @@ $carousel-padding: 0.5 * $grid-gutter-width
 .carousel__list
   padding: 0
   margin: 0
-  &.animate--dragged
-    +transition(all 0.15s ease-out)
-  &.animate--bounce-back
-    +transition(all 0.18s cubic-bezier(1, 2, 0.63, 0.55))
-  &.animate--tapped
-    +transition(all 0.4s ease-in-out)
-  &.animate--return-to-start
-    +transition(all 0.8s cubic-bezier(0.53, -0.33, 0.7, 1))
 
 .carousel__item
   list-style: none
@@ -35,22 +27,14 @@ $carousel-padding: 0.5 * $grid-gutter-width
   @media (max-width: $screen-xs-max)
     +border-radius(3px)
 
-.carousel__indicators
-  bottom: 0
-  font-size: 20px
-  line-height: 1
-  left: 0
-  padding: 0
-  position: absolute
-  right: 0
-  text-align: center
+.carousel__info
+  margin: 10px 0 5px
 
-.carousel__indicator
-  +opacity(0.3)
-  +transition(opacity 0.1s ease-in-out)
-  color: $white
-  display: inline-block
-  list-style-type: none
-  padding: 0 6px
-  &.is-active
-    +opacity(1)
+.carousel__info__title
+  margin: 0
+
+.carousel__info__counter
+  color: $text-color-faint
+  font-size: $font-size-sm
+  font-weight: normal
+  font-style: italic

@@ -5,14 +5,14 @@ import Animations from 'utils/animations.jsx';
 
 export default React.createClass({
   propTypes: {
-    images: React.PropTypes.array.isRequired
+    description: React.PropTypes.string.isRequired,
+    images: React.PropTypes.array.isRequired,
+    title: React.PropTypes.string.isRequired
   },
 
   getInitialState() {
     return {
-      animationOffset: 0,
       dragDirection: null,
-      dragDistance: 0,
       isDragging: false,
       pane: 0,
       scrollPosition: 0,
@@ -22,7 +22,6 @@ export default React.createClass({
 
   componentDidMount() {
     this._setDimensions();
-    this._setNextPane(0);
 
     window.addEventListener('resize', this._setDimensions);
     window.addEventListener('orientationchange', this._setDimensions);
@@ -34,42 +33,21 @@ export default React.createClass({
   },
 
   _setDimensions() {
-    const elem = React.findDOMNode(this);
+    const elem = React.findDOMNode(this.refs.wrapper);
 
     this.setState({
       width: elem.offsetWidth
     })
   },
 
-  _setNextPane(pane) {
-    const imageCount = this.props.images.length;
-
-    this.nextPane = Math.max(0, Math.min(imageCount - 1, pane))
-  },
-
   _getNextPane() {
     return this.nextPane;
-  },
-
-  _next() {
-    this._setNextPane(this.state.pane + 1);
-  },
-
-  _prev() {
-    this._setNextPane(this.state.pane - 1);
   },
 
   _isDraggingHorizontally() {
     const {dragDirection} = this.state;
 
     return (dragDirection === DIRECTIONS['left'] || dragDirection === DIRECTIONS['right']);
-  },
-
-  _isDraggingPast() {
-    const {dragDistance, pane} = this.state;
-    const imageCount = this.props.images.length;
-
-    return pane === 0 && dragDistance > 0 || pane === imageCount - 1 && dragDistance < 0;
   },
 
   _constrain(value, min, max) {
@@ -155,28 +133,9 @@ export default React.createClass({
     this._animateToPane(nextPane, 0);
   },
 
-  _getIndicators() {
-    const {images} = this.props;
-    const {pane} = this.state;
-
-    if (images.length === 1) return null;
-
-    return (
-      <ul className="carousel__indicators">
-        {images.map((image, index) => {
-          const indicatorClasses = classNames({
-            "carousel__indicator": true,
-            "is-active": index === pane
-          });
-          return <li key={index} className={indicatorClasses}>&bull;</li>;
-        })}
-      </ul>
-    );
-  },
-
   render() {
-    const {images} = this.props;
-    const {width, pane, dragDistance, isDragging, scrollPosition} = this.state;
+    const {description, images, title} = this.props;
+    const {width, pane, isDragging, scrollPosition} = this.state;
     const imageCount = images.length;
 
     const listStyle = {
@@ -185,22 +144,29 @@ export default React.createClass({
     };
 
     return (
-      <div>
-        <HammerComponent
-          vertical
-          onPan={this._handlePan}
-          onTap={this._handleTap}
-          options={{recognizers:{tap:{time:500, threshold:2}}}}>
-          <div className="carousel" style={{ width: width }}>
-            <ul className='carousel__list' style={listStyle}>
-              {images.map((image, index) => (
-                <li key={index} className="carousel__item" style={{ width: width }}>
-                  <img className="carousel__image" src={image} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </HammerComponent>
+      <div className="carousel">
+        <div className="carousel__wrapper" ref="wrapper">
+          <HammerComponent
+            vertical
+            onPan={this._handlePan}
+            onTap={this._handleTap}
+            options={{recognizers:{tap:{time:500, threshold:2}}}}>
+            <div className="carousel__frame" style={{ width: width }}>
+              <ul className="carousel__list" style={listStyle}>
+                {images.map((image, index) => (
+                  <li key={index} className="carousel__item" style={{ width: width }}>
+                    <img className="carousel__image" src={image} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </HammerComponent>
+        </div>
+        <div className="carousel__info clearfix">
+          <h4 className="carousel__info__title pull-left">{title}</h4>
+          <div className="carousel__info__counter pull-right">{pane + 1} of {imageCount}</div>
+        </div>
+        <div className="carousel__description">{description}</div>
       </div>
     );
   }

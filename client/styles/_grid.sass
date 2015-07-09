@@ -9,14 +9,6 @@ $container-md: $container-desktop !default
 $container-large-desktop: 1140px + $grid-gutter-width !default
 $container-lg: $container-large-desktop !default
 
-=clearfix
-  &:before,
-  &:after
-    content: " "
-    display: table
-  &:after
-    clear: both
-
 =make-grid-columns($i: 1, $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}")
   @for $i from 1 + 1 through $grid-columns
     $list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}"
