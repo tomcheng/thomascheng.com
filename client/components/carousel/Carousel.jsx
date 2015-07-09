@@ -154,7 +154,12 @@ export default React.createClass({
   _handleTap(evt) {
     const nextPane = this._atLastPane() ? 0 : this.state.pane + 1;
 
-    this._animateToPane(nextPane, 350);
+    if (nextPane === 0) {
+      this._animateToPane(nextPane, 150 * this.props.images.length, returnHome);
+    } else {
+      this._animateToPane(nextPane, 350, cubicInOut);
+    }
+
     this.setState({ pane: nextPane });
   },
 
@@ -209,6 +214,10 @@ const EVENT_TYPES = {
 };
 
 const simplifyEasing = complexFn => x => complexFn(x, x, 0, 1, 1);
+const easeInOutCubic = (x, t, b, c, d) => {
+  if ((t/=d/2) < 1) return c/2*t*t*t + b;
+  return c/2*((t-=2)*t*t + 2) + b;
+};
 const easeOutElastic = (x, t, b, c, d) => {
   var s=1.70158;
   var p=0;
@@ -237,5 +246,33 @@ const easeOutBounce = (x, t, b, c, d) => {
 };
 
 const cubicOut = x => --x * x * x + 1;
+const cubicInOut = x => simplifyEasing(easeInOutCubic)(x);
 const elasticOut = x => simplifyEasing(easeOutElastic)(x);
 const bounceOut = x => simplifyEasing(easeOutBounce)(x);
+
+
+const bezToEasing = (bezArray) => (x, t, b, c, d) => {
+  return c * polyBez([bezArray[0], bezArray[1]], [bezArray[2], bezArray[3]])(t/d) + b;
+};
+
+const polyBez = (p1, p2) => {
+  let A = [null, null], B = [null, null], C = [null, null];
+  const bezCoOrd = (t, ax) => {
+    C[ax] = 3 * p1[ax], B[ax] = 3 * (p2[ax] - p1[ax]) - C[ax], A[ax] = 1 - C[ax] - B[ax];
+    return t * (C[ax] + t * (B[ax] + t * A[ax]));
+  };
+  const xDeriv = (t) => C[0] + t * (2 * B[0] + 3 * A[0] * t);
+  const xForT = (t) => {
+    let x = t, i = 0, z;
+    while (++i < 14) {
+      z = bezCoOrd(x, 0) - t;
+      if (Math.abs(z) < 1e-3) break;
+      x -= z / xDeriv(x);
+    }
+    return x;
+  };
+  return (t) => bezCoOrd(xForT(t), 1);
+};
+
+const returnHomeComplex = bezToEasing([0.72, -0.36, 0.57, 1]);
+const returnHome = x => simplifyEasing(returnHomeComplex)(x);
