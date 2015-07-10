@@ -215,7 +215,7 @@ export default React.createClass({
               </ul>
             </div>
           </HammerComponent>
-          {imageCount === 1 ? (
+          {imageCount > 1 ? (
             <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
           ) : null}
         </div>
