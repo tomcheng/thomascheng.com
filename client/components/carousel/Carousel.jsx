@@ -127,13 +127,13 @@ export default React.createClass({
     if (isDraggingHorizontally) {
       if (scroll > 0) {
         // scrolled out of bounds at start
-        this._animateToPane(currentPane, 500, Easings.bounceOut);
+        this._animateToPane(currentPane, 450, Easings.bounceOut);
       } else if (scroll < -width * (imageCount - 1)) {
         // scrolled out of bounds at end
-        if (Math.abs(deltaX) > width * returnThreshold) {
+        if (Math.abs(deltaX) > width * returnThreshold && imageCount > 1) {
           this._animateToPane(0, 120 * imageCount, Easings.cubicOut);
         } else {
-          this._animateToPane(currentPane, 500, Easings.bounceOut);
+          this._animateToPane(currentPane, 450, Easings.bounceOut);
         }
       } else {
         if (Math.abs(velocityX) > 0.05) {
@@ -184,15 +184,18 @@ export default React.createClass({
       transform: "translate3d(" + scroll + "px, 0, 0)"
     };
 
-    draggedPastEnd = (-scroll/width - (imageCount - 1))/dragConstant;
+    if (imageCount > 1) {
+      indicatorFinalPosition = dragConstant * width * returnThreshold * 0.8;
 
-    indicatorProgress = Easings.sineIn(constrain(draggedPastEnd/returnThreshold, 0, 1));
-    indicatorFinalPosition = dragConstant * width * returnThreshold * 0.8;
+      draggedPastEnd = (-scroll/width - (imageCount - 1))/dragConstant;
 
-    indicatorStyle = {
-      opacity: indicatorProgress,
-      transform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)"
-    };
+      indicatorProgress = Easings.sineIn(constrain(draggedPastEnd/returnThreshold, 0, 1));
+
+      indicatorStyle = {
+        opacity: indicatorProgress,
+        transform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)"
+      };
+    }
 
     return (
       <div className="carousel">
@@ -212,7 +215,9 @@ export default React.createClass({
               </ul>
             </div>
           </HammerComponent>
-          <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
+          {imageCount === 1 ? (
+            <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
+          ) : null}
         </div>
         <div className="carousel__info clearfix">
           <h4 className="carousel__info__title pull-left">{title}</h4>
