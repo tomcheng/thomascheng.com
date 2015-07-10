@@ -126,13 +126,13 @@ export default React.createClass({
     if (isDraggingHorizontally) {
       if (scroll > 0) {
         // scrolled out of bounds at start
-        this._animateToPane(currentPane, 600, Easings.elasticOut);
+        this._animateToPane(currentPane, 500, Easings.bounceOut);
       } else if (scroll < -width * (imageCount - 1)) {
         // scrolled out of bounds at end
         if (Math.abs(deltaX) > width * returnThreshold) {
-          this._animateToPane(0, 120 * imageCount, Easings.elasticOut);
+          this._animateToPane(0, 120 * imageCount, Easings.cubicOut);
         } else {
-          this._animateToPane(currentPane, 600, Easings.elasticOut);
+          this._animateToPane(currentPane, 500, Easings.bounceOut);
         }
       } else {
         if (Math.abs(velocityX) > 0.05) {
