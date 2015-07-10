@@ -1,6 +1,8 @@
 $carousel-padding: 0.5 * $grid-gutter-width
 
 .carousel__wrapper
+  overflow: hidden
+  position: relative
   @media (max-width: $screen-xs-max)
     margin: 0 (-$carousel-padding)
 
@@ -26,6 +28,19 @@ $carousel-padding: 0.5 * $grid-gutter-width
 
   @media (max-width: $screen-xs-max)
     +border-radius(3px)
+
+$indicator-size: 20px
+
+.carousel__return-indicator
+  font-size: $indicator-size
+  height: $indicator-size
+  line-height: $indicator-size
+  margin-top: -$indicator-size / 2
+  position: absolute
+  right: -$indicator-size
+  text-align: center
+  top: 50%
+  width: $indicator-size
 
 .carousel__info
   margin: 10px 0 5px
