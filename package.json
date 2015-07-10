@@ -50,8 +50,7 @@
     "webpack-dev-server": "1.9.0",
     "file-loader": "^0.8.4",
     "url-loader": "^0.5.6",
-    "jquery": "^2.1.4",
-    "hammerjs": "https://github.com/tomcheng/hammer.js/tarball/3706fbef123194f4a99ff36581aa6559b0174d34"
+    "jquery": "^2.1.4"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",

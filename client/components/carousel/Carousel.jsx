@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import HammerComponent from 'components/common/Hammer.jsx';
 import Animations from 'utils/animations.jsx';
 import Easings from 'utils/easings.jsx';
+import TouchHandler from 'components/common/TouchHandler.jsx';
 
 export default React.createClass({
   propTypes: {
@@ -82,15 +82,11 @@ export default React.createClass({
     )
   },
 
-  _handlePan(evt) {
-    const {deltaX, direction, eventType, preventDefault} = evt,
+  _handleDrag(evt) {
+    const {deltaX, direction, preventDefault} = evt,
           {isDragging, isDraggingHorizontally, scroll, scrollAtDragStart, width} = this.state,
           {dragConstant, images} = this.props,
           imageCount = images.length;
-
-    if (eventType === EVENT_TYPES['release']) {
-      this._handleDragRelease(evt);
-    }
 
     if (isDragging && isDraggingHorizontally) {
       preventDefault();
@@ -110,7 +106,7 @@ export default React.createClass({
 
       this.setState({
         isDragging: true,
-        isDraggingHorizontally: direction === DIRECTIONS['left'] || direction === DIRECTIONS['right'],
+        isDraggingHorizontally: direction === 'left' || direction === 'right',
         scrollAtDragStart: scroll
       });
     }
@@ -137,16 +133,16 @@ export default React.createClass({
         }
       } else {
         if (Math.abs(velocityX) > 0.05) {
-          if (velocityX > 0) {
+          if (velocityX < 0) {
             destinationPane = this._getNextPane();
           }
-          if (velocityX < 0 && deltaX > 0) {
+          if (velocityX > 0) {
             destinationPane = this._getPrevPane();
           }
         }
         destinationPane = constrain(destinationPane, 0, imageCount - 1);
         distanceToScroll = Math.abs(-width * destinationPane - scroll);
-        duration = constrain(Math.abs(distanceToScroll/velocityX), 250, 400);
+        duration = constrain(Math.abs(distanceToScroll/velocityX*3), 200, 400);
 
         this._animateToPane(destinationPane, duration, Easings.cubicOut);
       }
@@ -184,7 +180,7 @@ export default React.createClass({
       transform: "translate3d(" + scroll + "px, 0, 0)"
     };
 
-    if (imageCount > 1) {
+    if (imageCount > 1 && -scroll > width * (imageCount - 1)) {
       indicatorFinalPosition = dragConstant * width * returnThreshold * 0.8;
 
       draggedPastEnd = (-scroll/width - (imageCount - 1))/dragConstant;
@@ -200,12 +196,14 @@ export default React.createClass({
     return (
       <div className="carousel">
         <div className="carousel__wrapper" ref="wrapper">
-          <HammerComponent
-            vertical
-            onPan={this._handlePan}
-            onTap={this._advanceToNextPane}
-            options={{recognizers:{tap:{time:500, threshold:2}}}}>
-            <div className="carousel__frame" style={{ width: width }}>
+          <TouchHandler
+            onDrag={this._handleDrag}
+            onDragRelease={this._handleDragRelease}
+            onTap={this._advanceToNextPane}>
+            <div
+              onClick={this._advanceToNextPane}
+              className="carousel__frame"
+              style={{ width: width }}>
               <ul className="carousel__list" style={listStyle}>
                 {images.map((image, index) => (
                   <li key={index} className="carousel__item" style={{ width: width }}>
@@ -214,7 +212,7 @@ export default React.createClass({
                 ))}
               </ul>
             </div>
-          </HammerComponent>
+          </TouchHandler>
           {imageCount > 1 ? (
             <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
           ) : null}
