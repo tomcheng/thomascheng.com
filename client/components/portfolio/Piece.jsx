@@ -32,14 +32,15 @@ export default React.createClass({
   },
 
   render() {
-    const {title, description} = this.props;
+    const {description, slug, title} = this.props;
 
     return (
       <div style={{ marginBottom: 30}}>
         <Carousel
+          description={description}
           images={this._getImages()}
-          title={title}
-          description={description} />
+          slug={slug}
+          title={title} />
       </div>
     );
   }

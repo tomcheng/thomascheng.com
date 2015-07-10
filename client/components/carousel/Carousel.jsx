@@ -10,6 +10,7 @@ export default React.createClass({
     dragConstant: React.PropTypes.number,     // how much scrolling slows down when dragging past bounds
     images: React.PropTypes.array.isRequired,
     returnThreshold: React.PropTypes.number.isRequired, // how much dragging past end is needed to return to first image
+    slug: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired
   },
 
@@ -70,7 +71,7 @@ export default React.createClass({
 
   _animateToPane(pane, duration, easing) {
     Animations.animate(
-      'horizontalPan',
+      'horizontalPan-' + this.props.slug,
       this.state.scroll,
       -this.state.width * pane,
       duration,
@@ -105,7 +106,7 @@ export default React.createClass({
     }
 
     if (!isDragging) {
-      Animations.stop('horizontalPan');
+      Animations.stop('horizontalPan-' + this.props.slug);
 
       this.setState({
         isDragging: true,
