@@ -1,19 +1,6 @@
 const Animations = {
   props: {
-    animations: {},
-    animationCount: 0
-  },
-
-  stop(name) {
-    const {animations} = this.props;
-
-    if (animations[name]) {
-      if (animations[name].raf) {
-        window.cancelAnimationFrame(animations[name].raf);
-      }
-      delete animations[name];
-      this.props.animationCount--;
-    }
+    animations: {}
   },
 
   _registerStart(name) {
@@ -24,7 +11,6 @@ const Animations = {
     }
 
     if (!animations[name]) {
-      this.props.animationCount++;
       animations[name] = {};
     }
   },
@@ -33,10 +19,22 @@ const Animations = {
     return new Date().getTime();
   },
 
-  animate(name, start, end, duration, easingFunction, onUpdate, onComplete) {
+  stop(name) {
     const {animations} = this.props;
-    const startTime = this._getCurrentTime();
-    var timePassed;
+
+    if (animations[name]) {
+      if (animations[name].raf) {
+        window.cancelAnimationFrame(animations[name].raf);
+      }
+      delete animations[name];
+    }
+  },
+
+  animate(params) {
+    const {name, start, end, duration, easing, onUpdate} = params,
+          {animations} = this.props,
+          startTime = this._getCurrentTime();
+    let timePassed;
 
     this._registerStart(name);
 
@@ -47,28 +45,15 @@ const Animations = {
         if (timePassed >= duration) {
           this.stop(name);
           onUpdate(end);
-          if (onComplete) {
-            onComplete();
-          }
           return;
         }
 
-        onUpdate( (end - start) * easingFunction(timePassed / duration) + start );
+        onUpdate( (end - start) * easing(timePassed / duration) + start );
 
         animations[name].raf = window.requestAnimationFrame(animationLoop);
       }
     };
     animationLoop();
-  },
-
-  getAnimations() {
-    return this.props.animations;
-  },
-
-  stopAll() {
-    Object.keys(this.props.animations).forEach(name => {
-      this.stop(name);
-    });
   }
 };
 

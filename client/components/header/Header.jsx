@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import $ from 'jquery';
+
+import Animations from 'utils/animations.jsx';
+import Easings from 'utils/easings.jsx';
 
 const topOffset = 20;
 
@@ -28,9 +30,19 @@ export default React.createClass({
   },
 
   _handleClick() {
-    $('body').animate({
-      scrollTop: 0
-    }, 300, 'swing');
+    const bodyEl = document.getElementsByTagName('body')[0],
+          initialPosition = bodyEl.scrollTop;
+
+    Animations.animate({
+      name: 'body-scroll',
+      start: initialPosition,
+      end: 0,
+      duration: 300,
+      easing: Easings.cubicInOut,
+      onUpdate: (pos) => {
+        bodyEl.scrollTop = pos;
+      }
+    });
   },
 
   render() {
