@@ -1,81 +1,110 @@
-$duration: 0.15s
-$height-expanded: 70px
-$height-collapsed: 40px
+$header-height-expanded: 70px
+$header-height-collapsed: 40px
+
+$nav-handle-size: 22px
+
+$header-anim-duration: 0.15s
 
 .header
+  +transition(transform $navigation-anim-duration ease-in-out)
   +user-select(none)
   left: 0
   position: fixed
-  right: 0
   top: 0
-  z-index: 1
+  width: 100%
+  z-index: $z-index-header
+
+.header__navigation-handle
+  height: $header-height-expanded
+  left: 0
+  overflow: hidden
+  position: absolute
+  top: 0
+  width: 70px
+  z-index: $z-index-header + 1
+  &:before
+    +font-awesome
+    +transition(transform $header-anim-duration ease-in-out)
+    transform: translate3d(-$nav-handle-size + 12px, ($header-height-expanded / 2), 0)
+    color: $text-color-secondary
+    content: $fa-var-bars
+    font-size: $nav-handle-size
+    left: 0
+    line-height: $nav-handle-size
+    margin-top: -$nav-handle-size / 2
+    top: 0
+    position: absolute
+
+  .header--affixed &
+    height: $header-height-collapsed
+    width: 50px
+    &:before
+      transform: translate3d(-$nav-handle-size + 10px, ($header-height-collapsed / 2), 0)
 
 .header__background
-  +transition(all $duration ease-in-out)
+  +transition(all $header-anim-duration ease-in-out)
   background: $white
   width: 100%
   position: absolute
   top: 0
   box-shadow: 0 2px 3px rgba(0,0,0,0)
-  height: $height-expanded
+  height: $header-height-expanded
   transform-origin: 0 0 0
   transform: scale3d(1, 1, 1)
 
-  .header--scrolled &
+  .header--affixed &
     background: rgba(255,255,255,0.92)
     box-shadow: 0 2px 3px rgba(0,0,0,0.18)
-    transform: scale3d(1, $height-collapsed / $height-expanded, 1)
+    transform: scale3d(1, $header-height-collapsed / $header-height-expanded, 1)
 
 .header__inner
   position: relative
 
 .header__logo
-  +transition(transform $duration ease-in-out)
+  +transition(transform $header-anim-duration ease-in-out)
   float: left
   height: 34px
   left: 0
   position: absolute
   top: 0
   transform-origin: 0 0 0
-  transform: scale3d(1, 1, 1) translate3d(0, 15px, 0)
+  transform: scale3d(1, 1, 1) translate3d(5px, 15px, 0)
   width: 50px
 
-  .header--scrolled &
-    transform: scale3d(0.6, 0.6, 1) translate3d(0, 14px, 0)
+  .header--affixed &
+    transform: scale3d(0.6, 0.6, 1) translate3d(5px, 14px, 0)
 
 .header__name
-  +transition(transform $duration ease-in-out)
+  +transition(transform $header-anim-duration ease-in-out)
   font-weight: bold
-  transform: translate3d(60px, 19px, 0)
+  transform: translate3d(65px, 19px, 0)
 
-  .header--scrolled &
-    transform: translate3d(38px, 12px, 0)
+  .header--affixed &
+    transform: translate3d(43px, 12px, 0)
 
 .header__position
-  +transition(all $duration ease-in-out)
+  +transition(all $header-anim-duration ease-in-out)
   color: $text-color-secondary
   font-style: italic
   font-size: $font-size-sm
   line-height: 16px
-  transform: translate3d(60px, 19px, 0)
+  transform: translate3d(65px, 19px, 0)
 
-  .header--scrolled &
+  .header--affixed &
     opacity: 0
-    transform: translate3d(38px, 12px, 0)
+    transform: translate3d(43px, 12px, 0)
 
 .header__border
-  +transition(all $duration ease-in-out)
+  +transition(all $header-anim-duration ease-in-out)
   height: 1px
   background-color: #aaa
   position: absolute
   top: 0
   left: 0
   right: 0
-  transform: translate3d(0, $height-expanded, 0)
+  transform: translate3d(0, $header-height-expanded, 0)
 
-  .header--scrolled &
+  .header--affixed &
     opacity: 0
-    transform: translate3d(0, $height-collapsed, 0)
+    transform: translate3d(0, $header-height-collapsed, 0)
 
-.header-spacer
-  height: $height-expanded + 20px

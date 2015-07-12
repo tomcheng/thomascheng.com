@@ -11,7 +11,7 @@ export default React.createClass({
     const {pieces} = this.props;
 
     return (
-      <div>
+      <div className="container">
         {pieces.map((piece) => (
           <Piece
             key={piece.slug}
