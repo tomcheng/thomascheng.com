@@ -6,7 +6,7 @@ import pieces from 'data/portfolio.jsx';
 export default React.createClass({
   render() {
     return (
-      <div className="container">
+      <div>
         {pieces.map((piece) => (
           <Piece key={piece.slug} {...piece} />
         ))}

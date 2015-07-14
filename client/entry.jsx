@@ -6,6 +6,7 @@ import Router from "react-router";
 import Home from "components/home/Home.jsx";
 import Header from "components/header/Header.jsx";
 import Portfolio from "components/portfolio/Portfolio.jsx";
+import FreshBooks from "components/freshbooks/FreshBooks.jsx";
 import Navigation from "components/navigation/Navigation.jsx";
 
 const {DefaultRoute, Link, Route, RouteHandler} = Router;
@@ -15,7 +16,21 @@ const App = React.createClass({
     return (
       <Navigation
         headerComponent={<Header />}
-        bodyComponent={<RouteHandler />} />
+        bodyComponent={<RouteHandler />}
+        links={[
+          {
+            path: "/",
+            title: "Home",
+          },
+          {
+            path: "/portfolio",
+            title: "Portfolio",
+          },
+          {
+            path: "/freshbooks",
+            title: "FreshBooks",
+          }
+        ]} />
     );
   }
 });
@@ -24,6 +39,7 @@ const routes = (
   <Route name="app" handler={App}>
     <Route name="home" path="/" handler={Home} />
     <Route name="portfolio" path="/portfolio" handler={Portfolio} />
+    <Route name="freshbooks" path="/freshbooks" handler={FreshBooks} />
   </Route>
 );
 
