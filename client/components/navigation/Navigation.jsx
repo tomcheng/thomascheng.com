@@ -1,5 +1,6 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
+import {Link} from "react-router";
 
 export default React.createClass({
   propTypes: {
@@ -8,44 +9,50 @@ export default React.createClass({
   },
 
   getDefaultProps() {
-    return {
-      navigationWidth: 200
-    };
+    return { navigationWidth: 200 };
   },
 
   getInitialState() {
     return {
+      menuPosition: 0,
       showMenu: false
     };
   },
 
-  _handleClick() {
-    const newShowMenu = !this.state.showMenu;
+  componentWillUpdate(nextProps, nextState) {
+    this._toggleBodyScroll(!nextState.showMenu);
+  },
 
-    this._toggleBodyScroll(!newShowMenu);
+  _handleNavHandleClick() {
+    this.setState({
+      menuPosition: document.getElementsByTagName('body')[0].scrollTop,
+      showMenu: !this.state.showMenu
+    });
+  },
 
-    this.setState({ showMenu: newShowMenu });
+  _handleLinkClick() {
+    this.setState({ showMenu: false });
   },
 
   _toggleBodyScroll(shouldScroll) {
-    document.getElementsByTagName('body')[0].style.overflow = shouldScroll ? null : 'hidden';
+    document.getElementsByTagName("body")[0].style.overflow = shouldScroll ? null : "hidden";
   },
 
   _getNavHandle() {
-    const handleClassNames = classNames({
-      'header__navigation-handle': true,
-      'navigation-handle': true,
-      'navigation-handle--inflated': this.state.showMenu
+    const handleClassNames = classNames("header__navigation-handle navigation-handle", {
+      "navigation-handle--inflated": this.state.showMenu
     });
-    return (
-      <div onClick={this._handleClick} className={handleClassNames} />
-    );
+    return <div onClick={this._handleNavHandleClick} className={handleClassNames} />;
   },
+
   render() {
     const {bodyComponent, headerComponent, navigationWidth} = this.props,
-          {showMenu} = this.state,
+          {menuPosition, showMenu} = this.state,
           containerStyles = {
             transform: "translate3d(" + (showMenu ? navigationWidth : 0) + "px, 0, 0)"
+          },
+          menuStyles = {
+            top: menuPosition
           };
 
     return (
@@ -57,8 +64,11 @@ export default React.createClass({
         })}
         <div className="navigation">
           <div className="navigation__container" style={containerStyles}>
-            <div className="navigation__menu">
-              Some Navigation here
+            <div className="navigation__menu" style={menuStyles}>
+              <ul>
+                <li><Link onClick={this._handleLinkClick} to="/">Home</Link></li>
+                <li><Link onClick={this._handleLinkClick} to="/portfolio">Portfolio</Link></li>
+              </ul>
             </div>
             <div className="navigation__content">
               {bodyComponent}

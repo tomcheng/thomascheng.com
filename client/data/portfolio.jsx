@@ -1,4 +1,4 @@
-export const pieces = [
+export default [
   {
     slug: "guide",
     title: "Typography Guide",

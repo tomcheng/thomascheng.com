@@ -1,21 +1,14 @@
 import React from 'react/addons';
 
 import Piece from './Piece.jsx';
+import pieces from 'data/portfolio.jsx';
 
 export default React.createClass({
-  propTypes: {
-    pieces: React.PropTypes.array.isRequired
-  },
-
   render() {
-    const {pieces} = this.props;
-
     return (
       <div className="container">
         {pieces.map((piece) => (
-          <Piece
-            key={piece.slug}
-            {...piece} />
+          <Piece key={piece.slug} {...piece} />
         ))}
       </div>
     );
