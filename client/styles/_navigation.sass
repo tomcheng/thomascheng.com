@@ -22,10 +22,18 @@
   padding: 0
 
 .navigation__menu__item
-  padding: 20px
-  line-height: 20px
   border-bottom: 1px solid rgba($white, 0.12)
   box-shadow: 0 -1px 0 rgba($black, 0.5) inset
+  &:active
+    background-color: rgba($black, 0.3)
+
+  a
+    display: block
+    padding: 20px
+    line-height: 20px
+
+    &:hover, &:active, &:focus
+      text-decoration: none
 
 .navigation__content
   background-color: $white

@@ -18,6 +18,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      contentMinHeight: null,
       isDragging: false,
       isDraggingHorizontally: false,
       menuVerticalPos: 0,
@@ -27,15 +28,24 @@ export default React.createClass({
     };
   },
 
+  componentDidMount() {
+    this._setDimensions();
+
+    window.addEventListener('resize', this._setDimensions);
+    window.addEventListener('orientationchange', this._setDimensions);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._setDimensions);
+    window.removeEventListener('orientationchange', this._setDimensions);
+  },
+
   componentWillUpdate(nextProps, nextState) {
     this._toggleBodyScroll(!nextState.showMenu);
   },
 
-  _handleNavHandleClick() {
-    this.setState({
-      menuVerticalPos: document.getElementsByTagName('body')[0].scrollTop,
-      showMenu: !this.state.showMenu
-    });
+  _setDimensions() {
+    this.setState({ contentMinHeight: window.innerHeight });
   },
 
   _handleTap() {
@@ -44,6 +54,10 @@ export default React.createClass({
     } else {
       this._animateToOpen(350, Easings.cubicInOut);
     }
+  },
+
+  _handleLinkClick() {
+    this._animateToClose(350, Easings.cubicInOut);
   },
 
   _toggleBodyScroll(shouldScroll) {
@@ -136,16 +150,19 @@ export default React.createClass({
         onDrag={this._handleDrag}
         onDragRelease={this._handleDragRelease}
         onTap={this._handleTap}>
-        <div className={handleClassNames} />
+        <div onClick={this._handleTap} className={handleClassNames} />
       </TouchHandler>
     );
   },
 
   render() {
     const {bodyComponent, headerComponent, navigationWidth} = this.props,
-          {isDragging, menuVerticalPos, menuHorizontalPos, showMenu} = this.state,
+          {contentMinHeight, isDragging, menuVerticalPos, menuHorizontalPos, showMenu} = this.state,
           containerStyles = {
             transform: "translate3d(" + menuHorizontalPos + "px, 0, 0)"
+          },
+          contentStyles = {
+            minHeight: contentMinHeight + "px"
           },
           menuStyles = {
             top: menuVerticalPos
@@ -170,7 +187,7 @@ export default React.createClass({
             </ul>
           </div>
           <div className="navigation__container" style={containerStyles}>
-            <div className="navigation__content">
+            <div className="navigation__content" style={contentStyles}>
               {bodyComponent}
             </div>
           </div>
