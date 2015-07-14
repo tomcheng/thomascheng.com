@@ -229,15 +229,4 @@ export default React.createClass({
   }
 });
 
-const DIRECTIONS = {
-  left: 2,
-  right: 4,
-  up: 8,
-  down: 16
-};
-
-const EVENT_TYPES = {
-  release: 4
-};
-
 const constrain = (value, min, max) => Math.min(Math.max(value, min), max);

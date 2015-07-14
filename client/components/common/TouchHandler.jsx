@@ -1,6 +1,12 @@
 import React from 'react';
 
 export default React.createClass({
+  propTypes: {
+    onDrag: React.PropTypes.func,
+    onDragRelease: React.PropTypes.func,
+    onTap: React.PropTypes.func
+  },
+
   getInitialState() {
     return {
       start: null,

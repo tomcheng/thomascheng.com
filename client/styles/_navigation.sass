@@ -1,16 +1,19 @@
+.navigation
+  overflow: hidden
+
 .navigation-handle.navigation-handle--inflated // more specific to override .header__navigation-handle
   height: 2000px
   width: 100%
 
-.navigation__container
-  +transition(transform $navigation-anim-duration ease-in-out)
-
 .navigation__menu
   background-color: #333
+  bottom: -500px
   color: $white
-  left: -$navigation-width
+  left: 0
   position: fixed
-  width: $navigation-width
+  right: 0
+  top: 0
 
 .navigation__content
+  background-color: $white
   padding-top: $header-height-expanded + 20px
