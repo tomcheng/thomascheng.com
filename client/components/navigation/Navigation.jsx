@@ -159,10 +159,14 @@ export default React.createClass({
           navigationOffset: menuHorizontalPos
         })}
         <div className="navigation">
-          <div className="navigation__menu" style={menuStyles}>
-            <ul>
-              <li><Link onClick={this._handleLinkClick} to="/">Home</Link></li>
-              <li><Link onClick={this._handleLinkClick} to="/portfolio">Portfolio</Link></li>
+          <div className="navigation__menu-container" style={menuStyles}>
+            <ul className="navigation__menu">
+              <li className="navigation__menu__item">
+                <Link onClick={this._handleLinkClick} to="/">Home</Link>
+              </li>
+              <li className="navigation__menu__item">
+                <Link onClick={this._handleLinkClick} to="/portfolio">Portfolio</Link>
+              </li>
             </ul>
           </div>
           <div className="navigation__container" style={containerStyles}>
