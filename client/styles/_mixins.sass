@@ -1,17 +1,3 @@
-=clearfix
-  &:before,
-  &:after
-    content: " "
-    display: table
-  &:after
-    clear: both
-
-=transition($transition...)
-  -moz-transition: $transition
-  -o-transition: $transition
-  -webkit-transition: $transition
-  transition: $transition
-
 =border-radius($radius)
   -moz-border-radius: $radius
   -o-border-radius: $radius
@@ -19,17 +5,13 @@
   border-radius: $radius
   background-clip: padding-box
 
-=opacity($opacity)
-  -webkit-opacity: $opacity
-  -moz-opacity: $opacity
-  opacity: $opacity
-
-=user-select($select)
-  -webkit-user-select: $select
-  -moz-user-select: $select
-  -ms-user-select: $select
-  -o-user-select: $select
-  user-select: $select
+=clearfix
+  &:before,
+  &:after
+    content: " "
+    display: table
+  &:after
+    clear: both
 
 =font-awesome
   display: inline-block
@@ -39,3 +21,27 @@
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   transform: translate(0, 0)
+
+=opacity($opacity)
+  -webkit-opacity: $opacity
+  -moz-opacity: $opacity
+  opacity: $opacity
+
+=transform($transform)
+  -webkit-transform: $transform
+  -ms-transform: $transform
+  transform: $transform
+
+=transition($transition...)
+  -moz-transition: $transition
+  -o-transition: $transition
+  -webkit-transition: $transition
+  transition: $transition
+
+=user-select($select)
+  -webkit-user-select: $select
+  -moz-user-select: $select
+  -ms-user-select: $select
+  -o-user-select: $select
+  user-select: $select
+
