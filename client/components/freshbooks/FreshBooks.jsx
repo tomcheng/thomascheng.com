@@ -10,12 +10,12 @@ export default React.createClass({
           before={{
             url: require("images/freshbooks-dashboard-before.png"),
             width: 840,
-            height: 775
+            height: 449
           }}
           after={{
             url: require("images/freshbooks-dashboard-after.png"),
             width: 840,
-            height: 1255
+            height: 1074
           }}
           description="A redesign to make account data more approachable and easier to understand."
           slug="dashboard" />
@@ -23,12 +23,12 @@ export default React.createClass({
           before={{
             url: require("images/client-before.png"),
             width: 840,
-            height: 1318
+            height: 967
           }}
           after={{
             url: require("images/client-after.png"),
             width: 840,
-            height: 1000
+            height: 651
           }}
           description="A redesign to make account data more approachable and easier to understand."
           slug="client" />
