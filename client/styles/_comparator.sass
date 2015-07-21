@@ -1,0 +1,80 @@
+.comparator
+  border: 1px solid #eee
+  position: relative
+
+.comparator__outer-wrapper
+  bottom: 0
+  overflow: hidden
+  position: absolute
+  top: 0
+
+.comparator__outer-wrapper--before
+  left: 0
+
+.comparator__outer-wrapper--after
+  right: 0
+
+.comparator__inner-wrapper
+  position: absolute
+  top: 0
+  bottom: 0
+
+.comparator__inner-wrapper--before
+  left: 0
+
+.comparator__inner-wrapper--after
+  right: 0
+
+.comparator__image
+  display: block
+  width: 100%
+
+.comparator__label
+  position: absolute
+  background-color: #333
+  color: rgba($white, 0.6)
+  font-size: 10px
+  letter-spacing: 1px
+  padding: 5px 10px
+  text-transform: uppercase
+
+.comparator__label--after
+  text-align: right
+
+$handle-size: 40px
+
+.comparator__handle
+  height: 100%
+  margin-left: -$handle-size / 2
+  position: absolute
+  top: 0
+  width: $handle-size
+
+.comparator__handle__indicator-top,
+.comparator__handle__indicator-bottom
+  color: $comparator-border
+  font-size: 18px
+  left: 0.5px
+  position: absolute
+  text-align: center
+  width: $handle-size
+  .is-dragging &
+    color: $comparator-active-border
+
+.comparator__handle__indicator-top
+  top: -12px
+
+.comparator__handle__indicator-bottom
+  bottom: -12px
+
+.comparator__handle__divider
+  background-color: $comparator-border
+  height: 102%
+  left: 50%
+  margin-left: 0
+  position: absolute
+  top: -1%
+  width: 1px
+  .is-dragging &
+    background-color: $comparator-active-border
+
