@@ -7,6 +7,14 @@ export default React.createClass({
     onTap: React.PropTypes.func
   },
 
+  getDefaultProps() {
+    return {
+      onDrag: () => {},
+      onDragRelease: () => {},
+      onTap: () => {}
+    };
+  },
+
   getInitialState() {
     return {
       start: null,
