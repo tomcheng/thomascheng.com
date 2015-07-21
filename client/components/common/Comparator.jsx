@@ -9,14 +9,19 @@ export default React.createClass({
     before: React.PropTypes.object.isRequired,
     after: React.PropTypes.object.isRequired,
     description: React.PropTypes.string.isRequired,
-    slug: React.PropTypes.string.isRequired
+    slug: React.PropTypes.string.isRequired,
+    startRatio: React.PropTypes.number
+  },
+
+  getDefaultProps() {
+    return { startRatio: 0.025 };
   },
 
   getInitialState() {
     return {
       isDragging: false,
       ratioAtDragStart: null,
-      ratio: 0.5,
+      ratio: this.props.startRatio,
       width: null
     };
   },
@@ -56,26 +61,11 @@ export default React.createClass({
 
   _handleDragRelease() {
     this.setState({ isDragging: false });
-  },
 
-  _handleBeforeClick() {
     Animations.animate({
       name: "comparator-" + this.props.slug,
       start: this.state.ratio,
-      end: 0,
-      duration: 300,
-      easing: Easings.cubicInOut,
-      onUpdate: pos => {
-        this.setState({ ratio: pos });
-      }
-    });
-  },
-
-  _handleAfterClick() {
-    Animations.animate({
-      name: "comparator-" + this.props.slug,
-      start: this.state.ratio,
-      end: 1,
+      end: this.props.startRatio,
       duration: 300,
       easing: Easings.cubicInOut,
       onUpdate: pos => {
@@ -85,7 +75,7 @@ export default React.createClass({
   },
 
   render() {
-    const {before, after} = this.props,
+    const {before, after, title, description} = this.props,
           {isDragging, ratio, width} = this.state,
           aspectRatio = Math.max(before.height/before.width, after.height/after.width),
           height = Math.ceil(aspectRatio * width),
@@ -94,57 +84,47 @@ export default React.createClass({
           });
 
     return (
-      <div className="comparator push-bottom">
-        <div className="comparator__frame" ref="frame" style={{ height: height }}>
-          <div
-            className="comparator__outer-wrapper comparator__outer-wrapper--before"
-            style={{ width: (width * ratio) }}>
+      <div>
+        <div className="comparator">
+          <div className="comparator__frame" ref="frame" style={{ height: height }}>
             <div
-              className="comparator__inner-wrapper comparator__inner-wrapper--before"
-              style={{ width: width }}>
-              <div style={{
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                backgroundColor: "rgba(0,0,0,0.1)"
-              }} />
-              <div className="comparator__label comparator__label--before">
-                Before
+              className="comparator__outer-wrapper comparator__outer-wrapper--before"
+              style={{ width: (width * ratio) }}>
+              <div
+                className="comparator__inner-wrapper comparator__inner-wrapper--before"
+                style={{ width: width }}>
+                <div className="comparator__label comparator__label--before">
+                  Before
+                </div>
+                <img className="comparator__image" src={before.url} />
               </div>
-              <img
-                className="comparator__image"
-                src={before.url}
-                onClick={this._handleBeforeClick} />
+            </div>
+            <div
+              className="comparator__outer-wrapper comparator__outer-wrapper--after"
+              style={{ width: (width * (1 - ratio)) }}>
+              <div
+                className="comparator__inner-wrapper comparator__inner-wrapper--after"
+                style={{ width: width }}>
+                <div className="comparator__label comparator__label--after">
+                  After
+                </div>
+                <img className="comparator__image" src={after.url} />
+              </div>
             </div>
           </div>
-          <div
-            className="comparator__outer-wrapper comparator__outer-wrapper--after"
-            style={{ width: (width * (1 - ratio)) }}>
-            <div
-              className="comparator__inner-wrapper comparator__inner-wrapper--after"
-              style={{ width: width }}>
-              <div className="comparator__label comparator__label--after">
-                After
-              </div>
-              <img
-                className="comparator__image"
-                src={after.url}
-                style={{ width: width }}
-                onClick={this._handleAfterClick} />
+          <TouchHandler
+            onDrag={this._handleDrag}
+            onDragRelease={this._handleDragRelease} >
+            <div className={handleClasses} style={{ left: (width * ratio) }}>
+              <div className="comparator__handle__divider" />
+              <div className="comparator__handle__handle" />
             </div>
-          </div>
+          </TouchHandler>
         </div>
-        <TouchHandler
-          onDrag={this._handleDrag}
-          onDragRelease={this._handleDragRelease} >
-          <div className={handleClasses} style={{ left: (width * ratio) }}>
-            <i className="comparator__handle__indicator-top fa fa-caret-down" />
-            <i className="comparator__handle__indicator-bottom fa fa-caret-up" />
-            <div className="comparator__handle__divider" />
-          </div>
-        </TouchHandler>
+        <div className="comparator__info">
+          <h4 className="comparator__info__title">{title}</h4>
+          <div>{description}</div>
+        </div>
       </div>
     );
   }

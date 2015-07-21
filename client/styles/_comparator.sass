@@ -1,5 +1,7 @@
 .comparator
-  border: 1px solid #eee
+  +border-radius
+  background-color: $white
+  border: 1px solid $border-light
   position: relative
 
 .comparator__outer-wrapper
@@ -26,6 +28,7 @@
   right: 0
 
 .comparator__image
+  +border-radius
   display: block
   width: 100%
 
@@ -37,11 +40,15 @@
   letter-spacing: 1px
   padding: 5px 10px
   text-transform: uppercase
+  top: 0
+  right: 0
+  display: none
 
 .comparator__label--after
   text-align: right
 
-$handle-size: 40px
+$handle-size: 30px
+$handle-border: 4px
 
 .comparator__handle
   height: 100%
@@ -50,31 +57,42 @@ $handle-size: 40px
   top: 0
   width: $handle-size
 
-.comparator__handle__indicator-top,
-.comparator__handle__indicator-bottom
-  color: $comparator-border
-  font-size: 18px
-  left: 0.5px
-  position: absolute
-  text-align: center
-  width: $handle-size
-  .is-dragging &
-    color: $comparator-active-border
-
-.comparator__handle__indicator-top
-  top: -12px
-
-.comparator__handle__indicator-bottom
-  bottom: -12px
-
 .comparator__handle__divider
   background-color: $comparator-border
-  height: 102%
+  height: 100%
   left: 50%
-  margin-left: 0
+  margin-left: -1px
   position: absolute
-  top: -1%
-  width: 1px
+  top: 0
+  width: 2px
   .is-dragging &
     background-color: $comparator-active-border
 
+.comparator__handle__handle
+  +border-radius(($handle-size + 2 * $handle-border) / 2)
+  +box-shadow(0 1px 0 rgba($white, 0.3) inset)
+  background-color: $comparator-handle-bg
+  border: $handle-border solid rgba($black, 0.15)
+  height: $handle-size + 2 * $handle-border
+  left: 50%
+  margin-left: -($handle-size + 2 * $handle-border) / 2
+  position: absolute
+  bottom: 10px - $handle-border
+  width: $handle-size + 2 * $handle-border
+  &:after
+    +font-awesome
+    font-size: 12px
+    content: $fa-var-arrow-right
+    color: rgba($white, 0.6)
+    text-align: center
+    display: block
+    line-height: $handle-size
+
+  .is-dragging &
+    background-color: $comparator-active-handle-bg
+
+.comparator__info
+  margin: 10px 0 5px
+
+.comparator__info__title
+  margin: 0

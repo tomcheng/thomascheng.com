@@ -18,7 +18,10 @@ $text-color: #333
 $text-color-secondary: #666
 $text-color-faint: #aaa
 
-$body-bg: #fff
+$border-light: #ddd
+
+$body-bg: #f0f0f0
+$dark-accent: #4B5963
 $link-color: #337ab7
 $link-hover-color: darken($link-color, 15%)
 $link-hover-decoration: underline
@@ -49,8 +52,14 @@ $navigation-anim-duration: 0.2s
 
 $fa-var-bars: "\f0c9"
 $fa-var-sort: "\f0dc"
+$fa-var-chevron-right: "\f054"
+$fa-var-arrow-right: "\f061"
 
 // Comparator
-$comparator-border: #ccc
-$comparator-active-border: red
+$comparator-handle-bg: $dark-accent
+$comparator-active-handle-bg: mix($black, $comparator-handle-bg, 30%)
+$comparator-border: mix($white, $comparator-handle-bg, 80%)
+$comparator-active-border: mix($white, $comparator-handle-bg, 40%)
 
+// Navigation
+$navigation-bg: $dark-accent

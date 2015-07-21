@@ -35,7 +35,7 @@ export default React.createClass({
     const {description, slug, title} = this.props;
 
     return (
-      <div style={{ marginBottom: 30}}>
+      <div className="push-bottom">
         <Carousel
           description={description}
           images={this._getImages()}
