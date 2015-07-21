@@ -128,7 +128,7 @@ export default React.createClass({
           <div className="navigation__menu-container">
             <ul className="navigation__menu">
               {links.map(link => (
-                <li className="navigation__menu__item">
+                <li key={link.title} className="navigation__menu__item">
                   <Link onClick={this._handleLinkClick} to={link.path}>{link.title}</Link>
                 </li>
               ))}
