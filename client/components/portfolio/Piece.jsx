@@ -1,7 +1,7 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import Carousel from 'components/carousel/Carousel.jsx';
+import Carousel from "components/common/Carousel.jsx";
 
 export default React.createClass({
   propTypes: {
@@ -13,7 +13,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      description: '',
+      description: "",
       imageCount: 1
     };
   },
