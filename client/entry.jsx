@@ -7,6 +7,7 @@ import Home from "components/home/Home.jsx";
 import Header from "components/header/Header.jsx";
 import Portfolio from "components/academic-work/AcademicWork.jsx";
 import FreshBooks from "components/freshbooks/FreshBooks.jsx";
+import PhotocopiedFaces from "components/photocopied-faces/PhotocopiedFaces.jsx";
 import Navigation from "components/navigation/Navigation.jsx";
 
 const {DefaultRoute, Link, Route, RouteHandler} = Router;
@@ -29,6 +30,10 @@ const App = React.createClass({
           {
             path: "/academic-work",
             title: "Academic Work",
+          },
+          {
+            path: "/photocopied-faces",
+            title: "Photocopied Faces",
           }
         ]} />
     );
@@ -40,6 +45,7 @@ const routes = (
     <Route name="home" path="/" handler={Home} />
     <Route name="academic-work" path="/academic-work" handler={Portfolio} />
     <Route name="freshbooks" path="/freshbooks" handler={FreshBooks} />
+    <Route name="photocopied-faces" path="/photocopied-faces" handler={PhotocopiedFaces} />
   </Route>
 );
 
