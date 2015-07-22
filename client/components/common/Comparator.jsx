@@ -44,12 +44,13 @@ export default React.createClass({
 
   _handleDrag(evt) {
     const {isDragging, ratio, ratioAtDragStart, width} = this.state,
+          {startRatio} = this.props,
           {deltaX, preventDefault} = evt;
 
     if (isDragging) {
       preventDefault();
       this.setState({
-        ratio: constrain(ratioAtDragStart + (deltaX / width), 0, 1)
+        ratio: constrain(ratioAtDragStart + (deltaX / width), startRatio, 1)
       });
     } else {
       this.setState({
