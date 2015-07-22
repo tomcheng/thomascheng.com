@@ -217,13 +217,13 @@ export default React.createClass({
             <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
           ) : null}
         </div>
-        <div className="carousel__info clearfix">
-          <h4 className="carousel__info__title pull-left">{title}</h4>
-          <div className="carousel__info__counter pull-right" onClick={this._advanceToNextPane}>
+        <div className="push-top-xs clearfix">
+          <h4 className="pull-left">{title}</h4>
+          <div className="carousel-counter pull-right" onClick={this._advanceToNextPane}>
             {this._getCurrentPane() + 1} of {imageCount}
           </div>
         </div>
-        <div className="carousel__description">{description}</div>
+        <div>{description}</div>
       </div>
     );
   }

@@ -85,8 +85,8 @@ export default React.createClass({
 
     return (
       <div>
-        <div className="comparator__info">
-          <h4 className="comparator__info__title">{title}</h4>
+        <div className="push-bottom-xs">
+          <h4>{title}</h4>
           <div>{description}</div>
         </div>
         <div className="comparator">
