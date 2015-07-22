@@ -1,15 +1,28 @@
 import React from "react";
 
 import Comparator from "components/common/Comparator.jsx";
-import Carousel from "components/common/Carousel.jsx";
-import Comparison from "components/freshbooks/Comparison.jsx";
 
 export default React.createClass({
   render() {
     return (
       <div>
         {Comparisons.map(comparison => (
-          <Comparison key={comparison.slug} {...comparison} />
+          <div className="push-bottom">
+            <Comparator
+              before={{
+                url: require("images/freshbooks/" + comparison.slug + "-before.png"),
+                width: comparison.beforeDimensions[0],
+                height: comparison.beforeDimensions[1]
+              }}
+              after={{
+                url: require("images/freshbooks/" + comparison.slug + "-after.png"),
+                width: comparison.afterDimensions[0],
+                height: comparison.afterDimensions[1]
+              }}
+              title={comparison.title}
+              description={comparison.description}
+              slug={comparison.slug} />
+          </div>
         ))}
       </div>
     );

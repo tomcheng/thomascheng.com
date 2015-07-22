@@ -1,13 +1,31 @@
-import React from 'react/addons';
-
-import Piece from './Piece.jsx';
+import React from "react";
+import classNames from "classnames";
+import Carousel from "components/common/Carousel.jsx";
 
 export default React.createClass({
+  _getImages(slug, imageCount) {
+    const images = [];
+
+    for (let i = 0; i < imageCount; i++) {
+      images.push(
+        require("images/" + slug + "-" + (i + 1) + ".jpg")
+      );
+    }
+
+    return images;
+  },
+
   render() {
     return (
       <div>
-        {pieces.map((piece) => (
-          <Piece key={piece.slug} {...piece} />
+        {pieces.map(piece => (
+          <div key={piece.slug} className="push-bottom">
+            <Carousel
+              description={piece.description}
+              images={this._getImages(piece.slug, piece.imageCount)}
+              slug={piece.slug}
+              title={piece.title} />
+          </div>
         ))}
       </div>
     );

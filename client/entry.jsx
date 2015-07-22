@@ -5,7 +5,7 @@ import Router from "react-router";
 
 import Home from "components/home/Home.jsx";
 import Header from "components/header/Header.jsx";
-import Portfolio from "components/portfolio/Portfolio.jsx";
+import Portfolio from "components/academic-work/AcademicWork.jsx";
 import FreshBooks from "components/freshbooks/FreshBooks.jsx";
 import Navigation from "components/navigation/Navigation.jsx";
 
