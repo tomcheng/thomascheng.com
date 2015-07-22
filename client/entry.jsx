@@ -23,12 +23,12 @@ const App = React.createClass({
             title: "Home",
           },
           {
-            path: "/portfolio",
-            title: "Portfolio",
-          },
-          {
             path: "/freshbooks",
             title: "FreshBooks",
+          },
+          {
+            path: "/academic-work",
+            title: "Academic Work",
           }
         ]} />
     );
@@ -38,7 +38,7 @@ const App = React.createClass({
 const routes = (
   <Route name="app" handler={App}>
     <Route name="home" path="/" handler={Home} />
-    <Route name="portfolio" path="/portfolio" handler={Portfolio} />
+    <Route name="academic-work" path="/academic-work" handler={Portfolio} />
     <Route name="freshbooks" path="/freshbooks" handler={FreshBooks} />
   </Route>
 );
