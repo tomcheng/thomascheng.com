@@ -8,18 +8,6 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="push-bottom">
-          <Carousel
-            description="This helped maintain design consistency across the application."
-            images={[
-              require("images/freshbooks/styleguide-1.png"),
-              require("images/freshbooks/styleguide-2.png"),
-              require("images/freshbooks/styleguide-3.png"),
-              require("images/freshbooks/styleguide-4.png")
-            ]}
-            title="Style Guide"
-            slug="styleguide" />
-        </div>
         {Comparisons.map(comparison => (
           <Comparison key={comparison.slug} {...comparison} />
         ))}

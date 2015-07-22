@@ -59,14 +59,12 @@ $handle-border: 4px
 
 .comparator__handle__divider
   background-color: $comparator-border
-  height: 100%
   left: 50%
-  margin-left: -1px
+  margin-left: 0
   position: absolute
-  top: 0
-  width: 2px
-  .is-dragging &
-    background-color: $comparator-active-border
+  top: -4px
+  bottom: -4px
+  width: 1px
 
 .comparator__handle__handle
   +border-radius(($handle-size + 2 * $handle-border) / 2)
@@ -92,7 +90,7 @@ $handle-border: 4px
     background-color: $comparator-active-handle-bg
 
 .comparator__info
-  margin: 10px 0 5px
+  margin: 0 0 5px
 
 .comparator__info__title
   margin: 0

@@ -14,7 +14,7 @@ export default React.createClass({
   },
 
   getDefaultProps() {
-    return { startRatio: 0.025 };
+    return { startRatio: 0.02 };
   },
 
   getInitialState() {
@@ -85,6 +85,10 @@ export default React.createClass({
 
     return (
       <div>
+        <div className="comparator__info">
+          <h4 className="comparator__info__title">{title}</h4>
+          <div>{description}</div>
+        </div>
         <div className="comparator">
           <div className="comparator__frame" ref="frame" style={{ height: height }}>
             <div
@@ -120,10 +124,6 @@ export default React.createClass({
               <div className="comparator__handle__handle" />
             </div>
           </TouchHandler>
-        </div>
-        <div className="comparator__info">
-          <h4 className="comparator__info__title">{title}</h4>
-          <div>{description}</div>
         </div>
       </div>
     );
