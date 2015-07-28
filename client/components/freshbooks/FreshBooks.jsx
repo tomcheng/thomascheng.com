@@ -7,7 +7,7 @@ export default React.createClass({
     return (
       <div>
         {Comparisons.map(comparison => (
-          <div className="push-bottom">
+          <div key={comparison.slug} className="push-bottom">
             <Comparator
               before={{
                 url: require("images/freshbooks/" + comparison.slug + "-before.png"),
