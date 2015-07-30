@@ -53,10 +53,10 @@ if (env.production === false) {
     historyApiFallback: true,
 
     headers: {
-      'Access-Control-Allow-Origin': 'http://localhost:3001',
+      'Access-Control-Allow-Origin': 'http://192.168.0.104:3001',
       'Access-Control-Allow-Headers': 'X-Requested-With'
     }
-  }).listen(3000, 'localhost', function (err, result) {
+  }).listen(2992, '192.168.0.104', function (err, result) {
     if (err) {
       console.log(err);
     }

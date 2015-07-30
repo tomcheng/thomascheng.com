@@ -8,7 +8,7 @@ export default React.createClass({
 
     for (let i = 0; i < imageCount; i++) {
       images.push(
-        require("images/" + slug + "-" + (i + 1) + ".jpg")
+        require("images/academic-work/" + slug + "-" + (i + 1) + ".jpg")
       );
     }
 
