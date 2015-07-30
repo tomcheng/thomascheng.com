@@ -42,7 +42,6 @@
     "jest": "0.1.40",
     "jest-cli": "0.4.5",
     "jsx-loader": "0.13.2",
-    "lodash": "3.10.0",
     "node-libs-browser": "0.5.2",
     "react-hot-loader": "1.2.7",
     "react-tools": "0.13.3",
