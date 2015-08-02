@@ -11,7 +11,7 @@
   -o-background-size: cover
   background-size: cover
 
-.image-flasher__content-container
+.image-flasher__trigger-container
   bottom: 0
   left: 0
   margin: auto
@@ -21,7 +21,7 @@
   top: 50%
   margin-top: -70px
 
-.image-flasher__trigger
+.image-flasher__trigger-logo
   +transform(scale3d(2.5, 2.5, 1))
   display: inline-block
   height: 34px
@@ -29,8 +29,12 @@
   width: 50px
   margin-bottom: 30px
 
-.image-flasher__trigger .logo-path
-  fill: $black
+  .logo-path
+    fill: $black
 
-.image-flasher__trigger.is-flashing .logo-path
-  fill: $white
+.image-flasher__trigger-container.is-flashing
+  .logo-path
+    fill: $white
+  .image-flasher__trigger-text
+    +opacity(0)
+
