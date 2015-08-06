@@ -65,7 +65,7 @@ export default React.createClass({
           {scrollTop} = this.state,
           headerClasses = classNames("header", {
             "header--affixed": scrollTop > topOffset,
-            "header--hidden": this.getPath() === "/"
+            "header--home": this.getPath() === "/"
           }),
           headerStyles = {
             transform: "translate3d(" + navigationOffset + "px, 0, 0)"

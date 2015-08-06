@@ -13,9 +13,6 @@ $header-anim-duration: 0.15s
   width: 100%
   z-index: $z-index-header
 
-.header--hidden
-  display: none
-
 .header__navigation-handle
   height: $header-height-expanded
   left: 0
@@ -43,6 +40,10 @@ $header-anim-duration: 0.15s
     &:before
       transform: translate3d(-$nav-handle-size + 10px, ($header-height-collapsed / 2), 0)
 
+  .header--home &:before
+    +opacity(0.4)
+    transform: translate3d(20px, ($header-height-expanded / 2), 0)
+
 .header__background
   +transition(all $header-anim-duration ease-in-out)
   background: $body-bg
@@ -58,6 +59,9 @@ $header-anim-duration: 0.15s
     background: rgba(255,255,255,0.92)
     box-shadow: 0 2px 3px rgba(0,0,0,0.18)
     transform: scale3d(1, $header-height-collapsed / $header-height-expanded, 1)
+
+  .header--home &
+    background-color: transparent
 
 .header__inner
   position: relative
@@ -76,6 +80,9 @@ $header-anim-duration: 0.15s
   .header--affixed &
     transform: scale3d(0.6, 0.6, 1) translate3d(5px, 14px, 0)
 
+  .header--home &
+    display: none
+
 .header__name
   +transition(transform $header-anim-duration ease-in-out)
   font-weight: bold
@@ -83,6 +90,9 @@ $header-anim-duration: 0.15s
 
   .header--affixed &
     transform: translate3d(43px, 12px, 0)
+
+  .header--home &
+    display: none
 
 .header__position
   +transition(all $header-anim-duration ease-in-out)
@@ -95,6 +105,9 @@ $header-anim-duration: 0.15s
   .header--affixed &
     opacity: 0
     transform: translate3d(43px, 12px, 0)
+
+  .header--home &
+    display: none
 
 .header__border
   +transition(all $header-anim-duration ease-in-out)
@@ -110,3 +123,5 @@ $header-anim-duration: 0.15s
     opacity: 0
     transform: translate3d(0, $header-height-collapsed, 0)
 
+  .header--home &
+    display: none
