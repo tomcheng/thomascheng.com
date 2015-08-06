@@ -10,14 +10,14 @@ export default React.createClass({
   getDefaultProps() {
     return {
       firstFrameEnter: 2,
-      secondFrameEnter: 6,
-      bothFramesLeave: 10
+      secondFrameEnter: 8,
+      bothFramesLeave: 16
     };
   },
 
   getInitialState() {
     return {
-      frame: 0,
+      currentFrame: 0,
       isPressed: false,
       images: shuffleArray(this.props.images)
     };
@@ -28,7 +28,7 @@ export default React.createClass({
 
     this.setState({
       isPressed: true,
-      frame: 0,
+      currentFrame: 0,
       images: shuffleArray(this.props.images)
     });
   },
@@ -39,19 +39,19 @@ export default React.createClass({
 
   render() {
     const {trigger, firstFrameEnter, bothFramesLeave, secondFrameEnter} = this.props,
-          {frame, isPressed, images, firstFrame, secondFrame} = this.state,
+          {currentFrame, isPressed, images} = this.state,
           frameDuration = 2,
-          isFlashing = isPressed && frame <= images.length,
+          isFlashing = isPressed && currentFrame <= images.length,
           showFirstFrame = isPressed &&
-                           frame >= images.length + firstFrameEnter &&
-                           frame <= images.length + bothFramesLeave,
+                           currentFrame >= images.length + firstFrameEnter &&
+                           currentFrame <= images.length + bothFramesLeave,
           showSecondFrame = isPressed &&
-                            frame >= images.length + secondFrameEnter &&
-                            frame <= images.length + bothFramesLeave;
+                            currentFrame >= images.length + secondFrameEnter &&
+                            currentFrame <= images.length + bothFramesLeave;
 
     if (isPressed) {
       setTimeout(() => {
-        this.setState({ frame: frame + 1 });
+        this.setState({ currentFrame: currentFrame + 1 });
       }, 60);
     }
 
@@ -63,23 +63,23 @@ export default React.createClass({
             className="image-flasher__image"
             style={{
               backgroundImage: "url(" + require("images/" + image) + ")",
-              opacity: ((isPressed && i === frame) ? 1 : 0)
+              opacity: ((isPressed && i === currentFrame) ? 1 : 0)
              }}
           />
         ))}
         {showFirstFrame ? (
           <div style={{
-            position: "absolute",
+            position: "fixed",
             textAlign: "center",
             left: 0,
-            top: "15%",
+            top: "20%",
             width: "100%"
           }}>
             Thank you. <span style={{ opacity: showSecondFrame ? 1 : 0}}>Come again.</span>
           </div>
         ) : null}
         <div
-          className={classNames("image-flasher__trigger-container", {
+          className={classNames({
             "is-flashing": isFlashing
           })}
           onTouchStart={this._handleTouchStart}

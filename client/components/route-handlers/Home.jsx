@@ -12,20 +12,22 @@ export default React.createClass({
           className="image-flasher__trigger-logo"
           dangerouslySetInnerHTML={{__html: svgTag}}
         />
-        <div className="image-flasher__trigger-text">
-          <div><strong>Thomas Cheng</strong></div>
-          <div><em>UI/UX Designer &amp; Front-End Developer</em></div>
-        </div>
       </div>
     );
   },
 
   render() {
     return (
-      <ImageFlasher
-        images={images}
-        trigger={this._getTrigger()}
-      />
+      <div className="image-flasher__trigger-container">
+        <ImageFlasher
+          images={images}
+          trigger={this._getTrigger()}
+        />
+        <div className="image-flasher__trigger-text">
+          <div><strong>Thomas Cheng</strong></div>
+          <div><em>UI/UX Designer &amp; Front-End Developer</em></div>
+        </div>
+      </div>
     );
   },
 });
