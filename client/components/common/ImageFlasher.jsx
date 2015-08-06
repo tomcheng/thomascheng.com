@@ -40,16 +40,17 @@ export default React.createClass({
   render() {
     const {trigger, firstFrameEnter, bothFramesLeave, secondFrameEnter} = this.props,
           {currentFrame, isPressed, images} = this.state,
-          frameDuration = 2,
           isFlashing = isPressed && currentFrame <= images.length,
-          showFirstFrame = isPressed &&
+          isFinishedFlashing = currentFrame > images.length,
+          isFinishedShowing = currentFrame > images.length + bothFramesLeave,
+          showFirstFrame = isFinishedFlashing &&
                            currentFrame >= images.length + firstFrameEnter &&
                            currentFrame <= images.length + bothFramesLeave,
-          showSecondFrame = isPressed &&
+          showSecondFrame = isFinishedFlashing &&
                             currentFrame >= images.length + secondFrameEnter &&
                             currentFrame <= images.length + bothFramesLeave;
 
-    if (isPressed) {
+    if ((isPressed || isFinishedFlashing) && !isFinishedShowing) {
       setTimeout(() => {
         this.setState({ currentFrame: currentFrame + 1 });
       }, 60);
