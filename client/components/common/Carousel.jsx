@@ -7,8 +7,10 @@ import TouchHandler from 'components/common/TouchHandler.jsx';
 export default React.createClass({
   propTypes: {
     description: React.PropTypes.string.isRequired,
-    dragConstant: React.PropTypes.number,     // how much scrollPosing slows down when dragging past bounds
+    dragConstant: React.PropTypes.number,               // how much scrollPosing slows down when dragging past bounds
     images: React.PropTypes.array.isRequired,
+    originalHeight: React.PropTypes.number.isRequired,
+    originalWidth: React.PropTypes.number.isRequired,
     returnThreshold: React.PropTypes.number.isRequired, // how much dragging past end is needed to return to first image
     slug: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired
@@ -24,11 +26,12 @@ export default React.createClass({
   getInitialState() {
     return {
       dragDirection: null,
+      height: 0,
       isDragging: false,
       isDraggingHorizontally: false,
       scrollPos: 0,
       scrollPosAtDragStart: null,
-      width: 100
+      width: 0
     };
   },
 
@@ -45,7 +48,13 @@ export default React.createClass({
   },
 
   _setDimensions() {
-    this.setState({ width: React.findDOMNode(this.refs.wrapper).offsetWidth });
+    const wrapperWidth = React.findDOMNode(this.refs.wrapper).offsetWidth,
+          {originalWidth, originalHeight} = this.props;
+
+    this.setState({
+      width: wrapperWidth,
+      height: wrapperWidth / originalWidth * originalHeight
+    });
   },
 
   _getCurrentPane() {
@@ -170,7 +179,7 @@ export default React.createClass({
 
   render() {
     const {description, dragConstant, returnThreshold, images, title} = this.props,
-          {width, scrollPos} = this.state,
+          {height, scrollPos, width} = this.state,
           imageCount = images.length;
 
     let listStyle, draggedPastEnd, indicatorProgress, indicatorFinalPosition, indicatorStyle;
@@ -203,10 +212,10 @@ export default React.createClass({
             <div
               onClick={this._advanceToNextPane}
               className="carousel__frame"
-              style={{ width: width }}>
+              style={{ width }}>
               <ul className="carousel__list" style={listStyle}>
                 {images.map((image, index) => (
-                  <li key={index} className="carousel__item" style={{ width: width }}>
+                  <li key={index} className="carousel__item" style={{ width, height }}>
                     <img className="carousel__image" src={image} />
                   </li>
                 ))}
