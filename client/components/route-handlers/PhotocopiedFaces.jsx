@@ -10,7 +10,7 @@ export default React.createClass({
         {faces.map((face, i) => (
           <img
             key={i}
-            className="push-bottom-sm"
+            className="push-bottom-sm image-rounded-corners"
             style={{ width: "100%" }}
             src={require("images/photocopied-faces/" + face)} />
         ))}
