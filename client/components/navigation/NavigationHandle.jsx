@@ -27,7 +27,7 @@ export default React.createClass({
 
   _handleDrag(evt) {
     const {deltaX, direction, preventDefault} = evt,
-          {position, setPosition} = this.props,
+          {position, setPosition, navigationWidth} = this.props,
           {isDragging, isDraggingHorizontally, posAtDragStart} = this.state;
 
     Animations.stop('navigation');
@@ -35,7 +35,7 @@ export default React.createClass({
     if (isDragging) {
       if (isDraggingHorizontally) {
         preventDefault();
-        setPosition(Math.max(deltaX + posAtDragStart, 0));
+        setPosition(constrain(deltaX + posAtDragStart, 0, navigationWidth));
       }
     } else {
       this.setState({
