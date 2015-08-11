@@ -80,8 +80,8 @@ export default React.createClass({
             <div className='header__logo' dangerouslySetInnerHTML={{__html: svgTag}} />
             <div className="header__name">Thomas Cheng</div>
             <div className="header__position">UI/UX Designer &amp; Front-End Developer</div>
-            <div className="header__border" />
           </div>
+          <div className="header__border" />
         </div>
       </div>
     );

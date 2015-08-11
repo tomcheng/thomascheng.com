@@ -47,16 +47,17 @@ $header-anim-duration: 0.15s
 .header__background
   +transition(all $header-anim-duration ease-in-out)
   background: $body-bg
-  width: 100%
-  position: absolute
-  top: 0
   box-shadow: 0 2px 3px rgba(0,0,0,0)
   height: $header-height-expanded
+  left: 0
+  position: absolute
+  top: 0
   transform-origin: 0 0 0
   transform: scale3d(1, 1, 1)
+  width: 100%
 
   .header--affixed &
-    background: rgba(255,255,255,0.92)
+    background: rgba($body-bg, 0.92)
     box-shadow: 0 2px 3px rgba(0,0,0,0.18)
     transform: scale3d(1, $header-height-collapsed / $header-height-expanded, 1)
 
@@ -112,7 +113,7 @@ $header-anim-duration: 0.15s
 .header__border
   +transition(all $header-anim-duration ease-in-out)
   height: 1px
-  background-color: #aaa
+  background-color: $border-light
   position: absolute
   top: 0
   left: 0
