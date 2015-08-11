@@ -36,10 +36,6 @@ const App = React.createClass({
           {
             path: "/photocopied-faces",
             title: "Photocopied Faces",
-          },
-          {
-            path: "/resume",
-            title: "Resume",
           }
         ]} />
     );
