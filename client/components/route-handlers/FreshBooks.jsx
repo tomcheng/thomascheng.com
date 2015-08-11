@@ -1,6 +1,6 @@
 import React from "react";
 
-import Comparator from "components/common/Comparator.jsx";
+import BeforeAfter from "components/common/BeforeAfter.jsx";
 
 export default React.createClass({
   render() {
@@ -8,7 +8,7 @@ export default React.createClass({
       <div>
         {Comparisons.map(comparison => (
           <div key={comparison.slug} className="push-bottom">
-            <Comparator
+            <BeforeAfter
               before={{
                 url: require("images/freshbooks/" + comparison.slug + "-before.png"),
                 width: comparison.beforeDimensions[0],

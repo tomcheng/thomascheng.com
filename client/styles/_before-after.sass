@@ -1,0 +1,44 @@
+.before-after
+  +border-radius-bottom
+  overflow: hidden
+  background-color: $white
+  border: 1px solid $border-light
+  border-top: 0
+  position: relative
+
+.before-after__image-wrapper
+  background-color: $white
+  bottom: 0
+  overflow: hidden
+  position: absolute
+  top: 0
+
+  &.is-active
+    z-index: 1
+
+.before-after__image
+  display: block
+  width: 100%
+
+.before-after__buttons
+  +clearfix
+
+.before-after__button
+  +box-sizing(border-box)
+  +user-select(none)
+  border: 1px solid $border-light
+  color: $text-color-faint
+  float: left
+  font-size: 9px
+  font-weight: bold
+  padding: 10px
+  text-align: center
+  text-transform: uppercase
+  letter-spacing: 1px
+  width: 50%
+  &:first-child
+    border-right: 0
+
+  &.is-active
+    background-color: $white
+    color: $text-color
