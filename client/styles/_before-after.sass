@@ -1,9 +1,8 @@
 .before-after
-  +border-radius-bottom
+  +border-radius
   overflow: hidden
   background-color: $white
   border: 1px solid $border-light
-  border-top: 0
   position: relative
 
 .before-after__image-wrapper
@@ -22,23 +21,53 @@
 
 .before-after__buttons
   +clearfix
+  margin-bottom: 10px
+  position: relative
+
+.before-after__buttons__background
+  +border-radius
+  position: absolute
+  background-color: #eaeaea
+  border: 1px solid $border-light
+  left: 0
+  right: 0
+  top: 0
+  bottom: 0
+
+.before-after__buttons__indicator-wrapper
+  bottom: 0
+  left: 0
+  position: absolute
+  top: 0
+  width: 50%
+
+.before-after__buttons__indicator
+  +border-radius
+  background-color: $white
+  border: 1px solid $border-light
+  bottom: 0
+  left: 0
+  margin: 1px
+  position: absolute
+  right: 0
+  top: 0
 
 .before-after__button
   +box-sizing(border-box)
+  +opacity(0.3)
   +user-select(none)
-  border: 1px solid $border-light
-  color: $text-color-faint
   float: left
   font-size: 9px
-  font-weight: bold
-  padding: 10px
+  letter-spacing: 1px
+  padding: 12px 0
+  position: relative
   text-align: center
   text-transform: uppercase
-  letter-spacing: 1px
   width: 50%
+  z-index: 1
+
   &:first-child
     border-right: 0
 
   &.is-active
-    background-color: $white
-    color: $text-color
+    +opacity(1)
