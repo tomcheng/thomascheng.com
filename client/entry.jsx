@@ -26,12 +26,12 @@ const App = React.createClass({
             title: "Home",
           },
           {
-            path: "/freshbooks",
-            title: "FreshBooks",
-          },
-          {
             path: "/academic-work",
             title: "Academic Work",
+          },
+          {
+            path: "/freshbooks",
+            title: "FreshBooks",
           },
           {
             path: "/photocopied-faces",
