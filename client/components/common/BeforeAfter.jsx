@@ -119,7 +119,6 @@ export default React.createClass({
           {showing, width, ratio} = this.state,
           aspectRatio = Math.max(before.height/before.width, after.height/after.width),
           height = Math.ceil(aspectRatio * width);
-    console.log(ratio);
 
     return (
       <div>
@@ -129,7 +128,8 @@ export default React.createClass({
         </div>
         <TouchHandler
           onDrag={this._handleDrag}
-          onDragRelease={this._handleDragRelease}>
+          onDragRelease={this._handleDragRelease}
+          onTap={this._toggleShowing}>
           <div className="before-after__buttons">
             <div className="before-after__buttons__background" />
             <div
