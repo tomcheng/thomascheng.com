@@ -7,7 +7,7 @@ import Navigation from "components/navigation/Navigation.jsx";
 
 import Home from "components/route-handlers/Home.jsx";
 import Portfolio from "components/route-handlers/AcademicWork.jsx";
-import FreshBooks from "components/route-handlers/FreshBooks.jsx";
+import WorkWork from "components/route-handlers/WorkWork.jsx";
 import Miscellany from "components/route-handlers/Miscellany.jsx";
 import Resume from "components/route-handlers/Resume.jsx";
 
@@ -54,7 +54,7 @@ const routes = (
   <Route name="app" handler={App}>
     <Route name="home" path="/" handler={Home} />
     <Route name="academic-work" path="/academic-work" handler={Portfolio} />
-    <Route name="work-work" path="/work-work" handler={FreshBooks} />
+    <Route name="work-work" path="/work-work" handler={WorkWork} />
     <Route name="miscellany" path="/miscellany" handler={Miscellany} />
     <Route name="resume" path="/resume" handler={Resume} />
   </Route>

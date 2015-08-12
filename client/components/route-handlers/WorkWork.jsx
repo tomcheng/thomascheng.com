@@ -32,29 +32,25 @@ export default React.createClass({
 const Comparisons = [
   {
     slug: "dashboard",
-    title: "Dashboard",
-    description: "A redesign to make account data more approachable and easier to understand.",
+    title: "FreshBooks Dashboard Redesign",
     beforeDimensions: [ 840, 449 ],
     afterDimensions: [ 840, 1074 ]
   },
   {
     slug: "client",
-    title: "Client",
-    description: "Create a layout that uses the same visual language as the rest of the app.",
+    title: "FreshBooks Client Page Redesign",
     beforeDimensions: [ 840, 714 ],
     afterDimensions: [ 840, 651 ]
   },
   {
     slug: "reports",
-    title: "Reports",
-    description: "Make reports easier to find and understand.",
+    title: "FreshBooks Reports Page Redesign",
     beforeDimensions: [ 1077, 334 ],
     afterDimensions: [ 840, 594 ]
   },
   {
     slug: "timer",
-    title: "Timer",
-    description: "Design a more friendly and approachable timer for users to track their time.",
+    title: "FreshBooks Timer Redesign",
     beforeDimensions: [ 840, 660 ],
     afterDimensions: [ 840, 740 ]
   }
