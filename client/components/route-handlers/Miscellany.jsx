@@ -10,7 +10,7 @@ export default React.createClass({
           <Carousel
             description="These images were produced by rolling and smearing my face along the glass as the photocopied was scanning."
             images={faces}
-            originalHeight={533}
+            originalHeight={411}
             originalWidth={411}
             slug="photocopied-faces"
             title="Photocopied Faces"
