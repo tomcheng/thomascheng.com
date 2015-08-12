@@ -152,35 +152,35 @@ export default React.createClass({
               After
             </div>
           </div>
-        </TouchHandler>
-        <div className="before-after" onClick={this._toggleShowing}>
-          <div className="before-after__frame" ref="frame" style={{ height }}>
-            <div
-              className="comparator__outer-wrapper comparator__outer-wrapper--before"
-              style={{ width: (width * ratio) }}>
+          <div className="before-after">
+            <div className="before-after__frame" ref="frame" style={{ height }}>
               <div
-                className="comparator__inner-wrapper comparator__inner-wrapper--before"
-                style={{ width }}>
-                <div className="comparator__label comparator__label--before">
-                  Before
+                className="comparator__outer-wrapper comparator__outer-wrapper--before"
+                style={{ width: (width * ratio) }}>
+                <div
+                  className="comparator__inner-wrapper comparator__inner-wrapper--before"
+                  style={{ width }}>
+                  <div className="comparator__label comparator__label--before">
+                    Before
+                  </div>
+                  <img className="comparator__image" src={after.url} />
                 </div>
-                <img className="comparator__image" src={after.url} />
               </div>
-            </div>
-            <div
-              className="comparator__outer-wrapper comparator__outer-wrapper--after"
-              style={{ width: (width * (1 - ratio)) }}>
               <div
-                className="comparator__inner-wrapper comparator__inner-wrapper--after"
-                style={{ width }}>
-                <div className="comparator__label comparator__label--after">
-                  After
+                className="comparator__outer-wrapper comparator__outer-wrapper--after"
+                style={{ width: (width * (1 - ratio)) }}>
+                <div
+                  className="comparator__inner-wrapper comparator__inner-wrapper--after"
+                  style={{ width }}>
+                  <div className="comparator__label comparator__label--after">
+                    After
+                  </div>
+                  <img className="comparator__image" src={before.url} />
                 </div>
-                <img className="comparator__image" src={before.url} />
               </div>
             </div>
           </div>
-        </div>
+        </TouchHandler>
       </div>
     );
   }
