@@ -57,7 +57,7 @@ export default React.createClass({
     }
 
     return (
-      <div>
+      <div className={classNames({ "is-flashing": isFlashing })}>
         {images.map((image, i) => (
           <div
             key={image}
@@ -80,9 +80,6 @@ export default React.createClass({
           </div>
         ) : null}
         <div
-          className={classNames({
-            "is-flashing": isFlashing
-          })}
           onTouchStart={this._handleTouchStart}
           onTouchEnd={this._handleTouchEnd}>
           {trigger}

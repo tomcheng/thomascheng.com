@@ -8,10 +8,13 @@
   background-repeat: no-repeat
   background-position: center center
 
+  .is-flashing &
+    z-index: $z-index-image-flasher-flashing
+
 .image-flasher__trigger-container
   left: 0
   margin: -60px auto 0
-  position: fixed
+  position: absolute
   right: 0
   text-align: center
   top: 50%
@@ -26,16 +29,16 @@
   width: 50px
   margin-bottom: 30px
 
-  .logo-path
-    fill: $black
-
-.is-flashing
-  .image-flasher__trigger-logo
+  .is-flashing &
     +transform(scale(3, 3))
+    z-index: $z-index-image-flasher-flashing + 1
 
-  .logo-path
+.image-flasher__trigger-logo .logo-path
+  fill: $black
+
+  .is-flashing &
     fill: $white
 
-  .image-flasher__trigger-text
-    +opacity(0)
+.is-flashing .image-flasher__trigger-text
+  +opacity(0)
 

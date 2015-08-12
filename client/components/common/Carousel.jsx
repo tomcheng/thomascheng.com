@@ -6,18 +6,19 @@ import TouchHandler from 'components/common/TouchHandler.jsx';
 
 export default React.createClass({
   propTypes: {
-    description: React.PropTypes.string.isRequired,
+    description: React.PropTypes.string,
     dragConstant: React.PropTypes.number,               // how much scrollPosing slows down when dragging past bounds
     images: React.PropTypes.array.isRequired,
     originalHeight: React.PropTypes.number.isRequired,
     originalWidth: React.PropTypes.number.isRequired,
-    returnThreshold: React.PropTypes.number.isRequired, // how much dragging past end is needed to return to first image
+    returnThreshold: React.PropTypes.number,            // how much dragging past end is needed to return to first image
     slug: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired
   },
 
   getDefaultProps() {
     return {
+      description: null,
       dragConstant: 0.2,
       returnThreshold: 0.6
     };
@@ -232,7 +233,7 @@ export default React.createClass({
             {this._getCurrentPane() + 1} of {imageCount}
           </div>
         </div>
-        <div>{description}</div>
+        {description ? <div>{description}</div> : null}
       </div>
     );
   }
