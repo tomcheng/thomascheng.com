@@ -57,17 +57,22 @@ export default React.createClass({
     }
 
     return (
-      <div className={classNames({ "is-flashing": isFlashing })}>
-        {images.map((image, i) => (
-          <div
-            key={image}
-            className="image-flasher__image"
-            style={{
-              backgroundImage: "url(" + require("images/" + image) + ")",
-              opacity: ((isPressed && i === currentFrame) ? 1 : 0)
-             }}
-          />
-        ))}
+      <div className={classNames({
+        "is-flashing": isFlashing,
+        "is-showing": (isPressed || isFinishedFlashing) && !isFinishedShowing
+      })}>
+        <div className="image-flasher__image-container">
+          {images.map((image, i) => (
+            <div
+              key={image}
+              className="image-flasher__image"
+              style={{
+                backgroundImage: "url(" + require("images/" + image) + ")",
+                opacity: ((isPressed && i === currentFrame) ? 1 : 0)
+               }}
+            />
+          ))}
+        </div>
         {showFirstFrame ? (
           <div style={{
             position: "fixed",
