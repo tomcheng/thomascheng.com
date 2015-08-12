@@ -73,17 +73,11 @@ export default React.createClass({
             />
           ))}
         </div>
-        {showFirstFrame ? (
-          <div style={{
-            position: "fixed",
-            textAlign: "center",
-            left: 0,
-            top: "20%",
-            width: "100%"
-          }}>
-            Thank you. <span style={{ opacity: showSecondFrame ? 1 : 0}}>Come again.</span>
-          </div>
-        ) : null}
+        <div className="image-flasher__message" style={{
+          opacity: showFirstFrame ? 1 : 0,
+        }}>
+          Thank you. <span className="image-flasher__message__part" style={{ opacity: showSecondFrame ? 1 : 0}}>Come again.</span>
+        </div>
         <div
           onTouchStart={this._handleTouchStart}
           onTouchEnd={this._handleTouchEnd}>
