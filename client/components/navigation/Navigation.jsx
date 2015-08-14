@@ -59,7 +59,6 @@ export default React.createClass({
           "navigation--collapsed": scrollTop > topOffset
         })}>
           <div className="navigation__background" />
-          <div className="navigation__bottom-border" />
           <ul className="navigation__list">
             {links.map((link, i) => (
               <li key={link.title} className="navigation__item">

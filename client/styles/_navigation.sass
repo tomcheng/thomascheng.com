@@ -7,6 +7,8 @@ $animation-duration: 0.15s
   font-family: Arial, Helvetica, sans-serif
   margin: 0 0 20px
   position: fixed
+  left: 0
+  top: 0
   width: 100%
   z-index: $z-index-navigation
 
@@ -16,10 +18,10 @@ $animation-duration: 0.15s
   width: 100%
 
 .navigation__background
-  +transition(all $animation-duration ease-in-out)
+  +transition(transform $animation-duration ease-in-out)
   transform-origin: 50% 0 0
-  background-color: $body-bg
-  box-shadow: 0 2px 3px rgba(0,0,0,0)
+  background-color: rgba($white, 0.96)
+  box-shadow: 0 1px 2px rgba(0,0,0,0.18)
   position: absolute
   top: 0
   left: 0
@@ -28,23 +30,7 @@ $animation-duration: 0.15s
   height: $expanded-height
 
   .navigation--collapsed &
-    box-shadow: 0 2px 3px rgba(0,0,0,0.18)
     transform: scale3d(1, $collapsed-height / $expanded-height, 1)
-
-.navigation__bottom-border
-  +transition(all $animation-duration ease-in-out)
-  transform-origin: 50% 0 0
-  position: absolute
-  width: 100%
-  height: 1px
-  background-color: $border-light
-  left: 0
-  top: $expanded-height
-  +opacity(1)
-
-  .navigation--collapsed &
-    +opacity(0)
-    transform: translate3d(0,  $collapsed-height - $expanded-height, 0)
 
 .navigation__list
   display: flex
