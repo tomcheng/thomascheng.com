@@ -8,7 +8,7 @@ import TouchHandler from "components/common/TouchHandler.jsx";
 
 export default React.createClass({
   propTypes: {
-    tite: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
     before: React.PropTypes.object.isRequired,
     after: React.PropTypes.object.isRequired,
     description: React.PropTypes.string,
