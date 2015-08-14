@@ -95,7 +95,8 @@ export default React.createClass({
       <div
         onTouchStart={this._handleTouchStart}
         onTouchMove={this._handleTouchMove}
-        onTouchEnd={this._handleTouchEnd}>
+        onTouchEnd={this._handleTouchEnd}
+        onClick={this.props.onTap}>
         {this.props.children}
       </div>
     );

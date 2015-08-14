@@ -9,8 +9,6 @@ export default React.createClass({
     description: React.PropTypes.string,
     dragConstant: React.PropTypes.number,               // how much scrollPosing slows down when dragging past bounds
     images: React.PropTypes.array.isRequired,
-    originalHeight: React.PropTypes.number.isRequired,
-    originalWidth: React.PropTypes.number.isRequired,
     returnThreshold: React.PropTypes.number,            // how much dragging past end is needed to return to first image
     slug: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired
@@ -49,12 +47,8 @@ export default React.createClass({
   },
 
   _setDimensions() {
-    const wrapperWidth = React.findDOMNode(this.refs.wrapper).offsetWidth,
-          {originalWidth, originalHeight} = this.props;
-
     this.setState({
-      width: wrapperWidth,
-      height: wrapperWidth / originalWidth * originalHeight
+      width: React.findDOMNode(this.refs.wrapper).offsetWidth
     });
   },
 
@@ -211,12 +205,11 @@ export default React.createClass({
             onDragRelease={this._handleDragRelease}
             onTap={this._advanceToNextPane}>
             <div
-              onClick={this._advanceToNextPane}
               className="carousel__frame"
               style={{ width }}>
               <ul className="carousel__list" style={listStyle}>
                 {images.map((image, index) => (
-                  <li key={index} className="carousel__item" style={{ width, height }}>
+                  <li key={index} className="carousel__item" style={{ width }}>
                     <img className="carousel__image" src={image} />
                   </li>
                 ))}

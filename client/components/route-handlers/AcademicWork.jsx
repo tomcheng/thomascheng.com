@@ -23,8 +23,6 @@ export default React.createClass({
             <Carousel
               description={piece.description}
               images={this._getImages(piece.slug, piece.imageCount)}
-              originalHeight={piece.height}
-              originalWidth={piece.width}
               slug={piece.slug}
               title={piece.title}
             />
