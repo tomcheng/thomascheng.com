@@ -1,7 +1,5 @@
-$header-height-expanded: 70px
-$header-height-collapsed: 40px
-
-$nav-handle-size: 22px
+$expanded-height: 70px
+$collapsed-height: 40px
 
 $header-anim-duration: 0.15s
 
@@ -13,42 +11,11 @@ $header-anim-duration: 0.15s
   width: 100%
   z-index: $z-index-header
 
-.header__navigation-handle
-  height: $header-height-expanded
-  left: 0
-  overflow: hidden
-  position: absolute
-  top: 0
-  width: 70px
-  z-index: $z-index-header + 1
-  &:before
-    +font-awesome
-    +transition(transform $header-anim-duration ease-in-out)
-    transform: translate3d(-$nav-handle-size + 12px, ($header-height-expanded / 2), 0)
-    color: $text-color-secondary
-    content: $fa-var-bars
-    font-size: $nav-handle-size
-    left: 0
-    line-height: $nav-handle-size
-    margin-top: -$nav-handle-size / 2
-    top: 0
-    position: absolute
-
-  .header--affixed &
-    height: $header-height-collapsed
-    width: 50px
-    &:before
-      transform: translate3d(-$nav-handle-size + 10px, ($header-height-collapsed / 2), 0)
-
-  .header--home &:before
-    +opacity(0.4)
-    transform: translate3d(20px, ($header-height-expanded / 2), 0)
-
 .header__background
-  +transition(all $header-anim-duration ease-in-out)
-  background: $body-bg
-  box-shadow: 0 2px 3px rgba(0,0,0,0)
-  height: $header-height-expanded
+  +transition(transform $header-anim-duration ease-in-out)
+  background-color: rgba($white, 0.96)
+  box-shadow: 0 1px 2px rgba(0,0,0,0.18)
+  height: $expanded-height
   left: 0
   position: absolute
   top: 0
@@ -56,13 +23,8 @@ $header-anim-duration: 0.15s
   transform: scale3d(1, 1, 1)
   width: 100%
 
-  .header--affixed &
-    background: rgba($body-bg, 0.92)
-    box-shadow: 0 2px 3px rgba(0,0,0,0.18)
-    transform: scale3d(1, $header-height-collapsed / $header-height-expanded, 1)
-
-  .header--home &
-    background-color: transparent
+  .header--collapsed &
+    transform: scale3d(1, $collapsed-height / $expanded-height, 1)
 
 .header__inner
   position: relative
@@ -73,27 +35,22 @@ $header-anim-duration: 0.15s
   height: 34px
   left: 0
   position: absolute
+  overflow: hidden
   top: 0
   transform-origin: 0 0 0
   transform: scale3d(1, 1, 1) translate3d(5px, 15px, 0)
   width: 50px
 
-  .header--affixed &
+  .header--collapsed &
     transform: scale3d(0.6, 0.6, 1) translate3d(5px, 14px, 0)
-
-  .header--home &
-    display: none
 
 .header__name
   +transition(transform $header-anim-duration ease-in-out)
   font-weight: bold
   transform: translate3d(65px, 19px, 0)
 
-  .header--affixed &
+  .header--collapsed &
     transform: translate3d(43px, 12px, 0)
-
-  .header--home &
-    display: none
 
 .header__position
   +transition(all $header-anim-duration ease-in-out)
@@ -103,26 +60,11 @@ $header-anim-duration: 0.15s
   line-height: 16px
   transform: translate3d(65px, 19px, 0)
 
-  .header--affixed &
+  .header--collapsed &
     opacity: 0
     transform: translate3d(43px, 12px, 0)
 
-  .header--home &
-    display: none
-
-.header__border
-  +transition(all $header-anim-duration ease-in-out)
-  height: 1px
-  background-color: $border-light
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  transform: translate3d(0, $header-height-expanded, 0)
-
-  .header--affixed &
-    opacity: 0
-    transform: translate3d(0, $header-height-collapsed, 0)
-
-  .header--home &
-    display: none
+.header-placeholder
+  height: $expanded-height
+  width: 100%
+  margin-bottom: 20px

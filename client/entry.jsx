@@ -4,6 +4,7 @@ import React from "react";
 import Router from "react-router";
 
 import Navigation from "components/navigation/Navigation.jsx";
+import Header from "components/header/Header.jsx";
 
 import Home from "components/route-handlers/Home.jsx";
 import AcademicWork from "components/route-handlers/AcademicWork.jsx";
@@ -15,12 +16,43 @@ import NotFound from "components/NotFound/NotFoundComponent.jsx";
 
 const {DefaultRoute, Link, Route, RouteHandler, NotFoundRoute} = Router;
 
+const MOBILE_BREAKPOINT = 768;
+
 const App = React.createClass({
+  getInitialState() {
+    return { isMobile: false };
+  },
+
+  componentDidMount() {
+    this._setDimensions();
+
+    window.addEventListener("resize", this._setDimensions);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._setDimensions);
+  },
+
+  _setDimensions() {
+    this.setState({
+      isMobile: window.innerWidth < MOBILE_BREAKPOINT
+    });
+  },
+
   render() {
+    const {isMobile} = this.state;
+
     return (
       <div className="container">
-        <Navigation links={links} />
-        <RouteHandler />
+        {!isMobile ? <Header /> : null}
+        <div className="row">
+          <div className="col-sm-3">
+            <Navigation links={links} isMobile={isMobile} />
+          </div>
+          <div className="col-sm-9">
+            <RouteHandler />
+          </div>
+        </div>
       </div>
     );
   }
