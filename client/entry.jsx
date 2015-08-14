@@ -16,12 +16,9 @@ const {DefaultRoute, Link, Route, RouteHandler} = Router;
 const App = React.createClass({
   render() {
     return (
-      <div>
-        <Navigation
-          links={links} />
-        <div className="container">
-          <RouteHandler />
-        </div>
+      <div className="container">
+        <Navigation links={links} />
+        <RouteHandler />
       </div>
     );
   }
@@ -46,7 +43,7 @@ const links = [
   {
     path: "/miscellany",
     title: "Miscellany",
-    icon: "flask"
+    icon: "cogs"
   }
 ];
 
