@@ -16,9 +16,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showing: "after",
       width: 0,
-      ratio: 1,
+      ratio: 0,
       isDragging: false,
       isDraggingHorizontally: false
     };
@@ -43,10 +42,6 @@ export default React.createClass({
   },
 
   _switchToBefore() {
-    this.setState({
-      showing: "before",
-    });
-
     Animations.animate({
       name: "before-after-" + this.props.slug,
       start: this.state.ratio,
@@ -61,10 +56,6 @@ export default React.createClass({
   },
 
   _switchToAfter() {
-    this.setState({
-      showing: "after"
-    });
-
     Animations.animate({
       name: "before-after-" + this.props.slug,
       start: this.state.ratio,
@@ -78,7 +69,7 @@ export default React.createClass({
   },
 
   _toggleShowing() {
-    if (this.state.showing === "before") {
+    if (this.state.ratio < 0.5) {
       this._switchToAfter();
     } else {
       this._switchToBefore();
