@@ -8,9 +8,10 @@ import TouchHandler from "components/common/TouchHandler.jsx";
 
 export default React.createClass({
   propTypes: {
+    tite: React.PropTypes.string.isRequired,
     before: React.PropTypes.object.isRequired,
     after: React.PropTypes.object.isRequired,
-    description: React.PropTypes.string.isRequired,
+    description: React.PropTypes.string,
     slug: React.PropTypes.string.isRequired
   },
 
@@ -115,59 +116,50 @@ export default React.createClass({
       <div>
         <div className="push-bottom-xs">
           <h4>{title}</h4>
-          <div>{description}</div>
+          {description ? <div>{description}</div> : null}
         </div>
         <TouchHandler
           onDrag={this._handleDrag}
           onDragRelease={this._handleDragRelease}
           onTap={this._toggleShowing}>
-          <div className="before-after__buttons">
-            <div className="before-after__buttons__background" />
+          <div className="before-after-buttons">
+            <div className="before-after-buttons__background" />
             <div
-              className="before-after__buttons__indicator-wrapper"
+              className="before-after-buttons__indicator"
               style={{
                 transform: "translate3d(" + (ratio * (width * 0.5 + 1)) + "px, 0, 0)"
-              }}>
-              <div className="before-after__buttons__indicator" />
-            </div>
+              }}
+            />
             <div
               onClick={this._switchToBefore}
               style={{ opacity: (0.2 + 0.8 * (1 - ratio)) }}
-              className="before-after__button">
+              className="before-after-button">
               Before
             </div>
             <div
               onClick={this._switchToAfter}
               style={{ opacity: (0.2 + 0.8 * ratio) }}
-              className="before-after__button">
+              className="before-after-button">
               After
             </div>
           </div>
-          <div className="before-after">
-            <div className="before-after__frame" ref="frame" style={{ height }}>
+          <div className="before-after" ref="frame" style={{ height }}>
+            <div
+              className="before-after__outer-wrapper before-after__outer-wrapper--after"
+              style={{ width: (width * ratio) }}>
               <div
-                className="comparator__outer-wrapper comparator__outer-wrapper--before"
-                style={{ width: (width * ratio) }}>
-                <div
-                  className="comparator__inner-wrapper comparator__inner-wrapper--before"
-                  style={{ width }}>
-                  <div className="comparator__label comparator__label--before">
-                    Before
-                  </div>
-                  <img className="comparator__image" src={after.url} />
-                </div>
+                className="before-after__inner-wrapper before-after__inner-wrapper--after"
+                style={{ width }}>
+                <img className="before-after__image" src={after.url} />
               </div>
+            </div>
+            <div
+              className="before-after__outer-wrapper before-after__outer-wrapper--before"
+              style={{ width: (width * (1 - ratio)) }}>
               <div
-                className="comparator__outer-wrapper comparator__outer-wrapper--after"
-                style={{ width: (width * (1 - ratio)) }}>
-                <div
-                  className="comparator__inner-wrapper comparator__inner-wrapper--after"
-                  style={{ width }}>
-                  <div className="comparator__label comparator__label--after">
-                    After
-                  </div>
-                  <img className="comparator__image" src={before.url} />
-                </div>
+                className="before-after__inner-wrapper before-after__inner-wrapper--before"
+                style={{ width }}>
+                <img className="before-after__image" src={before.url} />
               </div>
             </div>
           </div>

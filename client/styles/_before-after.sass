@@ -5,26 +5,40 @@
   border: 1px solid $border-light
   position: relative
 
-.before-after__image-wrapper
-  background-color: $white
+.before-after__outer-wrapper
   bottom: 0
   overflow: hidden
   position: absolute
   top: 0
 
-  &.is-active
-    z-index: 1
+.before-after__outer-wrapper--after
+  left: 0
+
+.before-after__outer-wrapper--before
+  right: 0
+
+.before-after__inner-wrapper
+  position: absolute
+  top: 0
+  bottom: 0
+
+.before-after__inner-wrapper--after
+  left: 0
+
+.before-after__inner-wrapper--before
+  right: 0
 
 .before-after__image
+  +border-radius
   display: block
   width: 100%
 
-.before-after__buttons
+.before-after-buttons
   +clearfix
   margin-bottom: 10px
   position: relative
 
-.before-after__buttons__background
+.before-after-buttons__background
   +border-radius
   position: absolute
   background-color: #eaeaea
@@ -34,25 +48,18 @@
   top: 0
   bottom: 0
 
-.before-after__buttons__indicator-wrapper
+.before-after-buttons__indicator
   bottom: 0
   left: 0
   position: absolute
   top: 0
-  width: 50%
-
-.before-after__buttons__indicator
+  width: calc(50% - 3px)
   +border-radius
   background-color: $white
   border: 1px solid $border-light
-  bottom: 0
-  left: 0
   margin: 1px
-  position: absolute
-  right: 0
-  top: 0
 
-.before-after__button
+.before-after-button
   +box-sizing(border-box)
   +user-select(none)
   float: left
