@@ -11,7 +11,9 @@ import WorkWork from "components/route-handlers/WorkWork.jsx";
 import Miscellany from "components/route-handlers/Miscellany.jsx";
 import Resume from "components/route-handlers/Resume.jsx";
 
-const {DefaultRoute, Link, Route, RouteHandler} = Router;
+import NotFound from "components/NotFound/NotFoundComponent.jsx";
+
+const {DefaultRoute, Link, Route, RouteHandler, NotFoundRoute} = Router;
 
 const App = React.createClass({
   render() {
@@ -48,12 +50,13 @@ const links = [
 ];
 
 const routes = (
-  <Route name="app" handler={App}>
-    <Route name="home" path="/" handler={Home} />
+  <Route name="app" path="/" handler={App}>
+    <DefaultRoute handler={Home} />
     <Route name="academic-work" path="/academic-work" handler={AcademicWork} />
     <Route name="work-work" path="/work-work" handler={WorkWork} />
     <Route name="miscellany" path="/miscellany" handler={Miscellany} />
     <Route name="resume" path="/resume" handler={Resume} />
+    <NotFoundRoute handler={NotFound} />
   </Route>
 );
 

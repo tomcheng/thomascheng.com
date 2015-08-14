@@ -1,15 +1,12 @@
 import React from 'react';
 
-export default class NotFoundComponent extends React.Component {
+export default React.createClass({
   render() {
     return (
-      <section>
+      <div>
         <h2 ref="title">404. Not found.</h2>
-        <p>
-          <img src="http://i.imgur.com/ooWW6.gif" />
-        </p>
-        <p><a href="/">Go to index</a></p>
-      </section>
+        <p><a href="/">Go to home page</a></p>
+      </div>
     );
   }
-}
+});
