@@ -67,7 +67,7 @@ export default React.createClass({
               key={image}
               className="image-flasher__image"
               style={{
-                backgroundImage: "url(" + require("images/" + image) + ")",
+                backgroundImage: "url(" + image + ")",
                 opacity: ((isPressed && i === currentFrame) ? 1 : 0)
                }}
             />

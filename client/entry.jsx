@@ -50,7 +50,7 @@ const App = React.createClass({
             <Navigation links={links} isMobile={isMobile} />
           </div>
           <div className="col-sm-9">
-            <RouteHandler />
+            <RouteHandler isMobile={isMobile} />
           </div>
         </div>
       </div>
