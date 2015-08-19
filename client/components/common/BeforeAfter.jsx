@@ -29,13 +29,11 @@ export default React.createClass({
 
     window.addEventListener("resize", this._setDimensions);
     window.addEventListener("orientationchange", this._setDimensions);
-    window.addEventListener("scroll", this._setFixed);
   },
 
   componentWillUnmount() {
     window.removeEventListener("resize", this._setDimensions);
     window.removeEventListener("orientationchange", this._setDimensions);
-    window.removeEventListener("scroll", this._setFixed);
   },
 
   _setDimensions() {
