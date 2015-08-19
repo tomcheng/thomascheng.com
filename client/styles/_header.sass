@@ -33,7 +33,7 @@ $header-anim-duration: 0.15s
   +transition(transform $header-anim-duration ease-in-out)
   float: left
   height: 34px
-  left: 0
+  left: -5px
   position: absolute
   overflow: hidden
   top: 0
@@ -47,10 +47,10 @@ $header-anim-duration: 0.15s
 .header__name
   +transition(transform $header-anim-duration ease-in-out)
   font-weight: bold
-  transform: translate3d(65px, 19px, 0)
+  transform: translate3d(60px, 19px, 0)
 
   .header--collapsed &
-    transform: translate3d(43px, 12px, 0)
+    transform: translate3d(38px, 12px, 0)
 
 .header__position
   +transition(all $header-anim-duration ease-in-out)
@@ -58,11 +58,11 @@ $header-anim-duration: 0.15s
   font-style: italic
   font-size: $font-size-sm
   line-height: 16px
-  transform: translate3d(65px, 19px, 0)
+  transform: translate3d(60px, 19px, 0)
 
   .header--collapsed &
     opacity: 0
-    transform: translate3d(43px, 12px, 0)
+    transform: translate3d(38px, 12px, 0)
 
 .header-placeholder
   height: $expanded-height

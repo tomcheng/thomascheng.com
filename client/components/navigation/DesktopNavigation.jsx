@@ -25,15 +25,17 @@ export default React.createClass({
       <div>
         <div className='desktop-nav'>
           <ul className="desktop-nav__list">
-            {links.map((link, i) => (
-              <li key={link.title} className="desktop-nav__item">
-                <Link to={link.path}>
-                  <i className={"fa fa-" + link.icon + " desktop-nav__item__icon"} />
-                  <span className="desktop-nav__item__text">
-                    {link.title}
-                  </span>
-                </Link>
-              </li>
+            {links.map((link) => (
+              !link.mobileOnly ? (
+                <li key={link.title} className="desktop-nav__item">
+                  <Link to={link.path}>
+                    <i className={"fa fa-fw fa-arrow-right desktop-nav__item__icon"} />
+                    <span className="desktop-nav__item__text">
+                      {link.title}
+                    </span>
+                  </Link>
+                </li>
+              ) : null
             ))}
           </ul>
         </div>

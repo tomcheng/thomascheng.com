@@ -46,9 +46,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className={classNames("header", {
-          "header--collapsed": this.state.scrollTop > this.props.topOffset
-        })}>
+        <div className="header">
           <div className="header__background"/>
           <div className="container" onClick={this._handleClick}>
             <div className="header__inner">
