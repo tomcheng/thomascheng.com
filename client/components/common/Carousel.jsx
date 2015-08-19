@@ -200,6 +200,12 @@ export default React.createClass({
 
     return (
       <div className="carousel">
+        <div className="push-bottom-xs clearfix">
+          <h4 className="pull-left">{title}</h4>
+          <div className="carousel-counter pull-right" onClick={this._advanceToNextPane}>
+            {this._getCurrentPane() + 1} of {imageCount}
+          </div>
+        </div>
         <div className="carousel__wrapper" ref="wrapper">
           <TouchHandler
             onDrag={this._handleDrag}
@@ -221,13 +227,7 @@ export default React.createClass({
             <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
           ) : null}
         </div>
-        <div className="push-top-xs clearfix">
-          <h4 className="pull-left">{title}</h4>
-          <div className="carousel-counter pull-right" onClick={this._advanceToNextPane}>
-            {this._getCurrentPane() + 1} of {imageCount}
-          </div>
-        </div>
-        {description ? <div>{description}</div> : null}
+        {description ? <div className="push-top-xs">{description}</div> : null}
       </div>
     );
   }
