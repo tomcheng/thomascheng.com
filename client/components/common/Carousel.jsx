@@ -201,10 +201,12 @@ export default React.createClass({
     return (
       <div className="carousel">
         <div className="push-bottom-xs clearfix">
-          <h4 className="pull-left">{title}</h4>
-          <div className="carousel-counter pull-right" onClick={this._advanceToNextPane}>
-            {this._getCurrentPane() + 1} of {imageCount}
-          </div>
+          {title ? <h4 className="pull-left">{title}</h4> : null}
+          {imageCount > 1 ? (
+            <div className="carousel-counter pull-right" onClick={this._advanceToNextPane}>
+              {this._getCurrentPane() + 1} of {imageCount}
+            </div>
+          ) : null}
         </div>
         <div className="carousel__wrapper" ref="wrapper">
           <TouchHandler

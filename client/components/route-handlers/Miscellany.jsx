@@ -29,7 +29,6 @@ export default React.createClass({
 
 const photocopiedFaces = [
   require("images/photocopied-faces/pcface4.jpg"),
-  require("images/photocopied-faces/pcface1.jpg"),
   require("images/photocopied-faces/pcface2.jpg"),
   require("images/photocopied-faces/pcface3.jpg"),
   require("images/photocopied-faces/pcface7.jpg")
@@ -39,7 +38,7 @@ const processingFaces = [
   require("images/processing-faces/diagonal-stripe-man.jpg"),
   require("images/processing-faces/squareman.png"),
   require("images/processing-faces/discowoman.jpg"),
-  require("images/processing-faces/stripeman.jpg"),
   require("images/processing-faces/circlewoman.jpg"),
+  require("images/processing-faces/stripeman.jpg"),
   require("images/processing-faces/radiating.jpg")
 ];
