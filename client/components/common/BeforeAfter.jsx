@@ -12,13 +12,18 @@ export default React.createClass({
     before: React.PropTypes.object.isRequired,
     after: React.PropTypes.object.isRequired,
     description: React.PropTypes.string,
+    annotations: React.PropTypes.array,
     slug: React.PropTypes.string.isRequired
+  },
+
+  getDefaultProps() {
+    return { annotations: [] };
   },
 
   getInitialState() {
     return {
       width: 0,
-      ratio: 0,
+      ratio: 1,
       isDragging: false,
       isDraggingHorizontally: false
     };
@@ -105,7 +110,7 @@ export default React.createClass({
   },
 
   render() {
-    const {before, after, title, description} = this.props,
+    const {before, after, annotations, title, description} = this.props,
           {showing, width, ratio} = this.state,
           aspectRatio = Math.max(before.height/before.width, after.height/after.width),
           height = Math.ceil(aspectRatio * width);
@@ -142,6 +147,9 @@ export default React.createClass({
             </div>
           </div>
           <div className="before-after" ref="frame" style={{ height }}>
+            {annotations.map((annotation, i) => (
+              <Annotation key={"point-" + i} annotation={annotation} />
+            ))}
             <div
               className="before-after__outer-wrapper before-after__outer-wrapper--after"
               style={{ width: (width * ratio) }}>
@@ -165,6 +173,26 @@ export default React.createClass({
       </div>
     );
   }
+});
+
+const Annotation = React.createClass({
+  propTypes: {
+    annotation: React.PropTypes.object.isRequired
+  },
+
+  render() {
+    const {left, top, message} = this.props.annotation;
+
+    return (
+      <div className="annotation-indicator" style={
+        {
+          left: (left * 100) + "%",
+          top: (top * 100) + "%"
+        }
+      }>
+      </div>
+    );
+  },
 });
 
 const constrain = (value, min, max) => Math.min(Math.max(value, min), max);
