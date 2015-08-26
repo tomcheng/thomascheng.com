@@ -12,11 +12,10 @@ export default React.createClass({
             <div className="col-sm-9 col-md-7">
               <ul className="flush-top push-bottom">
                 <li>UX/UI Design</li>
-                <li>Wireframing, prototyping and user-testing</li>
-                <li>Adobe Illustrator, Photoshop &amp; InDesign</li>
-                <li>HTML and CSS (LESS and SASS)</li>
-                <li>Javascript development (plain Javscript, jQuery, Backbone, Ember and React)</li>
+                <li>HTML, CSS (LESS and SASS) and Javascript development (plain Javascript, jQuery, Backbone, Ember and React)</li>
                 <li>Version control with Git</li>
+                <li>Adobe Illustrator, Photoshop &amp; InDesign</li>
+                <li>Wireframing, prototyping and user-testing</li>
               </ul>
             </div>
           </div>

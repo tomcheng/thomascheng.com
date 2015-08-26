@@ -11,7 +11,7 @@ export default React.createClass({
   },
 
   getDefaultProps() {
-    return { topOffset: 30 };
+    return { topOffset: 20 };
   },
 
   getInitialState() {
@@ -42,10 +42,10 @@ export default React.createClass({
           "navigation--collapsed": scrollTop > topOffset
         })}>
           <div className="navigation__background" />
+          <div className="navigation__bottom-divider" />
           <ul className="navigation__list">
             {links.map((link, i) => (
               <li key={link.title} className="navigation__item">
-               {i === 0 ? null : <div className="navigation__item__divider" />}
                 <Link to={link.path}>
                   <i className={"fa fa-" + link.icon + " navigation__item__icon"} />
                   <span className="navigation__item__text">

@@ -1,0 +1,13 @@
+@keyframes wiggle
+  from, 100%
+    transform: translate3d(0, 0, 0)
+  16.7%, 50%, 83.3%
+    transform: translate3d(-8px, 0, 0)
+  33.3%, 67.7%
+    transform: translate3d(8px, 0, 0)
+
+.wiggle
+  animation-name: wiggle
+  animation-duration: 0.5s
+  animation-iteration-count: 1
+  animation-timing-function: ease-out

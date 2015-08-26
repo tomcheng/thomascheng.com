@@ -21,7 +21,6 @@ $animation-duration: 0.15s
   +transition(transform $animation-duration ease-in-out)
   transform-origin: 50% 0 0
   background-color: rgba($white, 0.96)
-  box-shadow: 0 1px 2px rgba(0,0,0,0.18)
   position: absolute
   top: 0
   left: 0
@@ -31,6 +30,17 @@ $animation-duration: 0.15s
 
   .navigation--collapsed &
     transform: scale3d(1, $collapsed-height / $expanded-height, 1)
+
+.navigation__bottom-divider
+  +transition(transform $animation-duration ease-in-out)
+  background-color: $border-light
+  height: 1px
+  position: absolute
+  transform: translate3d(0, $expanded-height, 0)
+  width: 100%
+
+  .navigation--collapsed &
+    transform: translate3d(0, $collapsed-height, 0)
 
 .navigation__list
   display: flex
@@ -49,19 +59,6 @@ $animation-duration: 0.15s
   font-size: 10px
   list-style: none
   text-align: center
-
-.navigation__item__divider
-  +transition(transform $animation-duration ease-in-out)
-  transform-origin: 50% 0 0
-  position: absolute
-  left: 0
-  top: 0
-  width: 1px
-  background-color: $border-light
-  height: $expanded-height
-
-  .navigation--collapsed &
-    transform: scale3d(1, $collapsed-height / $expanded-height, 1)
 
 .navigation__item a
   +opacity(0.2)

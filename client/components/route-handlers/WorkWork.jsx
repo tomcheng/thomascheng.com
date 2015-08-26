@@ -1,13 +1,14 @@
 import React from "react";
-
 import BeforeAfter from "components/common/BeforeAfter.jsx";
+import PageFooter from "components/common/PageFooter.jsx";
 
 export default React.createClass({
   render() {
     return (
       <div>
-        {Comparisons.map(comparison => (
-          <div key={comparison.slug} className="push-bottom">
+        <h3>FreshBooks</h3>
+        {freshbooks.map((comparison, i) => (
+          <div key={comparison.slug} className="push-bottom-sm">
             <BeforeAfter
               before={{
                 url: require("images/freshbooks/" + comparison.slug + "-before.png"),
@@ -19,38 +20,48 @@ export default React.createClass({
                 width: comparison.afterDimensions[0],
                 height: comparison.afterDimensions[1]
               }}
-              title={comparison.title}
               description={comparison.description}
-              slug={comparison.slug} />
+              annotations={comparison.annotations}
+              title={comparison.title}
+              slug={comparison.slug}
+            />
           </div>
         ))}
+        <PageFooter />
       </div>
     );
   }
 });
 
-const Comparisons = [
+const freshbooks = [
   {
     slug: "dashboard",
-    title: "FreshBooks Dashboard",
+    title: "Dashboard",
     beforeDimensions: [ 840, 449 ],
-    afterDimensions: [ 840, 1074 ]
+    afterDimensions: [ 840, 1074 ],
+    annotations: [
+      {
+        left: 0.5,
+        top: 0.5,
+        message: "This is a message."
+      }
+    ]
   },
   {
     slug: "reports",
-    title: "FreshBooks Reports Page",
+    title: "Reports Page",
     beforeDimensions: [ 1077, 334 ],
     afterDimensions: [ 840, 594 ]
   },
   {
     slug: "client",
-    title: "FreshBooks Client Page",
+    title: "Client Page",
     beforeDimensions: [ 840, 714 ],
     afterDimensions: [ 840, 651 ]
   },
   {
     slug: "timer",
-    title: "FreshBooks Timer",
+    title: "Time-tracker",
     beforeDimensions: [ 840, 660 ],
     afterDimensions: [ 840, 740 ]
   }

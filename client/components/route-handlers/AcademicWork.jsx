@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import Carousel from "components/common/Carousel.jsx";
+import PageFooter from "components/common/PageFooter.jsx";
 
 export default React.createClass({
   _getImages(slug, imageCount) {
@@ -18,16 +19,18 @@ export default React.createClass({
   render() {
     return (
       <div>
-        {pieces.map(piece => (
-          <div key={piece.slug} className="push-bottom">
+        {pieces.map((piece, i) => (
+          <div key={piece.slug}>
             <Carousel
               description={piece.description}
               images={this._getImages(piece.slug, piece.imageCount)}
               slug={piece.slug}
               title={piece.title}
             />
+            {i !== pieces.length - 1 ? <hr className="divider--short" /> : null}
           </div>
         ))}
+        <PageFooter />
       </div>
     );
   }
@@ -77,18 +80,18 @@ const pieces = [
     imageCount: 2
   },
   {
-    slug: "robot",
-    title: "Robot Games Flyer",
-    width: 704,
-    height: 563,
-    imageCount: 1
-  },
-  {
     slug: "durer",
     title: "Albrecht Durer Brochure",
     width: 704,
     height: 468,
     imageCount: 2
+  },
+  {
+    slug: "robot",
+    title: "Robot Games Flyer",
+    width: 704,
+    height: 563,
+    imageCount: 1
   },
   {
     slug: "pez",

@@ -1,32 +1,29 @@
-import React from 'react';
-
+import React from "react";
 import Carousel from "components/common/Carousel.jsx";
+import PageFooter from "components/common/PageFooter.jsx";
 
 export default React.createClass({
   render() {
     return (
       <div>
-        <div className="push-bottom">
-          <Carousel
-            images={photocopiedFaces}
-            slug="photocopied-faces"
-            title="Photocopied Faces"
-          />
-        </div>
-        <div className="push-bottom">
-          <Carousel
-            images={processingFaces}
-            slug="processing-faces"
-            title="Experiments with Processing"
-          />
-        </div>
-        <div className="push-bottom">
-          <Carousel
-            images={funWithType}
-            slug="fun-with-type"
-            title="Fun With Type"
-          />
-        </div>
+        <Carousel
+          images={funWithType}
+          slug="fun-with-type"
+          title="Fun With Type"
+        />
+        <hr className="divider--short" />
+        <Carousel
+          images={processingFaces}
+          slug="processing-faces"
+          title="Experiments with Processing"
+        />
+        <hr className="divider--short" />
+        <Carousel
+          images={photocopiedFaces}
+          slug="photocopied-faces"
+          title="Photocopied Faces"
+        />
+        <PageFooter />
       </div>
     );
   }

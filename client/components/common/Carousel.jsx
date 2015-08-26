@@ -31,6 +31,7 @@ export default React.createClass({
       isDraggingHorizontally: false,
       scrollPos: 0,
       scrollPosAtDragStart: null,
+      shouldWiggle: false,
       width: 0
     };
   },
@@ -166,6 +167,13 @@ export default React.createClass({
           currentPane = this._getCurrentPane(),
           nextPane = currentPane === imageCount - 1 ? 0 : currentPane + 1;
 
+    if (imageCount === 1) {
+      this.setState({ shouldWiggle: true });
+      setTimeout(() => {
+        this.setState({ shouldWiggle: false });
+      }, 500);
+    }
+
     if (nextPane === 0) {
       this._animateToPane(0, 150 * imageCount, Easings.returnHome);
     } else {
@@ -203,7 +211,7 @@ export default React.createClass({
         <div className="push-bottom-xs clearfix">
           {title ? <h4 className="pull-left">{title}</h4> : null}
           {imageCount > 1 ? (
-            <div className="carousel-counter pull-right" onClick={this._advanceToNextPane}>
+            <div className="carousel__counter pull-right" onClick={this._advanceToNextPane}>
               {this._getCurrentPane() + 1} of {imageCount}
             </div>
           ) : null}
@@ -214,7 +222,9 @@ export default React.createClass({
             onDragRelease={this._handleDragRelease}
             onTap={this._advanceToNextPane}>
             <div
-              className="carousel__frame"
+              className={classNames("carousel__frame", {
+                "wiggle": this.state.shouldWiggle
+              })}
               style={{ width }}>
               <ul className="carousel__list" style={listStyle}>
                 {images.map((image, index) => (
