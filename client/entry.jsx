@@ -44,15 +44,8 @@ const App = React.createClass({
 
     return (
       <div className="container">
-        {!isMobile ? <Header /> : null}
-        <div className="row">
-          <div className="col-sm-3">
-            <Navigation links={links} isMobile={isMobile} />
-          </div>
-          <div className="col-sm-9">
-            <RouteHandler isMobile={isMobile} />
-          </div>
-        </div>
+        <Navigation links={links} />
+        <RouteHandler isMobile={isMobile} />
       </div>
     );
   }
