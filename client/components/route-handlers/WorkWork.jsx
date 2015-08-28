@@ -1,6 +1,7 @@
 import React from "react";
 import BeforeAfter from "components/common/BeforeAfter.jsx";
 import TwoUp from "components/common/TwoUp.jsx";
+import Carousel from "components/common/Carousel.jsx";
 import PageFooter from "components/common/PageFooter.jsx";
 
 export default React.createClass({
@@ -33,9 +34,19 @@ export default React.createClass({
               slug={comparison.slug}
               isMobile={isMobile}
             />
-            {i !== freshbooks.length - 1 ? <hr className="divider--short" /> : null}
+            <hr className="divider--short" />
           </div>
         ))}
+        <Carousel
+          images={[
+            require("images/freshbooks/styleguide-1.png"),
+            require("images/freshbooks/styleguide-2.png"),
+            require("images/freshbooks/styleguide-3.png"),
+            require("images/freshbooks/styleguide-4.png")
+          ]}
+          slug="style-guide"
+          title="FreshBooks Style Guide"
+        />
         <PageFooter />
       </div>
     );
