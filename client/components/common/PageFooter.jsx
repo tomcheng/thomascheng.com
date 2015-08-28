@@ -24,8 +24,8 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="text-center push-top push-bottom-sm text-muted">
-        <i style={{ fontSize: 18 }} onClick={this._handleClick} className="fa fa-paw" />
+      <div className="text-center push-top push-bottom-sm">
+        <i style={{ fontSize: 18, padding: 5 }} onClick={this._handleClick} className="fa fa-hand-o-up" />
       </div>
     );
   }
