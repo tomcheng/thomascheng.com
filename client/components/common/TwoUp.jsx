@@ -20,12 +20,13 @@ export default React.createClass({
           <h4>{title}</h4>
           {description ? <div>{description}</div> : null}
         </div>
-
-        <div className="row">
-          <div className="col-sm-6">
+        <div className="two-up">
+          <div className="two-up__panel two-up__panel--before">
+            <div className="two-up__label">Before</div>
             <img className="two-up__image" src={before.url} />
           </div>
-          <div className="col-sm-6">
+          <div className="two-up__panel two-up__panel--after">
+            <div className="two-up__label">After</div>
             <img className="two-up__image" src={after.url} />
           </div>
         </div>
