@@ -1,26 +1,4 @@
 .navigation
-  background-color: rgba($white, 0.96)
-  border-bottom: 1px solid $border-light
-  position: fixed
-  height: $header-height-mobile
-  left: 0
-  top: 0
-  width: 100%
-  z-index: $z-index-navigation
-
-.navigation__logo
-  position: absolute
-  overflow: hidden
-  width: 50px
-  height: 34px
-  transform: scale(0.6)
-  top: 4px
-  left: 5px
-
-  .logo-path
-    fill: $text-color
-
-.navigation__list
   align-items: center
   display: flex
   justify-content: flex-end
@@ -41,6 +19,9 @@
   &.active,
   .navigation--home &
     +opacity(1)
+
+  @media (min-width: $screen-sm-min)
+    line-height: $header-height-desktop
 
 .navigation__item__text
   display: block

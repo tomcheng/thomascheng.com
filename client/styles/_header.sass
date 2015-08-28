@@ -1,70 +1,44 @@
 $expanded-height: 70px
 $collapsed-height: 40px
 
-$header-anim-duration: 0.15s
-
 .header
-  +user-select(none)
-  left: 0
+  background-color: rgba($white, 0.96)
+  border-bottom: 1px solid $border-light
   position: fixed
+  left: 0
   top: 0
   width: 100%
   z-index: $z-index-header
 
-.header__background
-  +transition(transform $header-anim-duration ease-in-out)
-  background-color: rgba($white, 0.96)
-  box-shadow: 0 1px 2px rgba(0,0,0,0.18)
-  height: $expanded-height
-  left: 0
-  position: absolute
-  top: 0
-  transform-origin: 0 0 0
-  transform: scale3d(1, 1, 1)
-  width: 100%
-
-  .header--collapsed &
-    transform: scale3d(1, $collapsed-height / $expanded-height, 1)
-
-.header__inner
-  position: relative
-
 .header__logo
-  +transition(transform $header-anim-duration ease-in-out)
-  float: left
   height: 34px
-  left: -5px
-  position: absolute
+  left: 13px
   overflow: hidden
-  top: 0
-  transform-origin: 0 0 0
-  transform: scale3d(1, 1, 1) translate3d(5px, 15px, 0)
+  position: absolute
+  top: 17px
+  transform: scale(1)
   width: 50px
 
-  .header--collapsed &
-    transform: scale3d(0.6, 0.6, 1) translate3d(5px, 14px, 0)
+  .logo-path
+    fill: $text-color
+
+  @media (max-width: $screen-xs-max)
+    left: 5px
+    top: 4px
+    transform: scale(0.6)
+
+.header__name-and-position
+  margin-left: 60px
+  margin-top: 17px
+
+  @media (max-width: $screen-xs-max)
+    display: none
 
 .header__name
-  +transition(transform $header-anim-duration ease-in-out)
   font-weight: bold
-  transform: translate3d(60px, 19px, 0)
-
-  .header--collapsed &
-    transform: translate3d(38px, 12px, 0)
 
 .header__position
-  +transition(all $header-anim-duration ease-in-out)
   color: $text-color-secondary
   font-style: italic
   font-size: $font-size-sm
-  line-height: 16px
-  transform: translate3d(60px, 19px, 0)
 
-  .header--collapsed &
-    opacity: 0
-    transform: translate3d(38px, 12px, 0)
-
-.header-placeholder
-  height: $expanded-height
-  width: 100%
-  margin-bottom: 20px

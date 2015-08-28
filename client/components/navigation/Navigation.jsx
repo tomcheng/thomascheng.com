@@ -18,12 +18,18 @@ export default React.createClass({
           isHome = this.getPathname() === '/';
 
     return (
-      <div className={classNames("navigation", { "navigation--home": isHome })}>
+      <div className="header">
         <div className="container relative-box">
-          <Link to="/">
-            <div className='navigation__logo' dangerouslySetInnerHTML={{__html: svgTag}} />
-          </Link>
-          <ul className="navigation__list">
+          <div className="pull-left">
+            <Link to="/">
+              <div className="header__logo" dangerouslySetInnerHTML={{__html: svgTag}} />
+            </Link>
+            <div className="header__name-and-position">
+              <div className="header__name">Thomas Cheng</div>
+              <div className="header__position">UI/UX Designer &amp; Front-End Developer</div>
+            </div>
+          </div>
+          <ul className={classNames("navigation", {"navigation--home": isHome})}>
             {links.map((link, i) => (
               <li key={link.title} className="navigation__item h4">
                 <Link to={link.path}>
