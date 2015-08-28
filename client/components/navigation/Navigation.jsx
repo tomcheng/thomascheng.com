@@ -18,7 +18,7 @@ export default React.createClass({
           isHome = this.getPathname() === '/';
 
     return (
-      <div>
+      <div className="container">
         <div className={classNames("navigation", {
           "navigation--home": isHome
         })}>
@@ -37,7 +37,6 @@ export default React.createClass({
             ))}
           </ul>
         </div>
-        <div className="navigation-placeholder" />
       </div>
     );
   }
