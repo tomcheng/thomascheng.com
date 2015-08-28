@@ -2,15 +2,11 @@
   background-color: rgba($white, 0.96)
   border-bottom: 1px solid $border-light
   position: fixed
+  height: $header-height-mobile
   left: 0
   top: 0
   width: 100%
   z-index: $z-index-navigation
-
-.navigation-placeholder
-  height: $header-height-mobile
-  margin-bottom: 20px
-  width: 100%
 
 .navigation__logo
   position: absolute
@@ -25,10 +21,9 @@
     fill: $text-color
 
 .navigation__list
+  align-items: center
   display: flex
   justify-content: flex-end
-  align-items: center
-  height: $header-height-mobile
   margin: 0
   padding: 0 15px
 
@@ -39,10 +34,10 @@
   +opacity(0.2)
   color: inherit
   display: block
-  padding: 10px 7px
-  position: relative
+  line-height: $header-height-mobile
+  padding: 0 7px
   text-decoration: none
-  top: 1px
+  vertical-align: center
 
   &.active,
   .navigation--home &
