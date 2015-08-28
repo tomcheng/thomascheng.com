@@ -1,53 +1,34 @@
 import React from "react";
-import {Link} from "react-router";
+import {Link, State} from "react-router";
 import classNames from "classnames";
 
 import Animations from 'utils/animations.jsx';
 import Easings from 'utils/easings.jsx';
+import svgTag from "utils/svgTag.jsx";
 
 export default React.createClass({
+  mixins: [State],
+
   propTypes: {
     links: React.PropTypes.array.isRequired
   },
 
-  getDefaultProps() {
-    return { topOffset: 20 };
-  },
-
-  getInitialState() {
-    return { scrollTop: 0 };
-  },
-
-  componentDidMount() {
-    this.bodyEl = document.getElementsByTagName('body')[0];
-
-    document.addEventListener("scroll", this._handleScroll);
-  },
-
-  componentWillUnmount() {
-    document.removeEventListener("scroll", this._handleScroll)
-  },
-
-  _handleScroll() {
-    this.setState({ scrollTop: this.bodyEl.scrollTop });
-  },
-
   render() {
-    const {links, topOffset} = this.props,
-          {scrollTop} = this.state;
+    const {links} = this.props,
+          isHome = this.getPathname() === '/';
 
     return (
       <div>
         <div className={classNames("navigation", {
-          "navigation--collapsed": scrollTop > topOffset
+          "navigation--home": isHome
         })}>
-          <div className="navigation__background" />
-          <div className="navigation__bottom-divider" />
+          <Link to="/">
+            <div className='navigation__logo' dangerouslySetInnerHTML={{__html: svgTag}} />
+          </Link>
           <ul className="navigation__list">
             {links.map((link, i) => (
-              <li key={link.title} className="navigation__item">
+              <li key={link.title} className="navigation__item h4">
                 <Link to={link.path}>
-                  <i className={"fa fa-" + link.icon + " navigation__item__icon"} />
                   <span className="navigation__item__text">
                     {link.title}
                   </span>

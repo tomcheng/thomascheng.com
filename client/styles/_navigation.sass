@@ -1,11 +1,8 @@
-$expanded-height: 75px
-$collapsed-height: 45px
-
-$animation-duration: 0.15s
+$expanded-height: 45px
 
 .navigation
-  font-family: Arial, Helvetica, sans-serif
-  margin: 0 0 20px
+  background-color: rgba($white, 0.96)
+  border-bottom: 1px solid $border-light
   position: fixed
   left: 0
   top: 0
@@ -17,75 +14,42 @@ $animation-duration: 0.15s
   margin-bottom: 20px
   width: 100%
 
-.navigation__background
-  +transition(transform $animation-duration ease-in-out)
-  transform-origin: 50% 0 0
-  background-color: rgba($white, 0.96)
+.navigation__logo
   position: absolute
-  top: 0
-  left: 0
-  width: 100%
-  z-index: -1
-  height: $expanded-height
+  overflow: hidden
+  width: 50px
+  height: 34px
+  transform: scale(0.6)
+  top: 4px
+  left: 5px
 
-  .navigation--collapsed &
-    transform: scale3d(1, $collapsed-height / $expanded-height, 1)
-
-.navigation__bottom-divider
-  +transition(transform $animation-duration ease-in-out)
-  background-color: $border-light
-  height: 1px
-  position: absolute
-  transform: translate3d(0, $expanded-height, 0)
-  width: 100%
-
-  .navigation--collapsed &
-    transform: translate3d(0, $collapsed-height, 0)
+  .logo-path
+    fill: $text-color
 
 .navigation__list
   display: flex
+  justify-content: flex-end
+  align-items: center
   height: $expanded-height
   margin: 0
-  padding: 0
-
-  .navigation--collapsed &
-    height: $collapsed-height
+  padding: 0 15px
 
 .navigation__item
-  position: relative
-  flex-grow: 1
-  flex-shrink: 1
-  flex-basis: 0
-  font-size: 10px
   list-style: none
-  text-align: center
 
 .navigation__item a
   +opacity(0.2)
   color: inherit
   display: block
-  padding: 10px 0
+  padding: 10px 7px
+  position: relative
   text-decoration: none
-  &.active
+  top: 1px
+
+  &.active,
+  .navigation--home &
     +opacity(1)
 
-.navigation__item__icon
-  +transition(transform $animation-duration ease-in-out)
-  display: block
-  font-size: 36px
-  line-height: 1
-  margin-bottom: 5px
-  transform-origin: 50% 0 0
-
-  .navigation--collapsed &
-    transform: scale3d(0.7, 0.7, 1)
-
 .navigation__item__text
-  transform-origin: 50% 0 0
-  +transition(all $animation-duration ease-in-out)
-  +opacity(1)
   display: block
 
-  .navigation--collapsed &
-    +opacity(0)
-    transform: translate3d(0, -12px, 0)

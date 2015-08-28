@@ -7,6 +7,12 @@ export default React.createClass({
     return (
       <div>
         <Carousel
+          images={photocopiedFaces}
+          slug="photocopied-faces"
+          title="Photocopied Faces"
+        />
+        <hr className="divider--short" />
+        <Carousel
           images={funWithType}
           slug="fun-with-type"
           title="Fun With Type"
@@ -16,12 +22,6 @@ export default React.createClass({
           images={processingFaces}
           slug="processing-faces"
           title="Experiments with Processing"
-        />
-        <hr className="divider--short" />
-        <Carousel
-          images={photocopiedFaces}
-          slug="photocopied-faces"
-          title="Photocopied Faces"
         />
         <PageFooter />
       </div>

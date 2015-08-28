@@ -60,24 +60,16 @@ const App = React.createClass({
 
 const links = [
   {
-    path: "/",
-    title: "Home",
-    icon: "home"
+    path: "/work-work",
+    title: "Work"
   },
   {
     path: "/academic-work",
-    title: "Academic Work",
-    icon: "graduation-cap"
-  },
-  {
-    path: "/work-work",
-    title: "Work Work",
-    icon: "briefcase"
+    title: "Academic Work"
   },
   {
     path: "/miscellany",
-    title: "Miscellany",
-    icon: "cogs"
+    title: "Miscellany"
   }
 ];
 

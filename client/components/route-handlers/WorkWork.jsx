@@ -6,9 +6,8 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h3>FreshBooks</h3>
         {freshbooks.map((comparison, i) => (
-          <div key={comparison.slug} className="push-bottom-sm">
+          <div key={comparison.slug}>
             <BeforeAfter
               before={{
                 url: require("images/freshbooks/" + comparison.slug + "-before.png"),
@@ -25,6 +24,7 @@ export default React.createClass({
               title={comparison.title}
               slug={comparison.slug}
             />
+            {i !== freshbooks.length - 1 ? <hr className="divider--short" /> : null}
           </div>
         ))}
         <PageFooter />
@@ -36,32 +36,25 @@ export default React.createClass({
 const freshbooks = [
   {
     slug: "dashboard",
-    title: "Dashboard",
+    title: "FreshBooks Dashboard",
     beforeDimensions: [ 840, 449 ],
-    afterDimensions: [ 840, 1074 ],
-    annotations: [
-      {
-        left: 0.5,
-        top: 0.5,
-        message: "This is a message."
-      }
-    ]
+    afterDimensions: [ 840, 1074 ]
   },
   {
     slug: "reports",
-    title: "Reports Page",
+    title: "FreshBooks Reports Page",
     beforeDimensions: [ 1077, 334 ],
     afterDimensions: [ 840, 594 ]
   },
   {
     slug: "client",
-    title: "Client Page",
+    title: "FreshBooks Client Page",
     beforeDimensions: [ 840, 714 ],
     afterDimensions: [ 840, 651 ]
   },
   {
     slug: "timer",
-    title: "Time-tracker",
+    title: "FreshBooks Time-tracker",
     beforeDimensions: [ 840, 660 ],
     afterDimensions: [ 840, 740 ]
   }
