@@ -1,14 +1,22 @@
 import React from "react";
 import BeforeAfter from "components/common/BeforeAfter.jsx";
+import TwoUp from "components/common/TwoUp.jsx";
 import PageFooter from "components/common/PageFooter.jsx";
 
 export default React.createClass({
+  propTypes: {
+    isMobile: React.PropTypes.bool
+  },
+
   render() {
+    const {isMobile} = this.props,
+          Component = isMobile ? BeforeAfter : TwoUp;
+
     return (
       <div>
         {freshbooks.map((comparison, i) => (
           <div key={comparison.slug}>
-            <BeforeAfter
+            <Component
               before={{
                 url: require("images/freshbooks/" + comparison.slug + "-before.png"),
                 width: comparison.beforeDimensions[0],
@@ -23,6 +31,7 @@ export default React.createClass({
               annotations={comparison.annotations}
               title={comparison.title}
               slug={comparison.slug}
+              isMobile={isMobile}
             />
             {i !== freshbooks.length - 1 ? <hr className="divider--short" /> : null}
           </div>

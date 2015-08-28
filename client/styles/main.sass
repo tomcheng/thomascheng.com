@@ -14,8 +14,12 @@
 @import image-flasher
 @import header
 @import navigation
+@import two-up
 @import typography
 @import work-section
 
 body
   padding-top: $header-height-mobile + 20px
+
+  @media (min-width: $screen-sm-min)
+    padding-top: $header-height-desktop + 20px
