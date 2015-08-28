@@ -18,10 +18,8 @@ export default React.createClass({
           isHome = this.getPathname() === '/';
 
     return (
-      <div className="container">
-        <div className={classNames("navigation", {
-          "navigation--home": isHome
-        })}>
+      <div className={classNames("navigation", { "navigation--home": isHome })}>
+        <div className="container relative-box">
           <Link to="/">
             <div className='navigation__logo' dangerouslySetInnerHTML={{__html: svgTag}} />
           </Link>
