@@ -58,7 +58,14 @@ const freshbooks = [
     slug: "dashboard",
     title: "FreshBooks Dashboard",
     beforeDimensions: [ 840, 449 ],
-    afterDimensions: [ 840, 1074 ]
+    afterDimensions: [ 840, 1074 ],
+    annotations: [
+      {
+        message: "This is a message.",
+        top: 0.5,
+        left: 0.5
+      }
+    ]
   },
   {
     slug: "reports",

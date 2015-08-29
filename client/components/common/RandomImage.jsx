@@ -24,7 +24,7 @@ export default React.createClass({
     return (
       <div className="row">
         <div className="col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
-          <div onClick={this._handleClick}>
+          <div onClick={this._handleClick} style={{ cursor: "pointer" }}>
             {images.map((image, i) => (
               <img key={i} style={{
                 width: "100%",

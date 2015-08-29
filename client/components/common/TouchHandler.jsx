@@ -4,14 +4,16 @@ export default React.createClass({
   propTypes: {
     onDrag: React.PropTypes.func,
     onDragRelease: React.PropTypes.func,
-    onTap: React.PropTypes.func
+    onTap: React.PropTypes.func,
+    stopPropagation: React.PropTypes.bool
   },
 
   getDefaultProps() {
     return {
       onDrag: () => {},
       onDragRelease: () => {},
-      onTap: () => {}
+      onTap: () => {},
+      stopPropagation: false
     };
   },
 
@@ -31,6 +33,8 @@ export default React.createClass({
     const x = evt.touches[0].clientX,
           y = evt.touches[0].clientY,
           time = this._getCurrentTime();
+
+    if (this.props.stopPropagation) evt.stopPropagation();
 
     this.setState({
       start: {x, y, time},
@@ -90,13 +94,19 @@ export default React.createClass({
     });
   },
 
+  _handleClick(evt) {
+    if (this.props.stopPropagation) evt.stopPropagation();
+
+    this.props.onTap();
+  },
+
   render() {
     return (
       <div
         onTouchStart={this._handleTouchStart}
         onTouchMove={this._handleTouchMove}
         onTouchEnd={this._handleTouchEnd}
-        onClick={this.props.onTap}>
+        onClick={this._handleClick}>
         {this.props.children}
       </div>
     );

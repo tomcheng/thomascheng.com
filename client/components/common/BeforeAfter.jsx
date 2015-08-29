@@ -1,10 +1,9 @@
 import React from "react";
 import classNames from "classnames";
-
 import Animations from "utils/animations.jsx";
 import Easings from "utils/easings.jsx";
-
 import TouchHandler from "components/common/TouchHandler.jsx";
+import Annotation from "components/common/Annotation.jsx";
 
 export default React.createClass({
   propTypes: {
@@ -147,8 +146,8 @@ export default React.createClass({
             </div>
           </div>
           <div className="before-after" ref="frame" style={{ height }}>
-            {annotations.map((annotation, i) => (
-              <Annotation key={"point-" + i} annotation={annotation} />
+            {annotations.map(annotation => (
+              <Annotation key={annotation.message} annotation={annotation} />
             ))}
             <div
               className="before-after__outer-wrapper before-after__outer-wrapper--after"
@@ -173,26 +172,6 @@ export default React.createClass({
       </div>
     );
   }
-});
-
-const Annotation = React.createClass({
-  propTypes: {
-    annotation: React.PropTypes.object.isRequired
-  },
-
-  render() {
-    const {left, top, message} = this.props.annotation;
-
-    return (
-      <div className="annotation-indicator" style={
-        {
-          left: (left * 100) + "%",
-          top: (top * 100) + "%"
-        }
-      }>
-      </div>
-    );
-  },
 });
 
 const constrain = (value, min, max) => Math.min(Math.max(value, min), max);
