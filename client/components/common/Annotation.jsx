@@ -104,7 +104,7 @@ const Tooltip = React.createClass({
           {width, height} = this.state;
 
     return (
-      <div className="annotation-tooltip" style={{
+      <div className="annotation-tooltip-container" style={{
         left: left,
         top: top,
         opacity: isShowing ? 1 : 0,

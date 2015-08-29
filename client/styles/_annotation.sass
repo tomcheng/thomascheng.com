@@ -1,8 +1,9 @@
-$indicator-size: 30px
+$indicator-size: 34px
+$indicator-offset: 6px
 
 .annotation-indicator
   +border-radius($indicator-size / 2)
-  background-color: red
+  background-color: rgba($black, 0.1)
   height: $indicator-size
   margin-left: -$indicator-size / 2
   margin-top: -$indicator-size / 2
@@ -10,11 +11,24 @@ $indicator-size: 30px
   width: $indicator-size
   z-index: $z-index-annotation
 
-.annotation-tooltip
-  +border-radius
-  border: 1px solid $border-light
+  &:before
+    content: ''
+    position: absolute
+    width: $indicator-size + 2 * $indicator-offset
+    height: $indicator-size + 2 * $indicator-offset
+    border: 4px solid rgba($black, 0.1)
+    +border-radius(50%)
+    left: -$indicator-offset
+    top: -$indicator-offset
+
+
+.annotation-tooltip-container
   position: absolute
   z-index: $z-index-tooltip
-  background-color: $white
-  padding: 5px 10px
   pointer-events: none
+
+.annotation-tooltip
+  +border-radius
+  background-color: $white
+  border: 1px solid $border-light
+  padding: 5px 10px
