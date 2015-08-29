@@ -49,8 +49,11 @@ export default React.createClass({
   },
 
   _setDimensions() {
+    const newWidth = React.findDOMNode(this.refs.wrapper).offsetWidth,
+          currentPane = this._getCurrentPane();
     this.setState({
-      width: React.findDOMNode(this.refs.wrapper).offsetWidth
+      width: newWidth,
+      scrollPos: -newWidth * currentPane
     });
   },
 
