@@ -83,14 +83,33 @@ const Tooltip = React.createClass({
     top: React.PropTypes.number
   },
 
+  getInitialState() {
+    return {
+      width: 0,
+      height: 0
+    };
+  },
+
+  componentDidMount() {
+    const box = React.findDOMNode(this).getBoundingClientRect();
+
+    this.setState({
+      width: box.width,
+      height: box.height
+    });
+  },
+
   render() {
-    const {isShowing, message, top, left} = this.props;
+    const {isShowing, message, top, left} = this.props,
+          {width, height} = this.state;
 
     return (
       <div className="annotation-tooltip" style={{
         left: left,
         top: top,
-        display: isShowing ? "block" : "none"
+        opacity: isShowing ? 1 : 0,
+        marginLeft: -width / 2,
+        marginTop: -height - 20
       }}>
         {message}
       </div>

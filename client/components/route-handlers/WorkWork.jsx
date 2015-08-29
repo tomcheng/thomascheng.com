@@ -61,9 +61,18 @@ const freshbooks = [
     afterDimensions: [ 840, 1074 ],
     annotations: [
       {
-        message: "This is a message.",
-        top: 0.5,
-        left: 0.5
+        message: (
+          <div style={{ width: 200 }}>
+            One of FreshBooks core tenets is getting users paid, so this information was brought to the forefront.
+          </div>
+        ),
+        top: 0.095,
+        left: 0.73
+      },
+      {
+        message: "Show Tooltip",
+        top: 0.36,
+        left: 0.763
       }
     ]
   },
