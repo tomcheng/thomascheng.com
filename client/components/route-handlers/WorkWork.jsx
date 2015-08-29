@@ -55,25 +55,7 @@ const freshbooks = [
     slug: "dashboard",
     title: "Dashboard",
     beforeDimensions: [ 840, 449 ],
-    afterDimensions: [ 840, 1074 ],
-    annotations: [
-      {
-        message: (
-          <div className="annotation-tooltip" style={{ width: 200 }}>
-            One of FreshBooks core tenets is getting users paid, so this
-            information was brought to the forefront.
-          </div>
-        ),
-        top: 0.095,
-        left: 0.73,
-        position: "top"
-      },
-      {
-        message: <div className="annotation-tooltip">Show Tooltip</div>,
-        top: 0.36,
-        left: 0.763
-      }
-    ]
+    afterDimensions: [ 840, 1074 ]
   },
   {
     slug: "reports",
