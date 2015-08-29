@@ -146,8 +146,8 @@ export default React.createClass({
             </div>
           </div>
           <div className="before-after" ref="frame" style={{ height }}>
-            {annotations.map(annotation => (
-              <Annotation key={annotation.message} annotation={annotation} />
+            {annotations.map((annotation, i) => (
+              <Annotation key={i} annotation={annotation} />
             ))}
             <div
               className="before-after__outer-wrapper before-after__outer-wrapper--after"
