@@ -3,15 +3,16 @@ import BeforeAfter from "components/common/BeforeAfter.jsx";
 import TwoUp from "components/common/TwoUp.jsx";
 import Carousel from "components/common/Carousel.jsx";
 import PageFooter from "components/common/PageFooter.jsx";
+import breakPoints from "utils/breakpoints.jsx";
 
 export default React.createClass({
   propTypes: {
-    isMobile: React.PropTypes.bool
+    windowWidth: React.PropTypes.number.isRequired
   },
 
   render() {
-    const {isMobile} = this.props,
-          Component = isMobile ? BeforeAfter : TwoUp;
+    const {windowWidth} = this.props,
+          Component = windowWidth <= breakPoints.sm.max ? BeforeAfter : TwoUp;
 
     return (
       <div>
@@ -32,7 +33,6 @@ export default React.createClass({
               annotations={comparison.annotations}
               title={comparison.title}
               slug={comparison.slug}
-              isMobile={isMobile}
             />
             <hr className="divider--short" />
           </div>

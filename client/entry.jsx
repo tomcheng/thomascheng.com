@@ -16,36 +16,34 @@ import NotFound from "components/NotFound/NotFoundComponent.jsx";
 
 const {DefaultRoute, Link, Route, RouteHandler, NotFoundRoute} = Router;
 
-const MOBILE_BREAKPOINT = 768;
-
 const App = React.createClass({
   getInitialState() {
-    return { isMobile: false };
+    return { windowWidth: 0 };
   },
 
   componentDidMount() {
-    this._setDimensions();
+    this._getWindowWidth();
 
-    window.addEventListener("resize", this._setDimensions);
+    window.addEventListener("resize", this._getWindowWidth);
   },
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this._setDimensions);
+    window.removeEventListener("resize", this._getWindowWidth);
   },
 
-  _setDimensions() {
+  _getWindowWidth() {
     this.setState({
-      isMobile: window.innerWidth < MOBILE_BREAKPOINT
+      windowWidth: window.innerWidth
     });
   },
 
   render() {
-    const {isMobile} = this.state;
+    const {windowWidth} = this.state;
 
     return (
       <div className="container">
         <Navigation links={links} />
-        <RouteHandler isMobile={isMobile} />
+        <RouteHandler windowWidth={windowWidth} />
       </div>
     );
   }
