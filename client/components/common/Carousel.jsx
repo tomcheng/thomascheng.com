@@ -32,7 +32,7 @@ export default React.createClass({
       scrollPos: 0,
       scrollPosAtDragStart: null,
       shouldWiggle: false,
-      width: 0
+      width: 1000
     };
   },
 
@@ -52,7 +52,7 @@ export default React.createClass({
     const newWidth = React.findDOMNode(this.refs.wrapper).offsetWidth,
           currentPane = this._getCurrentPane();
     this.setState({
-      width: newWidth,
+      width: Math.max(newWidth, 1),
       scrollPos: -newWidth * currentPane
     });
   },
