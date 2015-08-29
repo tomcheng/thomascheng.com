@@ -10,7 +10,7 @@ export default React.createClass({
         <h2>FreshBooks</h2>
         <div className="push-bottom">
           FreshBooks is a cloud-based accounting software service designed for
-          small business owners and serves over five million users.
+          small business owners and serves over five million&nbsp;users.
         </div>
         <div className="push-bottom">
           <Carousel
@@ -22,6 +22,10 @@ export default React.createClass({
             ]}
             slug="style-guide"
             title="Style Guide"
+            description={
+              "Created as a resource for developers and designers to enforce " +
+              "visual consistency across the product."
+            }
           />
         </div>
         {freshbooks.map((comparison, i) => (

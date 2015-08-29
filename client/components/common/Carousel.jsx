@@ -211,13 +211,18 @@ export default React.createClass({
 
     return (
       <div className="carousel">
-        <div className="push-bottom-xs clearfix">
-          {title ? <h4 className="pull-left">{title}</h4> : null}
-          {imageCount > 1 ? (
-            <div className="carousel__counter pull-right" onClick={this._advanceToNextPane}>
-              {this._getCurrentPane() + 1} of {imageCount}
+        <div className="push-bottom-xs">
+          <div className="carousel__header">
+            <div className="carousel__header__info">
+              <h4>{title}</h4>
+              {description ? <div>{description}</div> : null}
             </div>
-          ) : null}
+            {imageCount > 1 ? (
+              <div className="carousel__header__counter" onClick={this._advanceToNextPane}>
+                {this._getCurrentPane() + 1}&nbsp;of&nbsp;{imageCount}
+              </div>
+            ) : null}
+          </div>
         </div>
         <div className="carousel__wrapper" ref="wrapper">
           <TouchHandler
@@ -242,7 +247,6 @@ export default React.createClass({
             <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
           ) : null}
         </div>
-        {description ? <div className="push-top-xs">{description}</div> : null}
       </div>
     );
   }

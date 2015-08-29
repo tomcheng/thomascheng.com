@@ -6,6 +6,23 @@ $carousel-padding: 0.5 * $grid-gutter-width
   @media (max-width: $screen-xs-max)
     margin: 0 (-$carousel-padding)
 
+.carousel__header
+  display: flex
+  justify-content: space-between
+
+.carousel__header__info
+  align-self: flex-end
+
+.carousel__header__counter
+  +user-select(none)
+  color: $text-color-faint
+  cursor: pointer
+  font-size: $font-size-sm
+  line-height: $line-height-base-computed
+  font-weight: normal
+  font-style: italic
+  align-self: flex-end
+
 .carousel__frame
   overflow: hidden
   position: relative
@@ -41,11 +58,3 @@ $indicator-size: 20px
   text-align: center
   top: 50%
   width: $indicator-size
-
-.carousel__counter
-  +user-select(none)
-  color: $text-color-faint
-  cursor: pointer
-  font-size: $font-size-sm
-  font-weight: normal
-  font-style: italic

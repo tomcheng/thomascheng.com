@@ -26,9 +26,8 @@ export default React.createClass({
     return (
       <div className="text-center push-top push-bottom-sm">
         <i
-          style={{ fontSize: 18, padding: 5, cursor: "pointer" }}
+          className="fa fa-hand-o-up page-footer-icon"
           onClick={this._handleClick}
-          className="fa fa-hand-o-up"
         />
       </div>
     );
