@@ -43,7 +43,11 @@ const App = React.createClass({
     return (
       <div className="container">
         <Navigation links={links} />
-        <RouteHandler windowWidth={windowWidth} />
+        <div className="row">
+          <div className="col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+            <RouteHandler windowWidth={windowWidth} />
+          </div>
+        </div>
       </div>
     );
   }

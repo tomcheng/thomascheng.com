@@ -210,43 +210,39 @@ export default React.createClass({
     }
 
     return (
-      <div className="row">
-        <div className="col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
-          <div className="carousel">
-            <div className="push-bottom-xs clearfix">
-              {title ? <h4 className="pull-left">{title}</h4> : null}
-              {imageCount > 1 ? (
-                <div className="carousel__counter pull-right" onClick={this._advanceToNextPane}>
-                  {this._getCurrentPane() + 1} of {imageCount}
-                </div>
-              ) : null}
+      <div className="carousel">
+        <div className="push-bottom-xs clearfix">
+          {title ? <h4 className="pull-left">{title}</h4> : null}
+          {imageCount > 1 ? (
+            <div className="carousel__counter pull-right" onClick={this._advanceToNextPane}>
+              {this._getCurrentPane() + 1} of {imageCount}
             </div>
-            <div className="carousel__wrapper" ref="wrapper">
-              <TouchHandler
-                onDrag={this._handleDrag}
-                onDragRelease={this._handleDragRelease}
-                onTap={this._advanceToNextPane}>
-                <div
-                  className={classNames("carousel__frame", {
-                    "wiggle": this.state.shouldWiggle
-                  })}
-                  style={{ width }}>
-                  <ul className="carousel__list" style={listStyle}>
-                    {images.map((image, index) => (
-                      <li key={index} className="carousel__item" style={{ width }}>
-                        <img className="carousel__image" src={image} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </TouchHandler>
-              {imageCount > 1 ? (
-                <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
-              ) : null}
-            </div>
-            {description ? <div className="push-top-xs">{description}</div> : null}
-          </div>
+          ) : null}
         </div>
+        <div className="carousel__wrapper" ref="wrapper">
+          <TouchHandler
+            onDrag={this._handleDrag}
+            onDragRelease={this._handleDragRelease}
+            onTap={this._advanceToNextPane}>
+            <div
+              className={classNames("carousel__frame", {
+                "wiggle": this.state.shouldWiggle
+              })}
+              style={{ width }}>
+              <ul className="carousel__list" style={listStyle}>
+                {images.map((image, index) => (
+                  <li key={index} className="carousel__item" style={{ width }}>
+                    <img className="carousel__image" src={image} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </TouchHandler>
+          {imageCount > 1 ? (
+            <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
+          ) : null}
+        </div>
+        {description ? <div className="push-top-xs">{description}</div> : null}
       </div>
     );
   }
