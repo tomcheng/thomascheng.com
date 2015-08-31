@@ -5,6 +5,27 @@
   border: 1px solid $border-light
   position: relative
 
+.before-after--browser
+  border: 1px solid $browser-chrome-color
+  +border-radius(0 0 $border-radius-default $border-radius-default)
+
+$toolbar-height: 20px
+
+.before-after__browser-chrome
+  +border-radius($border-radius-default $border-radius-default 0 0)
+  height: $toolbar-height
+  background-color: $browser-chrome-color
+  position: relative
+  &:before
+    content: "•••"
+    color: $white
+    position: absolute
+    letter-spacing: 5px
+    font-size: 18px
+    line-height: $toolbar-height
+    top: 1px
+    left: 10px
+
 .before-after__outer-wrapper
   bottom: 0
   overflow: hidden
@@ -33,10 +54,13 @@
   display: block
   width: 100%
 
+  .before-after--browser &
+    +border-radius(0 0 $border-radius-default $border-radius-default)
+
 .before-after-buttons
   +clearfix
-  margin-bottom: 7px
   position: relative
+  top: -3px
 
 .before-after-buttons__background
   +border-radius
@@ -66,7 +90,7 @@
   font-family: Arial, Helvetica, sans-serif
   font-size: 9px
   letter-spacing: 1px
-  padding: 12px 0 10px
+  padding: 6px 0 3px
   position: relative
   text-align: center
   text-transform: uppercase

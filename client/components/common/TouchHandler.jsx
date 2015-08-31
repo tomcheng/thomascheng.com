@@ -61,7 +61,7 @@ export default React.createClass({
     };
 
     this.props.onDrag({
-      deltaX, deltaY, velocityX, velocityY, direction,
+      deltaX, deltaY, velocityX, velocityY, direction, x, y,
       preventDefault: () => evt.preventDefault()
     });
 

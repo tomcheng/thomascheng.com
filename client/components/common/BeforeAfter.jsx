@@ -10,19 +10,20 @@ export default React.createClass({
     title: React.PropTypes.string.isRequired,
     before: React.PropTypes.object.isRequired,
     after: React.PropTypes.object.isRequired,
-    description: React.PropTypes.string,
     annotations: React.PropTypes.array,
-    slug: React.PropTypes.string.isRequired
+    slug: React.PropTypes.string.isRequired,
+    showBrowserChrome: React.PropTypes.bool
   },
 
   getDefaultProps() {
-    return { annotations: [] };
+    return { annotations: [], showBrowserChrome: true };
   },
 
   getInitialState() {
     return {
       width: 0,
       ratio: 1,
+      dragStartPosition: null,
       isDragging: false,
       isDraggingHorizontally: false
     };
@@ -79,17 +80,18 @@ export default React.createClass({
     }
   },
 
-  _handleDrag({deltaX, direction, preventDefault}) {
+  _handleDrag({x, deltaX, direction, preventDefault}) {
     if (!this.state.isDragging) {
       this.setState({
         isDragging: true,
         ratioAtDragStart: this.state.ratio,
+        dragStartPosition: x,
         isDraggingHorizontally: direction === "left" || direction === "right"
       });
     } else if (this.state.isDraggingHorizontally) {
       preventDefault();
       this.setState({
-        ratio: constrain((this.state.ratioAtDragStart + deltaX / (this.state.width * 0.5 + 1)), 0, 1)
+        ratio: constrain((this.state.ratioAtDragStart + deltaX / (this.state.width * 0.6 + 1)), 0, 1)
       });
     }
 
@@ -98,6 +100,7 @@ export default React.createClass({
   _handleDragRelease() {
     this.setState({
       isDragging: false,
+      dragStartPosition: null,
       ratioAtDragStart: null,
       isDraggingHorizontally: false
     });
@@ -109,69 +112,93 @@ export default React.createClass({
   },
 
   render() {
-    const {before, after, annotations, title, description} = this.props,
+    const {before, after, annotations, title, description, showBrowserChrome} = this.props,
           {showing, width, ratio} = this.state,
           aspectRatio = Math.max(before.height/before.width, after.height/after.width),
           height = Math.ceil(aspectRatio * width);
 
     return (
-      <div>
-        <div className="push-bottom-xs">
-          <h4>{title}</h4>
-          {description ? <div>{description}</div> : null}
-        </div>
-        <TouchHandler
-          onDrag={this._handleDrag}
-          onDragRelease={this._handleDragRelease}
-          onTap={this._toggleShowing}>
-          <div className="before-after-buttons">
-            <div className="before-after-buttons__background" />
-            <div
-              className="before-after-buttons__indicator"
-              style={{
-                transform: "translate3d(" + (ratio * (width * 0.5 + 1)) + "px, 0, 0)"
-              }}
+      <TouchHandler
+        onDrag={this._handleDrag}
+        onDragRelease={this._handleDragRelease}
+        onTap={this._toggleShowing}>
+
+        <div className="push-bottom-xs clearfix">
+          <div className="pull-left">
+            <h4>{title}</h4>
+          </div>
+          <div className="pull-right">
+            <BeforeAfterSlider
+              ratio={ratio}
+              width={120}
             />
+          </div>
+        </div>
+
+
+        {showBrowserChrome ? <div className="before-after__browser-chrome"></div> : null}
+
+        <div className={classNames("before-after", {"before-after--browser": showBrowserChrome})} ref="frame" style={{ height }}>
+          {annotations.map((annotation, i) => (
+            <Annotation key={i} annotation={annotation} />
+          ))}
+          <div
+            className="before-after__outer-wrapper before-after__outer-wrapper--after"
+            style={{ width: (width * ratio) }}>
             <div
-              onClick={this._switchToBefore}
-              style={{ opacity: (0.2 + 0.8 * (1 - ratio)) }}
-              className="before-after-button">
-              Before
-            </div>
-            <div
-              onClick={this._switchToAfter}
-              style={{ opacity: (0.2 + 0.8 * ratio) }}
-              className="before-after-button">
-              After
+              className="before-after__inner-wrapper before-after__inner-wrapper--after"
+              style={{ width }}>
+              <img className="before-after__image" src={after.url} />
             </div>
           </div>
-          <div className="before-after" ref="frame" style={{ height }}>
-            {annotations.map((annotation, i) => (
-              <Annotation key={i} annotation={annotation} />
-            ))}
+          <div
+            className="before-after__outer-wrapper before-after__outer-wrapper--before"
+            style={{ width: (width * (1 - ratio)) }}>
             <div
-              className="before-after__outer-wrapper before-after__outer-wrapper--after"
-              style={{ width: (width * ratio) }}>
-              <div
-                className="before-after__inner-wrapper before-after__inner-wrapper--after"
-                style={{ width }}>
-                <img className="before-after__image" src={after.url} />
-              </div>
-            </div>
-            <div
-              className="before-after__outer-wrapper before-after__outer-wrapper--before"
-              style={{ width: (width * (1 - ratio)) }}>
-              <div
-                className="before-after__inner-wrapper before-after__inner-wrapper--before"
-                style={{ width }}>
-                <img className="before-after__image" src={before.url} />
-              </div>
+              className="before-after__inner-wrapper before-after__inner-wrapper--before"
+              style={{ width }}>
+              <img className="before-after__image" src={before.url} />
             </div>
           </div>
-        </TouchHandler>
-      </div>
+        </div>
+      </TouchHandler>
     );
   }
 });
 
 const constrain = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const BeforeAfterSlider = React.createClass({
+  propTypes: {
+    ratio: React.PropTypes.number.isRequired,
+    width: React.PropTypes.number.isRequired
+  },
+
+  render() {
+    const {ratio, width} = this.props
+
+    return (
+      <div style={{width: width}}>
+        <div className="before-after-buttons">
+          <div className="before-after-buttons__background" />
+          <div
+            className="before-after-buttons__indicator"
+            style={{
+              transform: "translate3d(" + (ratio * (width * 0.5 + 1)) + "px, 0, 0)"
+            }}
+          />
+          <div
+            style={{ opacity: (0.2 + 0.8 * (1 - ratio)) }}
+            className="before-after-button">
+            Before
+          </div>
+          <div
+            style={{ opacity: (0.2 + 0.8 * ratio) }}
+            className="before-after-button">
+            After
+          </div>
+        </div>
+      </div>
+    );
+  }
+})
