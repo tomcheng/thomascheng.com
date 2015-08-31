@@ -88,8 +88,8 @@ const qcloud = [
   {
     slug: "form-creation",
     title: "Form Creation",
-    beforeDimensions: [ 1024, 960 ],
-    afterDimensions: [ 1024, 960 ]
+    beforeDimensions: [ 1024, 768 ],
+    afterDimensions: [ 1024, 768 ]
   },
   {
     slug: "inspector-view",
