@@ -42,14 +42,15 @@ export default React.createClass({
         </div>
         <div className="push-bottom">
           <Carousel
+            slug="style-guide"
+            title="Style Guide"
+            description="Develop a playful yet straightforward visual language for the application and provide a resource to enforce consistency."
             images={[
               require("images/freshbooks/styleguide-1.png"),
               require("images/freshbooks/styleguide-2.png"),
               require("images/freshbooks/styleguide-3.png"),
               require("images/freshbooks/styleguide-4.png")
             ]}
-            slug="style-guide"
-            title="Style Guide"
           />
         </div>
         {freshbooks.map((comparison, i) => (
@@ -82,18 +83,21 @@ const qcloud = [
   {
     slug: "forms",
     title: "Forms Page",
+    description: "Simplify the user interface and reduce unnecessary information to make the content more approachable.",
     beforeDimensions: [ 1024, 768 ],
     afterDimensions: [ 1024, 768 ]
   },
   {
     slug: "form-creation",
     title: "Form Creation",
+    description: "Make form creation more intuitive by providing a WYSIWYG interface.",
     beforeDimensions: [ 1024, 768 ],
     afterDimensions: [ 1024, 768 ]
   },
   {
     slug: "sheet-filling",
     title: "Sheet Filling",
+    description: "Make form filling more obvious and less error-prone by using buttons instead of dropdowns for Pass/Fail checks.",
     beforeDimensions: [ 768, 640 ],
     afterDimensions: [ 768, 640 ]
   }
@@ -103,25 +107,22 @@ const freshbooks = [
   {
     slug: "dashboard",
     title: "Dashboard",
+    description: "Show users pertinent information from their account and give them insight into how their business is doing.",
     beforeDimensions: [ 840, 449 ],
     afterDimensions: [ 840, 710 ]
   },
   {
     slug: "reports",
     title: "Reports Page",
+    description: "Add descriptions and organize reports so they are more understandable and less over-whelming.",
     beforeDimensions: [ 1077, 334 ],
     afterDimensions: [ 840, 594 ]
   },
   {
     slug: "client",
     title: "Client Page",
+    description: "Simplify the elements on the page to make it visually consistent with the rest of the application.",
     beforeDimensions: [ 840, 714 ],
     afterDimensions: [ 840, 651 ]
-  },
-  // {
-  //   slug: "timer",
-  //   title: "Time-tracker",
-  //   beforeDimensions: [ 840, 660 ],
-  //   afterDimensions: [ 840, 740 ]
-  // }
+  }
 ];

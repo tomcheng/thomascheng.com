@@ -211,19 +211,36 @@ export default React.createClass({
 
     return (
       <div className="carousel">
-        <div className="push-bottom-xs">
-          <div className="carousel__header">
-            <div className="carousel__header__info">
-              <h4>{title}</h4>
-              {description ? <div>{description}</div> : null}
-            </div>
-            {imageCount > 1 ? (
-              <div className="carousel__header__counter" onClick={this._advanceToNextPane}>
-                {this._getCurrentPane() + 1}&nbsp;of&nbsp;{imageCount}
+        {description ? (
+          <div>
+            <h4>{title}</h4>
+            <div className="clearfix">
+              <div className="push-bottom-xs pull-left">
+                {description}
               </div>
-            ) : null}
+              <div className="push-bottom-xs pull-right">
+                {imageCount > 1 ? (
+                  <div className="carousel__header__counter" onClick={this._advanceToNextPane}>
+                    {this._getCurrentPane() + 1}&nbsp;of&nbsp;{imageCount}
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="clearfix">
+            <div className="push-bottom-xs pull-left">
+              <h4>{title}</h4>
+            </div>
+            <div className="push-bottom-xs pull-right">
+              {imageCount > 1 ? (
+                <div className="carousel__header__counter" onClick={this._advanceToNextPane}>
+                  {this._getCurrentPane() + 1}&nbsp;of&nbsp;{imageCount}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        )}
         <div className="carousel__wrapper" ref="wrapper">
           <TouchHandler
             onDrag={this._handleDrag}

@@ -7,6 +7,7 @@ import TouchHandler from "components/common/TouchHandler.jsx";
 export default React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
+    description: React.PropTypes.string.isRequired,
     before: React.PropTypes.object.isRequired,
     after: React.PropTypes.object.isRequired,
     slug: React.PropTypes.string.isRequired,
@@ -136,11 +137,12 @@ export default React.createClass({
     return (
       <div>
 
-        <div className="push-bottom-xs clearfix">
-          <div className="pull-left">
-            <h4>{title}</h4>
+        <h4>{title}</h4>
+        <div className="clearfix">
+          <div className="push-bottom-xs pull-left">
+            <div>{description}</div>
           </div>
-          <div className="pull-right">
+          <div className="push-bottom-xs pull-right">
             <TouchHandler
               onDrag={this._handleDragSlider}
               onDragRelease={this._handleDragRelease}
