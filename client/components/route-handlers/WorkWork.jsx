@@ -9,7 +9,7 @@ export default React.createClass({
       <div>
         <h2>QCloud</h2>
         <div className="push-bottom">
-          QCloud is a quality control solution designed for packagers and manufacturers.
+          QCloud is a quality control solution designed for contract packagers and manufacturers.
         </div>
         {qcloud.map((comparison, i) => (
           <div key={comparison.slug} className="push-bottom">
