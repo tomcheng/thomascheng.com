@@ -19,7 +19,7 @@ export default React.createClass({
     return {
       annotations: [],
       showBrowserChrome: true,
-      sliderWidth: 120
+      sliderWidth: 130
     };
   },
 

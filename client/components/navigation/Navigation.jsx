@@ -31,7 +31,7 @@ export default React.createClass({
           </div>
           <ul className={classNames("navigation", {"navigation--home": isHome})}>
             {links.map((link, i) => (
-              <li key={link.title} className="navigation__item h4">
+              <li key={link.title} className="navigation__item">
                 <Link to={link.path}>
                   <span className="navigation__item__text">
                     {link.title}

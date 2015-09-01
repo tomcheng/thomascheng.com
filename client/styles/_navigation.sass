@@ -6,6 +6,15 @@
 
 .navigation__item
   list-style: none
+  color: $text-color-header
+  text-transform: uppercase
+  font-size: 11px
+  font-weight: bold
+  line-height: $line-height-base-computed
+  letter-spacing: 0.5px
+
+  @media (min-width: $screen-md-min)
+    font-size: 12px
 
 .navigation__item a
   +opacity(0.2)

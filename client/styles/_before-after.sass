@@ -4,6 +4,7 @@
   background-color: $white
   border: 1px solid $border-light
   position: relative
+  cursor: pointer
 
 .before-after--browser
   border: 1px solid $browser-chrome-color
@@ -96,3 +97,7 @@ $toolbar-height: 20px
   text-transform: uppercase
   width: 50%
   z-index: 1
+  cursor: pointer
+
+  @media (min-width: $screen-md-min)
+    padding: 8px 0 6px
