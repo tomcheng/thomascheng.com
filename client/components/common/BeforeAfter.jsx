@@ -133,8 +133,9 @@ export default React.createClass({
   render() {
     const {before, after, title, description, showBrowserChrome, sliderWidth} = this.props,
           {showing, width, ratio} = this.state,
-          aspectRatio = Math.max(before.height/before.width, after.height/after.width),
-          height = Math.ceil(aspectRatio * width);
+          beforeHeight = before.width < width ? before.height : before.height / before.width * width,
+          afterHeight = after.width < width ? after.height : after.height / after.width * width,
+          height = Math.ceil(Math.max(beforeHeight, afterHeight));
 
     return (
       <div>
@@ -171,7 +172,7 @@ export default React.createClass({
               <div
                 className="before-after__inner-wrapper before-after__inner-wrapper--after"
                 style={{ width }}>
-                <img className="before-after__image" src={after.url} />
+                <img className="before-after__image" src={after.url} style={{ maxWidth: after.width }} />
               </div>
             </div>
             <div
@@ -180,7 +181,7 @@ export default React.createClass({
               <div
                 className="before-after__inner-wrapper before-after__inner-wrapper--before"
                 style={{ width }}>
-                <img className="before-after__image" src={before.url} />
+                <img className="before-after__image" src={before.url} style={{ maxWidth: before.width }}/>
               </div>
             </div>
           </div>
