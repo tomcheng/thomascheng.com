@@ -2,9 +2,17 @@ import React from "react";
 import BeforeAfter from "components/common/BeforeAfter.jsx";
 import Carousel from "components/common/Carousel.jsx";
 import PageFooter from "components/common/PageFooter.jsx";
+import breakPoints from "utils/breakpoints.jsx";
 
 export default React.createClass({
+  propTypes: {
+    windowWidth: React.PropTypes.number.isRequired
+  },
+
   render() {
+    const {windowWidth} = this.props,
+          isMd = windowWidth > breakPoints.md.min;
+
     return (
       <div>
         <h2>QCloud</h2>
@@ -25,13 +33,30 @@ export default React.createClass({
                 height: comparison.afterDimensions[1]
               }}
               description={comparison.description}
-              annotations={comparison.annotations}
               title={comparison.title}
               slug={comparison.slug}
               showBrowserChrome={true}
             />
           </div>
         ))}
+        <div className="push-bottom">
+          <BeforeAfter
+            before={{
+              url: isMd ? require("images/qcloud/sheet-filling-landscape-before.png") : require("images/qcloud/sheet-filling-before.png"),
+              width: isMd ? 1024 : 768,
+              height: isMd ? 768 : 640
+            }}
+            after={{
+              url: isMd ? require("images/qcloud/sheet-filling-landscape-after.png") : require("images/qcloud/sheet-filling-after.png"),
+              width: isMd ? 1024 : 768,
+              height: isMd ? 768 : 640
+            }}
+            description="Make form filling more obvious and less error-prone by using buttons instead of dropdowns for Pass/Fail checks."
+            title="Sheet Filling"
+            slug="sheet-filling"
+            showBrowserChrome={true}
+          />
+        </div>
 
         <hr className="divider--short" />
 
@@ -67,7 +92,6 @@ export default React.createClass({
                 height: comparison.afterDimensions[1]
               }}
               description={comparison.description}
-              annotations={comparison.annotations}
               title={comparison.title}
               slug={comparison.slug}
             />
@@ -93,13 +117,6 @@ const qcloud = [
     description: "Make form creation more intuitive by providing a WYSIWYG interface.",
     beforeDimensions: [ 1024, 768 ],
     afterDimensions: [ 1024, 768 ]
-  },
-  {
-    slug: "sheet-filling",
-    title: "Sheet Filling",
-    description: "Make form filling more obvious and less error-prone by using buttons instead of dropdowns for Pass/Fail checks.",
-    beforeDimensions: [ 768, 640 ],
-    afterDimensions: [ 768, 640 ]
   }
 ];
 
