@@ -1,10 +1,12 @@
-import React from "react";
+import React from "react/addons";
 import classNames from "classnames";
 import Animations from "utils/animations.jsx";
 import Easings from "utils/easings.jsx";
 import TouchHandler from "components/common/TouchHandler.jsx";
 
 export default React.createClass({
+  mixins: [React.PureRenderMixin],
+
   propTypes: {
     title: React.PropTypes.string.isRequired,
     description: React.PropTypes.string.isRequired,
