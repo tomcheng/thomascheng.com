@@ -92,10 +92,10 @@ const qcloud = [
     afterDimensions: [ 1024, 768 ]
   },
   {
-    slug: "inspector-view",
-    title: "Inspector View",
-    beforeDimensions: [ 768, 950 ],
-    afterDimensions: [ 768, 950 ]
+    slug: "sheet-filling",
+    title: "Sheet Filling",
+    beforeDimensions: [ 768, 640 ],
+    afterDimensions: [ 768, 640 ]
   }
 ];
 
