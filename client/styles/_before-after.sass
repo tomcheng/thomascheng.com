@@ -62,7 +62,9 @@ $toolbar-height: 20px
 .before-after-buttons
   +clearfix
   position: relative
-  top: -3px
+
+  @media (min-width: $screen-md-min)
+    margin-top: -4px
 
 .before-after-buttons__background
   +border-radius
