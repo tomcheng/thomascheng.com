@@ -16,7 +16,11 @@ export default React.createClass({
   },
 
   getDefaultProps() {
-    return { annotations: [], showBrowserChrome: true };
+    return {
+      annotations: [],
+      showBrowserChrome: true,
+      sliderWidth: 120
+    };
   },
 
   getInitialState() {
@@ -80,7 +84,7 @@ export default React.createClass({
     }
   },
 
-  _handleDrag({x, deltaX, direction, preventDefault}) {
+  _handleDragFull({x, deltaX, direction, preventDefault}) {
     if (!this.state.isDragging) {
       this.setState({
         isDragging: true,
@@ -91,10 +95,25 @@ export default React.createClass({
     } else if (this.state.isDraggingHorizontally) {
       preventDefault();
       this.setState({
-        ratio: constrain((this.state.ratioAtDragStart + deltaX / (this.state.width * 0.6 + 1)), 0, 1)
+        ratio: constrain((this.state.ratioAtDragStart + deltaX / (this.state.width * 0.75 + 1)), 0, 1)
       });
     }
+  },
 
+  _handleDragSlider({x, deltaX, direction, preventDefault}) {
+    if (!this.state.isDragging) {
+      this.setState({
+        isDragging: true,
+        ratioAtDragStart: this.state.ratio,
+        dragStartPosition: x,
+        isDraggingHorizontally: direction === "left" || direction === "right"
+      });
+    } else if (this.state.isDraggingHorizontally) {
+      preventDefault();
+      this.setState({
+        ratio: constrain((this.state.ratioAtDragStart + deltaX / (this.props.sliderWidth * 0.5)), 0, 1)
+      });
+    }
   },
 
   _handleDragRelease() {
@@ -112,56 +131,63 @@ export default React.createClass({
   },
 
   render() {
-    const {before, after, annotations, title, description, showBrowserChrome} = this.props,
+    const {before, after, annotations, title, description, showBrowserChrome, sliderWidth} = this.props,
           {showing, width, ratio} = this.state,
           aspectRatio = Math.max(before.height/before.width, after.height/after.width),
           height = Math.ceil(aspectRatio * width);
 
     return (
-      <TouchHandler
-        onDrag={this._handleDrag}
-        onDragRelease={this._handleDragRelease}
-        onTap={this._toggleShowing}>
+      <div>
 
         <div className="push-bottom-xs clearfix">
           <div className="pull-left">
             <h4>{title}</h4>
           </div>
           <div className="pull-right">
-            <BeforeAfterSlider
-              ratio={ratio}
-              width={120}
-            />
+            <TouchHandler
+              onDrag={this._handleDragSlider}
+              onDragRelease={this._handleDragRelease}
+              onTap={this._toggleShowing}>
+              <BeforeAfterSlider
+                ratio={ratio}
+                width={sliderWidth}
+              />
+            </TouchHandler>
           </div>
         </div>
 
+        <TouchHandler
+          onDrag={this._handleDragFull}
+          onDragRelease={this._handleDragRelease}
+          onTap={this._toggleShowing}>
 
-        {showBrowserChrome ? <div className="before-after__browser-chrome"></div> : null}
+          {showBrowserChrome ? <div className="before-after__browser-chrome"></div> : null}
 
-        <div className={classNames("before-after", {"before-after--browser": showBrowserChrome})} ref="frame" style={{ height }}>
-          {annotations.map((annotation, i) => (
-            <Annotation key={i} annotation={annotation} />
-          ))}
-          <div
-            className="before-after__outer-wrapper before-after__outer-wrapper--after"
-            style={{ width: (width * ratio) }}>
+          <div className={classNames("before-after", {"before-after--browser": showBrowserChrome})} ref="frame" style={{ height }}>
+            {annotations.map((annotation, i) => (
+              <Annotation key={i} annotation={annotation} />
+            ))}
             <div
-              className="before-after__inner-wrapper before-after__inner-wrapper--after"
-              style={{ width }}>
-              <img className="before-after__image" src={after.url} />
+              className="before-after__outer-wrapper before-after__outer-wrapper--after"
+              style={{ width: (width * ratio) }}>
+              <div
+                className="before-after__inner-wrapper before-after__inner-wrapper--after"
+                style={{ width }}>
+                <img className="before-after__image" src={after.url} />
+              </div>
+            </div>
+            <div
+              className="before-after__outer-wrapper before-after__outer-wrapper--before"
+              style={{ width: (width * (1 - ratio)) }}>
+              <div
+                className="before-after__inner-wrapper before-after__inner-wrapper--before"
+                style={{ width }}>
+                <img className="before-after__image" src={before.url} />
+              </div>
             </div>
           </div>
-          <div
-            className="before-after__outer-wrapper before-after__outer-wrapper--before"
-            style={{ width: (width * (1 - ratio)) }}>
-            <div
-              className="before-after__inner-wrapper before-after__inner-wrapper--before"
-              style={{ width }}>
-              <img className="before-after__image" src={before.url} />
-            </div>
-          </div>
-        </div>
-      </TouchHandler>
+        </TouchHandler>
+      </div>
     );
   }
 });
