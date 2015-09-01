@@ -3,21 +3,18 @@ import classNames from "classnames";
 import Animations from "utils/animations.jsx";
 import Easings from "utils/easings.jsx";
 import TouchHandler from "components/common/TouchHandler.jsx";
-import Annotation from "components/common/Annotation.jsx";
 
 export default React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
     before: React.PropTypes.object.isRequired,
     after: React.PropTypes.object.isRequired,
-    annotations: React.PropTypes.array,
     slug: React.PropTypes.string.isRequired,
     showBrowserChrome: React.PropTypes.bool
   },
 
   getDefaultProps() {
     return {
-      annotations: [],
       showBrowserChrome: true,
       sliderWidth: 130
     };
@@ -131,7 +128,7 @@ export default React.createClass({
   },
 
   render() {
-    const {before, after, annotations, title, description, showBrowserChrome, sliderWidth} = this.props,
+    const {before, after, title, description, showBrowserChrome, sliderWidth} = this.props,
           {showing, width, ratio} = this.state,
           aspectRatio = Math.max(before.height/before.width, after.height/after.width),
           height = Math.ceil(aspectRatio * width);
@@ -164,9 +161,6 @@ export default React.createClass({
           {showBrowserChrome ? <div className="before-after__browser-chrome"></div> : null}
 
           <div className={classNames("before-after", {"before-after--browser": showBrowserChrome})} ref="frame" style={{ height }}>
-            {annotations.map((annotation, i) => (
-              <Annotation key={i} annotation={annotation} />
-            ))}
             <div
               className="before-after__outer-wrapper before-after__outer-wrapper--after"
               style={{ width: (width * ratio) }}>
