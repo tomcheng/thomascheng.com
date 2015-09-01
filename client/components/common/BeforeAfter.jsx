@@ -95,7 +95,7 @@ export default React.createClass({
     } else if (this.state.isDraggingHorizontally) {
       preventDefault();
       this.setState({
-        ratio: constrain((this.state.ratioAtDragStart + deltaX / (this.state.width * 0.75 + 1)), 0, 1)
+        ratio: constrain((this.state.ratioAtDragStart + deltaX / (this.state.width * 0.7 + 1)), 0, 1)
       });
     }
   },
