@@ -121,7 +121,7 @@ const freshbooks = [
   {
     slug: "client",
     title: "Client Page",
-    description: "Simplify the elements on the page to make it visually consistent with the rest of the application.",
+    description: "Simplify elements on the page to make it friendlier and visually consistent with the rest of the application.",
     beforeDimensions: [ 840, 714 ],
     afterDimensions: [ 840, 651 ]
   }
