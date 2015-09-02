@@ -51,7 +51,7 @@ const App = React.createClass({
 
 const links = [
   {
-    path: "/work-work",
+    path: "/work",
     title: "Work"
   },
   {
@@ -68,7 +68,7 @@ const routes = (
   <Route name="app" path="/" handler={App}>
     <DefaultRoute handler={Home} />
     <Route name="academic-work" path="/academic-work" handler={AcademicWork} />
-    <Route name="work-work" path="/work-work" handler={WorkWork} />
+    <Route name="work" path="/work" handler={WorkWork} />
     <Route name="miscellany" path="/miscellany" handler={Miscellany} />
     <Route name="resume" path="/resume" handler={Resume} />
     <NotFoundRoute handler={NotFound} />
