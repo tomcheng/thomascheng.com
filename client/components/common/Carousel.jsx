@@ -186,6 +186,20 @@ export default React.createClass({
     }
   },
 
+  _renderCounter() {
+    const imageCount = this.props.images.length;
+
+    return (
+      <div className="push-bottom-xs pull-right">
+        {imageCount > 1 ? (
+          <div className="carousel__header__counter" onClick={this._advanceToNextPane}>
+            {this._getCurrentPane() + 1}&nbsp;of&nbsp;{imageCount}
+          </div>
+        ) : null}
+      </div>
+    );
+  },
+
   render() {
     const {description, dragConstant, returnThreshold, images, title} = this.props,
           {height, scrollPos, width} = this.state,
@@ -220,13 +234,7 @@ export default React.createClass({
               <div className="push-bottom-xs pull-left">
                 {description}
               </div>
-              <div className="push-bottom-xs pull-right">
-                {imageCount > 1 ? (
-                  <div className="carousel__header__counter" onClick={this._advanceToNextPane}>
-                    {this._getCurrentPane() + 1}&nbsp;of&nbsp;{imageCount}
-                  </div>
-                ) : null}
-              </div>
+              {this._renderCounter()}
             </div>
           </div>
         ) : (
@@ -234,13 +242,7 @@ export default React.createClass({
             <div className="push-bottom-xs pull-left">
               <h4>{title}</h4>
             </div>
-            <div className="push-bottom-xs pull-right">
-              {imageCount > 1 ? (
-                <div className="carousel__header__counter" onClick={this._advanceToNextPane}>
-                  {this._getCurrentPane() + 1}&nbsp;of&nbsp;{imageCount}
-                </div>
-              ) : null}
-            </div>
+            {this._renderCounter()}
           </div>
         )}
         <div className="carousel__wrapper" ref="wrapper">

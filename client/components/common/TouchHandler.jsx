@@ -75,7 +75,6 @@ export default React.createClass({
   },
 
   _handleTouchEnd(evt) {
-    evt.preventDefault();
     const {last, start, hasDragged} = this.state,
           {velocityX, velocityY} = last,
           deltaX = last.x - start.x,
