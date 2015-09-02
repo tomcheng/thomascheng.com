@@ -28,7 +28,6 @@ export default React.createClass({
   getInitialState() {
     return {
       dragDirection: null,
-      height: 0,
       isDragging: false,
       isDraggingHorizontally: false,
       scrollPos: 0,
@@ -202,7 +201,7 @@ export default React.createClass({
 
   render() {
     const {description, dragConstant, returnThreshold, images, title} = this.props,
-          {height, scrollPos, width} = this.state,
+          {scrollPos, width} = this.state,
           imageCount = images.length;
 
     let listStyle, draggedPastEnd, indicatorProgress, indicatorFinalPosition, indicatorStyle;
