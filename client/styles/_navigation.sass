@@ -16,12 +16,13 @@
   @media (min-width: $screen-md-min)
     font-size: 12px
 
+$text-top-adjustment: 1px
 .navigation__item a
   +opacity(0.2)
   color: $text-color-header
   display: block
-  line-height: $header-height-mobile
-  padding: 0 7px
+  line-height: $header-height-mobile - $text-top-adjustment
+  padding: $text-top-adjustment 7px 0
   vertical-align: center
 
   &.active,
@@ -30,6 +31,7 @@
 
   @media (min-width: $screen-sm-min)
     line-height: $header-height-desktop
+    padding-top: 0
 
 .navigation__item__text
   display: inline
