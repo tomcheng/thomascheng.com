@@ -25,8 +25,10 @@ export default React.createClass({
               <div className="header__logo" dangerouslySetInnerHTML={{__html: svgTag}} />
             </Link>
             <div className="header__name-and-position">
-              <div className="header__name">Thomas Cheng</div>
-              <div className="header__position">UI/UX Designer &amp; Front-End Developer</div>
+              <Link to="/">
+                <div className="header__name">Thomas Cheng</div>
+                <div className="header__position">UI/UX Designer &amp; Front-End Developer</div>
+              </Link>
             </div>
           </div>
           <ul className={classNames("navigation", {"navigation--home": isHome})}>

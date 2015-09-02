@@ -22,7 +22,6 @@
   display: block
   line-height: $header-height-mobile
   padding: 0 7px
-  text-decoration: none
   vertical-align: center
 
   &.active,
@@ -33,5 +32,12 @@
     line-height: $header-height-desktop
 
 .navigation__item__text
-  display: block
+  display: inline
+  padding-bottom: 3px
+
+  @media (min-width: $screen-sm-min)
+
+    .active &,
+    &:hover
+      border-bottom: 2px solid $text-color-header
 
