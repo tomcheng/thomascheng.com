@@ -14,7 +14,7 @@ import Resume from "components/route-handlers/Resume.jsx";
 
 import NotFound from "components/NotFound/NotFoundComponent.jsx";
 
-const {DefaultRoute, Link, Route, RouteHandler, NotFoundRoute} = Router;
+const {DefaultRoute, Route, RouteHandler, NotFoundRoute} = Router;
 
 const App = React.createClass({
   getInitialState() {

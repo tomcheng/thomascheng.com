@@ -1,5 +1,4 @@
 import React from "react/addons";
-import classNames from "classnames";
 import Animations from "utils/animations.jsx";
 import Easings from "utils/easings.jsx";
 import TouchHandler from "components/common/TouchHandler.jsx";
@@ -12,15 +11,11 @@ export default React.createClass({
     description: React.PropTypes.string.isRequired,
     before: React.PropTypes.object.isRequired,
     after: React.PropTypes.object.isRequired,
-    slug: React.PropTypes.string.isRequired,
-    showBrowserChrome: React.PropTypes.bool
+    slug: React.PropTypes.string.isRequired
   },
 
   getDefaultProps() {
-    return {
-      showBrowserChrome: true,
-      sliderWidth: 130
-    };
+    return { sliderWidth: 130 };
   },
 
   getInitialState() {
@@ -131,8 +126,8 @@ export default React.createClass({
   },
 
   render() {
-    const {before, after, title, description, showBrowserChrome, sliderWidth} = this.props,
-          {showing, width, ratio} = this.state,
+    const {before, after, title, description, sliderWidth} = this.props,
+          {width, ratio} = this.state,
           beforeHeight = before.width < width ? before.height : before.height / before.width * width,
           afterHeight = after.width < width ? after.height : after.height / after.width * width,
           height = Math.ceil(Math.max(beforeHeight, afterHeight));
@@ -163,9 +158,9 @@ export default React.createClass({
           onDragRelease={this._handleDragRelease}
           onTap={this._toggleShowing}>
 
-          {showBrowserChrome ? <div className="before-after__browser-chrome"></div> : null}
+          <div className="before-after__browser-chrome"></div>
 
-          <div className={classNames("before-after", {"before-after--browser": showBrowserChrome})} ref="frame" style={{ height }}>
+          <div className="before-after before-after--browser" ref="frame" style={{ height }}>
             <div
               className="before-after__outer-wrapper before-after__outer-wrapper--after"
               style={{ width: (width * ratio) }}>
