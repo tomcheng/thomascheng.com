@@ -29,7 +29,7 @@ export default React.createClass({
             <div><em>UI/UX Designer &amp; Front-End Developer</em></div>
           </div>
         </div>
-        <div className="mobile-home-footer">Contact: <a href="mailto:info@thomascheng.com">info@thomasceng.com</a></div>
+        <div className="mobile-home-footer">Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a></div>
       </div>
     );
   },
