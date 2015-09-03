@@ -15,7 +15,7 @@ export default React.createClass({
 
   render() {
     const {links} = this.props,
-          isHome = this.getPathname() === '/';
+          isHome = this.getPathname() === "/";
 
     return (
       <div className="header">
