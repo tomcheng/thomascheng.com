@@ -18,15 +18,18 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="image-flasher__trigger-container">
-        <ImageFlasher
-          images={images}
-          trigger={this._getTrigger()}
-        />
-        <div className="image-flasher__trigger-text">
-          <div><strong>Thomas Cheng</strong></div>
-          <div><em>UI/UX Designer &amp; Front-End Developer</em></div>
+      <div>
+        <div className="image-flasher__trigger-container">
+          <ImageFlasher
+            images={images}
+            trigger={this._getTrigger()}
+          />
+          <div className="image-flasher__trigger-text">
+            <div><strong>Thomas Cheng</strong></div>
+            <div><em>UI/UX Designer &amp; Front-End Developer</em></div>
+          </div>
         </div>
+        <div className="mobile-home-footer">Contact: <a href="mailto:info@thomascheng.com">info@thomasceng.com</a></div>
       </div>
     );
   },

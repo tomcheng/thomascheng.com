@@ -33,7 +33,11 @@ export default React.createClass({
           </div>
           <ul className={classNames("navigation", {"navigation--home": isHome})}>
             {links.map((link, i) => (
-              <li key={link.title} className="navigation__item">
+              <li
+                key={link.title}
+                className={classNames("navigation__item", {
+                  "hidden-xs": link.hiddenOnMobile
+                })}>
                 <Link to={link.path}>
                   <span className="navigation__item__text">
                     {link.title}

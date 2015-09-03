@@ -10,6 +10,7 @@ import Home from "components/route-handlers/Home.jsx";
 import AcademicWork from "components/route-handlers/AcademicWork.jsx";
 import WorkWork from "components/route-handlers/WorkWork.jsx";
 import Miscellany from "components/route-handlers/Miscellany.jsx";
+import Contact from "components/route-handlers/Contact.jsx";
 import Resume from "components/route-handlers/Resume.jsx";
 
 import NotFound from "components/NotFound/NotFoundComponent.jsx";
@@ -61,6 +62,11 @@ const links = [
   {
     path: "/miscellany",
     title: "Miscellany"
+  },
+  {
+    path: "/contact",
+    title: "Contact",
+    hiddenOnMobile: true
   }
 ];
 
@@ -70,6 +76,7 @@ const routes = (
     <Route name="academic-work" path="/academic-work" handler={AcademicWork} />
     <Route name="work" path="/work" handler={WorkWork} />
     <Route name="miscellany" path="/miscellany" handler={Miscellany} />
+    <Route name="contact" path="/contact" handler={Contact} />
     <Route name="resume" path="/resume" handler={Resume} />
     <NotFoundRoute handler={NotFound} />
   </Route>
