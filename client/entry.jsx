@@ -2,6 +2,7 @@ import "styles/main.sass";
 
 import React from "react";
 import Router from "react-router";
+import FastClick from "fastclick";
 
 import Navigation from "components/navigation/Navigation.jsx";
 import Header from "components/header/Header.jsx";
@@ -26,6 +27,12 @@ const App = React.createClass({
     this._getWindowWidth();
 
     window.addEventListener("resize", this._getWindowWidth);
+  },
+
+  componentWillMount() {
+    document.addEventListener('DOMContentLoaded', () => {
+      FastClick.attach(document.body);
+    });
   },
 
   componentWillUnmount() {
