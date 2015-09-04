@@ -5,7 +5,6 @@ import Router from "react-router";
 import FastClick from "fastclick";
 
 import Navigation from "components/navigation/Navigation.jsx";
-import Header from "components/header/Header.jsx";
 
 import Home from "components/route-handlers/Home.jsx";
 import AcademicWork from "components/route-handlers/AcademicWork.jsx";
