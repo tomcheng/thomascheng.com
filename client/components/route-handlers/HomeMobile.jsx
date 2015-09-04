@@ -42,7 +42,6 @@ const images = [
   require("images/home/diabetes-low-res.jpg"),
   require("images/home/diagonal-stripe-man.jpg"),
   require("images/home/discowoman.jpg"),
-  require("images/home/dotsman.jpg"),
   require("images/home/DSC_4252_small-low-res.jpg"),
   require("images/home/DSC_4757_small-low-res.jpg"),
   require("images/home/DSC_5209_small-low-res.jpg"),
@@ -70,6 +69,5 @@ const images = [
   require("images/home/squareman2.jpg"),
   require("images/home/stripeman.jpg"),
   require("images/home/strippedfaces.jpg"),
-  require("images/home/tapestry.jpg"),
   require("images/home/twofonts-low-res.jpg")
 ];
