@@ -21,8 +21,8 @@ export default React.createClass({
       <div className="header">
         <div className="container relative-box">
           <div className="pull-left">
-            <Link to="/">
-              <div className="header__logo" dangerouslySetInnerHTML={{__html: svgTag}} />
+            <Link className="header__logo-container" to="/">
+              <span className="header__logo" dangerouslySetInnerHTML={{__html: svgTag}} />
             </Link>
             <div className="header__name-and-position">
               <Link to="/">
