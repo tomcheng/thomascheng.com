@@ -43,7 +43,11 @@ export default React.createClass({
       isTouched: true
     });
 
-    setTimeout(() => {this.setState({ isTouched: false})}, 1000);
+    if (this.cancelIsTouched) {
+      clearTimeout(this.cancelIsTouched);
+    }
+
+    this.cancelIsTouched = setTimeout(() => {this.setState({ isTouched: false})}, 1000);
   },
 
   _handleTouchMove(evt) {
