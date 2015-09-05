@@ -2,8 +2,13 @@ import React from "react";
 import classNames from "classnames";
 import Carousel from "components/common/Carousel.jsx";
 import PageFooter from "components/common/PageFooter.jsx";
+import breakpoints from "utils/breakpoints.jsx";
 
 export default React.createClass({
+  propTypes: {
+    windowWidth: React.PropTypes.number.isRequired
+  },
+
   _getImages(slug, imageCount) {
     const images = [];
 
@@ -17,15 +22,20 @@ export default React.createClass({
   },
 
   render() {
+    const isMobile = this.props.windowWidth <= breakpoints.xs.max;
+
     return (
       <div>
         {pieces.map((piece, i) => (
           <div key={piece.slug}>
             <Carousel
               description={piece.description}
+              height={piece.height}
               images={this._getImages(piece.slug, piece.imageCount)}
+              isMobile={isMobile}
               slug={piece.slug}
               title={piece.title}
+              width={piece.width}
             />
             {i !== pieces.length - 1 ? <hr className="divider--short" /> : null}
           </div>

@@ -1,27 +1,32 @@
 import React from "react/addons";
-import classNames from 'classnames';
-import Animations from 'utils/animations.jsx';
-import Easings from 'utils/easings.jsx';
-import TouchHandler from 'components/common/TouchHandler.jsx';
+import classNames from "classnames";
+import Animations from "utils/animations.jsx";
+import Easings from "utils/easings.jsx";
+import {constrain} from "utils/math.jsx"
+import TouchHandler from "components/common/TouchHandler.jsx";
+
+const mobilePadding = 15,
+      dragConstant = 0.2, // how much scrolling slows down when dragging past bounds
+      returnThreshold = 0.6; // how much dragging past end is needed to return to first image
 
 export default React.createClass({
   mixins: [React.PureRenderMixin],
 
   propTypes: {
     description: React.PropTypes.string,
-    dragConstant: React.PropTypes.number,     // how much scrollPosing slows down when dragging past bounds
+    height: React.PropTypes.number.isRequired,
     images: React.PropTypes.array.isRequired,
-    returnThreshold: React.PropTypes.number,  // how much dragging past end is needed to return to first image
+    isMobile: React.PropTypes.bool,
     slug: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string
+    title: React.PropTypes.string,
+    width: React.PropTypes.number.isRequired
   },
 
   getDefaultProps() {
     return {
       description: null,
-      dragConstant: 0.2,
-      returnThreshold: 0.6,
-      title: ""
+      title: "",
+      isMobile: false
     };
   },
 
@@ -33,7 +38,7 @@ export default React.createClass({
       scrollPos: 0,
       scrollPosAtDragStart: null,
       shouldWiggle: false,
-      width: 1000
+      frameWidth: 1000
     };
   },
 
@@ -50,40 +55,41 @@ export default React.createClass({
   },
 
   _setDimensions() {
-    const newWidth = React.findDOMNode(this.refs.wrapper).offsetWidth,
+    const frameWidth = React.findDOMNode(this.refs.wrapper).offsetWidth,
           currentPane = this._getCurrentPane();
+
     this.setState({
-      width: Math.max(newWidth, 1),
-      scrollPos: -newWidth * currentPane
+      frameWidth: Math.max(frameWidth, 1),
+      scrollPos: -frameWidth * currentPane
     });
   },
 
   _getCurrentPane() {
-    const {scrollPos, width} = this.state,
+    const {scrollPos, frameWidth} = this.state,
           imageCount = this.props.images.length;
 
-    return constrain(Math.floor(-scrollPos / width + 0.5), 0, imageCount - 1);
+    return constrain(Math.floor(-scrollPos / frameWidth + 0.5), 0, imageCount - 1);
   },
 
   _getPrevPane() {
-    const {scrollPos, width} = this.state,
+    const {scrollPos, frameWidth} = this.state,
           imageCount = this.props.images.length;
 
-    return constrain(Math.floor(-scrollPos / width), 0, imageCount - 1);
+    return constrain(Math.floor(-scrollPos / frameWidth), 0, imageCount - 1);
   },
 
   _getNextPane() {
-    const {scrollPos, width} = this.state,
+    const {scrollPos, frameWidth} = this.state,
           imageCount = this.props.images.length;
 
-    return constrain(Math.ceil(-scrollPos / width), 0, imageCount - 1);
+    return constrain(Math.ceil(-scrollPos / frameWidth), 0, imageCount - 1);
   },
 
   _animateToPane(pane, duration, easing) {
     Animations.animate({
       name: 'horizontalPan-' + this.props.slug,
       start: this.state.scrollPos,
-      end: -this.state.width * pane,
+      end: -this.state.frameWidth * pane,
       duration: duration,
       easing: easing,
       onUpdate: (pos) => {
@@ -94,15 +100,15 @@ export default React.createClass({
 
   _handleDrag(evt) {
     const {deltaX, direction, preventDefault} = evt,
-          {isDragging, isDraggingHorizontally, scrollPos, scrollPosAtDragStart, width} = this.state,
-          {dragConstant, images} = this.props,
+          {isDragging, isDraggingHorizontally, scrollPos, scrollPosAtDragStart, frameWidth} = this.state,
+          {images} = this.props,
           imageCount = images.length;
 
     if (isDragging && isDraggingHorizontally) {
       preventDefault();
       let dragOffset = deltaX;
       if (scrollPosAtDragStart + deltaX > 0 ||
-          scrollPosAtDragStart + deltaX < -width * (imageCount - 1)) {
+          scrollPosAtDragStart + deltaX < -frameWidth * (imageCount - 1)) {
         dragOffset *= dragConstant;
       };
 
@@ -124,8 +130,8 @@ export default React.createClass({
 
   _handleDragRelease(evt) {
     const {deltaX, velocityX} = evt,
-          {isDraggingHorizontally, scrollPos, width} = this.state,
-          {images, returnThreshold} = this.props,
+          {isDraggingHorizontally, scrollPos, frameWidth} = this.state,
+          {images} = this.props,
           imageCount = images.length,
           currentPane = this._getCurrentPane();
     let destinationPane = currentPane, distanceToScroll, duration;
@@ -134,9 +140,9 @@ export default React.createClass({
       if (scrollPos > 0 || imageCount === 1) {
         // scrollPosed out of bounds at start
         this._animateToPane(currentPane, 600, Easings.elasticOut);
-      } else if (scrollPos < -width * (imageCount - 1)) {
+      } else if (scrollPos < -frameWidth * (imageCount - 1)) {
         // scrollPosed out of bounds at end
-        if (Math.abs(deltaX) > width * returnThreshold && imageCount > 1) {
+        if (Math.abs(deltaX) > frameWidth * returnThreshold && imageCount > 1) {
           this._animateToPane(0, 120 * imageCount, Easings.cubicOut);
         } else {
           this._animateToPane(currentPane, 450, Easings.bounceOut);
@@ -151,7 +157,7 @@ export default React.createClass({
           }
         }
         destinationPane = constrain(destinationPane, 0, imageCount - 1);
-        distanceToScroll = Math.abs(-width * destinationPane - scrollPos);
+        distanceToScroll = Math.abs(-frameWidth * destinationPane - scrollPos);
         duration = constrain(Math.abs(distanceToScroll/velocityX*3), 200, 400);
 
         this._animateToPane(destinationPane, duration, Easings.cubicOut);
@@ -200,31 +206,14 @@ export default React.createClass({
   },
 
   render() {
-    const {description, dragConstant, returnThreshold, images, title} = this.props,
-          {scrollPos, width} = this.state,
-          imageCount = images.length;
-
-    let listStyle, draggedPastEnd, indicatorProgress, indicatorFinalPosition, indicatorStyle;
-
-    listStyle = {
-      width: width * imageCount,
-      WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
-      transform: "translate3d(" + scrollPos + "px, 0, 0)"
-    };
-
-    if (imageCount > 1 && -scrollPos > width * (imageCount - 1)) {
-      indicatorFinalPosition = dragConstant * width * returnThreshold * 0.8;
-
-      draggedPastEnd = (-scrollPos/width - (imageCount - 1))/dragConstant;
-
-      indicatorProgress = Easings.sineIn(constrain(draggedPastEnd/returnThreshold, 0, 1));
-
-      indicatorStyle = {
-        opacity: indicatorProgress,
-        WebkitTransform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)",
-        transform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)"
-      };
-    }
+    const {description, images, title, isMobile, height, width} = this.props,
+          {scrollPos, frameWidth} = this.state,
+          imageCount = images.length,
+          indicatorFinalPosition = frameWidth * dragConstant * returnThreshold * 0.8,
+          amountDraggedPastEnd = (-scrollPos/frameWidth - (imageCount - 1))/dragConstant,
+          indicatorProgress = Easings.sineIn(constrain(amountDraggedPastEnd/returnThreshold, 0, 1)),
+          imageWidth = isMobile ? frameWidth - 2 * mobilePadding : frameWidth,
+          imageHeight = Math.round(height / width * imageWidth);
 
     return (
       <div className="carousel">
@@ -246,7 +235,13 @@ export default React.createClass({
             {this._renderCounter()}
           </div>
         )}
-        <div className="carousel__wrapper" ref="wrapper">
+        <div
+          className="carousel__wrapper"
+          ref="wrapper"
+          style={{
+            marginLeft: isMobile ? -mobilePadding : 0,
+            marginRight: isMobile ? -mobilePadding : 0
+          }}>
           <TouchHandler
             onDrag={this._handleDrag}
             onDragRelease={this._handleDragRelease}
@@ -255,23 +250,48 @@ export default React.createClass({
               className={classNames("carousel__frame", {
                 "wiggle": this.state.shouldWiggle
               })}
-              style={{ width }}>
-              <ul className="carousel__list" style={listStyle}>
+              style={{ frameWidth }}>
+              <ul
+                className="carousel__list"
+                style={{
+                  width: frameWidth * imageCount,
+                  WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
+                  transform: "translate3d(" + scrollPos + "px, 0, 0)"
+                }}>
                 {images.map((image, index) => (
-                  <li key={index} className="carousel__item" style={{ width }}>
-                    <img className="carousel__image" src={image} />
+                  <li
+                    key={index}
+                    className="carousel__item"
+                    style={{
+                      width: frameWidth,
+                      paddingLeft: isMobile ? mobilePadding : 0,
+                      paddingRight: isMobile ? mobilePadding : 0
+                    }}>
+                    <img
+                      className="carousel__image"
+                      src={image}
+                      style={{
+                        width: imageWidth,
+                        height: imageHeight
+                      }}
+                    />
                   </li>
                 ))}
               </ul>
             </div>
           </TouchHandler>
           {imageCount > 1 ? (
-            <i className="carousel__return-indicator fa fa-arrow-left" style={indicatorStyle} />
+            <i
+              className="carousel__return-indicator fa fa-arrow-left"
+              style={{
+                opacity: indicatorProgress,
+                WebkitTransform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)",
+                transform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)"
+              }}
+            />
           ) : null}
         </div>
       </div>
     );
   }
 });
-
-const constrain = (value, min, max) => Math.min(Math.max(value, min), max);

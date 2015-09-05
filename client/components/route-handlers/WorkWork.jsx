@@ -2,7 +2,7 @@ import React from "react";
 import BeforeAfter from "components/common/BeforeAfter.jsx";
 import Carousel from "components/common/Carousel.jsx";
 import PageFooter from "components/common/PageFooter.jsx";
-import breakPoints from "utils/breakpoints.jsx";
+import breakpoints from "utils/breakpoints.jsx";
 
 export default React.createClass({
   propTypes: {
@@ -11,7 +11,9 @@ export default React.createClass({
 
   render() {
     const {windowWidth} = this.props,
-          isMd = windowWidth > breakPoints.md.min;
+          isMd = windowWidth > breakpoints.md.min,
+          isMobile = windowWidth <= breakpoints.xs.max;
+
 
     return (
       <div>
@@ -76,6 +78,9 @@ export default React.createClass({
               require("images/freshbooks/styleguide-3.png"),
               require("images/freshbooks/styleguide-4.png")
             ]}
+            width={1080}
+            height={660}
+            isMobile={isMobile}
           />
         </div>
         {freshbooks.map((comparison, i) => (

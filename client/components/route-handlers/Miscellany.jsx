@@ -1,27 +1,43 @@
 import React from "react";
 import Carousel from "components/common/Carousel.jsx";
 import PageFooter from "components/common/PageFooter.jsx";
+import breakpoints from "utils/breakpoints.jsx";
 
 export default React.createClass({
+  propTypes: {
+    windowWidth: React.PropTypes.number.isRequired
+  },
+
   render() {
+    const isMobile = this.props.windowWidth <= breakpoints.xs.max;
+
     return (
       <div>
         <Carousel
           images={photocopiedFaces}
           slug="photocopied-faces"
           title="Photocopied Faces"
+          width={704}
+          height={468}
+          isMobile={isMobile}
         />
         <hr className="divider--short" />
         <Carousel
           images={funWithType}
           slug="fun-with-type"
           title="Fun With Type"
+          width={600}
+          height={400}
+          isMobile={isMobile}
         />
         <hr className="divider--short" />
         <Carousel
           images={processingFaces}
           slug="processing-faces"
           title="Experiments with Processing"
+          width={704}
+          height={468}
+          isMobile={isMobile}
         />
         <PageFooter />
       </div>
