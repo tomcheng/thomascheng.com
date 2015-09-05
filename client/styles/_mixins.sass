@@ -4,48 +4,19 @@
   background: -moz-linear-gradient($color1, $color2)
   background: linear-gradient($color1, $color2)
 
-=background-size($size)
-  -webkit-background-size: $size
-  -moz-background-size: $size
-  -o-background-size: $size
-  background-size: $size
-
 =border-radius($radius: $border-radius-default)
-  -moz-border-radius: $radius
-  -o-border-radius: $radius
-  -webkit-border-radius: $radius
   border-radius: $radius
   background-clip: padding-box
 
 =border-radius-top($radius: $border-radius-default)
-  -moz-border-radius-topleft: $radius;
-  -moz-border-radius-topright: $radius;
-  -webkit-border-top-left-radius: $radius;
-  -webkit-border-top-right-radius: $radius;
   border-top-left-radius: $radius;
   border-top-right-radius: $radius;
   background-clip: padding-box
 
 =border-radius-bottom($radius: $border-radius-default)
-  -moz-border-radius-bottomleft: $radius;
-  -moz-border-radius-bottomright: $radius;
-  -webkit-border-bottom-left-radius: $radius;
-  -webkit-border-bottom-right-radius: $radius;
   border-bottom-left-radius: $radius;
   border-bottom-right-radius: $radius;
   background-clip: padding-box
-
-=box-shadow($shadow)
-  -moz-box-shadow: $shadow
-  -o-box-shadow: $shadow
-  -webkit-box-shadow: $shadow
-  box-shadow: $shadow
-
-=box-sizing($sizing)
-  -moz-box-sizing: $sizing
-  -o-box-sizing: $sizing
-  -webkit-box-sizing: $sizing
-  box-sizing: $sizing
 
 =clearfix
   &:before,
@@ -64,11 +35,6 @@
   -moz-osx-font-smoothing: grayscale
   transform: translate(0, 0)
 
-=opacity($opacity)
-  -webkit-opacity: $opacity
-  -moz-opacity: $opacity
-  opacity: $opacity
-
 =transform($transform...)
   -webkit-transform: $transform
   -ms-transform: $transform
@@ -86,4 +52,3 @@
   -ms-user-select: $select
   -o-user-select: $select
   user-select: $select
-
