@@ -208,6 +208,7 @@ export default React.createClass({
 
     listStyle = {
       width: width * imageCount,
+      WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
       transform: "translate3d(" + scrollPos + "px, 0, 0)"
     };
 
@@ -220,6 +221,7 @@ export default React.createClass({
 
       indicatorStyle = {
         opacity: indicatorProgress,
+        WebkitTransform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)",
         transform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)"
       };
     }

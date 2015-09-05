@@ -204,6 +204,7 @@ const BeforeAfterSlider = React.createClass({
           <div
             className="before-after-buttons__indicator"
             style={{
+              WebkitTransform: "translate3d(" + (ratio * (width * 0.5 + 1)) + "px, 0, 0)",
               transform: "translate3d(" + (ratio * (width * 0.5 + 1)) + "px, 0, 0)"
             }}
           />
