@@ -270,10 +270,8 @@ export default React.createClass({
                     <img
                       className="carousel__image"
                       src={image}
-                      style={{
-                        width: imageWidth,
-                        height: imageHeight
-                      }}
+                      width={imageWidth}
+                      height={imageHeight}
                     />
                   </li>
                 ))}
