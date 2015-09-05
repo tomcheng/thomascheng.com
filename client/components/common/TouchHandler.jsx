@@ -21,7 +21,8 @@ export default React.createClass({
     return {
       start: null,
       last: null,
-      hasDragged: false
+      hasDragged: false,
+      isTouched: false
     };
   },
 
@@ -38,8 +39,11 @@ export default React.createClass({
 
     this.setState({
       start: {x, y, time},
-      last: {x, y, time}
+      last: {x, y, time},
+      isTouched: true
     });
+
+    setTimeout(() => {this.setState({ isTouched: false})}, 1000);
   },
 
   _handleTouchMove(evt) {
@@ -96,7 +100,9 @@ export default React.createClass({
   _handleClick(evt) {
     if (this.props.stopPropagation) evt.stopPropagation();
 
-    this.props.onTap();
+    if (!this.state.isTouched) {
+      this.props.onTap();
+    }
   },
 
   render() {
