@@ -8,10 +8,7 @@ export default React.createClass({
   _getTrigger() {
     return (
       <div>
-        <div
-          className="image-flasher__trigger-logo"
-          dangerouslySetInnerHTML={{__html: svgTag}}
-        />
+        <div className="home__title">Thomas Cheng</div>
       </div>
     );
   },
@@ -25,8 +22,7 @@ export default React.createClass({
             trigger={this._getTrigger()}
           />
           <div className="image-flasher__trigger-text">
-            <div><strong>Thomas Cheng</strong></div>
-            <div><em>UI/UX Designer &amp; Front-End Developer</em></div>
+            <div><em>UI/UX Designer &amp;<br />Front-End Developer</em></div>
           </div>
         </div>
         <div className="mobile-home-footer">Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a></div>
