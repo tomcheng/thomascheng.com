@@ -23,15 +23,6 @@ export default React.createClass({
         />
         <hr className="divider--short" />
         <Carousel
-          images={funWithType}
-          slug="fun-with-type"
-          title="Fun With Type"
-          width={600}
-          height={400}
-          isMobile={isMobile}
-        />
-        <hr className="divider--short" />
-        <Carousel
           images={processingFaces}
           slug="processing-faces"
           title="Experiments with Processing"
