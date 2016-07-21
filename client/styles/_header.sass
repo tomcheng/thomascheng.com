@@ -10,6 +10,15 @@ $collapsed-height: 40px
   width: 100%
   z-index: $z-index-header
 
+  @media print
+    position: static
+    border-bottom: 1px solid #444
+    height: 70px
+    margin-bottom: 20px
+    > .container
+      margin: 0
+      padding: 0
+
 .header__logo-container
   position: absolute
   height: $collapsed-height
@@ -28,11 +37,18 @@ $collapsed-height: 40px
   top: 9px
   position: absolute
 
+  @media print
+    display: none
+
 .header__name-and-position
   margin-top: 15px
+  margin-bottom: 15px
 
   @media (max-width: $screen-xs-max)
     display: none
+
+  @media print
+    display: block
 
 .header__name
   color: $text-color-header

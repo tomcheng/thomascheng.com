@@ -30,9 +30,8 @@ const Animations = {
     }
   },
 
-  animate(params) {
-    const {name, start, end, duration, easing, onUpdate} = params,
-          {animations} = this.props,
+  animate({name, start, end, duration, easing, onUpdate}) {
+    const {animations} = this.props,
           startTime = this._getCurrentTime();
     let timePassed;
 

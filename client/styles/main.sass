@@ -17,12 +17,19 @@
 
 body
   padding-top: $header-height-mobile + 20px
+  background-color: $body-bg
 
   @media (min-width: $screen-sm-min)
     padding-top: $header-height-desktop + 25px
 
   @media (min-width: $screen-md-min)
     padding-top: $header-height-desktop + 35px
+
+  @media print
+    background-color: #FFF
+    padding-top: 0
+    margin-top: 0
+
 
 .home__title
   +transition(all 0.06s ease-in)
@@ -56,3 +63,41 @@ body
   left: 0
   right: 0
   text-align: center
+
+@media print
+  .col-print-1
+    width: 8%
+    float: left
+  .col-print-2
+    width: 16%
+    float: left
+  .col-print-3
+    width: 25%
+    float: left
+  .col-print-4
+    width: 33%
+    float: left
+  .col-print-5
+    width: 42%
+    float: left
+  .col-print-6
+    width: 50%
+    float: left
+  .col-print-7
+    width: 58%
+    float: left
+  .col-print-8
+    width: 66%
+    float: left
+  .col-print-9
+    width: 75%
+    float: left
+  .col-print-1
+    width: 83%
+    float: left
+  .col-print-1
+    width: 92%
+    float: left
+  .col-print-1
+    width: 100%
+    float: left
