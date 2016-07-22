@@ -24,25 +24,16 @@ const App = React.createClass({
   },
 
   componentDidMount() {
-    this._getWindowWidth();
-
-    window.addEventListener("resize", this._getWindowWidth);
-  },
-
-  componentWillMount() {
-    document.addEventListener('DOMContentLoaded', () => {
-      FastClick.attach(document.body);
-    });
+    this.getWindowWidth();
+    window.addEventListener("resize", this.getWindowWidth);
   },
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this._getWindowWidth);
+    window.removeEventListener("resize", this.getWindowWidth);
   },
 
-  _getWindowWidth() {
-    this.setState({
-      windowWidth: window.innerWidth
-    });
+  getWindowWidth() {
+    this.setState({ windowWidth: window.innerWidth });
   },
 
   render() {
@@ -88,6 +79,8 @@ const routes = (
     <Route path="*" component={NotFound} />
   </Route>
 );
+
+FastClick.attach(document.getElementById("app"));
 
 ReactDOM.render((
   <Router history={browserHistory}>

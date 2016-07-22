@@ -14,7 +14,6 @@ export default React.createClass({
           isMd = windowWidth > breakpoints.md.min,
           isMobile = windowWidth <= breakpoints.xs.max;
 
-
     return (
       <div>
         <h2>QCloud</h2>
