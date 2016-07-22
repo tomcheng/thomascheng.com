@@ -1,11 +1,9 @@
-import React from "react/addons";
+import React from "react";
 import Animations from "utils/animations.jsx";
 import Easings from "utils/easings.jsx";
 import TouchHandler from "components/common/TouchHandler.jsx";
 
 export default React.createClass({
-  mixins: [React.PureRenderMixin],
-
   propTypes: {
     title: React.PropTypes.string.isRequired,
     description: React.PropTypes.string.isRequired,
@@ -41,7 +39,7 @@ export default React.createClass({
   },
 
   _setDimensions() {
-    this.setState({ width: React.findDOMNode(this.refs.frame).offsetWidth });
+    this.setState({ width: this.frame.offsetWidth });
   },
 
   _switchToBefore() {
@@ -160,7 +158,7 @@ export default React.createClass({
 
           <div className="before-after__browser-chrome"></div>
 
-          <div className="before-after before-after--browser" ref="frame" style={{ height }}>
+          <div className="before-after before-after--browser" ref={el => { this.frame = el; }} style={{ height }}>
             <div
               className="before-after__outer-wrapper before-after__outer-wrapper--after"
               style={{ width: (width * ratio) }}>

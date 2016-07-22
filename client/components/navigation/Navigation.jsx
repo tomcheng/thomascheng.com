@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, State} from "react-router";
+import { Link } from "react-router";
 import classNames from "classnames";
 
 import Animations from 'utils/animations.jsx';
@@ -7,16 +7,17 @@ import Easings from 'utils/easings.jsx';
 import svgTag from "utils/svgTag.jsx";
 
 export default React.createClass({
-  mixins: [State],
-
   propTypes: {
-    links: React.PropTypes.array.isRequired
+    links: React.PropTypes.array.isRequired,
+    location: React.PropTypes.shape({
+      pathname: React.PropTypes.string.isRequired
+    }).isRequired
   },
 
   render() {
-    const {links} = this.props,
-          isHome = this.getPathname() === "/",
-          isResume = this.getPathname() === "/resume";
+    const { links, location } = this.props;
+    const isHome = location.pathname === "/";
+    const isResume = location.pathname === "/resume";
 
     return (
       <div className={classNames("header", {

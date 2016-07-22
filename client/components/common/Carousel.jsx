@@ -1,4 +1,4 @@
-import React from "react/addons";
+import React from "react";
 import classNames from "classnames";
 import Animations from "utils/animations.jsx";
 import Easings from "utils/easings.jsx";
@@ -10,8 +10,6 @@ const mobilePadding = 15,
       returnThreshold = 0.6; // how much dragging past end is needed to return to first image
 
 export default React.createClass({
-  mixins: [React.PureRenderMixin],
-
   propTypes: {
     description: React.PropTypes.string,
     height: React.PropTypes.number.isRequired,
@@ -55,7 +53,7 @@ export default React.createClass({
   },
 
   _setDimensions() {
-    const frameWidth = React.findDOMNode(this.refs.wrapper).offsetWidth,
+    const frameWidth = this.wrapper.offsetWidth,
           currentPane = this._getCurrentPane();
 
     this.setState({
@@ -237,7 +235,7 @@ export default React.createClass({
         )}
         <div
           className="carousel__wrapper"
-          ref="wrapper"
+          ref={el => { this.wrapper = el; }}
           style={{
             marginLeft: isMobile ? -mobilePadding : 0,
             marginRight: isMobile ? -mobilePadding : 0
