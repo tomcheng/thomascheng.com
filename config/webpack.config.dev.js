@@ -45,7 +45,7 @@ module.exports = {
   module: {
     preLoaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loader: 'eslint',
         include: srcPath
       }
@@ -100,10 +100,6 @@ module.exports = {
       }
     ]
   },
-  eslint: {
-    configFile: path.join(__dirname, 'eslint.js'),
-    useEslintrc: false
-  },
   postcss: function() {
     return [autoprefixer];
   },
@@ -111,7 +107,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: indexHtmlPath,
-      favicon: faviconPath,
+      favicon: faviconPath
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
