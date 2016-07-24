@@ -1,9 +1,7 @@
 const Animations = {
-  props: {
-    animations: {}
-  },
+  props: { animations: {} },
 
-  _registerStart(name) {
+  registerStart (name) {
     const {animations} = this.props;
 
     if (animations[name]) {
@@ -15,11 +13,11 @@ const Animations = {
     }
   },
 
-  _getCurrentTime() {
+  getCurrentTime () {
     return new Date().getTime();
   },
 
-  stop(name) {
+  stop (name) {
     const {animations} = this.props;
 
     if (animations[name]) {
@@ -30,16 +28,16 @@ const Animations = {
     }
   },
 
-  animate({name, start, end, duration, easing, onUpdate}) {
-    const {animations} = this.props,
-          startTime = this._getCurrentTime();
+  animate ({name, start, end, duration, easing, onUpdate}) {
+    const { animations } = this.props;
+    const startTime = this.getCurrentTime();
     let timePassed;
 
-    this._registerStart(name);
+    this.registerStart(name);
 
     const animationLoop = () => {
       if (animations[name]) {
-        timePassed = this._getCurrentTime() - startTime;
+        timePassed = this.getCurrentTime() - startTime;
 
         if (timePassed >= duration) {
           this.stop(name);
@@ -47,13 +45,13 @@ const Animations = {
           return;
         }
 
-        onUpdate( (end - start) * easing(timePassed / duration) + start );
+        onUpdate((end - start) * easing(timePassed / duration) + start);
 
         animations[name].raf = window.requestAnimationFrame(animationLoop);
       }
     };
     animationLoop();
-  }
+  },
 };
 
 export default Animations;

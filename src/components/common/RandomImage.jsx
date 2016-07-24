@@ -1,35 +1,43 @@
 import React from "react";
 
-export default React.createClass({
-  propTypes: {
-    images: React.PropTypes.array.isRequired
-  },
+class RandomImage extends React.Component {
+  static propTypes = {
+    images: React.PropTypes.array.isRequired,
+  };
 
-  getInitialState() {
-    return {
-      imageShown: Math.floor(Math.random() * this.props.images.length)
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      imageShown: Math.floor(Math.random() * this.props.images.length),
     };
-  },
+  }
 
-  _handleClick() {
+  handleClick = () => {
     this.setState({
-      imageShown: (this.state.imageShown + 1) % this.props.images.length
+      imageShown: (this.state.imageShown + 1) % this.props.images.length,
     });
-  },
+  };
 
-  render() {
-    const {images} = this.props,
-          {imageShown} = this.state;
+  render () {
+    const { images } = this.props;
+    const { imageShown } = this.state;
 
     return (
-      <div onClick={this._handleClick} style={{ cursor: "pointer" }}>
+      <div onClick={this.handleClick} style={{ cursor: "pointer" }}>
         {images.map((image, i) => (
-          <img key={i} style={{
-            width: "100%",
-            display: imageShown === i ? "block" : "none"
-          }} src={image} />
+          <img
+            key={image}
+            style={{
+              width: "100%",
+              display: imageShown === i ? "block" : "none",
+            }}
+            src={image}
+          />
         ))}
       </div>
     );
   }
-});
+}
+
+export default RandomImage;

@@ -3,44 +3,40 @@ import Carousel from "components/common/Carousel.jsx";
 import PageFooter from "components/common/PageFooter.jsx";
 import breakpoints from "utils/breakpoints.jsx";
 
-export default React.createClass({
-  propTypes: {
-    windowWidth: React.PropTypes.number.isRequired
-  },
+const Miscellany = ({ windowWidth }) => (
+  <div>
+    <Carousel
+      images={photocopiedFaces}
+      slug="photocopied-faces"
+      title="Photocopied Faces"
+      width={704}
+      height={468}
+      isMobile={windowWidth <= breakpoints.xs.max}
+    />
+    <hr className="divider--short" />
+    <Carousel
+      images={processingFaces}
+      slug="processing-faces"
+      title="Experiments with Processing"
+      width={704}
+      height={468}
+      isMobile={windowWidth <= breakpoints.xs.max}
+    />
+    <PageFooter />
+  </div>
+);
 
-  render() {
-    const isMobile = this.props.windowWidth <= breakpoints.xs.max;
+Miscellany.propTypes = {
+  windowWidth: React.PropTypes.number.isRequired,
+};
 
-    return (
-      <div>
-        <Carousel
-          images={photocopiedFaces}
-          slug="photocopied-faces"
-          title="Photocopied Faces"
-          width={704}
-          height={468}
-          isMobile={isMobile}
-        />
-        <hr className="divider--short" />
-        <Carousel
-          images={processingFaces}
-          slug="processing-faces"
-          title="Experiments with Processing"
-          width={704}
-          height={468}
-          isMobile={isMobile}
-        />
-        <PageFooter />
-      </div>
-    );
-  }
-});
+export default Miscellany;
 
 const photocopiedFaces = [
   require("images/photocopied-faces/pcface4.jpg"),
   require("images/photocopied-faces/pcface2.jpg"),
   require("images/photocopied-faces/pcface3.jpg"),
-  require("images/photocopied-faces/pcface7.jpg")
+  require("images/photocopied-faces/pcface7.jpg"),
 ];
 
 const processingFaces = [
@@ -49,7 +45,7 @@ const processingFaces = [
   require("images/processing-faces/discowoman.jpg"),
   require("images/processing-faces/circlewoman.jpg"),
   require("images/processing-faces/stripeman.jpg"),
-  require("images/processing-faces/radiating.jpg")
+  require("images/processing-faces/radiating.jpg"),
 ];
 
 const funWithType = [
@@ -67,5 +63,5 @@ const funWithType = [
   require("images/fun-with-type/segregate.png"),
   require("images/fun-with-type/sharpen.png"),
   require("images/fun-with-type/stink.png"),
-  require("images/fun-with-type/trap.png")
+  require("images/fun-with-type/trap.png"),
 ];

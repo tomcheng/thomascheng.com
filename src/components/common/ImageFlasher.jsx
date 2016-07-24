@@ -1,54 +1,62 @@
 import React from "react";
 import classNames from "classnames";
 
-export default React.createClass({
-  propTypes: {
+const FIRST_FRAME_ENTER = 2;
+const SECOND_FRAME_ENTER = 8;
+const BOTH_FRAMES_LEAVE = 16;
+
+const shuffleArray = array => {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+};
+
+class ImageFlasher extends React.Component {
+  static propTypes = {
     images: React.PropTypes.array.isRequired,
-    trigger: React.PropTypes.node.isRequired
-  },
+    trigger: React.PropTypes.node.isRequired,
+  };
 
-  getDefaultProps() {
-    return {
-      firstFrameEnter: 2,
-      secondFrameEnter: 8,
-      bothFramesLeave: 16
-    };
-  },
+  constructor (props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       currentFrame: 0,
       isPressed: false,
-      images: shuffleArray(this.props.images)
+      images: shuffleArray(this.props.images),
     };
-  },
+  }
 
-  _handleTouchStart(evt) {
+  handleTouchStart = evt => {
     evt.preventDefault();
 
     this.setState({
       isPressed: true,
       currentFrame: 0,
-      images: shuffleArray(this.props.images)
+      images: shuffleArray(this.props.images),
     });
-  },
+  };
 
-  _handleTouchEnd() {
+  handleTouchEnd = () => {
     this.setState({ isPressed: false });
-  },
+  };
 
-  render() {
-    const {trigger, firstFrameEnter, bothFramesLeave, secondFrameEnter} = this.props,
-          {currentFrame, isPressed, images} = this.state,
-          isFlashing = isPressed && currentFrame <= images.length,
-          isFinishedFlashing = currentFrame > images.length,
-          isFinishedShowing = currentFrame > images.length + bothFramesLeave,
-          showFirstFrame = isFinishedFlashing &&
-                           currentFrame >= images.length + firstFrameEnter &&
-                           currentFrame <= images.length + bothFramesLeave,
-          showSecondFrame = isFinishedFlashing &&
-                            currentFrame >= images.length + secondFrameEnter &&
-                            currentFrame <= images.length + bothFramesLeave;
+  render () {
+    const { trigger } = this.props;
+    const { currentFrame, isPressed, images } = this.state;
+    const isFlashing = isPressed && currentFrame <= images.length;
+    const isFinishedFlashing = currentFrame > images.length;
+    const isFinishedShowing = currentFrame > images.length + BOTH_FRAMES_LEAVE;
+    const showFirstFrame = isFinishedFlashing &&
+      currentFrame >= images.length + FIRST_FRAME_ENTER &&
+      currentFrame <= images.length + BOTH_FRAMES_LEAVE;
+    const showSecondFrame = isFinishedFlashing &&
+      currentFrame >= images.length + SECOND_FRAME_ENTER &&
+      currentFrame <= images.length + BOTH_FRAMES_LEAVE;
 
     if ((isPressed || isFinishedFlashing) && !isFinishedShowing) {
       setTimeout(() => {
@@ -59,7 +67,7 @@ export default React.createClass({
     return (
       <div className={classNames({
         "is-flashing": isFlashing,
-        "is-showing": (isPressed || isFinishedFlashing) && !isFinishedShowing
+        "is-showing": (isPressed || isFinishedFlashing) && !isFinishedShowing,
       })}>
         <div className="image-flasher__image-container">
           {images.map((image, i) => (
@@ -68,32 +76,30 @@ export default React.createClass({
               className="image-flasher__image"
               style={{
                 backgroundImage: "url(" + image + ")",
-                opacity: ((isPressed && i === currentFrame) ? 1 : 0)
-               }}
+                opacity: ((isPressed && i === currentFrame) ? 1 : 0),
+              }}
             />
           ))}
         </div>
         <div className="image-flasher__message" style={{
           opacity: showFirstFrame ? 1 : 0,
         }}>
-          Thank you. <span className="image-flasher__message__part" style={{ opacity: showSecondFrame ? 1 : 0}}>Come again.</span>
+          Thank you.&nbsp;
+          <span
+            className="image-flasher__message__part"
+            style={{ opacity: showSecondFrame ? 1 : 0 }}
+          >
+            Come again.
+          </span>
         </div>
         <div
-          onTouchStart={this._handleTouchStart}
-          onTouchEnd={this._handleTouchEnd}>
+          onTouchStart={this.handleTouchStart}
+          onTouchEnd={this.handleTouchEnd}>
           {trigger}
         </div>
       </div>
     );
   }
-});
+}
 
-const shuffleArray = (array) => {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-  return array;
-};
+export default ImageFlasher;

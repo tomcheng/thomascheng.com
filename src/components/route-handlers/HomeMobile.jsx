@@ -1,35 +1,28 @@
 import React from "react";
-import classNames from "classnames";
-
-import svgTag from "utils/svgTag.jsx";
 import ImageFlasher from "components/common/ImageFlasher.jsx";
 
-export default React.createClass({
-  _getTrigger() {
-    return (
-      <div>
-        <div className="home__title">Thomas Cheng</div>
-      </div>
-    );
-  },
-
-  render() {
-    return (
-      <div>
-        <div className="image-flasher__trigger-container">
-          <ImageFlasher
-            images={images}
-            trigger={this._getTrigger()}
-          />
-          <div className="image-flasher__trigger-text">
-            <div><em>UI/UX Designer &amp;<br />Front-End Developer</em></div>
+const HomeMobile = () => (
+  <div>
+    <div className="image-flasher__trigger-container">
+      <ImageFlasher
+        images={images}
+        trigger={(
+          <div>
+            <div className="home__title">Thomas Cheng</div>
           </div>
+        )}
+      />
+      <div className="image-flasher__trigger-text">
+        <div>
+          <em>UI/UX Designer &amp;<br />Front-End Developer</em>
         </div>
-        <div className="mobile-home-footer">Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a></div>
       </div>
-    );
-  },
-});
+    </div>
+    <div className="mobile-home-footer">
+      Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
+    </div>
+  </div>
+);
 
 const images = [
   require("images/home/3Dproj2-low-res.jpg"),
@@ -65,5 +58,7 @@ const images = [
   require("images/home/squareman2.jpg"),
   require("images/home/stripeman.jpg"),
   require("images/home/strippedfaces.jpg"),
-  require("images/home/twofonts-low-res.jpg")
+  require("images/home/twofonts-low-res.jpg"),
 ];
+
+export default HomeMobile;

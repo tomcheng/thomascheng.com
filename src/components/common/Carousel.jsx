@@ -2,178 +2,190 @@ import React from "react";
 import classNames from "classnames";
 import Animations from "utils/animations.jsx";
 import Easings from "utils/easings.jsx";
-import {constrain} from "utils/math.jsx"
+import { constrain } from "utils/math.jsx";
 import TouchHandler from "components/common/TouchHandler.jsx";
 
-const mobilePadding = 15,
-      dragConstant = 0.2, // how much scrolling slows down when dragging past bounds
-      returnThreshold = 0.6; // how much dragging past end is needed to return to first image
+const MOBILE_PADDING = 15;
+const DRAG_CONSTANT = 0.2; // amount of slow down dragging past bounds
+const RETURN_THRESHOLD = 0.6; // amount dragging past end to return to first image
 
-export default React.createClass({
-  propTypes: {
-    description: React.PropTypes.string,
+class Carousel extends React.Component {
+  static propTypes = {
     height: React.PropTypes.number.isRequired,
     images: React.PropTypes.array.isRequired,
-    isMobile: React.PropTypes.bool,
     slug: React.PropTypes.string.isRequired,
+    width: React.PropTypes.number.isRequired,
+    description: React.PropTypes.string,
+    isMobile: React.PropTypes.bool,
     title: React.PropTypes.string,
-    width: React.PropTypes.number.isRequired
-  },
+  };
 
-  getDefaultProps() {
-    return {
-      description: null,
-      title: "",
-      isMobile: false
-    };
-  },
+  constructor (props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       dragDirection: null,
       isDragging: false,
       isDraggingHorizontally: false,
       scrollPos: 0,
       scrollPosAtDragStart: null,
       shouldWiggle: false,
-      frameWidth: 1000
+      frameWidth: 1000,
     };
-  },
+  }
 
-  componentDidMount() {
-    this._setDimensions();
+  componentDidMount () {
+    this.setDimensions();
+    window.addEventListener("resize", this.setDimensions);
+    window.addEventListener("orientationchange", this.setDimensions);
+  }
 
-    window.addEventListener('resize', this._setDimensions);
-    window.addEventListener('orientationchange', this._setDimensions);
-  },
+  componentWillUnmount () {
+    window.removeEventListener("resize", this.setDimensions);
+    window.removeEventListener("orientationchange", this.setDimensions);
+  }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this._setDimensions);
-    window.removeEventListener('orientationchange', this._setDimensions);
-  },
-
-  _setDimensions() {
-    const frameWidth = this.wrapper.offsetWidth,
-          currentPane = this._getCurrentPane();
+  setDimensions = () => {
+    const frameWidth = this.wrapper.offsetWidth;
+    const currentPane = this.getCurrentPane();
 
     this.setState({
       frameWidth: Math.max(frameWidth, 1),
-      scrollPos: -frameWidth * currentPane
+      scrollPos: -frameWidth * currentPane,
     });
-  },
+  };
 
-  _getCurrentPane() {
-    const {scrollPos, frameWidth} = this.state,
-          imageCount = this.props.images.length;
+  getCurrentPane = () => {
+    const { scrollPos, frameWidth } = this.state;
+    const imageCount = this.props.images.length;
 
-    return constrain(Math.floor(-scrollPos / frameWidth + 0.5), 0, imageCount - 1);
-  },
+    return constrain(
+      Math.floor(-scrollPos / frameWidth + 0.5),
+      0,
+      imageCount - 1
+    );
+  };
 
-  _getPrevPane() {
-    const {scrollPos, frameWidth} = this.state,
-          imageCount = this.props.images.length;
+  getPrevPane = () => {
+    const { scrollPos, frameWidth } = this.state;
+    const imageCount = this.props.images.length;
 
-    return constrain(Math.floor(-scrollPos / frameWidth), 0, imageCount - 1);
-  },
+    return constrain(
+      Math.floor(-scrollPos / frameWidth),
+      0,
+      imageCount - 1
+    );
+  };
 
-  _getNextPane() {
-    const {scrollPos, frameWidth} = this.state,
-          imageCount = this.props.images.length;
+  getNextPane = () => {
+    const { scrollPos, frameWidth } = this.state;
+    const imageCount = this.props.images.length;
 
-    return constrain(Math.ceil(-scrollPos / frameWidth), 0, imageCount - 1);
-  },
+    return constrain(
+      Math.ceil(-scrollPos / frameWidth),
+      0,
+      imageCount - 1
+    );
+  };
 
-  _animateToPane(pane, duration, easing) {
+  animateToPane = (pane, duration, easing) => {
     Animations.animate({
-      name: 'horizontalPan-' + this.props.slug,
+      name: "horizontalPan-" + this.props.slug,
       start: this.state.scrollPos,
       end: -this.state.frameWidth * pane,
-      duration: duration,
-      easing: easing,
-      onUpdate: (pos) => {
-        this.setState({ scrollPos: pos });
-      }
+      duration,
+      easing,
+      onUpdate: scrollPos => {
+        this.setState({ scrollPos });
+      },
     });
-  },
+  };
 
-  _handleDrag(evt) {
-    const {deltaX, direction, preventDefault} = evt,
-          {isDragging, isDraggingHorizontally, scrollPos, scrollPosAtDragStart, frameWidth} = this.state,
-          {images} = this.props,
-          imageCount = images.length;
+  handleDrag = evt => {
+    const { deltaX, direction, preventDefault } = evt;
+    const {
+      isDragging,
+      isDraggingHorizontally,
+      scrollPos,
+      scrollPosAtDragStart,
+      frameWidth,
+    } = this.state;
+    const { images } = this.props;
+    const imageCount = images.length;
 
     if (isDragging && isDraggingHorizontally) {
       preventDefault();
       let dragOffset = deltaX;
-      if (scrollPosAtDragStart + deltaX > 0 ||
-          scrollPosAtDragStart + deltaX < -frameWidth * (imageCount - 1)) {
-        dragOffset *= dragConstant;
-      };
+      if (
+        scrollPosAtDragStart + deltaX > 0 ||
+        scrollPosAtDragStart + deltaX < -frameWidth * (imageCount - 1)
+      ) {
+        dragOffset *= DRAG_CONSTANT;
+      }
 
-      this.setState({
-        scrollPos: scrollPosAtDragStart + dragOffset
-      });
+      this.setState({ scrollPos: scrollPosAtDragStart + dragOffset });
     }
 
     if (!isDragging) {
-      Animations.stop('horizontalPan-' + this.props.slug);
+      Animations.stop("horizontalPan-" + this.props.slug);
 
       this.setState({
         isDragging: true,
-        isDraggingHorizontally: direction === 'left' || direction === 'right',
-        scrollPosAtDragStart: scrollPos
+        isDraggingHorizontally: direction === "left" || direction === "right",
+        scrollPosAtDragStart: scrollPos,
       });
     }
-  },
+  };
 
-  _handleDragRelease(evt) {
-    const {deltaX, velocityX} = evt,
-          {isDraggingHorizontally, scrollPos, frameWidth} = this.state,
-          {images} = this.props,
-          imageCount = images.length,
-          currentPane = this._getCurrentPane();
-    let destinationPane = currentPane, distanceToScroll, duration;
+  handleDragRelease = evt => {
+    const { deltaX, velocityX } = evt;
+    const { isDraggingHorizontally, scrollPos, frameWidth } = this.state;
+    const { images } = this.props;
+    const imageCount = images.length;
+    const currentPane = this.getCurrentPane();
+    let destinationPane = currentPane;
+    let distanceToScroll;
+    let duration;
 
     if (isDraggingHorizontally) {
       if (scrollPos > 0 || imageCount === 1) {
         // scrollPosed out of bounds at start
-        this._animateToPane(currentPane, 600, Easings.elasticOut);
+        this.animateToPane(currentPane, 600, Easings.elasticOut);
       } else if (scrollPos < -frameWidth * (imageCount - 1)) {
         // scrollPosed out of bounds at end
-        if (Math.abs(deltaX) > frameWidth * returnThreshold && imageCount > 1) {
-          this._animateToPane(0, 120 * imageCount, Easings.cubicOut);
+        if (Math.abs(deltaX) > frameWidth * RETURN_THRESHOLD && imageCount > 1) {
+          this.animateToPane(0, 120 * imageCount, Easings.cubicOut);
         } else {
-          this._animateToPane(currentPane, 450, Easings.bounceOut);
+          this.animateToPane(currentPane, 450, Easings.bounceOut);
         }
       } else {
         if (Math.abs(velocityX) > 0.05) {
           if (velocityX < 0) {
-            destinationPane = this._getNextPane();
+            destinationPane = this.getNextPane();
           }
           if (velocityX > 0) {
-            destinationPane = this._getPrevPane();
+            destinationPane = this.getPrevPane();
           }
         }
         destinationPane = constrain(destinationPane, 0, imageCount - 1);
         distanceToScroll = Math.abs(-frameWidth * destinationPane - scrollPos);
-        duration = constrain(Math.abs(distanceToScroll/velocityX*3), 200, 400);
+        duration = constrain(Math.abs(distanceToScroll / velocityX * 3), 200, 400);
 
-        this._animateToPane(destinationPane, duration, Easings.cubicOut);
+        this.animateToPane(destinationPane, duration, Easings.cubicOut);
       }
     }
 
     this.setState({
       isDragging: false,
       isDraggingHorizontally: false,
-      scrollPosAtDragStart: null
+      scrollPosAtDragStart: null,
     });
+  };
 
-  },
-
-  _advanceToNextPane(evt) {
-    const imageCount = this.props.images.length,
-          currentPane = this._getCurrentPane(),
-          nextPane = currentPane === imageCount - 1 ? 0 : currentPane + 1;
+  handleAdvanceToNextPane = evt => {
+    const imageCount = this.props.images.length;
+    const currentPane = this.getCurrentPane();
+    const nextPane = currentPane === imageCount - 1 ? 0 : currentPane + 1;
 
     if (imageCount === 1) {
       this.setState({ shouldWiggle: true });
@@ -183,35 +195,36 @@ export default React.createClass({
     }
 
     if (nextPane === 0) {
-      this._animateToPane(0, 150 * imageCount, Easings.returnHome);
+      this.animateToPane(0, 150 * imageCount, Easings.returnHome);
     } else {
-      this._animateToPane(nextPane, 350, Easings.cubicInOut);
+      this.animateToPane(nextPane, 350, Easings.cubicInOut);
     }
-  },
+  };
 
-  _renderCounter() {
-    const imageCount = this.props.images.length;
+  getCounter = () => (
+    <div className="push-bottom-xs pull-right">
+      {this.props.images.length > 1 ? (
+        <div
+          className="carousel__header__counter"
+          onClick={this.handleAdvanceToNextPane}
+        >
+          {this.getCurrentPane() + 1}&nbsp;of&nbsp;{this.props.images.length}
+        </div>
+      ) : null}
+    </div>
+  );
 
-    return (
-      <div className="push-bottom-xs pull-right">
-        {imageCount > 1 ? (
-          <div className="carousel__header__counter" onClick={this._advanceToNextPane}>
-            {this._getCurrentPane() + 1}&nbsp;of&nbsp;{imageCount}
-          </div>
-        ) : null}
-      </div>
+  render () {
+    const { description, images, title, isMobile, height, width } = this.props;
+    const { scrollPos, frameWidth } = this.state;
+    const imageCount = images.length;
+    const indicatorFinalPosition = frameWidth * DRAG_CONSTANT * RETURN_THRESHOLD * 0.8;
+    const amountDraggedPastEnd = (-scrollPos / frameWidth - (imageCount - 1)) / DRAG_CONSTANT;
+    const indicatorProgress = Easings.sineIn(
+      constrain(amountDraggedPastEnd / RETURN_THRESHOLD, 0, 1)
     );
-  },
-
-  render() {
-    const {description, images, title, isMobile, height, width} = this.props,
-          {scrollPos, frameWidth} = this.state,
-          imageCount = images.length,
-          indicatorFinalPosition = frameWidth * dragConstant * returnThreshold * 0.8,
-          amountDraggedPastEnd = (-scrollPos/frameWidth - (imageCount - 1))/dragConstant,
-          indicatorProgress = Easings.sineIn(constrain(amountDraggedPastEnd/returnThreshold, 0, 1)),
-          imageWidth = isMobile ? frameWidth - 2 * mobilePadding : frameWidth,
-          imageHeight = Math.round(height / width * imageWidth);
+    const imageWidth = isMobile ? frameWidth - 2 * MOBILE_PADDING : frameWidth;
+    const imageHeight = Math.round(height / width * imageWidth);
 
     return (
       <div className="carousel">
@@ -222,7 +235,7 @@ export default React.createClass({
               <div className="push-bottom-xs pull-left">
                 {description}
               </div>
-              {this._renderCounter()}
+              {this.getCounter()}
             </div>
           </div>
         ) : (
@@ -230,41 +243,44 @@ export default React.createClass({
             <div className="push-bottom-xs pull-left">
               <h4>{title}</h4>
             </div>
-            {this._renderCounter()}
+            {this.getCounter()}
           </div>
         )}
         <div
           className="carousel__wrapper"
           ref={el => { this.wrapper = el; }}
           style={{
-            marginLeft: isMobile ? -mobilePadding : 0,
-            marginRight: isMobile ? -mobilePadding : 0
+            marginLeft: isMobile ? -MOBILE_PADDING : 0,
+            marginRight: isMobile ? -MOBILE_PADDING : 0,
           }}>
           <TouchHandler
-            onDrag={this._handleDrag}
-            onDragRelease={this._handleDragRelease}
-            onTap={this._advanceToNextPane}>
+            onDrag={this.handleDrag}
+            onDragRelease={this.handleDragRelease}
+            onTap={this.handleAdvanceToNextPane}>
             <div
               className={classNames("carousel__frame", {
-                "wiggle": this.state.shouldWiggle
+                "wiggle": this.state.shouldWiggle,
               })}
-              style={{ frameWidth }}>
+              style={{ frameWidth }}
+            >
               <ul
                 className="carousel__list"
                 style={{
                   width: frameWidth * imageCount,
                   WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
-                  transform: "translate3d(" + scrollPos + "px, 0, 0)"
-                }}>
+                  transform: "translate3d(" + scrollPos + "px, 0, 0)",
+                }}
+              >
                 {images.map((image, index) => (
                   <li
                     key={index}
                     className="carousel__item"
                     style={{
                       width: frameWidth,
-                      paddingLeft: isMobile ? mobilePadding : 0,
-                      paddingRight: isMobile ? mobilePadding : 0
-                    }}>
+                      paddingLeft: isMobile ? MOBILE_PADDING : 0,
+                      paddingRight: isMobile ? MOBILE_PADDING : 0,
+                    }}
+                  >
                     <img
                       className="carousel__image"
                       src={image}
@@ -281,8 +297,10 @@ export default React.createClass({
               className="carousel__return-indicator fa fa-arrow-left"
               style={{
                 opacity: indicatorProgress,
-                WebkitTransform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)",
-                transform: "translate3d(-" + indicatorProgress * indicatorFinalPosition + "px, 0, 0)"
+                WebkitTransform: "translate3d(-" +
+                  indicatorProgress * indicatorFinalPosition + "px, 0, 0)",
+                transform: "translate3d(-" +
+                  indicatorProgress * indicatorFinalPosition + "px, 0, 0)",
               }}
             />
           ) : null}
@@ -290,4 +308,12 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+Carousel.defaultProps = {
+  description: null,
+  title: "",
+  isMobile: false,
+};
+
+export default Carousel;
