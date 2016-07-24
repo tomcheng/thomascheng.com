@@ -16,42 +16,44 @@ import NotFound from "./components/NotFound/NotFoundComponent.jsx";
 const links = [
   {
     path: "/work",
-    title: "Work"
+    title: "Work",
   },
   {
     path: "/academic-work",
-    title: "Academic Work"
+    title: "Academic Work",
   },
   {
     path: "/miscellany",
-    title: "Miscellany"
+    title: "Miscellany",
   },
   {
     path: "/contact",
     title: "Contact",
-    hiddenOnMobile: true
-  }
+    hiddenOnMobile: true,
+  },
 ];
 
-const App = React.createClass({
-  getInitialState() {
-    return { windowWidth: 0 };
-  },
+class App extends React.Component {
+  constructor (props) {
+    super(props);
 
-  componentDidMount() {
+    this.state = { windowWidth: 0 };
+  }
+
+  componentDidMount () {
     this.getWindowWidth();
     window.addEventListener("resize", this.getWindowWidth);
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener("resize", this.getWindowWidth);
-  },
+  }
 
-  getWindowWidth() {
+  getWindowWidth = () => {
     this.setState({ windowWidth: window.innerWidth });
-  },
+  };
 
-  render() {
+  render () {
     const { windowWidth } = this.state;
 
     return (
@@ -61,7 +63,12 @@ const App = React.createClass({
       </div>
     );
   }
-});
+}
+
+App.propTypes = {
+  children: React.PropTypes.element.isRequired,
+  location: React.PropTypes.string.isRequired,
+};
 
 const routes = (
   <Route path="/" component={App}>

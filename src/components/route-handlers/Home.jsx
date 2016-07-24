@@ -3,12 +3,12 @@ import HomeMobile from "components/route-handlers/HomeMobile.jsx";
 import HomeDesktop from "components/route-handlers/HomeDesktop.jsx";
 import breakPoints from "utils/breakpoints.jsx";
 
-export default React.createClass({
-  propTypes: {
-    windowWidth: React.PropTypes.number.isRequired
-  },
+const Home = ({ windowWidth }) => windowWidth <= breakPoints.xs.max
+  ? <HomeMobile />
+  : <HomeDesktop />;
 
-  render() {
-    return (this.props.windowWidth <= breakPoints.xs.max) ? <HomeMobile /> : <HomeDesktop />;
-  }
-});
+Home.propTypes = {
+  windowWidth: React.PropTypes.number.isRequired,
+};
+
+export default Home;
