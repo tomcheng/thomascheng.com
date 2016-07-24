@@ -162,39 +162,40 @@ class BeforeAfter extends React.Component {
         <TouchHandler
           onDrag={this.handleDragFull}
           onDragRelease={this.handleDragRelease}
-          onTap={this.handleTap}>
-
-          <div className="before-after__browser-chrome"></div>
-
-          <div
-            className="before-after before-after--browser"
-            ref={el => { this.frame = el; }}
-            style={{ height }}
-          >
+          onTap={this.handleTap}
+        >
+          <div>
+            <div className="before-after__browser-chrome"></div>
             <div
-              className="before-after__outer-wrapper before-after__outer-wrapper--after"
-              style={{ width: (width * ratio) }}>
+              className="before-after before-after--browser"
+              ref={el => { this.frame = el; }}
+              style={{ height }}
+            >
               <div
-                className="before-after__inner-wrapper before-after__inner-wrapper--after"
-                style={{ width }}>
-                <img
-                  className="before-after__image"
-                  src={after.url}
-                  style={{ maxWidth: after.width }}
-                />
+                className="before-after__outer-wrapper before-after__outer-wrapper--after"
+                style={{ width: (width * ratio) }}>
+                <div
+                  className="before-after__inner-wrapper before-after__inner-wrapper--after"
+                  style={{ width }}>
+                  <img
+                    className="before-after__image"
+                    src={after.url}
+                    style={{ maxWidth: after.width }}
+                  />
+                </div>
               </div>
-            </div>
-            <div
-              className="before-after__outer-wrapper before-after__outer-wrapper--before"
-              style={{ width: (width * (1 - ratio)) }}>
               <div
-                className="before-after__inner-wrapper before-after__inner-wrapper--before"
-                style={{ width }}>
-                <img
-                  className="before-after__image"
-                  src={before.url}
-                  style={{ maxWidth: before.width }}
-                />
+                className="before-after__outer-wrapper before-after__outer-wrapper--before"
+                style={{ width: (width * (1 - ratio)) }}>
+                <div
+                  className="before-after__inner-wrapper before-after__inner-wrapper--before"
+                  style={{ width }}>
+                  <img
+                    className="before-after__image"
+                    src={before.url}
+                    style={{ maxWidth: before.width }}
+                  />
+                </div>
               </div>
             </div>
           </div>
