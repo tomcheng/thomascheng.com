@@ -1,7 +1,7 @@
 import React from "react";
-import Carousel from "components/common/Carousel.jsx";
-import PageFooter from "components/common/PageFooter.jsx";
-import breakpoints from "utils/breakpoints.jsx";
+import Carousel from "components/common/Carousel.js";
+import PageFooter from "components/common/PageFooter.js";
+import breakpoints from "utils/breakpoints.js";
 
 class AcademicWork extends React.Component {
   static propTypes = {

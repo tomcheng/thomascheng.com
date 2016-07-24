@@ -3,15 +3,14 @@ import React from "react";
 import { Router, IndexRoute, Route, browserHistory } from "react-router";
 import ReactDOM from "react-dom";
 import FastClick from "fastclick";
-import Navigation from "./components/navigation/Navigation.jsx";
-import Home from "./components/route-handlers/Home.jsx";
-import AcademicWork from "./components/route-handlers/AcademicWork.jsx";
-import WorkWork from "./components/route-handlers/WorkWork.jsx";
-import Miscellany from "./components/route-handlers/Miscellany.jsx";
-import Contact from "./components/route-handlers/Contact.jsx";
-import Resume from "./components/route-handlers/Resume.jsx";
-
-import NotFound from "./components/NotFound/NotFoundComponent.jsx";
+import Navigation from "./components/navigation/Navigation";
+import Home from "./components/route-handlers/Home";
+import AcademicWork from "./components/route-handlers/AcademicWork";
+import WorkWork from "./components/route-handlers/WorkWork";
+import Miscellany from "./components/route-handlers/Miscellany";
+import Contact from "./components/route-handlers/Contact";
+import Resume from "./components/route-handlers/Resume";
+import NotFound from "./components/NotFound/NotFoundComponent";
 
 const links = [
   {

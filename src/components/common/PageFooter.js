@@ -1,6 +1,6 @@
 import React from "react";
-import Animations from "utils/animations.jsx";
-import Easings from "utils/easings.jsx";
+import Animations from "utils/animations.js";
+import Easings from "utils/easings.js";
 
 class PageFooter extends React.Component {
   componentDidMount () {

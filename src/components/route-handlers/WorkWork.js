@@ -1,8 +1,8 @@
 import React from "react";
-import BeforeAfter from "components/common/BeforeAfter.jsx";
-import Carousel from "components/common/Carousel.jsx";
-import PageFooter from "components/common/PageFooter.jsx";
-import breakpoints from "utils/breakpoints.jsx";
+import BeforeAfter from "components/common/BeforeAfter.js";
+import Carousel from "components/common/Carousel.js";
+import PageFooter from "components/common/PageFooter.js";
+import breakpoints from "utils/breakpoints.js";
 
 const WorkWork = ({ windowWidth }) => {
   const isMd = windowWidth > breakpoints.md.min;

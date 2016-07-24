@@ -1,5 +1,5 @@
 import React from "react";
-import RandomImage from "components/common/RandomImage.jsx";
+import RandomImage from "components/common/RandomImage.js";
 
 const HomeDesktop = () => (
   <div className="push-top">

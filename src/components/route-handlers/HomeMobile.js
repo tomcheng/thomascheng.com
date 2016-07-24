@@ -1,5 +1,5 @@
 import React from "react";
-import ImageFlasher from "components/common/ImageFlasher.jsx";
+import ImageFlasher from "components/common/ImageFlasher.js";
 
 const HomeMobile = () => (
   <div>
