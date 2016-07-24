@@ -47,21 +47,3 @@ const processingFaces = [
   require("images/processing-faces/stripeman.jpg"),
   require("images/processing-faces/radiating.jpg"),
 ];
-
-const funWithType = [
-  require("images/fun-with-type/assassinate.png"),
-  require("images/fun-with-type/clip.png"),
-  require("images/fun-with-type/evolve.png"),
-  require("images/fun-with-type/exasperate.png"),
-  require("images/fun-with-type/fit.png"),
-  require("images/fun-with-type/grope.png"),
-  require("images/fun-with-type/hit.png"),
-  require("images/fun-with-type/lie.png"),
-  require("images/fun-with-type/melt.png"),
-  require("images/fun-with-type/misplace.png"),
-  require("images/fun-with-type/seethe.png"),
-  require("images/fun-with-type/segregate.png"),
-  require("images/fun-with-type/sharpen.png"),
-  require("images/fun-with-type/stink.png"),
-  require("images/fun-with-type/trap.png"),
-];
