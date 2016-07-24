@@ -2,7 +2,14 @@ import React from "react";
 import { Link } from "react-router";
 import classNames from "classnames";
 
-const Navigation = ({ links, location }) => {
+const LINKS = [
+  { title: "Work", path: "/work" },
+  { title: "Academic Work", path: "/academic-work" },
+  { title: "Miscellany", path: "/miscellany" },
+  { title: "Contact", path: "/contact", hiddenOnMobile: true },
+];
+
+const Navigation = ({ location }) => {
   const isHome = location.pathname === "/";
   const isResume = location.pathname === "/resume";
 
@@ -17,13 +24,17 @@ const Navigation = ({ links, location }) => {
           </Link>
           <div className="header__name-and-position">
             <Link to="/">
-              <div className="header__name">Thomas Cheng</div>
+              <div className="header__name">
+                Thomas Cheng
+              </div>
               {isResume ? (
                 <div className="header__position">
                   thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St, Toronto, ON, M5T 3K7
                 </div>
               ) : (
-                <div className="header__position">Front-End Developer &amp; Designer</div>
+                <div className="header__position">
+                  Front-End Developer &amp; Designer
+                </div>
               )}
 
             </Link>
@@ -31,7 +42,7 @@ const Navigation = ({ links, location }) => {
         </div>
         {!isResume ? (
           <ul className={classNames("navigation", {"navigation--home": isHome})}>
-            {links.map((link, i) => (
+            {LINKS.map((link, i) => (
               <li
                 key={link.title}
                 className={classNames("navigation__item", {
@@ -53,7 +64,6 @@ const Navigation = ({ links, location }) => {
 };
 
 Navigation.propTypes = {
-  links: React.PropTypes.array.isRequired,
   location: React.PropTypes.shape({
     pathname: React.PropTypes.string.isRequired,
   }).isRequired,

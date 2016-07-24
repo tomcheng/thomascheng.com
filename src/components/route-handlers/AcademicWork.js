@@ -1,53 +1,9 @@
 import React from "react";
-import Carousel from "components/common/Carousel.js";
-import PageFooter from "components/common/PageFooter.js";
-import breakpoints from "utils/breakpoints.js";
+import withResponsiveness from "higher-order-components/withResponsiveness";
+import Carousel from "components/common/Carousel";
+import PageFooter from "components/common/PageFooter";
 
-class AcademicWork extends React.Component {
-  static propTypes = {
-    windowWidth: React.PropTypes.number.isRequired,
-  };
-
-  getImages = (slug, imageCount) => {
-    const images = [];
-
-    for (let i = 0; i < imageCount; i++) {
-      images.push(
-        require("images/academic-work/" + slug + "-" + (i + 1) + ".jpg")
-      );
-    }
-
-    return images;
-  };
-
-  render () {
-    const isMobile = this.props.windowWidth <= breakpoints.xs.max;
-
-    return (
-      <div>
-        {pieces.map((piece, i) => (
-          <div key={piece.slug}>
-            <Carousel
-              description={piece.description}
-              height={piece.height}
-              images={this.getImages(piece.slug, piece.imageCount)}
-              isMobile={isMobile}
-              slug={piece.slug}
-              title={piece.title}
-              width={piece.width}
-            />
-            {i !== pieces.length - 1 ? <hr className="divider--short" /> : null}
-          </div>
-        ))}
-        <PageFooter />
-      </div>
-    );
-  }
-}
-
-export default AcademicWork;
-
-const pieces = [
+const PIECES = [
   {
     slug: "guide",
     title: "Typography Booklet",
@@ -112,3 +68,47 @@ const pieces = [
     imageCount: 1,
   },
 ];
+
+class AcademicWork extends React.Component {
+  static propTypes = {
+    isMobile: React.PropTypes.bool.isRequired,
+  };
+
+  getImages = (slug, imageCount) => {
+    const images = [];
+
+    for (let i = 0; i < imageCount; i++) {
+      images.push(
+        require("images/academic-work/" + slug + "-" + (i + 1) + ".jpg")
+      );
+    }
+
+    return images;
+  };
+
+  render () {
+    const { isMobile } = this.props;
+
+    return (
+      <div>
+        {PIECES.map((piece, i) => (
+          <div key={piece.slug}>
+            <Carousel
+              description={piece.description}
+              height={piece.height}
+              images={this.getImages(piece.slug, piece.imageCount)}
+              isMobile={isMobile}
+              slug={piece.slug}
+              title={piece.title}
+              width={piece.width}
+            />
+            {i !== PIECES.length - 1 ? <hr className="divider--short" /> : null}
+          </div>
+        ))}
+        <PageFooter />
+      </div>
+    );
+  }
+}
+
+export default withResponsiveness(AcademicWork);
