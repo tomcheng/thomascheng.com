@@ -8,22 +8,6 @@ var config = require('../config/webpack.config.dev');
 var execSync = require('child_process').execSync;
 var opn = require('opn');
 
-// TODO: hide this behind a flag and eliminate dead code on eject.
-// This shouldn't be exposed to the user.
-var handleCompile;
-var isSmokeTest = process.argv.some(arg =>
-  arg.indexOf('--smoke-test') > -1
-);
-if (isSmokeTest) {
-  handleCompile = function (err, stats) {
-    if (err || stats.hasErrors() || stats.hasWarnings()) {
-      process.exit(1);
-    } else {
-      process.exit(0);
-    }
-  };
-}
-
 var friendlySyntaxErrorLabel = 'Syntax error:';
 
 function isLikelyASyntaxError(message) {
@@ -56,7 +40,7 @@ function clearConsole() {
   process.stdout.write('\x1B[2J\x1B[0f');
 }
 
-var compiler = webpack(config, handleCompile);
+var compiler = webpack(config);
 compiler.plugin('invalid', function () {
   clearConsole();
   console.log('Compiling...');
@@ -92,8 +76,8 @@ compiler.plugin('done', function (stats) {
     }
     formattedErrors.forEach(message => {
       console.log(message);
-    console.log();
-  });
+      console.log();
+    });
     // If errors exist, ignore warnings.
     return;
   }
@@ -103,8 +87,8 @@ compiler.plugin('done', function (stats) {
     console.log();
     formattedWarnings.forEach(message => {
       console.log(message);
-    console.log();
-  });
+      console.log();
+    });
 
     console.log('You may use special comments to disable some warnings.');
     console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
@@ -139,9 +123,7 @@ new WebpackDevServer(compiler, {
   publicPath: config.output.publicPath,
   quiet: true
 }).listen(3000, 'localhost', function (err, result) {
-  if (err) {
-    return console.log(err);
-  }
+  if (err) { return console.log(err); }
 
   clearConsole();
   console.log(chalk.cyan('Starting the development server...'));
