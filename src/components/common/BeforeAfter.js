@@ -1,6 +1,6 @@
 import React from "react";
 import Animations from "utils/animations.js";
-import Easings from "utils/easings.js";
+import { cubicInOut } from "utils/easings.js";
 import TouchHandler from "components/common/TouchHandler.js";
 
 class BeforeAfter extends React.Component {
@@ -46,9 +46,9 @@ class BeforeAfter extends React.Component {
       start: this.state.ratio,
       end: 0,
       duration: 250,
-      easing: Easings.cubicInOut,
-      onUpdate: pos => {
-        this.setState({ ratio: pos });
+      easing: cubicInOut,
+      onUpdate: ratio => {
+        this.setState({ ratio });
       },
     });
   };
@@ -59,9 +59,9 @@ class BeforeAfter extends React.Component {
       start: this.state.ratio,
       end: 1,
       duration: 250,
-      easing: Easings.cubicInOut,
-      onUpdate: pos => {
-        this.setState({ ratio: pos });
+      easing: cubicInOut,
+      onUpdate: ratio => {
+        this.setState({ ratio });
       },
     });
   };

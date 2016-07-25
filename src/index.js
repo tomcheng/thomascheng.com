@@ -7,7 +7,7 @@ import routes from "routes";
 
 const rootEl = document.getElementById("root");
 
-FastClick.attach(document.getElementById("root"));
+FastClick.attach(rootEl);
 
 ReactDOM.render((
   <Router history={browserHistory}>

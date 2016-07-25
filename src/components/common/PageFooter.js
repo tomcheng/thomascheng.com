@@ -1,6 +1,6 @@
 import React from "react";
-import Animations from "utils/animations.js";
-import Easings from "utils/easings.js";
+import Animations from "utils/animations";
+import { cubicInOut } from "utils/easings";
 
 class PageFooter extends React.Component {
   componentDidMount () {
@@ -15,7 +15,7 @@ class PageFooter extends React.Component {
       start: initialPosition,
       end: 0,
       duration: 500,
-      easing: Easings.cubicInOut,
+      easing: cubicInOut,
       onUpdate: pos => {
         this.bodyEl.scrollTop = pos;
       },

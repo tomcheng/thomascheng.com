@@ -1,4 +1,4 @@
-const bezToEasing = bezArray => (x, t, b, c, d) => {
+const bezToEasing = bezArray => x => {
   const polyBez = (p1, p2) => {
     const A = [null, null];
     const B = [null, null];
@@ -23,62 +23,35 @@ const bezToEasing = bezArray => (x, t, b, c, d) => {
     };
     return t => bezCoOrd(xForT(t), 1);
   };
-  return c * polyBez([bezArray[0], bezArray[1]], [bezArray[2], bezArray[3]])(t / d) + b;
+  return polyBez([bezArray[0], bezArray[1]], [bezArray[2], bezArray[3]])(x);
 };
 
-const simplifyEasing = complexFn => x => complexFn(x, x, 0, 1, 1);
-
-const returnHomeComplex = bezToEasing([0.72, -0.36, 0.57, 1]);
-
-const easeInSine = (x, t, b, c, d) => -c * Math.cos(t / d * (Math.PI / 2)) + c + b;
-
-const easeInOutCubic = (x, t, b, c, d) => {
-  if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
-  return c / 2 * ((t -= 2) * t * t + 2) + b;
-};
-
-const easeOutElastic = (x, t, b, c, d) => {
-  let s;
-  let p = 0;
-  let a = c;
-  if (t === 0) { return 0; }
-  if ((t /= d) === 1) { return b + c; }
-  if (!p) { p = d * 0.3; }
-  if (a < Math.abs(c)) {
-    a = c;
-    s = p / 4;
+export const bounceOut = x => {
+  if (x < (1 / 2.75)) {
+    return 7.5625 * x * x;
+  } else if (x < (2 / 2.75)) {
+    return 7.5625 * (x -= (1.5 / 2.75)) * x + 0.75;
+  } else if (x < (2.5 / 2.75)) {
+    return 7.5625 * (x -= (2.25 / 2.75)) * x + 0.9375;
   } else {
-    s = p / (2 * Math.PI) * Math.asin(c / a);
-  }
-  return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + 0;
-};
-
-const easeOutBounce = (x, t, b, c, d) => {
-  if ((t /= d) < (1 / 2.75)) {
-    return c * (7.5625 * t * t) + b;
-  } else if (t < (2 / 2.75)) {
-    return c * (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75) + b;
-  } else if (t < (2.5 / 2.75)) {
-    return c * (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375) + b;
-  } else {
-    return c * (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375) + b;
+    return 7.5625 * (x -= (2.625 / 2.75)) * x + 0.984375;
   }
 };
 
-const easeOutBack = (x, t, b, c, d, s) => {
-  if (s === undefined) { s = 1.70158; }
-  return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
+export const cubicInOut = x => {
+  if ((x *= 2) < 1) { return 1 / 2 * x * x * x; }
+  return 1 / 2 * ((x -= 2) * x * x + 2);
 };
 
-const Easings = {
-  cubicIn: x => x * x * x,
-  cubicOut: x => --x * x * x + 1,
-  cubicInOut: x => simplifyEasing(easeInOutCubic)(x),
-  elasticOut: x => simplifyEasing(easeOutElastic)(x),
-  bounceOut: x => simplifyEasing(easeOutBounce)(x),
-  backOut: x => simplifyEasing(easeOutBack)(x),
-  sineIn: x => simplifyEasing(easeInSine)(x),
-  returnHome: x => simplifyEasing(returnHomeComplex)(x),
+export const cubicOut = x => --x * x * x + 1;
+
+export const elasticOut = x => {
+  if (x === 0) { return 0; }
+  if (x === 1) { return 1; }
+  const s = 0.3 / (2 * Math.PI) * Math.asin(1);
+  return Math.pow(2, -10 * x) * Math.sin((x - s) * (2 * Math.PI) / 0.3) + 1;
 };
 
-export default Easings;
+export const returnHome = bezToEasing([0.72, -0.36, 0.57, 1]);
+
+export const sineIn = x => -Math.cos(x / 1 * (Math.PI / 2)) + 1;

@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import Animations from "utils/animations.js";
-import Easings from "utils/easings.js";
+import { bounceOut, cubicOut, cubicInOut, elasticOut, returnHome, sineIn } from "utils/easings.js";
 import { constrain } from "utils/math.js";
 import TouchHandler from "components/common/TouchHandler.js";
 
@@ -150,13 +150,13 @@ class Carousel extends React.Component {
     if (isDraggingHorizontally) {
       if (scrollPos > 0 || imageCount === 1) {
         // scrollPosed out of bounds at start
-        this.animateToPane(currentPane, 600, Easings.elasticOut);
+        this.animateToPane(currentPane, 600, elasticOut);
       } else if (scrollPos < -frameWidth * (imageCount - 1)) {
         // scrollPosed out of bounds at end
         if (Math.abs(deltaX) > frameWidth * RETURN_THRESHOLD && imageCount > 1) {
-          this.animateToPane(0, 120 * imageCount, Easings.cubicOut);
+          this.animateToPane(0, 120 * imageCount, cubicOut);
         } else {
-          this.animateToPane(currentPane, 450, Easings.bounceOut);
+          this.animateToPane(currentPane, 450, bounceOut);
         }
       } else {
         if (Math.abs(velocityX) > 0.05) {
@@ -171,7 +171,7 @@ class Carousel extends React.Component {
         distanceToScroll = Math.abs(-frameWidth * destinationPane - scrollPos);
         duration = constrain(Math.abs(distanceToScroll / velocityX * 3), 200, 400);
 
-        this.animateToPane(destinationPane, duration, Easings.cubicOut);
+        this.animateToPane(destinationPane, duration, cubicOut);
       }
     }
 
@@ -195,9 +195,9 @@ class Carousel extends React.Component {
     }
 
     if (nextPane === 0) {
-      this.animateToPane(0, 150 * imageCount, Easings.returnHome);
+      this.animateToPane(0, 150 * imageCount, returnHome);
     } else {
-      this.animateToPane(nextPane, 350, Easings.cubicInOut);
+      this.animateToPane(nextPane, 350, cubicInOut);
     }
   };
 
@@ -220,7 +220,7 @@ class Carousel extends React.Component {
     const imageCount = images.length;
     const indicatorFinalPosition = frameWidth * DRAG_CONSTANT * RETURN_THRESHOLD * 0.8;
     const amountDraggedPastEnd = (-scrollPos / frameWidth - (imageCount - 1)) / DRAG_CONSTANT;
-    const indicatorProgress = Easings.sineIn(
+    const indicatorProgress = sineIn(
       constrain(amountDraggedPastEnd / RETURN_THRESHOLD, 0, 1)
     );
     const imageWidth = isMobile ? frameWidth - 2 * MOBILE_PADDING : frameWidth;
