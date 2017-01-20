@@ -1,6 +1,6 @@
 import React from "react";
-import Animations from "utils/animations";
-import { cubicInOut } from "utils/easings";
+import Animations from "../../utils/animations";
+import { cubicInOut } from "../../utils/easings";
 
 class PageFooter extends React.Component {
   componentDidMount () {

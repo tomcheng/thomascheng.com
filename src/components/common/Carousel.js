@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames";
-import Animations from "utils/animations.js";
-import { bounceOut, cubicOut, cubicInOut, elasticOut, returnHome, sineIn } from "utils/easings.js";
-import { constrain } from "utils/math.js";
-import TouchHandler from "components/common/TouchHandler.js";
+import Animations from "../../utils/animations.js";
+import { bounceOut, cubicOut, cubicInOut, elasticOut, returnHome, sineIn } from "../../utils/easings.js";
+import { constrain } from "../../utils/math.js";
+import TouchHandler from "./TouchHandler.js";
 
 const MOBILE_PADDING = 15;
 const DRAG_CONSTANT = 0.2; // amount of slow down dragging past bounds

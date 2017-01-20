@@ -1,7 +1,7 @@
 import React from "react";
-import Animations from "utils/animations.js";
-import { cubicInOut } from "utils/easings.js";
-import TouchHandler from "components/common/TouchHandler.js";
+import Animations from "../../utils/animations.js";
+import { cubicInOut } from "../../utils/easings.js";
+import TouchHandler from "./TouchHandler.js";
 
 class BeforeAfter extends React.Component {
   static propTypes = {

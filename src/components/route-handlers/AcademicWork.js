@@ -1,7 +1,7 @@
 import React from "react";
-import withResponsiveness from "higher-order-components/withResponsiveness";
-import Carousel from "components/common/Carousel";
-import PageFooter from "components/common/PageFooter";
+import withResponsiveness from "../../higher-order-components/withResponsiveness";
+import Carousel from "../common/Carousel";
+import PageFooter from "../common/PageFooter";
 
 const PIECES = [
   {
@@ -79,7 +79,7 @@ class AcademicWork extends React.Component {
 
     for (let i = 0; i < imageCount; i++) {
       images.push(
-        require("images/academic-work/" + slug + "-" + (i + 1) + ".jpg")
+        require("../../images/academic-work/" + slug + "-" + (i + 1) + ".jpg")
       );
     }
 

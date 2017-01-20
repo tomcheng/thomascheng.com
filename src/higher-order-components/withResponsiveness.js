@@ -1,5 +1,5 @@
 import React from "react";
-import breakpoints from "utils/breakpoints";
+import breakpoints from "../utils/breakpoints";
 
 const withResponsiveness = Target => class extends React.Component {
   constructor (props) {

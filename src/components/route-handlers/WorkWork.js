@@ -1,8 +1,8 @@
 import React from "react";
-import withResponsiveness from "higher-order-components/withResponsiveness";
-import BeforeAfter from "components/common/BeforeAfter";
-import Carousel from "components/common/Carousel";
-import PageFooter from "components/common/PageFooter";
+import withResponsiveness from "../../higher-order-components/withResponsiveness";
+import BeforeAfter from "../common/BeforeAfter";
+import Carousel from "../common/Carousel";
+import PageFooter from "../common/PageFooter";
 
 const QCLOUD = [
   {
@@ -59,12 +59,12 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
       <div key={comparison.slug} className="push-bottom">
         <BeforeAfter
           before={{
-            url: require("images/qcloud/" + comparison.slug + "-before.png"),
+            url: require("../../images/qcloud/" + comparison.slug + "-before.png"),
             width: comparison.beforeDimensions[0],
             height: comparison.beforeDimensions[1],
           }}
           after={{
-            url: require("images/qcloud/" + comparison.slug + "-after.png"),
+            url: require("../../images/qcloud/" + comparison.slug + "-after.png"),
             width: comparison.afterDimensions[0],
             height: comparison.afterDimensions[1],
           }}
@@ -79,15 +79,15 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
       <BeforeAfter
         before={{
           url: isMdAndUp
-            ? require("images/qcloud/sheet-filling-landscape-before.png")
-            : require("images/qcloud/sheet-filling-before.png"),
+            ? require("../../images/qcloud/sheet-filling-landscape-before.png")
+            : require("../../images/qcloud/sheet-filling-before.png"),
           width: isMdAndUp ? 1024 : 768,
           height: isMdAndUp ? 768 : 640,
         }}
         after={{
           url: isMdAndUp
-            ? require("images/qcloud/sheet-filling-landscape-after.png")
-            : require("images/qcloud/sheet-filling-after.png"),
+            ? require("../../images/qcloud/sheet-filling-landscape-after.png")
+            : require("../../images/qcloud/sheet-filling-after.png"),
           width: isMdAndUp ? 1024 : 768,
           height: isMdAndUp ? 768 : 640,
         }}
@@ -113,10 +113,10 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
         description={"Develop a playful yet straightforward visual language " +
           "for the application and provide a resource to enforce consistency."}
         images={[
-          require("images/freshbooks/styleguide-1.png"),
-          require("images/freshbooks/styleguide-2.png"),
-          require("images/freshbooks/styleguide-3.png"),
-          require("images/freshbooks/styleguide-4.png"),
+          require("../../images/freshbooks/styleguide-1.png"),
+          require("../../images/freshbooks/styleguide-2.png"),
+          require("../../images/freshbooks/styleguide-3.png"),
+          require("../../images/freshbooks/styleguide-4.png"),
         ]}
         width={1080}
         height={660}
@@ -127,12 +127,12 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
       <div key={comparison.slug} className="push-bottom">
         <BeforeAfter
           before={{
-            url: require("images/freshbooks/" + comparison.slug + "-before.png"),
+            url: require("../../images/freshbooks/" + comparison.slug + "-before.png"),
             width: comparison.beforeDimensions[0],
             height: comparison.beforeDimensions[1],
           }}
           after={{
-            url: require("images/freshbooks/" + comparison.slug + "-after.png"),
+            url: require("../../images/freshbooks/" + comparison.slug + "-after.png"),
             width: comparison.afterDimensions[0],
             height: comparison.afterDimensions[1],
           }}
