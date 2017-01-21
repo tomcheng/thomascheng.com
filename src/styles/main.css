@@ -16,13 +16,8 @@ body,
 figure {
   margin: 0
 }
-.pull-left {
-  float: left
-}
 .before-after-buttons:after,
 .clearfix:after,
-.container-fluid:after,
-.container:after,
 .row:after {
   clear: both
 }
@@ -282,19 +277,8 @@ h3 {
   background-clip: padding-box;
   border-radius: 3px
 }
-.container,
-.container-fluid {
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-right: auto;
-  margin-left: auto
-}
 .clearfix:after,
 .clearfix:before,
-.container-fluid:after,
-.container-fluid:before,
-.container:after,
-.container:before,
 .row:after,
 .row:before {
   content: " ";
@@ -520,9 +504,6 @@ h3 {
   width: 50%;
   z-index: 1
 }
-.home__title {
-  font-family: Raleway, sans-serif
-}
 .before-after-button,
 .carousel__header__counter {
   -webkit-user-select: none;
@@ -612,16 +593,6 @@ h3 {
   background-repeat: no-repeat;
   background-position: center center
 }
-.image-flasher__trigger-container {
-  left: 0;
-  margin: -40px auto 0;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  top: 50%;
-  width: 250px;
-  z-index: 1010
-}
 .image-flasher__trigger-logo {
   -webkit-transform: scale(2.5, 2.5);
   transform: scale(2.5, 2.5);
@@ -651,9 +622,6 @@ h3 {
 }
 .is-flashing .image-flasher__trigger-logo .logo-path {
   fill: #fff
-}
-.is-flashing .image-flasher__trigger-text {
-  opacity: 0
 }
 .image-flasher__message {
   text-align: center;
@@ -761,35 +729,9 @@ body {
     padding-top: 105px
   }
 }
-.home__title {
-  transition: all .06s ease-in;
-  color: #333;
-  font-weight: 900;
-  text-transform: uppercase;
-  font-size: 16px;
-  letter-spacing: .5px;
-  border-bottom: 8px solid #333;
-  display: inline-block;
-  padding: 0 10px 5px;
-  margin-bottom: 15px;
-  position: relative
-}
-.is-flashing .home__title {
-  color: #fff;
-  border-color: #fff;
-  -webkit-transform: scale3d(1.2, 1.2, 1);
-  transform: scale3d(1.2, 1.2, 1)
-}
 .page-footer-icon {
   font-size: 18px;
   padding: 5px;
   cursor: pointer;
   color: #333
-}
-.mobile-home-footer {
-  position: fixed;
-  bottom: 15px;
-  left: 0;
-  right: 0;
-  text-align: center
 }

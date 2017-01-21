@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import styled from "styled-components";
+import Container from "../common/Container";
 
 const LINKS = [
   { title: "Work", path: "/work" },
@@ -25,20 +26,6 @@ const Header = styled.div`
     height: 70px;
     display: flex;
     align-items: center;
-  }
-`;
-
-const Container = styled.div`
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-right: auto;
-  margin-left: auto;
-
-  @media (min-width: 768px) {
-    width: 750px
-  }
-  @media (min-width: 992px) {
-    width: 970px
   }
 `;
 

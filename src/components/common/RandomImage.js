@@ -1,8 +1,19 @@
 import React from "react";
+import styled from "styled-components";
+
+const Container = styled.div`
+  cursor: pointer;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  display: ${props => props.visible ? "block" : "none"}
+`;
 
 class RandomImage extends React.Component {
   static propTypes = {
     images: React.PropTypes.array.isRequired,
+    className: React.PropTypes.string,
   };
 
   constructor (props) {
@@ -20,22 +31,19 @@ class RandomImage extends React.Component {
   };
 
   render () {
-    const { images } = this.props;
+    const { images, className } = this.props;
     const { imageShown } = this.state;
 
     return (
-      <div onClick={this.handleClick} style={{ cursor: "pointer" }}>
+      <Container onClick={this.handleClick} className={className}>
         {images.map((image, i) => (
-          <img
+          <Image
             key={image}
-            style={{
-              width: "100%",
-              display: imageShown === i ? "block" : "none",
-            }}
+            visible={imageShown === i}
             src={image}
           />
         ))}
-      </div>
+      </Container>
     );
   }
 }

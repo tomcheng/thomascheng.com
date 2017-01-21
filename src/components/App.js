@@ -1,11 +1,12 @@
 import React from "react";
 import Navigation from "./navigation/Navigation";
+import Container from "./common/Container";
 
 const App = ({ children, location }) => (
-  <div className="container">
+  <Container>
     <Navigation location={location} />
     {children}
-  </div>
+  </Container>
 );
 
 App.propTypes = {

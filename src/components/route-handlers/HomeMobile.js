@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import ImageFlasher from "../common/ImageFlasher.js";
 
 const images = [
@@ -38,26 +39,70 @@ const images = [
   require("../../images/home/twofonts-low-res.jpg"),
 ];
 
+const Footer = styled.div`
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  text-align: center;
+`;
+
+const TriggerContainer = styled.div`
+  left: 0;
+  margin: -40px auto 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 50%;
+  width: 250px;
+  z-index: 1010;
+`;
+
+const Trigger = styled.div`
+  font-family: Raleway, sans-serif;
+  transition: all .06s ease-in;
+  color: #333;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: .5px;
+  border-bottom: 8px solid #333;
+  display: inline-block;
+  padding: 0 10px 5px;
+  margin-bottom: 15px;
+  position: relative;
+
+  .is-flashing & {
+    color: #fff;
+    border-color: #fff;
+    -webkit-transform: scale3d(1.2, 1.2, 1);
+    transform: scale3d(1.2, 1.2, 1);
+  }
+`;
+
+const Subtitle = styled.div`
+  .is-flashing & {
+    opacity: 0;
+  }
+`;
+
+
 const HomeMobile = () => (
   <div>
-    <div className="image-flasher__trigger-container">
+    <TriggerContainer>
       <ImageFlasher
         images={images}
         trigger={(
-          <div>
-            <div className="home__title">Thomas Cheng</div>
-          </div>
+          <Trigger>Thomas Cheng</Trigger>
         )}
       />
-      <div className="image-flasher__trigger-text">
-        <div>
-          <em>UI/UX Designer &amp;<br />Front-End Developer</em>
-        </div>
-      </div>
-    </div>
-    <div className="mobile-home-footer">
+      <Subtitle>
+        <em>UI/UX Designer &amp;<br />Front-End Developer</em>
+      </Subtitle>
+    </TriggerContainer>
+    <Footer>
       Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
-    </div>
+    </Footer>
   </div>
 );
 
