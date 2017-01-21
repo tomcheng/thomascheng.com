@@ -1,29 +1,6 @@
 import React from "react";
 import ImageFlasher from "../common/ImageFlasher.js";
 
-const HomeMobile = () => (
-  <div>
-    <div className="image-flasher__trigger-container">
-      <ImageFlasher
-        images={images}
-        trigger={(
-          <div>
-            <div className="home__title">Thomas Cheng</div>
-          </div>
-        )}
-      />
-      <div className="image-flasher__trigger-text">
-        <div>
-          <em>UI/UX Designer &amp;<br />Front-End Developer</em>
-        </div>
-      </div>
-    </div>
-    <div className="mobile-home-footer">
-      Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
-    </div>
-  </div>
-);
-
 const images = [
   require("../../images/home/3Dproj2-low-res.jpg"),
   require("../../images/home/circleboy.jpg"),
@@ -60,5 +37,28 @@ const images = [
   require("../../images/home/strippedfaces.jpg"),
   require("../../images/home/twofonts-low-res.jpg"),
 ];
+
+const HomeMobile = () => (
+  <div>
+    <div className="image-flasher__trigger-container">
+      <ImageFlasher
+        images={images}
+        trigger={(
+          <div>
+            <div className="home__title">Thomas Cheng</div>
+          </div>
+        )}
+      />
+      <div className="image-flasher__trigger-text">
+        <div>
+          <em>UI/UX Designer &amp;<br />Front-End Developer</em>
+        </div>
+      </div>
+    </div>
+    <div className="mobile-home-footer">
+      Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
+    </div>
+  </div>
+);
 
 export default HomeMobile;

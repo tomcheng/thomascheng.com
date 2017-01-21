@@ -3,6 +3,8 @@ import Animations from "../../utils/animations.js";
 import { cubicInOut } from "../../utils/easings.js";
 import TouchHandler from "./TouchHandler.js";
 
+const constrain = (value, min, max) => Math.min(Math.max(value, min), max);
+
 class BeforeAfter extends React.Component {
   static propTypes = {
     after: React.PropTypes.object.isRequired,
@@ -206,8 +208,6 @@ class BeforeAfter extends React.Component {
 }
 
 BeforeAfter.defaultProps = { sliderWidth: 130 };
-
-const constrain = (value, min, max) => Math.min(Math.max(value, min), max);
 
 const BeforeAfterSlider = ({ ratio, width }) => (
   <div style={{ width }}>
