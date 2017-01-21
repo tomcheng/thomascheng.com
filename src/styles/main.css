@@ -2939,7 +2939,7 @@ h7 {
   position: relative
 }
 .before-after__browser-chrome:before {
-  content: "â€¢â€¢â€¢";
+  content: "•••";
   color: #fff;
   position: absolute;
   letter-spacing: 5px;
