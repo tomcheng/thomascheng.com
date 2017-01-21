@@ -62,7 +62,7 @@ class TouchHandler extends Component {
 
     this.props.onDrag({
       deltaX, deltaY, velocityX, velocityY, direction, x, y,
-      preventDefault: evt.preventDefault,
+      preventDefault: evt.preventDefault.bind(evt),
     });
 
     if (!hasDragged) {
@@ -74,7 +74,7 @@ class TouchHandler extends Component {
     this.setState({ last: {x, y, velocityX, velocityY, time} });
   };
 
-  handleTouchEnd = evt => {
+  handleTouchEnd = () => {
     const { last, start, hasDragged } = this.state;
     const { velocityX, velocityY } = last;
     const deltaX = last.x - start.x;
