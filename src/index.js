@@ -1,3 +1,4 @@
+import "./styles/font-awesome.css";
 import "./styles/main.css";
 import React from "react";
 import { Router, hashHistory } from "react-router";
