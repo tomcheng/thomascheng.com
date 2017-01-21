@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
 import styled from "styled-components";
-import classNames from "classnames";
 
 const LINKS = [
   { title: "Work", path: "/work" },
@@ -34,12 +33,20 @@ const Container = styled.div`
   padding-right: 15px;
   margin-right: auto;
   margin-left: auto;
+
   @media (min-width: 768px) {
     width: 750px
   }
   @media (min-width: 992px) {
     width: 970px
   }
+`;
+
+const HeaderContainer = styled(Container)`
+  display: flex;
+  justify-content: space-between;
+  alignItems: center;
+  height: 100%;
 `;
 
 const MobileLink = styled(Link)`
@@ -74,18 +81,73 @@ const Position = styled.div`
   font-size: 13px;
 `;
 
+const Nav = styled.ul`
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+`;
+
+const NavItem = styled.li`
+  list-style: none;
+  color: #333;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 19px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+
+  @media (max-width: 767px) {
+    display: ${props => props.hiddenOnMobile ? "none" : "block"};
+  }
+  @media (min-width: 768px) {
+    font-size: 13px;
+    text-transform: none;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0
+  }
+  @media (min-width: 992px) {
+    font-size: 14px
+  }
+`;
+
+const NavLink = styled(Link)`
+  opacity: 0.2;
+  color: #333;
+  display: block;
+  line-height: 40px;
+  padding: 1px 7px 0;
+  vertical-align: center;
+  
+  &.active {
+    opacity: 1;
+  }
+`;
+
+const NavLinkHome = styled(NavLink)`
+  opacity: 1;
+`;
+
+const NavText = styled.span`
+  padding-bottom: 3px;
+
+  @media (min-width: 768px) {
+    .active &,
+    &:hover {
+      border-bottom: 3px solid #333
+    }
+  }
+`;
+
 const Navigation = ({ location }) => {
   const isHome = location.pathname === "/";
   const isResume = location.pathname === "/resume";
 
+  const LinkComponent = isHome ? NavLinkHome : NavLink;
   return (
     <Header>
-      <Container style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        height: "100%",
-      }}>
+      <HeaderContainer>
         <MobileLink to="/">
           <HomeIcon className="fa fa-home" />
         </MobileLink>
@@ -104,24 +166,19 @@ const Navigation = ({ location }) => {
           )}
         </DesktopLink>
         {!isResume ? (
-          <ul className={classNames("navigation", {"navigation--home": isHome})}>
+          <Nav>
             {LINKS.map((link, i) => (
-              <li
-                key={link.title}
-                className={classNames("navigation__item", {
-                  "hidden-xs": link.hiddenOnMobile,
-                })}
-              >
-                <Link to={link.path} activeClassName="active">
-                  <span className="navigation__item__text">
+              <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
+                <LinkComponent to={link.path} activeClassName="active">
+                  <NavText>
                     {link.title}
-                  </span>
-                </Link>
-              </li>
+                  </NavText>
+                </LinkComponent>
+              </NavItem>
             ))}
-          </ul>
+          </Nav>
         ) : null}
-      </Container>
+      </HeaderContainer>
     </Header>
   );
 };
