@@ -49,7 +49,7 @@ const Navigation = ({ location }) => {
                   "hidden-xs": link.hiddenOnMobile,
                 })}
               >
-                <Link to={link.path}>
+                <Link to={link.path} activeClassName="active">
                   <span className="navigation__item__text">
                     {link.title}
                   </span>
