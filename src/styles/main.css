@@ -39,8 +39,6 @@ figure {
   clear: both
 }
 .before-after-button,
-.fa-fw,
-.fa-li,
 .text-center {
   text-align: center
 }
@@ -282,6 +280,15 @@ h6,
 h7 {
   margin: 0
 }
+.h4,
+h2,
+h4 {
+  font-weight: 700
+}
+.work-section__title,
+h3 {
+  text-transform: uppercase
+}
 .before-after,
 .image-rounded-corners {
   background-clip: padding-box;
@@ -357,11 +364,6 @@ h7 {
 @media (min-width: 992px) {
   .container {
     width: 970px
-  }
-}
-@media (min-width: 1200000px) {
-  .container {
-    width: 1170px
   }
 }
 .row {
@@ -1247,12 +1249,10 @@ h7 {
   width: 50%;
   z-index: 1
 }
-.header__name,
 .navigation__item {
   text-transform: uppercase;
-  letter-spacing: .5px
+  letter-spacing: .5px;
 }
-.header__name,
 .home__title {
   font-family: Raleway, sans-serif
 }
@@ -1366,7 +1366,6 @@ h7 {
   width: 50px;
   margin-bottom: 30px
 }
-.header,
 .image-flasher__message {
   left: 0;
   position: fixed;
@@ -1393,53 +1392,11 @@ h7 {
   text-align: center;
   top: 20%
 }
-.header {
-  background-color: rgba(255, 255, 255, .96);
-  border-bottom: 1px solid #e0e0e0;
-  top: 0;
-  z-index: 1000
-}
-.header__logo-container {
-  position: absolute;
-  height: 40px;
-  width: 60px;
-  left: 0;
-  top: 0;
-  z-index: 1
-}
-@media (min-width: 768px) {
-  .header__logo-container {
-    display: none
-  }
-}
-.header__logo {
-  left: 15px;
-  font-size: 24px;
-  color: #333;
-  top: 9px;
-  position: absolute
-}
-.header__name-and-position {
-  margin-top: 15px
-}
 @media (max-width: 767px) {
   .carousel__image {
     border-radius: 3px;
     background-clip: padding-box
   }
-  .header__name-and-position {
-    display: none
-  }
-}
-.header__name {
-  color: #333;
-  font-size: 14px;
-  font-weight: 900
-}
-.header__position {
-  color: #666;
-  font-style: italic;
-  font-size: 13px
 }
 .navigation {
   -webkit-align-items: center;
@@ -1468,15 +1425,6 @@ h7 {
     line-height: 19px;
     letter-spacing: 0
   }
-}
-.h4,
-h2,
-h4 {
-  font-weight: 700
-}
-.work-section__title,
-h3 {
-  text-transform: uppercase
 }
 @media (min-width: 992px) {
   .navigation__item {
