@@ -90,10 +90,10 @@ const NavItem = styled.div`
     text-transform: none;
     font-weight: 400;
     line-height: 19px;
-    letter-spacing: 0
+    letter-spacing: 0;
   }
   @media (min-width: 992px) {
-    font-size: 14px
+    font-size: 14px;
   }
 `;
 

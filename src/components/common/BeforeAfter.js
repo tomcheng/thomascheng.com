@@ -10,9 +10,18 @@ const SLIDER_WIDTH = 130;
 
 const constrain = (value, min, max) => Math.min(Math.max(value, min), max);
 
+const Header = styled.div`
+  @media (min-width: 992px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+`;
+
 const SliderContainer = styled(NudgeBottom)`
   display: flex;
   justify-content: flex-end;
+  flex-shrink: 0;
 `;
 
 const BrowserChrome = styled.div`
@@ -226,16 +235,20 @@ class BeforeAfter extends React.Component {
 
     return (
       <div>
-        <h4>{title}</h4>
-        <NudgeBottom>{description}</NudgeBottom>
-        <SliderContainer>
-          <TouchHandler
-            onDrag={this.handleDragSlider}
-            onDragRelease={this.handleDragRelease}
-            onTap={this.handleTap}>
-            <BeforeAfterSlider ratio={ratio} />
-          </TouchHandler>
-        </SliderContainer>
+        <Header>
+          <div>
+            <h4>{title}</h4>
+            <NudgeBottom>{description}</NudgeBottom>
+          </div>
+          <SliderContainer>
+            <TouchHandler
+              onDrag={this.handleDragSlider}
+              onDragRelease={this.handleDragRelease}
+              onTap={this.handleTap}>
+              <BeforeAfterSlider ratio={ratio} />
+            </TouchHandler>
+          </SliderContainer>
+        </Header>
 
         <TouchHandler
           onDrag={this.handleDragFull}
