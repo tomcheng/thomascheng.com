@@ -10,7 +10,15 @@ import Resume from "./components/route-handlers/Resume";
 import NotFound from "./components/NotFound/NotFoundComponent";
 
 const routes = (
-  <Route path="/" component={App}>
+  <Route
+    path="/"
+    component={App}
+    onChange={(prevState, nextState) => {
+      if (nextState.location.action !== "POP") {
+        window.scrollTo(0, 0);
+      }
+    }}
+  >
     <IndexRoute component={Home} />
     <Route path="/academic-work" component={AcademicWork} />
     <Route path="/work" component={WorkWork} />
