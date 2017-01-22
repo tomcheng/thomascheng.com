@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import withResponsiveness from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
@@ -69,6 +70,11 @@ const PIECES = [
   },
 ];
 
+const ShortDivider = styled.div`
+  margin: 25px 25% 20px;
+  border-bottom: 1px solid #ddd;
+`;
+
 class AcademicWork extends React.Component {
   static propTypes = {
     isMobile: React.PropTypes.bool.isRequired,
@@ -102,7 +108,7 @@ class AcademicWork extends React.Component {
               title={piece.title}
               width={piece.width}
             />
-            {i !== PIECES.length - 1 ? <hr className="divider--short" /> : null}
+            {i !== PIECES.length - 1 ? <ShortDivider /> : null}
           </div>
         ))}
         <PageFooter />

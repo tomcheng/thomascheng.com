@@ -1,5 +1,6 @@
 import React from "react";
-import classNames from "classnames";
+import styled, { keyframes } from "styled-components";
+import { findDOMNode } from "react-dom";
 import Animations from "../../utils/animations.js";
 import { bounceOut, cubicOut, cubicInOut, elasticOut, returnHome, sineIn } from "../../utils/easings.js";
 import { constrain } from "../../utils/math.js";
@@ -8,6 +9,96 @@ import TouchHandler from "./TouchHandler.js";
 const MOBILE_PADDING = 15;
 const DRAG_CONSTANT = 0.2; // amount of slow down dragging past bounds
 const RETURN_THRESHOLD = 0.6; // amount dragging past end to return to first image
+
+const NudgeBottom = styled.div`
+  margin-bottom: 8px;
+
+  @media (min-width: 992px) {
+    margin-bottom: 10px;
+  }
+`;
+
+const HeaderWithTitleOnly = styled(NudgeBottom)`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Counter = styled.div`
+  user-select: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 19px;
+  font-weight: 400;
+  font-style: italic;
+  align-self: flex-end;
+  min-width: 45px;
+  text-align: right;
+
+  @media (min-width: 992px) {
+    font-size: 13px;
+  }
+`;
+
+const wiggle = keyframes`
+  100%, from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0)
+  }
+  16.7%, 50%, 83.3% {
+    -webkit-transform: translate3d(-8px, 0, 0);
+    transform: translate3d(-8px, 0, 0)
+  }
+  33.3%, 67.7% {
+    -webkit-transform: translate3d(8px, 0, 0);
+    transform: translate3d(8px, 0, 0)
+  }
+`;
+
+const Container = styled.div`
+  overflow: hidden;
+  position: relative;
+  margin-left: ${props => props.isMobile ? -MOBILE_PADDING + "px" : 0};
+  margin-right: ${props => props.isMobile ? -MOBILE_PADDING + "px" : 0};
+  animation-name: ${props => props.shouldWiggle ? wiggle : "" };
+  animation-duration: .5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+`;
+
+const List = styled.div`
+  display: flex;
+  user-select: none;
+`;
+
+const Item = styled.div`
+  width: ${props => props.frameWidth};
+  padding-left: ${props => props.isMobile ? MOBILE_PADDING + "px" : "0"};
+  padding-right: ${props => props.isMobile ? MOBILE_PADDING + "px" : "0"};
+`;
+
+const Image = styled.img`
+  display: block;
+
+  @media (max-width: 767px) {
+    border-radius: 3px;
+    background-clip: padding-box;
+  }
+`;
+
+const ReturnIndicator = styled.i`
+  font-size: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: -10px;
+  position: absolute;
+  right: -20px;
+  text-align: center;
+  top: 50%;
+  width: 20px;
+  opacity: ${props => props.indicatorProgress};
+  transform: translate3d(-${props => (props.indicatorProgress * props.indicatorFinalPosition)}px, 0, 0);
+`;
 
 class Carousel extends React.Component {
   static propTypes = {
@@ -46,7 +137,7 @@ class Carousel extends React.Component {
   }
 
   setDimensions = () => {
-    const frameWidth = this.wrapper.offsetWidth;
+    const frameWidth = findDOMNode(this.wrapper).offsetWidth;
     const currentPane = this.getCurrentPane();
 
     this.setState({
@@ -59,22 +150,14 @@ class Carousel extends React.Component {
     const { scrollPos, frameWidth } = this.state;
     const imageCount = this.props.images.length;
 
-    return constrain(
-      Math.floor(-scrollPos / frameWidth + 0.5),
-      0,
-      imageCount - 1
-    );
+    return constrain(Math.floor(-scrollPos / frameWidth + 0.5), 0, imageCount - 1);
   };
 
   getPrevPane = () => {
     const { scrollPos, frameWidth } = this.state;
     const imageCount = this.props.images.length;
 
-    return constrain(
-      Math.floor(-scrollPos / frameWidth),
-      0,
-      imageCount - 1
-    );
+    return constrain(Math.floor(-scrollPos / frameWidth), 0, imageCount - 1);
   };
 
   getNextPane = () => {
@@ -182,7 +265,7 @@ class Carousel extends React.Component {
     });
   };
 
-  handleAdvanceToNextPane = evt => {
+  handleAdvanceToNextPane = () => {
     const imageCount = this.props.images.length;
     const currentPane = this.getCurrentPane();
     const nextPane = currentPane === imageCount - 1 ? 0 : currentPane + 1;
@@ -201,22 +284,15 @@ class Carousel extends React.Component {
     }
   };
 
-  getCounter = () => (
-    <div className="push-bottom-xs pull-right">
-      {this.props.images.length > 1 ? (
-        <div
-          className="carousel__header__counter"
-          onClick={this.handleAdvanceToNextPane}
-        >
-          {this.getCurrentPane() + 1}&nbsp;of&nbsp;{this.props.images.length}
-        </div>
-      ) : null}
-    </div>
-  );
+  getCounter = () => this.props.images.length > 1 ? (
+    <Counter onClick={this.handleAdvanceToNextPane}>
+      {this.getCurrentPane() + 1}&nbsp;of&nbsp;{this.props.images.length}
+    </Counter>
+  ) : null;
 
   render () {
     const { description, images, title, isMobile, height, width } = this.props;
-    const { scrollPos, frameWidth } = this.state;
+    const { scrollPos, frameWidth, shouldWiggle } = this.state;
     const imageCount = images.length;
     const indicatorFinalPosition = frameWidth * DRAG_CONSTANT * RETURN_THRESHOLD * 0.8;
     const amountDraggedPastEnd = (-scrollPos / frameWidth - (imageCount - 1)) / DRAG_CONSTANT;
@@ -229,82 +305,61 @@ class Carousel extends React.Component {
     return (
       <div className="carousel">
         {description ? (
-          <div>
+          <NudgeBottom>
             <h4>{title}</h4>
-            <div className="clearfix">
-              <div className="push-bottom-xs pull-left">
-                {description}
-              </div>
+            <NudgeBottom>
+              {description}
+            </NudgeBottom>
+            <NudgeBottom>
               {this.getCounter()}
-            </div>
-          </div>
+            </NudgeBottom>
+          </NudgeBottom>
         ) : (
-          <div className="clearfix">
-            <div className="push-bottom-xs pull-left">
-              <h4>{title}</h4>
-            </div>
+          <HeaderWithTitleOnly>
+            <h4>{title}</h4>
             {this.getCounter()}
-          </div>
+          </HeaderWithTitleOnly>
         )}
-        <div
-          className="carousel__wrapper"
+        <Container
           ref={el => { this.wrapper = el; }}
-          style={{
-            marginLeft: isMobile ? -MOBILE_PADDING : 0,
-            marginRight: isMobile ? -MOBILE_PADDING : 0,
-          }}>
+          isMobile={isMobile}
+          shouldWiggle={shouldWiggle}
+        >
           <TouchHandler
             onDrag={this.handleDrag}
             onDragRelease={this.handleDragRelease}
-            onTap={this.handleAdvanceToNextPane}>
-            <div
-              className={classNames("carousel__frame", {
-                "wiggle": this.state.shouldWiggle,
-              })}
-              style={{ frameWidth }}
+            onTap={this.handleAdvanceToNextPane}
+          >
+            <List
+              style={{
+                width: frameWidth * imageCount,
+                WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
+                transform: "translate3d(" + scrollPos + "px, 0, 0)",
+              }}
             >
-              <ul
-                className="carousel__list"
-                style={{
-                  width: frameWidth * imageCount,
-                  WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
-                  transform: "translate3d(" + scrollPos + "px, 0, 0)",
-                }}
-              >
-                {images.map((image, index) => (
-                  <li
-                    key={index}
-                    className="carousel__item"
-                    style={{
-                      width: frameWidth,
-                      paddingLeft: isMobile ? MOBILE_PADDING : 0,
-                      paddingRight: isMobile ? MOBILE_PADDING : 0,
-                    }}
-                  >
-                    <img
-                      className="carousel__image"
-                      src={image}
-                      width={imageWidth}
-                      height={imageHeight}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
+              {images.map((image, index) => (
+                <Item
+                  key={index}
+                  frameWidth={frameWidth}
+                  isMobile={isMobile}
+                >
+                  <Image
+                    src={image}
+                    width={imageWidth}
+                    height={imageHeight}
+                  />
+                </Item>
+              ))}
+            </List>
           </TouchHandler>
           {imageCount > 1 ? (
-            <i
-              className="carousel__return-indicator fa fa-arrow-left"
-              style={{
-                opacity: indicatorProgress,
-                WebkitTransform: "translate3d(-" +
-                  indicatorProgress * indicatorFinalPosition + "px, 0, 0)",
-                transform: "translate3d(-" +
-                  indicatorProgress * indicatorFinalPosition + "px, 0, 0)",
-              }}
+            <ReturnIndicator
+              className="fa fa-arrow-left"
+              indicatorProgress={indicatorProgress}
+              indicatorFinalPosition={indicatorFinalPosition}
             />
           ) : null}
-        </div>
+        </Container>
       </div>
     );
   }
