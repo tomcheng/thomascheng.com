@@ -35,7 +35,7 @@ html {
 a {
   text-decoration: none;
   background-color: transparent;
-  color: #337ab7;
+  color: #333;
 }
 a:active,
 a:hover {
@@ -53,7 +53,7 @@ img {
 }
 a:focus,
 a:hover {
-  color: #22527b
+  color: #333;
 }
 a:focus {
   outline: dotted thin;
