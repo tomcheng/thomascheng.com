@@ -3,6 +3,7 @@ import withResponsiveness from "../../higher-order-components/withResponsiveness
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import ShortDivider from "../common/ShortDivider";
+import PushBottom from "../common/PushBottom";
 
 const PHOTOCOPIED_FACES = [
   require("../../images/photocopied-faces/pcface4.jpg"),
@@ -22,23 +23,25 @@ const PROCESSING_IMAGES = [
 
 const Miscellany = ({ isMobile }) => (
   <div>
-    <Carousel
-      images={PHOTOCOPIED_FACES}
-      slug="photocopied-faces"
-      title="Photocopied Faces"
-      width={704}
-      height={468}
-      isMobile={isMobile}
-    />
-    <ShortDivider />
-    <Carousel
-      images={PROCESSING_IMAGES}
-      slug="processing-faces"
-      title="Experiments with Processing"
-      width={704}
-      height={468}
-      isMobile={isMobile}
-    />
+    <PushBottom>
+      <Carousel
+        images={PHOTOCOPIED_FACES}
+        slug="photocopied-faces"
+        title="Photocopied Faces"
+        width={704}
+        height={468}
+        isMobile={isMobile}
+      />
+      <ShortDivider />
+      <Carousel
+        images={PROCESSING_IMAGES}
+        slug="processing-faces"
+        title="Experiments with Processing"
+        width={704}
+        height={468}
+        isMobile={isMobile}
+      />
+    </PushBottom>
     <PageFooter />
   </div>
 );

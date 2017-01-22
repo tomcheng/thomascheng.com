@@ -3,6 +3,7 @@ import withResponsiveness from "../../higher-order-components/withResponsiveness
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import ShortDivider from "../common/ShortDivider";
+import PushBottom from "../common/PushBottom";
 
 const PIECES = [
   {
@@ -92,20 +93,22 @@ class AcademicWork extends React.Component {
 
     return (
       <div>
-        {PIECES.map((piece, i) => (
-          <div key={piece.slug}>
-            <Carousel
-              description={piece.description}
-              height={piece.height}
-              images={this.getImages(piece.slug, piece.imageCount)}
-              isMobile={isMobile}
-              slug={piece.slug}
-              title={piece.title}
-              width={piece.width}
-            />
-            {i !== PIECES.length - 1 ? <ShortDivider /> : null}
-          </div>
-        ))}
+        <PushBottom>
+          {PIECES.map((piece, i) => (
+            <div key={piece.slug}>
+              <Carousel
+                description={piece.description}
+                height={piece.height}
+                images={this.getImages(piece.slug, piece.imageCount)}
+                isMobile={isMobile}
+                slug={piece.slug}
+                title={piece.title}
+                width={piece.width}
+              />
+              {i !== PIECES.length - 1 ? <ShortDivider /> : null}
+            </div>
+          ))}
+        </PushBottom>
         <PageFooter />
       </div>
     );
