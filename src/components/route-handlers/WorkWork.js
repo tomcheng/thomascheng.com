@@ -4,6 +4,7 @@ import BeforeAfter from "../common/BeforeAfter";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import ShortDivider from "../common/ShortDivider";
+import PushBottom from "../common/PushBottom";
 
 const QCLOUD = [
   {
@@ -53,11 +54,11 @@ const FRESHBOOKS = [
 const WorkWork = ({ isMobile, isMdAndUp }) => (
   <div>
     <h2>QCloud</h2>
-    <div className="push-bottom">
+    <PushBottom>
       QCloud is a quality control solution designed for contract packagers and manufacturers.
-    </div>
+    </PushBottom>
     {QCLOUD.map((comparison, i) => (
-      <div key={comparison.slug} className="push-bottom">
+      <PushBottom key={comparison.slug}>
         <BeforeAfter
           before={{
             url: require("../../images/qcloud/" + comparison.slug + "-before.png"),
@@ -74,9 +75,9 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
           slug={comparison.slug}
           showBrowserChrome
         />
-      </div>
+      </PushBottom>
     ))}
-    <div className="push-bottom">
+    <PushBottom>
       <BeforeAfter
         before={{
           url: isMdAndUp
@@ -98,16 +99,16 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
         slug="sheet-filling"
         showBrowserChrome
       />
-    </div>
+    </PushBottom>
 
     <ShortDivider />
 
     <h2>FreshBooks</h2>
-    <div className="push-bottom">
+    <PushBottom>
       FreshBooks is a cloud-based accounting software service designed for
       small business owners and serves over five million users world-wide.
-    </div>
-    <div className="push-bottom">
+    </PushBottom>
+    <PushBottom>
       <Carousel
         slug="style-guide"
         title="Style Guide"
@@ -123,9 +124,9 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
         height={660}
         isMobile={isMobile}
       />
-    </div>
+    </PushBottom>
     {FRESHBOOKS.map((comparison, i) => (
-      <div key={comparison.slug} className="push-bottom">
+      <PushBottom key={comparison.slug}>
         <BeforeAfter
           before={{
             url: require("../../images/freshbooks/" + comparison.slug + "-before.png"),
@@ -141,7 +142,7 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
           title={comparison.title}
           slug={comparison.slug}
         />
-      </div>
+      </PushBottom>
     ))}
     <PageFooter />
   </div>

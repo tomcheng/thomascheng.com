@@ -123,9 +123,13 @@
 :root .fa-flip-vertical,
 :root .fa-rotate-180,
 :root .fa-rotate-270,
-\\:root .fa-rotate-90 {
+:root .fa-rotate-90 {
   -webkit-filter: none;
   filter: none
+}
+.fa,
+.fa-stack {
+  display: inline-block
 }
 .fa-stack {
   position: relative;

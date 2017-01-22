@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import classNames from "classnames";
 
 const FIRST_FRAME_ENTER = 2;
 const SECOND_FRAME_ENTER = 8;
@@ -75,23 +74,17 @@ const TriggerContainer = styled.div`
 const Trigger = styled.div`
   font-family: Raleway, sans-serif;
   transition: all .06s ease-in;
-  color: #333;
+  color: ${props => props.isFlashing ? "#fff" : "#333"};
   font-weight: 900;
   text-transform: uppercase;
   font-size: 16px;
   letter-spacing: .5px;
-  border-bottom: 8px solid #333;
+  border-bottom: 8px solid ${props => props.isFlashing ? "#fff" : "#333"};
   display: inline-block;
   padding: 0 10px 5px;
   margin-bottom: 15px;
   position: relative;
-
-  .is-flashing & {
-    color: #fff;
-    border-color: #fff;
-    -webkit-transform: scale3d(1.2, 1.2, 1);
-    transform: scale3d(1.2, 1.2, 1);
-  }
+  transform: scale3d(${props => props.isFlashing ? "1.2, 1.2, 1" : "1, 1, 1"});
 `;
 
 const Subtitle = styled.div`
@@ -100,6 +93,42 @@ const Subtitle = styled.div`
   }
 `;
 
+const Message = styled.div`
+  left: 0;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  top: 20%;
+  transition: opacity .05s ease-in-out;
+  opacity: ${props => props.show ? 1 : 0};
+`;
+
+const MessagePart = styled.span`
+  transition: opacity .05s ease-in-out;
+  opacity: ${props => props.show ? 1 : 0};
+`;
+
+const Images = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  transition: background-color 0.1s ease-in-out;
+  background-color: rgba(240, 240, 240, ${props => props.isShowing ? 1 : 0});
+`;
+
+const Image = styled.div`
+  background-size: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  backgroundImage: url(${props => props.image});
+  opacity: ${props => props.show ? 1 : 0};
+`;
 
 class HomeMobile extends React.Component {
   state = {
@@ -133,6 +162,7 @@ class HomeMobile extends React.Component {
     const showSecondFrame = isFinishedFlashing &&
       currentFrame >= images.length + SECOND_FRAME_ENTER &&
       currentFrame <= images.length + BOTH_FRAMES_LEAVE;
+    const isShowing = (isPressed || isFinishedFlashing) && !isFinishedShowing;
 
     if ((isPressed || isFinishedFlashing) && !isFinishedShowing) {
       setTimeout(() => {
@@ -143,39 +173,25 @@ class HomeMobile extends React.Component {
     return (
       <div>
         <TriggerContainer>
-          <div className={classNames({
-            "is-flashing": isFlashing,
-            "is-showing": (isPressed || isFinishedFlashing) && !isFinishedShowing,
-          })}>
-            <div className="image-flasher__image-container">
+          <div>
+            <Images isShowing={isShowing}>
               {images.map((image, i) => (
-                <div
-                  key={image}
-                  className="image-flasher__image"
-                  style={{
-                    backgroundImage: "url(" + image + ")",
-                    opacity: ((isPressed && i === currentFrame) ? 1 : 0),
-                  }}
-                />
+                <Image key={image} image={image} show={isPressed && i === currentFrame} />
               ))}
-            </div>
-            <div className="image-flasher__message" style={{
-              opacity: showFirstFrame ? 1 : 0,
-            }}>
+            </Images>
+            <Message show={showFirstFrame}>
               Thank you.&nbsp;
-              <span
-                className="image-flasher__message__part"
-                style={{ opacity: showSecondFrame ? 1 : 0 }}
-              >
-              Come again.
-            </span>
-            </div>
-            <div
+              <MessagePart show={showSecondFrame}>
+                Come again.
+              </MessagePart>
+            </Message>
+            <Trigger
+              isFlashing={isFlashing}
               onTouchStart={this.handleTouchStart}
               onTouchEnd={this.handleTouchEnd}
             >
-              <Trigger>Thomas Cheng</Trigger>
-            </div>
+              Thomas Cheng
+            </Trigger>
           </div>
           <Subtitle>
             <em>UI/UX Designer &amp;<br />Front-End Developer</em>
