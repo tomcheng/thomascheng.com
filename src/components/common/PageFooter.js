@@ -1,6 +1,20 @@
 import React from "react";
+import styled from "styled-components";
 import Animations from "../../utils/animations";
 import { cubicInOut } from "../../utils/easings";
+
+const Footer = styled.div`
+  text-align: center;
+  margin-bottom: 15px;
+`;
+
+const FooterIcon = styled.i`
+  font-size: 18px;
+  padding: 5px;
+  cursor: pointer;
+  color: #333;
+  padding: 15px;
+`;
 
 class PageFooter extends React.Component {
   componentDidMount () {
@@ -24,12 +38,9 @@ class PageFooter extends React.Component {
 
   render () {
     return (
-      <div className="text-center push-top push-bottom-sm">
-        <i
-          className="fa fa-hand-o-up page-footer-icon"
-          onClick={this.handleClick}
-        />
-      </div>
+      <Footer>
+        <FooterIcon className="fa fa-hand-o-up" onClick={this.handleClick} />
+      </Footer>
     );
   }
 }
