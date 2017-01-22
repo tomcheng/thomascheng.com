@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { findDOMNode } from "react-dom";
 import Animations from "../../utils/animations.js";
+import NudgeBottom from "./NudgeBottom";
 import { bounceOut, cubicOut, cubicInOut, elasticOut, returnHome, sineIn } from "../../utils/easings.js";
 import { constrain } from "../../utils/math.js";
 import TouchHandler from "./TouchHandler.js";
@@ -9,14 +10,6 @@ import TouchHandler from "./TouchHandler.js";
 const MOBILE_PADDING = 15;
 const DRAG_CONSTANT = 0.2; // amount of slow down dragging past bounds
 const RETURN_THRESHOLD = 0.6; // amount dragging past end to return to first image
-
-const NudgeBottom = styled.div`
-  margin-bottom: 8px;
-
-  @media (min-width: 992px) {
-    margin-bottom: 10px;
-  }
-`;
 
 const HeaderWithTitleOnly = styled(NudgeBottom)`
   display: flex;

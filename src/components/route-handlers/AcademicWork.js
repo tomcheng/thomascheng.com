@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import withResponsiveness from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
+import ShortDivider from "../common/ShortDivider";
 
 const PIECES = [
   {
@@ -69,11 +69,6 @@ const PIECES = [
     imageCount: 1,
   },
 ];
-
-const ShortDivider = styled.div`
-  margin: 25px 25% 20px;
-  border-bottom: 1px solid #ddd;
-`;
 
 class AcademicWork extends React.Component {
   static propTypes = {

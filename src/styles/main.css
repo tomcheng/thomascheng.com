@@ -16,12 +16,10 @@ body,
 figure {
   margin: 0
 }
-.before-after-buttons:after,
 .clearfix:after,
 .row:after {
   clear: both
 }
-.before-after-button,
 .text-center {
   text-align: center
 }
@@ -178,7 +176,6 @@ input[type=search] {
   box-sizing: content-box
 }
 *,
-.before-after-button,
 :after,
 :before {
   box-sizing: border-box
@@ -272,7 +269,6 @@ h4 {
 h3 {
   text-transform: uppercase
 }
-.before-after,
 .image-rounded-corners {
   background-clip: padding-box;
   border-radius: 3px
@@ -293,14 +289,6 @@ h3 {
   .container {
     width: 970px
   }
-}
-.before-after__inner-wrapper--before,
-.before-after__outer-wrapper--before {
-  right: 0
-}
-.divider--short {
-  margin: 25px 25% 20px;
-  border-bottom: 1px solid #e0e0e0
 }
 @media (min-width: 992px) {
   .divider--short {
@@ -344,111 +332,6 @@ h3 {
 }
 .text-muted {
   color: #aaa
-}
-.before-after {
-  overflow: hidden;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  position: relative;
-  cursor: pointer
-}
-.before-after--browser {
-  border: 1px solid #d2d2d2;
-  border-radius: 0 0 3px 3px;
-  background-clip: padding-box
-}
-.before-after__browser-chrome {
-  border-radius: 3px 3px 0 0;
-  background-clip: padding-box;
-  height: 20px;
-  background-color: #d2d2d2;
-  position: relative
-}
-.before-after__browser-chrome:before {
-  content: "•••";
-  color: #fff;
-  position: absolute;
-  letter-spacing: 5px;
-  font-size: 18px;
-  line-height: 20px;
-  top: 1px;
-  left: 10px
-}
-.before-after__outer-wrapper {
-  bottom: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0
-}
-.before-after__outer-wrapper--after {
-  left: 0
-}
-.before-after__inner-wrapper {
-  position: absolute;
-  top: 0;
-  bottom: 0
-}
-.before-after-buttons {
-  position: relative
-}
-.before-after__inner-wrapper--after {
-  left: 0
-}
-.before-after__image {
-  border-radius: 3px;
-  background-clip: padding-box;
-  display: block;
-  width: 100%;
-  margin: 0 auto
-}
-.before-after--browser .before-after__image {
-  border-radius: 0 0 3px 3px;
-  background-clip: padding-box
-}
-.before-after-buttons:after,
-.before-after-buttons:before {
-  content: " ";
-  display: table
-}
-@media (min-width: 992px) {
-  .before-after-buttons {
-    margin-top: -4px
-  }
-}
-.before-after-buttons__background {
-  border-radius: 3px;
-  background: linear-gradient(#e8e8e8, #eaeaea);
-  position: absolute;
-  border: 1px solid #e0e0e0;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0
-}
-.before-after-buttons__indicator {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: calc(50% - 3px);
-  border-radius: 3px;
-  background-clip: padding-box;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  margin: 1px
-}
-.before-after-button {
-  user-select: none;
-  cursor: pointer;
-  float: left;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 9px;
-  letter-spacing: 1px;
-  line-height: 24px;
-  position: relative;
-  text-transform: uppercase;
-  width: 50%;
-  z-index: 1
 }
 .image-flasher__image-container {
   position: fixed;

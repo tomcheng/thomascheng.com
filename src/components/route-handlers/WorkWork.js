@@ -3,6 +3,7 @@ import withResponsiveness from "../../higher-order-components/withResponsiveness
 import BeforeAfter from "../common/BeforeAfter";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
+import ShortDivider from "../common/ShortDivider";
 
 const QCLOUD = [
   {
@@ -99,7 +100,7 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
       />
     </div>
 
-    <hr className="divider--short" />
+    <ShortDivider />
 
     <h2>FreshBooks</h2>
     <div className="push-bottom">

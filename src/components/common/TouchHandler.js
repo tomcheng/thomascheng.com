@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class TouchHandler extends Component {
   static propTypes = {
-    children: React.PropTypes.element.isRequired,
+    children: React.PropTypes.any.isRequired,
     stopPropagation: React.PropTypes.bool,
     onDrag: React.PropTypes.func,
     onDragRelease: React.PropTypes.func,

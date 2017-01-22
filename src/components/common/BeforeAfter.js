@@ -1,9 +1,93 @@
 import React from "react";
+import { findDOMNode } from "react-dom";
+import styled from "styled-components";
 import Animations from "../../utils/animations.js";
 import { cubicInOut } from "../../utils/easings.js";
+import NudgeBottom from "./NudgeBottom";
 import TouchHandler from "./TouchHandler.js";
 
+const SLIDER_WIDTH = 130;
+
 const constrain = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const SliderContainer = styled(NudgeBottom)`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const BrowserChrome = styled.div`
+  border-radius: 3px 3px 0 0;
+  background-clip: padding-box;
+  height: 20px;
+  background-color: #d2d2d2;
+  position: relative;
+
+  &:before {
+    content: "•••";
+    color: #fff;
+    position: absolute;
+    letter-spacing: 5px;
+    font-size: 18px;
+    line-height: 20px;
+    top: 1px;
+    left: 10px;
+  }
+`;
+
+const Container = styled.div`
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #d2d2d2;
+  border-radius: 0 0 3px 3px;
+  background-clip: padding-box;
+  height: ${props => props.height + "px"};
+`;
+
+const OuterWrapper = styled.div`
+  bottom: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+`;
+
+const OuterWrapperBefore = styled(OuterWrapper)`
+  left: 0;
+  width: ${props => props.width * props.ratio}px;
+`;
+
+const OuterWrapperAfter = styled(OuterWrapper)`
+  right: 0;
+  width: ${props => props.width * (1 - props.ratio)}px;
+`;
+
+const InnerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: ${props => props.width}px;
+`;
+
+const InnerWrapperBefore = styled(InnerWrapper)`
+  left: 0;
+`;
+
+const InnerWrapperAfter = styled(InnerWrapper)`
+  right: 0;
+`;
+
+const Image = styled.img`
+  background-clip: padding-box;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 0 0 3px 3px;
+  background-clip: padding-box;
+  max-width: ${props => props.maxWidth}px;
+`;
+
 
 class BeforeAfter extends React.Component {
   static propTypes = {
@@ -12,7 +96,6 @@ class BeforeAfter extends React.Component {
     description: React.PropTypes.string.isRequired,
     slug: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
-    sliderWidth: React.PropTypes.number,
   };
 
   constructor (props) {
@@ -39,7 +122,7 @@ class BeforeAfter extends React.Component {
   };
 
   setDimensions = () => {
-    this.setState({ width: this.frame.offsetWidth });
+    this.setState({ width: findDOMNode(this.frame).offsetWidth });
   };
 
   switchToBefore = () => {
@@ -108,7 +191,7 @@ class BeforeAfter extends React.Component {
       preventDefault();
       this.setState({
         ratio: constrain(
-          this.state.ratioAtDragStart + deltaX / (this.props.sliderWidth * 0.5),
+          this.state.ratioAtDragStart + deltaX / (SLIDER_WIDTH * 0.5),
           0,
           1
         ),
@@ -131,7 +214,7 @@ class BeforeAfter extends React.Component {
   };
 
   render () {
-    const { before, after, title, description, sliderWidth } = this.props;
+    const { before, after, title, description } = this.props;
     const { width, ratio } = this.state;
     const beforeHeight = before.width < width
       ? before.height
@@ -144,101 +227,100 @@ class BeforeAfter extends React.Component {
     return (
       <div>
         <h4>{title}</h4>
-        <div className="clearfix">
-          <div className="push-bottom-xs pull-left">
-            <div>{description}</div>
-          </div>
-          <div className="push-bottom-xs pull-right">
-            <TouchHandler
-              onDrag={this.handleDragSlider}
-              onDragRelease={this.handleDragRelease}
-              onTap={this.handleTap}>
-              <BeforeAfterSlider
-                ratio={ratio}
-                width={sliderWidth}
-              />
-            </TouchHandler>
-          </div>
-        </div>
+        <NudgeBottom>{description}</NudgeBottom>
+        <SliderContainer>
+          <TouchHandler
+            onDrag={this.handleDragSlider}
+            onDragRelease={this.handleDragRelease}
+            onTap={this.handleTap}>
+            <BeforeAfterSlider ratio={ratio} />
+          </TouchHandler>
+        </SliderContainer>
 
         <TouchHandler
           onDrag={this.handleDragFull}
           onDragRelease={this.handleDragRelease}
           onTap={this.handleTap}
         >
-          <div>
-            <div className="before-after__browser-chrome"></div>
-            <div
-              className="before-after before-after--browser"
-              ref={el => { this.frame = el; }}
-              style={{ height }}
-            >
-              <div
-                className="before-after__outer-wrapper before-after__outer-wrapper--after"
-                style={{ width: (width * ratio) }}>
-                <div
-                  className="before-after__inner-wrapper before-after__inner-wrapper--after"
-                  style={{ width }}>
-                  <img
-                    className="before-after__image"
-                    src={after.url}
-                    style={{ maxWidth: after.width }}
-                  />
-                </div>
-              </div>
-              <div
-                className="before-after__outer-wrapper before-after__outer-wrapper--before"
-                style={{ width: (width * (1 - ratio)) }}>
-                <div
-                  className="before-after__inner-wrapper before-after__inner-wrapper--before"
-                  style={{ width }}>
-                  <img
-                    className="before-after__image"
-                    src={before.url}
-                    style={{ maxWidth: before.width }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <BrowserChrome />
+          <Container ref={el => { this.frame = el; }} height={height}>
+            <OuterWrapperBefore width={width} ratio={ratio}>
+              <InnerWrapperBefore width={width}>
+                <Image
+                  alt={title + " - before"}
+                  src={after.url}
+                  maxWidth={after.width}
+                />
+              </InnerWrapperBefore>
+            </OuterWrapperBefore>
+            <OuterWrapperAfter width={width} ratio={ratio}>
+              <InnerWrapperAfter width={width}>
+                <Image
+                  alt={title + " - after"}
+                  src={before.url}
+                  maxWidth={before.width}
+                />
+              </InnerWrapperAfter>
+            </OuterWrapperAfter>
+          </Container>
         </TouchHandler>
       </div>
     );
   }
 }
 
-BeforeAfter.defaultProps = { sliderWidth: 130 };
+const Slider = styled.div`
+  position: relative;
+  width: ${SLIDER_WIDTH}px;
+  border-radius: 3px;
+  background: linear-gradient(#e8e8e8, #eaeaea);
+  border: 1px solid #e0e0e0;
+  display: flex;
+`;
 
-const BeforeAfterSlider = ({ ratio, width }) => (
-  <div style={{ width }}>
-    <div className="before-after-buttons">
-      <div className="before-after-buttons__background" />
-      <div
-        className="before-after-buttons__indicator"
-        style={{
-          WebkitTransform: "translate3d(" + (ratio * (width * 0.5 + 1)) + "px, 0, 0)",
-          transform: "translate3d(" + (ratio * (width * 0.5 + 1)) + "px, 0, 0)",
-        }}
-      />
-      <div
-        style={{ opacity: (0.2 + 0.8 * (1 - ratio)) }}
-        className="before-after-button"
-      >
-        Before
-      </div>
-      <div
-        style={{ opacity: (0.2 + 0.8 * ratio) }}
-        className="before-after-button"
-      >
-        After
-      </div>
-    </div>
-  </div>
+const SliderOption = styled.div`
+  user-select: none;
+  cursor: pointer;
+  float: left;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9px;
+  letter-spacing: 1px;
+  line-height: 24px;
+  text-transform: uppercase;
+  flex-basis: 50%;
+  text-align: center;
+  z-index: 1;
+  opacity: ${props => props.opacity};
+`;
+
+const Indicator = styled.div`
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: calc(50% - 2px);
+  border-radius: 3px;
+  background-clip: padding-box;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  transform: translate3d(${props => props.ratio * (SLIDER_WIDTH * 0.5 + 1)}px, 0, 0);
+`;
+
+
+const BeforeAfterSlider = ({ ratio }) => (
+  <Slider>
+    <Indicator ratio={ratio} />
+    <SliderOption opacity={0.2 + 0.8 * (1 - ratio)}>
+      Before
+    </SliderOption>
+    <SliderOption opacity={0.2 + 0.8 * ratio}>
+      After
+    </SliderOption>
+  </Slider>
 );
 
 BeforeAfterSlider.propTypes = {
   ratio: React.PropTypes.number.isRequired,
-  width: React.PropTypes.number.isRequired,
 };
 
 export default BeforeAfter;
