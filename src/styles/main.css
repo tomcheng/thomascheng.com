@@ -35,7 +35,7 @@ html {
 a {
   text-decoration: none;
   background-color: transparent;
-  color: #333;
+  color: #337ab7;
 }
 a:active,
 a:hover {
@@ -51,9 +51,8 @@ h1 {
 img {
   vertical-align: middle
 }
-a:focus,
 a:hover {
-  color: #333;
+  color: #22527b
 }
 a:focus {
   outline: dotted thin;

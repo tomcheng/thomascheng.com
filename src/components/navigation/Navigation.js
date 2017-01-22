@@ -68,15 +68,13 @@ const Position = styled.div`
   font-size: 13px;
 `;
 
-const Nav = styled.ul`
+const Nav = styled.div`
   align-items: center;
   display: flex;
   justify-content: flex-end;
-  margin: 0;
 `;
 
-const NavItem = styled.li`
-  list-style: none;
+const NavItem = styled.div`
   color: #333;
   font-size: 11px;
   font-weight: 700;
@@ -110,10 +108,18 @@ const NavLink = styled(Link)`
   &.active {
     opacity: 1;
   }
+  &:hover, &:active {
+    color: #333;
+  }
 `;
 
 const NavLinkHome = styled(NavLink)`
+  color: #333;
   opacity: 1;
+
+  &:hover, &:active {
+    color: #333;
+  }
 `;
 
 const NavText = styled.span`
