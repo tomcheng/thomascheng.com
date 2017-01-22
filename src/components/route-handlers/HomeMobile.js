@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import ImageFlasher from "../common/ImageFlasher.js";
+import classNames from "classnames";
 
-const images = [
+const FIRST_FRAME_ENTER = 2;
+const SECOND_FRAME_ENTER = 8;
+const BOTH_FRAMES_LEAVE = 16;
+
+const IMAGES = [
   require("../../images/home/3Dproj2-low-res.jpg"),
   require("../../images/home/circleboy.jpg"),
   require("../../images/home/circlewoman.jpg"),
@@ -38,6 +42,16 @@ const images = [
   require("../../images/home/strippedfaces.jpg"),
   require("../../images/home/twofonts-low-res.jpg"),
 ];
+
+const shuffleArray = array => {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+};
 
 const Footer = styled.div`
   position: fixed;
@@ -87,23 +101,92 @@ const Subtitle = styled.div`
 `;
 
 
-const HomeMobile = () => (
-  <div>
-    <TriggerContainer>
-      <ImageFlasher
-        images={images}
-        trigger={(
-          <Trigger>Thomas Cheng</Trigger>
-        )}
-      />
-      <Subtitle>
-        <em>UI/UX Designer &amp;<br />Front-End Developer</em>
-      </Subtitle>
-    </TriggerContainer>
-    <Footer>
-      Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
-    </Footer>
-  </div>
-);
+class HomeMobile extends React.Component {
+  state = {
+    currentFrame: 0,
+    isPressed: false,
+    images: shuffleArray(IMAGES),
+  };
+
+  handleTouchStart = evt => {
+    evt.preventDefault();
+
+    this.setState({
+      isPressed: true,
+      currentFrame: 0,
+      images: shuffleArray(IMAGES),
+    });
+  };
+
+  handleTouchEnd = () => {
+    this.setState({ isPressed: false });
+  };
+
+  render () {
+    const { currentFrame, isPressed, images } = this.state;
+    const isFlashing = isPressed && currentFrame <= images.length;
+    const isFinishedFlashing = currentFrame > images.length;
+    const isFinishedShowing = currentFrame > images.length + BOTH_FRAMES_LEAVE;
+    const showFirstFrame = isFinishedFlashing &&
+      currentFrame >= images.length + FIRST_FRAME_ENTER &&
+      currentFrame <= images.length + BOTH_FRAMES_LEAVE;
+    const showSecondFrame = isFinishedFlashing &&
+      currentFrame >= images.length + SECOND_FRAME_ENTER &&
+      currentFrame <= images.length + BOTH_FRAMES_LEAVE;
+
+    if ((isPressed || isFinishedFlashing) && !isFinishedShowing) {
+      setTimeout(() => {
+        this.setState({ currentFrame: currentFrame + 1 });
+      }, 60);
+    }
+
+    return (
+      <div>
+        <TriggerContainer>
+          <div className={classNames({
+            "is-flashing": isFlashing,
+            "is-showing": (isPressed || isFinishedFlashing) && !isFinishedShowing,
+          })}>
+            <div className="image-flasher__image-container">
+              {images.map((image, i) => (
+                <div
+                  key={image}
+                  className="image-flasher__image"
+                  style={{
+                    backgroundImage: "url(" + image + ")",
+                    opacity: ((isPressed && i === currentFrame) ? 1 : 0),
+                  }}
+                />
+              ))}
+            </div>
+            <div className="image-flasher__message" style={{
+              opacity: showFirstFrame ? 1 : 0,
+            }}>
+              Thank you.&nbsp;
+              <span
+                className="image-flasher__message__part"
+                style={{ opacity: showSecondFrame ? 1 : 0 }}
+              >
+              Come again.
+            </span>
+            </div>
+            <div
+              onTouchStart={this.handleTouchStart}
+              onTouchEnd={this.handleTouchEnd}
+            >
+              <Trigger>Thomas Cheng</Trigger>
+            </div>
+          </div>
+          <Subtitle>
+            <em>UI/UX Designer &amp;<br />Front-End Developer</em>
+          </Subtitle>
+        </TriggerContainer>
+        <Footer>
+          Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
+        </Footer>
+      </div>
+    );
+  }
+}
 
 export default HomeMobile;

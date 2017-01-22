@@ -460,7 +460,7 @@ strong {
 }
 .position__company:before {
   color: #666;
-  content: \' // \'
+  content: " // ";
 }
 .position__duration {
   font-style: italic;

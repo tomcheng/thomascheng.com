@@ -2,6 +2,7 @@ import React from "react";
 import withResponsiveness from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
+import ShortDivider from "../common/ShortDivider";
 
 const PHOTOCOPIED_FACES = [
   require("../../images/photocopied-faces/pcface4.jpg"),
@@ -29,7 +30,7 @@ const Miscellany = ({ isMobile }) => (
       height={468}
       isMobile={isMobile}
     />
-    <hr className="divider--short" />
+    <ShortDivider />
     <Carousel
       images={PROCESSING_IMAGES}
       slug="processing-faces"
