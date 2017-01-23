@@ -5,20 +5,19 @@ import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import ShortDivider from "../common/ShortDivider";
 import PushBottom from "../common/PushBottom";
+import NudgeBottom from "../common/NudgeBottom";
+import SectionTitle from "../common/SectionTitle";
 
 const QCLOUD = [
   {
     slug: "forms",
-    title: "Forms Page",
-    description: "Simplify the user interface and reduce unnecessary " +
-    "information to make the content more approachable.",
+    title: "Forms Page Redesign",
     beforeDimensions: [ 1024, 768 ],
     afterDimensions: [ 1024, 768 ],
   },
   {
     slug: "form-creation",
-    title: "Form Creation",
-    description: "Make form creation more intuitive by providing a WYSIWYG interface.",
+    title: "Form Creation Redesign",
     beforeDimensions: [ 1024, 768 ],
     afterDimensions: [ 1024, 768 ],
   },
@@ -27,25 +26,19 @@ const QCLOUD = [
 const FRESHBOOKS = [
   {
     slug: "dashboard",
-    title: "Dashboard",
-    description: "Show users pertinent information from their account and " +
-    "give them insight into how their business is doing.",
+    title: "Dashboard Redesign",
     beforeDimensions: [ 840, 449 ],
     afterDimensions: [ 840, 710 ],
   },
   {
     slug: "reports",
-    title: "Reports Page",
-    description: "Add descriptions and organize reports so they are more " +
-    "understandable and less over-whelming.",
+    title: "Reports Page Redesign",
     beforeDimensions: [ 1077, 334 ],
     afterDimensions: [ 840, 594 ],
   },
   {
     slug: "client",
-    title: "Client Page",
-    description: "Simplify elements on the page to make it friendlier and " +
-    "visually consistent with the rest of the application.",
+    title: "Client Page Redesign",
     beforeDimensions: [ 840, 714 ],
     afterDimensions: [ 840, 651 ],
   },
@@ -53,9 +46,12 @@ const FRESHBOOKS = [
 
 const WorkWork = ({ isMobile, isMdAndUp }) => (
   <div>
-    <h2>QCloud</h2>
+    <NudgeBottom>
+      <SectionTitle>QCloud</SectionTitle>
+    </NudgeBottom>
     <PushBottom>
-      QCloud is a quality control solution designed for contract packagers and manufacturers.
+      QCloud is a quality control application for packagers and manufacturers. The application was
+      redesigned to make workflows simpler and less error prone while adopting a more modern aesthetic.
     </PushBottom>
     {QCLOUD.map((comparison, i) => (
       <PushBottom key={comparison.slug}>
@@ -103,17 +99,17 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
 
     <ShortDivider />
 
-    <h2>FreshBooks</h2>
+    <NudgeBottom>
+      <SectionTitle>FreshBooks</SectionTitle>
+    </NudgeBottom>
     <PushBottom>
-      FreshBooks is a cloud-based accounting software service designed for
-      small business owners and serves over five million users world-wide.
+      FreshBooks is an invoicing/accounting solution for small business owners. A style guide was
+      developed and a consistent visual language was applied throughout the application.
     </PushBottom>
     <PushBottom>
       <Carousel
         slug="style-guide"
         title="Style Guide"
-        description={"Develop a playful yet straightforward visual language " +
-          "for the application and provide a resource to enforce consistency."}
         images={[
           require("../../images/freshbooks/styleguide-1.png"),
           require("../../images/freshbooks/styleguide-2.png"),

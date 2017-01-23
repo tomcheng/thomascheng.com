@@ -10,15 +10,13 @@ const SLIDER_WIDTH = 130;
 
 const constrain = (value, min, max) => Math.min(Math.max(value, min), max);
 
-const Header = styled.div`
-  @media (min-width: 992px) {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
+const Header = styled(NudgeBottom)`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
-const SliderContainer = styled(NudgeBottom)`
+const SliderContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   flex-shrink: 0;
@@ -64,7 +62,7 @@ const OuterWrapper = styled.div`
 
 const OuterWrapperBefore = styled(OuterWrapper)`
   left: 0;
-  width: ${props => props.width * props.ratio}px;
+  width: ${props => props.width}px;
 `;
 
 const OuterWrapperAfter = styled(OuterWrapper)`
@@ -102,7 +100,6 @@ class BeforeAfter extends React.Component {
   static propTypes = {
     after: React.PropTypes.object.isRequired,
     before: React.PropTypes.object.isRequired,
-    description: React.PropTypes.string.isRequired,
     slug: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
   };
@@ -223,7 +220,7 @@ class BeforeAfter extends React.Component {
   };
 
   render () {
-    const { before, after, title, description } = this.props;
+    const { before, after, title } = this.props;
     const { width, ratio } = this.state;
     const beforeHeight = before.width < width
       ? before.height
@@ -236,10 +233,7 @@ class BeforeAfter extends React.Component {
     return (
       <div>
         <Header>
-          <div>
-            <h4>{title}</h4>
-            <NudgeBottom>{description}</NudgeBottom>
-          </div>
+          <h4>{title}</h4>
           <SliderContainer>
             <TouchHandler
               onDrag={this.handleDragSlider}
@@ -249,7 +243,6 @@ class BeforeAfter extends React.Component {
             </TouchHandler>
           </SliderContainer>
         </Header>
-
         <TouchHandler
           onDrag={this.handleDragFull}
           onDragRelease={this.handleDragRelease}

@@ -1,5 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import OriginalSectionTitle from "../common/SectionTitle";
+
+const SectionTitle = styled(OriginalSectionTitle)`
+  flex: 0 0 30%;
+
+  @media (max-width: 767px) {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  @media (min-width: 768px) {
+    margin-bottom: 15px;
+  }
+  @media (min-width: 992px) {
+    margin-bottom: 20px;
+  }
+`;
 
 const WorkSection = styled.div`
   border-bottom: 1px solid #ccc;
@@ -20,25 +36,6 @@ const WorkSection = styled.div`
     border-bottom: 1px dotted #ccc;
     margin-bottom: 30px;
     padding-bottom: 30px;
-  }
-`;
-
-const SectionTitle = styled.h3`
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  flex: 0 0 30%;
-
-  @media (max-width: 767px) {
-    font-size: 14px;
-    margin-bottom: 15px;
-  }
-  @media (min-width: 768px) {
-    margin-bottom: 15px;
-  }
-  @media (min-width: 992px) {
-    margin-bottom: 20px;
   }
 `;
 
