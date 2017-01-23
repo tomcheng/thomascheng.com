@@ -4,7 +4,7 @@
   "private": true,
   "description": "Thomas Cheng's Portfolio",
   "main": "index.js",
-  "homepage": "https://tomcheng.github.io/thomascheng.com",
+  "homepage": "https://thomascheng.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
