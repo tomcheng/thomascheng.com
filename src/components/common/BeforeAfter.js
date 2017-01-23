@@ -53,36 +53,18 @@ const Container = styled.div`
   height: ${props => props.height + "px"};
 `;
 
-const OuterWrapper = styled.div`
-  bottom: 0;
+const OuterWrapperAfter = styled.div`
+  position: absolute;
   overflow: hidden;
-  position: absolute;
-  top: 0;
-`;
-
-const OuterWrapperBefore = styled(OuterWrapper)`
-  left: 0;
-  width: ${props => props.width}px;
-`;
-
-const OuterWrapperAfter = styled(OuterWrapper)`
-  right: 0;
-  width: ${props => props.width * (1 - props.ratio)}px;
-`;
-
-const InnerWrapper = styled.div`
-  position: absolute;
-  top: 0;
   bottom: 0;
-  width: ${props => props.width}px;
-`;
-
-const InnerWrapperBefore = styled(InnerWrapper)`
+  top: 0;
   left: 0;
+  width: ${props => props.width * props.ratio}px;
+  background-color: #fff;
 `;
 
-const InnerWrapperAfter = styled(InnerWrapper)`
-  right: 0;
+const InnerWrapperAfter = styled.div`
+  width: ${props => props.width}px;
 `;
 
 const Image = styled.img`
@@ -250,21 +232,17 @@ class BeforeAfter extends React.Component {
         >
           <BrowserChrome />
           <Container ref={el => { this.frame = el; }} height={height}>
-            <OuterWrapperBefore width={width} ratio={ratio}>
-              <InnerWrapperBefore width={width}>
-                <Image
-                  alt={title + " - before"}
-                  src={after.url}
-                  maxWidth={after.width}
-                />
-              </InnerWrapperBefore>
-            </OuterWrapperBefore>
+            <Image
+              alt={title + " - before"}
+              src={before.url}
+              maxWidth={before.width}
+            />
             <OuterWrapperAfter width={width} ratio={ratio}>
               <InnerWrapperAfter width={width}>
                 <Image
                   alt={title + " - after"}
-                  src={before.url}
-                  maxWidth={before.width}
+                  src={after.url}
+                  maxWidth={after.width}
                 />
               </InnerWrapperAfter>
             </OuterWrapperAfter>
