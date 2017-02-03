@@ -2,7 +2,6 @@ import React from "react";
 import withResponsiveness from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
-import ShortDivider from "../common/ShortDivider";
 import PushBottom from "../common/PushBottom";
 
 const PHOTOCOPIED_FACES = [
@@ -32,7 +31,8 @@ const Miscellany = ({ isMobile }) => (
         height={468}
         isMobile={isMobile}
       />
-      <ShortDivider />
+    </PushBottom>
+    <PushBottom>
       <Carousel
         images={PROCESSING_IMAGES}
         slug="processing-faces"
