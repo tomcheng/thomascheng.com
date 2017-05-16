@@ -9,16 +9,12 @@ class TouchHandler extends Component {
     onTap: React.PropTypes.func,
   };
 
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      start: null,
-      last: null,
-      hasDragged: false,
-      isTouched: false,
-    };
-  }
+  state = {
+    start: null,
+    last: null,
+    hasDragged: false,
+    isTouched: false,
+  };
 
   getCurrentTime = () => new Date().getTime();
 
@@ -30,8 +26,8 @@ class TouchHandler extends Component {
     if (this.props.stopPropagation) evt.stopPropagation();
 
     this.setState({
-      start: {x, y, time},
-      last: {x, y, time},
+      start: { x, y, time },
+      last: { x, y, time },
       isTouched: true,
     });
 
@@ -39,7 +35,12 @@ class TouchHandler extends Component {
       clearTimeout(this.cancelIsTouched);
     }
 
-    this.cancelIsTouched = setTimeout(() => { this.setState({ isTouched: false }); }, 1000);
+    this.cancelIsTouched = setTimeout(
+      () => {
+        this.setState({ isTouched: false });
+      },
+      1000
+    );
   };
 
   handleTouchMove = evt => {
@@ -61,7 +62,13 @@ class TouchHandler extends Component {
     }
 
     this.props.onDrag({
-      deltaX, deltaY, velocityX, velocityY, direction, x, y,
+      deltaX,
+      deltaY,
+      velocityX,
+      velocityY,
+      direction,
+      x,
+      y,
       preventDefault: evt.preventDefault.bind(evt),
     });
 
@@ -71,7 +78,7 @@ class TouchHandler extends Component {
       }
     }
 
-    this.setState({ last: {x, y, velocityX, velocityY, time} });
+    this.setState({ last: { x, y, velocityX, velocityY, time } });
   };
 
   handleTouchEnd = () => {
@@ -81,7 +88,7 @@ class TouchHandler extends Component {
     const deltaY = last.y - start.y;
 
     if (hasDragged) {
-      this.props.onDragRelease({deltaX, deltaY, velocityX, velocityY});
+      this.props.onDragRelease({ deltaX, deltaY, velocityX, velocityY });
     } else {
       this.props.onTap();
     }
@@ -94,17 +101,22 @@ class TouchHandler extends Component {
   };
 
   handleClick = evt => {
-    if (this.props.stopPropagation) { evt.stopPropagation(); }
-    if (!this.state.isTouched) { this.props.onTap(); }
+    if (this.props.stopPropagation) {
+      evt.stopPropagation();
+    }
+    if (!this.state.isTouched) {
+      this.props.onTap();
+    }
   };
 
-  render () {
+  render() {
     return (
       <div
         onTouchStart={this.handleTouchStart}
         onTouchMove={this.handleTouchMove}
         onTouchEnd={this.handleTouchEnd}
-        onClick={this.handleClick}>
+        onClick={this.handleClick}
+      >
         {this.props.children}
       </div>
     );

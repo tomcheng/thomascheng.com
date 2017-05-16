@@ -148,29 +148,27 @@ const Navigation = ({ location }) => {
           <Name>
             Thomas Cheng
           </Name>
-          {isResume ? (
-            <Position>
-              thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St, Toronto, ON, M5T 3K7
-            </Position>
-          ) : (
-            <Position>
-              Front-End Developer &amp; Designer
-            </Position>
-          )}
+          {isResume
+            ? <Position>
+                thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St, Toronto, ON, M5T 3K7
+              </Position>
+            : <Position>
+                Front-End Developer & Designer
+              </Position>}
         </DesktopLink>
-        {!isResume ? (
-          <Nav>
-            {LINKS.map((link, i) => (
-              <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
-                <LinkComponent to={link.path} activeClassName="active">
-                  <NavText>
-                    {link.title}
-                  </NavText>
-                </LinkComponent>
-              </NavItem>
-            ))}
-          </Nav>
-        ) : null}
+        {!isResume
+          ? <Nav>
+              {LINKS.map((link, i) => (
+                <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
+                  <LinkComponent to={link.path} activeClassName="active">
+                    <NavText>
+                      {link.title}
+                    </NavText>
+                  </LinkComponent>
+                </NavItem>
+              ))}
+            </Nav>
+          : null}
       </HeaderContainer>
     </Header>
   );

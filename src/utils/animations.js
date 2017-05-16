@@ -1,8 +1,8 @@
 const Animations = {
   props: { animations: {} },
 
-  registerStart (name) {
-    const {animations} = this.props;
+  registerStart(name) {
+    const { animations } = this.props;
 
     if (animations[name]) {
       this.stop(name);
@@ -13,12 +13,12 @@ const Animations = {
     }
   },
 
-  getCurrentTime () {
+  getCurrentTime() {
     return new Date().getTime();
   },
 
-  stop (name) {
-    const {animations} = this.props;
+  stop(name) {
+    const { animations } = this.props;
 
     if (animations[name]) {
       if (animations[name].raf) {
@@ -28,7 +28,7 @@ const Animations = {
     }
   },
 
-  animate ({name, start, end, duration, easing, onUpdate}) {
+  animate({ name, start, end, duration, easing, onUpdate }) {
     const { animations } = this.props;
     const startTime = this.getCurrentTime();
     let timePassed;

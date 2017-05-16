@@ -151,7 +151,7 @@ class HomeMobile extends React.Component {
     this.setState({ isPressed: false });
   };
 
-  render () {
+  render() {
     const { currentFrame, isPressed, images } = this.state;
     const isFlashing = isPressed && currentFrame <= images.length;
     const isFinishedFlashing = currentFrame > images.length;
@@ -165,9 +165,12 @@ class HomeMobile extends React.Component {
     const isShowing = (isPressed || isFinishedFlashing) && !isFinishedShowing;
 
     if ((isPressed || isFinishedFlashing) && !isFinishedShowing) {
-      setTimeout(() => {
-        this.setState({ currentFrame: currentFrame + 1 });
-      }, 60);
+      setTimeout(
+        () => {
+          this.setState({ currentFrame: currentFrame + 1 });
+        },
+        60
+      );
     }
 
     return (
@@ -176,7 +179,11 @@ class HomeMobile extends React.Component {
           <div>
             <Images isShowing={isShowing}>
               {images.map((image, i) => (
-                <Image key={image} image={image} show={isPressed && i === currentFrame} />
+                <Image
+                  key={image}
+                  image={image}
+                  show={isPressed && i === currentFrame}
+                />
               ))}
             </Images>
             <Message show={showFirstFrame}>
@@ -194,11 +201,13 @@ class HomeMobile extends React.Component {
             </Trigger>
           </div>
           <Subtitle>
-            <em>UI/UX Designer &amp;<br />Front-End Developer</em>
+            <em>UI/UX Designer &<br />Front-End Developer</em>
           </Subtitle>
         </TriggerContainer>
         <Footer>
-          Contact: <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
+          Contact:
+          {" "}
+          <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
         </Footer>
       </div>
     );

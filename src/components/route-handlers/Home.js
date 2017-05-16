@@ -1,5 +1,6 @@
 import React from "react";
-import withResponsiveness from "../../higher-order-components/withResponsiveness";
+import withResponsiveness
+  from "../../higher-order-components/withResponsiveness";
 import HomeMobile from "./HomeMobile.js";
 import HomeDesktop from "./HomeDesktop.js";
 

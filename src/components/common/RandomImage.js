@@ -16,7 +16,7 @@ class RandomImage extends React.Component {
     className: React.PropTypes.string,
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -30,18 +30,14 @@ class RandomImage extends React.Component {
     });
   };
 
-  render () {
+  render() {
     const { images, className } = this.props;
     const { imageShown } = this.state;
 
     return (
       <Container onClick={this.handleClick} className={className}>
         {images.map((image, i) => (
-          <Image
-            key={image}
-            visible={imageShown === i}
-            src={image}
-          />
+          <Image key={image} visible={imageShown === i} src={image} />
         ))}
       </Container>
     );

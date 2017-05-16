@@ -77,7 +77,6 @@ const Image = styled.img`
   max-width: ${props => props.maxWidth}px;
 `;
 
-
 class BeforeAfter extends React.Component {
   static propTypes = {
     after: React.PropTypes.object.isRequired,
@@ -86,28 +85,24 @@ class BeforeAfter extends React.Component {
     title: React.PropTypes.string.isRequired,
   };
 
-  constructor (props) {
-    super(props);
+  state = {
+    width: 0,
+    ratio: 1,
+    dragStartPosition: null,
+    isDragging: false,
+    isDraggingHorizontally: false,
+  };
 
-    this.state = {
-      width: 0,
-      ratio: 1,
-      dragStartPosition: null,
-      isDragging: false,
-      isDraggingHorizontally: false,
-    };
-  }
-
-  componentDidMount () {
+  componentDidMount() {
     this.setDimensions();
     window.addEventListener("resize", this.setDimensions);
     window.addEventListener("orientationchange", this.setDimensions);
-  };
+  }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener("resize", this.setDimensions);
     window.removeEventListener("orientationchange", this.setDimensions);
-  };
+  }
 
   setDimensions = () => {
     this.setState({ width: findDOMNode(this.frame).offsetWidth });
@@ -201,7 +196,7 @@ class BeforeAfter extends React.Component {
     }
   };
 
-  render () {
+  render() {
     const { before, after, title } = this.props;
     const { width, ratio } = this.state;
     const beforeHeight = before.width < width
@@ -220,7 +215,8 @@ class BeforeAfter extends React.Component {
             <TouchHandler
               onDrag={this.handleDragSlider}
               onDragRelease={this.handleDragRelease}
-              onTap={this.handleTap}>
+              onTap={this.handleTap}
+            >
               <BeforeAfterSlider ratio={ratio} />
             </TouchHandler>
           </SliderContainer>
@@ -231,7 +227,12 @@ class BeforeAfter extends React.Component {
           onTap={this.handleTap}
         >
           <BrowserChrome />
-          <Container ref={el => { this.frame = el; }} height={height}>
+          <Container
+            ref={el => {
+              this.frame = el;
+            }}
+            height={height}
+          >
             <Image
               alt={title + " - before"}
               src={before.url}
@@ -289,7 +290,6 @@ const Indicator = styled.div`
   border: 1px solid #e0e0e0;
   transform: translate3d(${props => props.ratio * (SLIDER_WIDTH * 0.5 + 1)}px, 0, 0);
 `;
-
 
 const BeforeAfterSlider = ({ ratio }) => (
   <Slider>

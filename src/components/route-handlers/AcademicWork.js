@@ -1,5 +1,6 @@
 import React from "react";
-import withResponsiveness from "../../higher-order-components/withResponsiveness";
+import withResponsiveness
+  from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import PushBottom from "../common/PushBottom";
@@ -87,7 +88,7 @@ class AcademicWork extends React.Component {
     return images;
   };
 
-  render () {
+  render() {
     const { isMobile } = this.props;
 
     return (

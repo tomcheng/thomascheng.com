@@ -17,9 +17,9 @@ const FooterIcon = styled.i`
 `;
 
 class PageFooter extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     this.bodyEl = document.getElementsByTagName("body")[0];
-  };
+  }
 
   handleClick = () => {
     const initialPosition = this.bodyEl.scrollTop;
@@ -36,7 +36,7 @@ class PageFooter extends React.Component {
     });
   };
 
-  render () {
+  render() {
     return (
       <Footer>
         <FooterIcon className="fa fa-hand-o-up" onClick={this.handleClick} />

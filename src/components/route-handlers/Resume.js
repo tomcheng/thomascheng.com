@@ -68,15 +68,17 @@ const Duration = styled.div`
 const Resume = () => (
   <div>
     <WorkSection>
-      <SectionTitle>Knowledge &amp; Skills</SectionTitle>
+      <SectionTitle>Knowledge & Skills</SectionTitle>
       <ul>
-        <li>Javascript development (React, Ember, Backbone, jQuery, Lodash, Ramda)</li>
+        <li>
+          Javascript development (React, Ember, Backbone, jQuery, Lodash, Ramda)
+        </li>
         <li>HTML, CSS (LESS and SASS)</li>
         <li>Testing with Jasmine, Mocha and Chai</li>
         <li>Version control with Git</li>
         <li>UX/UI Design</li>
         <li>Wireframing, prototyping and user-testing</li>
-        <li>Adobe Illustrator, Photoshop &amp; InDesign</li>
+        <li>Adobe Illustrator, Photoshop & InDesign</li>
       </ul>
     </WorkSection>
 
@@ -88,7 +90,7 @@ const Resume = () => (
             Front-end Developer / Product Designer
             <Company>Nulogy</Company>
           </h4>
-          <Duration>October 2014 &ndash; present</Duration>
+          <Duration>October 2014 – present</Duration>
           <ul>
             <li>
               Front-end development using React and Flux architecture on
@@ -116,7 +118,7 @@ const Resume = () => (
             UX Designer
             <Company>FreshBooks</Company>
           </h4>
-          <Duration>October 2011 &ndash; October 2014</Duration>
+          <Duration>October 2011 – October 2014</Duration>
           <ul>
             <li>
               Lead the design on major projects such as Automatic Expense
@@ -140,11 +142,11 @@ const Resume = () => (
 
         <Position>
           <h4>
-            Front-End Developer &amp; Designer
+            Front-End Developer & Designer
             <Company>Jet Cooper</Company>
           </h4>
           <Duration>
-            April 2011 &ndash; October 2011
+            April 2011 – October 2011
           </Duration>
           <ul>
             <li>
@@ -154,41 +156,47 @@ const Resume = () => (
               Designed interfaces for web and mobile applications
             </li>
             <li>
-              Projects include: <em>My City Lives</em>, <em>The Lunch
-              Lady</em>, and <em>Tea Sparrow</em>
+              Projects include: <em>My City Lives</em>, <em>
+                The Lunch
+                Lady
+              </em>, and <em>Tea Sparrow</em>
             </li>
           </ul>
         </Position>
 
         <Position>
           <h4>
-            Freelance Developer &amp; Designer
+            Freelance Developer & Designer
           </h4>
-          <Duration>January 2011 &ndash; March 2011</Duration>
+          <Duration>January 2011 – March 2011</Duration>
           <ul>
             <li>
               Managed projects from concept to wireframes and mockups to
               development and deployment
             </li>
             <li>
-              Clients include: <em>Centre for Social Innovation</em>, <em>The
-              MOWAT Centre for Policy Innovation</em>, <em>The Rosenberg Fund
-              for Children</em> and <em>Toronto Brigantine Inc.</em>
+              Clients include: <em>Centre for Social Innovation</em>, <em>
+                The
+                MOWAT Centre for Policy Innovation
+              </em>, <em>
+                The Rosenberg Fund
+                for Children
+              </em> and <em>Toronto Brigantine Inc.</em>
             </li>
           </ul>
         </Position>
 
         <Position>
           <h4>
-            Developer &amp; Designer
+            Developer & Designer
             <Company>The Movement</Company>
           </h4>
           <Duration>
-            May 2009 &ndash; December 2010
+            May 2009 – December 2010
           </Duration>
           <ul>
             <li>
-              Worked closely with clients to create print material &amp;
+              Worked closely with clients to create print material &
               websites suitable to their audience
             </li>
             <li>
@@ -206,30 +214,36 @@ const Resume = () => (
         <Position>
           <h4>
             Bachelor of Design Program
-            <Company>York University &amp; Sheridan College</Company>
+            <Company>York University & Sheridan College</Company>
           </h4>
-          <Duration>September 2007 &ndash; May 2009</Duration>
+          <Duration>September 2007 – May 2009</Duration>
           <ul>
-            <li>Finished two years of a four-year program before starting work full-time</li>
-            <li>Studied fundamentals of design history, design principles and typography</li>
+            <li>
+              Finished two years of a four-year program before starting work full-time
+            </li>
+            <li>
+              Studied fundamentals of design history, design principles and typography
+            </li>
           </ul>
         </Position>
 
         <Position>
           <h4>
-            Bachelor of Applied Science &amp; Engineering
+            Bachelor of Applied Science & Engineering
             <Company>University of Toronto</Company>
           </h4>
-          <Duration>September 2001 &ndash; May 2005</Duration>
+          <Duration>September 2001 – May 2005</Duration>
           <ul>
-            <li>Graduated the Engineering Science program (Aerospace option)</li>
+            <li>
+              Graduated the Engineering Science program (Aerospace option)
+            </li>
           </ul>
         </Position>
       </div>
     </WorkSection>
 
     <WorkSection>
-      <SectionTitle>Interests &amp; Activities</SectionTitle>
+      <SectionTitle>Interests & Activities</SectionTitle>
       <div>
         <Position>
           <h4>
@@ -237,7 +251,9 @@ const Resume = () => (
           </h4>
           <ul>
             <li>A platform for creating and sharing soundboards</li>
-            <li>Building it with React and Redux, and hoping to leverage React Native soon</li>
+            <li>
+              Building it with React and Redux, and hoping to leverage React Native soon
+            </li>
           </ul>
         </Position>
 

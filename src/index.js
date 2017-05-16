@@ -10,9 +10,9 @@ const rootEl = document.getElementById("root");
 
 FastClick.attach(rootEl);
 
-ReactDOM.render((
+ReactDOM.render(
   <Router history={hashHistory}>
     {routes}
-  </Router>
-), rootEl);
-
+  </Router>,
+  rootEl
+);

@@ -3,7 +3,14 @@ import styled, { keyframes } from "styled-components";
 import { findDOMNode } from "react-dom";
 import Animations from "../../utils/animations.js";
 import NudgeBottom from "./NudgeBottom";
-import { bounceOut, cubicOut, cubicInOut, elasticOut, returnHome, sineIn } from "../../utils/easings.js";
+import {
+  bounceOut,
+  cubicOut,
+  cubicInOut,
+  elasticOut,
+  returnHome,
+  sineIn,
+} from "../../utils/easings.js";
 import { constrain } from "../../utils/math.js";
 import TouchHandler from "./TouchHandler.js";
 
@@ -53,7 +60,7 @@ const Container = styled.div`
   position: relative;
   margin-left: ${props => props.isMobile ? -MOBILE_PADDING + "px" : 0};
   margin-right: ${props => props.isMobile ? -MOBILE_PADDING + "px" : 0};
-  animation-name: ${props => props.shouldWiggle ? wiggle : "" };
+  animation-name: ${props => props.shouldWiggle ? wiggle : ""};
   animation-duration: .5s;
   animation-iteration-count: 1;
   animation-timing-function: ease-out;
@@ -90,7 +97,7 @@ const ReturnIndicator = styled.i`
   top: 50%;
   width: 20px;
   opacity: ${props => props.indicatorProgress};
-  transform: translate3d(-${props => (props.indicatorProgress * props.indicatorFinalPosition)}px, 0, 0);
+  transform: translate3d(-${props => props.indicatorProgress * props.indicatorFinalPosition}px, 0, 0);
 `;
 
 class Carousel extends React.Component {
@@ -104,27 +111,23 @@ class Carousel extends React.Component {
     title: React.PropTypes.string,
   };
 
-  constructor (props) {
-    super(props);
+  state = {
+    dragDirection: null,
+    isDragging: false,
+    isDraggingHorizontally: false,
+    scrollPos: 0,
+    scrollPosAtDragStart: null,
+    shouldWiggle: false,
+    frameWidth: 1000,
+  };
 
-    this.state = {
-      dragDirection: null,
-      isDragging: false,
-      isDraggingHorizontally: false,
-      scrollPos: 0,
-      scrollPosAtDragStart: null,
-      shouldWiggle: false,
-      frameWidth: 1000,
-    };
-  }
-
-  componentDidMount () {
+  componentDidMount() {
     this.setDimensions();
     window.addEventListener("resize", this.setDimensions);
     window.addEventListener("orientationchange", this.setDimensions);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener("resize", this.setDimensions);
     window.removeEventListener("orientationchange", this.setDimensions);
   }
@@ -143,7 +146,11 @@ class Carousel extends React.Component {
     const { scrollPos, frameWidth } = this.state;
     const imageCount = this.props.images.length;
 
-    return constrain(Math.floor(-scrollPos / frameWidth + 0.5), 0, imageCount - 1);
+    return constrain(
+      Math.floor(-scrollPos / frameWidth + 0.5),
+      0,
+      imageCount - 1
+    );
   };
 
   getPrevPane = () => {
@@ -157,11 +164,7 @@ class Carousel extends React.Component {
     const { scrollPos, frameWidth } = this.state;
     const imageCount = this.props.images.length;
 
-    return constrain(
-      Math.ceil(-scrollPos / frameWidth),
-      0,
-      imageCount - 1
-    );
+    return constrain(Math.ceil(-scrollPos / frameWidth), 0, imageCount - 1);
   };
 
   animateToPane = (pane, duration, easing) => {
@@ -229,7 +232,9 @@ class Carousel extends React.Component {
         this.animateToPane(currentPane, 600, elasticOut);
       } else if (scrollPos < -frameWidth * (imageCount - 1)) {
         // scrollPosed out of bounds at end
-        if (Math.abs(deltaX) > frameWidth * RETURN_THRESHOLD && imageCount > 1) {
+        if (
+          Math.abs(deltaX) > frameWidth * RETURN_THRESHOLD && imageCount > 1
+        ) {
           this.animateToPane(0, 120 * imageCount, cubicOut);
         } else {
           this.animateToPane(currentPane, 450, bounceOut);
@@ -245,7 +250,11 @@ class Carousel extends React.Component {
         }
         destinationPane = constrain(destinationPane, 0, imageCount - 1);
         distanceToScroll = Math.abs(-frameWidth * destinationPane - scrollPos);
-        duration = constrain(Math.abs(distanceToScroll / velocityX * 3), 200, 400);
+        duration = constrain(
+          Math.abs(distanceToScroll / velocityX * 3),
+          200,
+          400
+        );
 
         this.animateToPane(destinationPane, duration, cubicOut);
       }
@@ -265,9 +274,12 @@ class Carousel extends React.Component {
 
     if (imageCount === 1) {
       this.setState({ shouldWiggle: true });
-      setTimeout(() => {
-        this.setState({ shouldWiggle: false });
-      }, 500);
+      setTimeout(
+        () => {
+          this.setState({ shouldWiggle: false });
+        },
+        500
+      );
     }
 
     if (nextPane === 0) {
@@ -277,18 +289,23 @@ class Carousel extends React.Component {
     }
   };
 
-  getCounter = () => this.props.images.length > 1 ? (
-    <Counter onClick={this.handleAdvanceToNextPane}>
-      {this.getCurrentPane() + 1}&nbsp;of&nbsp;{this.props.images.length}
-    </Counter>
-  ) : null;
+  getCounter = () =>
+    this.props.images.length > 1
+      ? <Counter onClick={this.handleAdvanceToNextPane}>
+          {this.getCurrentPane() + 1}&nbsp;of&nbsp;{this.props.images.length}
+        </Counter>
+      : null;
 
-  render () {
+  render() {
     const { description, images, title, isMobile, height, width } = this.props;
     const { scrollPos, frameWidth, shouldWiggle } = this.state;
     const imageCount = images.length;
-    const indicatorFinalPosition = frameWidth * DRAG_CONSTANT * RETURN_THRESHOLD * 0.8;
-    const amountDraggedPastEnd = (-scrollPos / frameWidth - (imageCount - 1)) / DRAG_CONSTANT;
+    const indicatorFinalPosition = frameWidth *
+      DRAG_CONSTANT *
+      RETURN_THRESHOLD *
+      0.8;
+    const amountDraggedPastEnd = (-scrollPos / frameWidth - (imageCount - 1)) /
+      DRAG_CONSTANT;
     const indicatorProgress = sineIn(
       constrain(amountDraggedPastEnd / RETURN_THRESHOLD, 0, 1)
     );
@@ -297,24 +314,24 @@ class Carousel extends React.Component {
 
     return (
       <div className="carousel">
-        {description ? (
-          <NudgeBottom>
-            <h4>{title}</h4>
-            <NudgeBottom>
-              {description}
+        {description
+          ? <NudgeBottom>
+              <h4>{title}</h4>
+              <NudgeBottom>
+                {description}
+              </NudgeBottom>
+              <NudgeBottom>
+                {this.getCounter()}
+              </NudgeBottom>
             </NudgeBottom>
-            <NudgeBottom>
+          : <HeaderWithTitleOnly>
+              <h4>{title}</h4>
               {this.getCounter()}
-            </NudgeBottom>
-          </NudgeBottom>
-        ) : (
-          <HeaderWithTitleOnly>
-            <h4>{title}</h4>
-            {this.getCounter()}
-          </HeaderWithTitleOnly>
-        )}
+            </HeaderWithTitleOnly>}
         <Container
-          ref={el => { this.wrapper = el; }}
+          ref={el => {
+            this.wrapper = el;
+          }}
           isMobile={isMobile}
           shouldWiggle={shouldWiggle}
         >
@@ -331,27 +348,19 @@ class Carousel extends React.Component {
               }}
             >
               {images.map((image, index) => (
-                <Item
-                  key={index}
-                  frameWidth={frameWidth}
-                  isMobile={isMobile}
-                >
-                  <Image
-                    src={image}
-                    width={imageWidth}
-                    height={imageHeight}
-                  />
+                <Item key={index} frameWidth={frameWidth} isMobile={isMobile}>
+                  <Image src={image} width={imageWidth} height={imageHeight} />
                 </Item>
               ))}
             </List>
           </TouchHandler>
-          {imageCount > 1 ? (
-            <ReturnIndicator
-              className="fa fa-arrow-left"
-              indicatorProgress={indicatorProgress}
-              indicatorFinalPosition={indicatorFinalPosition}
-            />
-          ) : null}
+          {imageCount > 1
+            ? <ReturnIndicator
+                className="fa fa-arrow-left"
+                indicatorProgress={indicatorProgress}
+                indicatorFinalPosition={indicatorFinalPosition}
+              />
+            : null}
         </Container>
       </div>
     );
