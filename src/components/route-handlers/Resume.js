@@ -4,12 +4,23 @@ import OriginalSectionTitle from "../common/SectionTitle";
 
 const WORK_HISTORY = [
   {
+    role: "Senior Developer (Full Stack)",
+    company: "LookBookHQ",
+    start: "February 2016",
+    end: null,
+    details: [
+      "Architected the frontend of a revamped version of LookBookHQ's platform",
+      "Created the data processing pipeline with Elixir, using the Event Sourcing pattern",
+      "Worked with Ruby and Ruby on Rails for the backend",
+    ],
+  },
+  {
     role: "Frontend Developer / Product Designer",
     company: "Nulogy",
     start: "October 2014",
-    end: null,
+    end: "January 2016",
     details: [
-      "Front-end development using React and Flux architecture on QCloud, a quality control application for manufacturers and packagers",
+      "Frontend development using React and Flux architecture on QCloud, a quality control application for manufacturers and packagers",
       "Optimized the application was for touch devices and lower-end iPads",
       "Worked closely with backend developers to determine appropriate data structures and API contracts",
       "Overhauled the UI/UX to make the application easier use",
@@ -93,7 +104,7 @@ const INTERESTS = [
   {
     role: "Avid Podcast Listener",
     details: [
-      "Favourites: EconTalk, Planet Money, This American Life, 99% Invisible, On The Grid, Javascript Jabber, Software Engineering Daily",
+      "Favourites: EconTalk, Planet Money, This American Life, Radiolab, 99% Invisible, Software Engineering Daily",
     ],
   },
 ];
@@ -180,11 +191,8 @@ const Resume = () => (
     <WorkSection>
       <SectionTitle>Knowledge & Skills</SectionTitle>
       <ul>
-        <li>
-          Javascript development (React, Ember, Backbone, jQuery, Lodash, Ramda)
-        </li>
+        <li>Languages: Javascript, Elixir, Ruby</li>
         <li>HTML, CSS (LESS and SASS)</li>
-        <li>Testing with Jasmine, Mocha and Chai</li>
         <li>Version control with Git</li>
         <li>UX/UI Design</li>
         <li>Wireframing, prototyping and user-testing</li>
