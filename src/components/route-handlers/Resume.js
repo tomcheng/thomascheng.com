@@ -2,6 +2,117 @@ import React from "react";
 import styled from "styled-components";
 import OriginalSectionTitle from "../common/SectionTitle";
 
+const WORK_HISTORY = [
+  {
+    role: "Frontend Developer / Product Designer",
+    company: "Nulogy",
+    start: "October 2014",
+    end: null,
+    details: [
+      "Front-end development using React and Flux architecture on QCloud, a quality control application for manufacturers and packagers",
+      "Optimized the application was for touch devices and lower-end iPads",
+      "Worked closely with backend developers to determine appropriate data structures and API contracts",
+      "Overhauled the UI/UX to make the application easier use",
+      "Wrote scalable CSS using SMACSS principles",
+    ],
+  },
+  {
+    role: "UX Designer",
+    company: "FreshBooks",
+    start: "October 2011",
+    end: "October 2014",
+    details: [
+      "Lead the design on major projects such as Automatic Expense Import and Dashboard Redesign",
+      "Created a Style Guideline used by the entire development team",
+      "Wrote a User Experience Principles Guideline used by the design team",
+      "Developed quick UI prototypes in Backbone and conducted weekly user tests",
+      "Worked on a new version of FreshBooks developed in Ember",
+    ],
+  },
+  {
+    role: "Frontend Developer & Designer",
+    company: "Jet Cooper",
+    start: "April 2011",
+    end: "October 2011",
+    details: [
+      "Developed responsive websites and functional prototypes",
+      "Designed interfaces for web and mobile applications",
+      "Projects include: <em>My City Lives</em>, <em>The Lunch Lady</em>, and <em>Tea Sparrow</em>",
+    ],
+  },
+  {
+    role: "Freelance Developer & Designer",
+    company: null,
+    start: "January 2011",
+    end: "March 2011",
+    details: [
+      "Managed projects from concept to wireframes and mockups to development and deployment",
+      "Clients include: <em>Centre for Social Innovation</em>, <em>The MOWAT Centre for Policy Innovation</em>, <em>The Rosenberg Fund for Children</em> and <em>Toronto Brigantine Inc.</em>",
+    ],
+  },
+  {
+    role: "Developer & Designer",
+    company: "The Movement",
+    start: "May 2009",
+    end: "December 2010",
+    details: [
+      "Worked closely with clients to create print material & websites suitable to their audience",
+      "Projects include: <em>Neighbourhood Arts Network</em>, <em>Corporate Knights</em> and <em>Alex Osterwalder</em>",
+    ],
+  },
+];
+
+const EDUCATION = [
+  {
+    role: "Bachelor of Design Program",
+    company: "York University & Sheridan College",
+    start: "September 2007",
+    end: "May 2009",
+    details: [
+      "Finished two years of a four-year program before starting work full-time",
+      "Studied fundamentals of design history, design principles and typography",
+    ],
+  },
+  {
+    role: "Bachelor of Applied Science & Engineering",
+    company: "University of Toronto",
+    start: "September 2000",
+    end: "May 2005",
+    details: ["Graduated the Engineering Science program (Aerospace option)"],
+  },
+];
+
+const INTERESTS = [
+  {
+    role: "Current Side Project: Zoundboards",
+    details: [
+      "A platform for creating and sharing soundboards",
+      "Building it with React and Redux, and hoping to leverage React Native soon",
+    ],
+  },
+  {
+    role: "Avid Podcast Listener",
+    details: [
+      "Favourites: EconTalk, Planet Money, This American Life, 99% Invisible, On The Grid, Javascript Jabber, Software Engineering Daily",
+    ],
+  },
+];
+
+const SECTIONS = [
+  {
+    title: "Employment History",
+    positions: WORK_HISTORY,
+  },
+  {
+    title: "Education",
+    positions: EDUCATION,
+  },
+  {
+    title: "Interests & Activities",
+    positions: INTERESTS,
+  }
+];
+
 const SectionTitle = styled(OriginalSectionTitle)`
   flex: 0 0 30%;
 
@@ -62,7 +173,6 @@ const Duration = styled.div`
   font-size: 12px;
   line-height: 18px;
   margin-bottom: 10px;
-  
 `;
 
 const Resume = () => (
@@ -82,195 +192,30 @@ const Resume = () => (
       </ul>
     </WorkSection>
 
-    <WorkSection>
-      <SectionTitle>Employment History</SectionTitle>
-      <div>
-        <Position>
-          <h4>
-            Front-end Developer / Product Designer
-            <Company>Nulogy</Company>
-          </h4>
-          <Duration>October 2014 – present</Duration>
-          <ul>
-            <li>
-              Front-end development using React and Flux architecture on
-              QCloud, a quality control application for manufacturers and
-              packagers
-            </li>
-            <li>
-              Optimized the application was for touch devices and lower-end iPads
-            </li>
-            <li>
-              Worked closely with backend developers to determine appropriate
-              data structures and API contracts
-            </li>
-            <li>
-              Overhauled the UI/UX to make the application easier use
-            </li>
-            <li>
-              Wrote scalable CSS using SMACSS principles
-            </li>
-          </ul>
-        </Position>
-
-        <Position>
-          <h4>
-            UX Designer
-            <Company>FreshBooks</Company>
-          </h4>
-          <Duration>October 2011 – October 2014</Duration>
-          <ul>
-            <li>
-              Lead the design on major projects such as Automatic Expense
-              Import and Dashboard Redesign
-            </li>
-            <li>
-              Created a Style Guideline used by the entire development team
-            </li>
-            <li>
-              Wrote a User Experience Principles Guideline used by the design team
-            </li>
-            <li>
-              Developed quick UI prototypes in Backbone and conducted weekly
-              user tests
-            </li>
-            <li>
-              Worked on a new version of FreshBooks developed in Ember
-            </li>
-          </ul>
-        </Position>
-
-        <Position>
-          <h4>
-            Front-End Developer & Designer
-            <Company>Jet Cooper</Company>
-          </h4>
-          <Duration>
-            April 2011 – October 2011
-          </Duration>
-          <ul>
-            <li>
-              Developed responsive websites and functional prototypes
-            </li>
-            <li>
-              Designed interfaces for web and mobile applications
-            </li>
-            <li>
-              Projects include: <em>My City Lives</em>, <em>
-                The Lunch
-                Lady
-              </em>, and <em>Tea Sparrow</em>
-            </li>
-          </ul>
-        </Position>
-
-        <Position>
-          <h4>
-            Freelance Developer & Designer
-          </h4>
-          <Duration>January 2011 – March 2011</Duration>
-          <ul>
-            <li>
-              Managed projects from concept to wireframes and mockups to
-              development and deployment
-            </li>
-            <li>
-              Clients include: <em>Centre for Social Innovation</em>, <em>
-                The
-                MOWAT Centre for Policy Innovation
-              </em>, <em>
-                The Rosenberg Fund
-                for Children
-              </em> and <em>Toronto Brigantine Inc.</em>
-            </li>
-          </ul>
-        </Position>
-
-        <Position>
-          <h4>
-            Developer & Designer
-            <Company>The Movement</Company>
-          </h4>
-          <Duration>
-            May 2009 – December 2010
-          </Duration>
-          <ul>
-            <li>
-              Worked closely with clients to create print material &
-              websites suitable to their audience
-            </li>
-            <li>
-              Projects include: <em>Neighbourhood Arts Network</em>,
-              <em>Corporate Knights</em> and <em>Alex Osterwalder</em>
-            </li>
-          </ul>
-        </Position>
-      </div>
-    </WorkSection>
-
-    <WorkSection>
-      <SectionTitle>Education</SectionTitle>
-      <div>
-        <Position>
-          <h4>
-            Bachelor of Design Program
-            <Company>York University & Sheridan College</Company>
-          </h4>
-          <Duration>September 2007 – May 2009</Duration>
-          <ul>
-            <li>
-              Finished two years of a four-year program before starting work full-time
-            </li>
-            <li>
-              Studied fundamentals of design history, design principles and typography
-            </li>
-          </ul>
-        </Position>
-
-        <Position>
-          <h4>
-            Bachelor of Applied Science & Engineering
-            <Company>University of Toronto</Company>
-          </h4>
-          <Duration>September 2001 – May 2005</Duration>
-          <ul>
-            <li>
-              Graduated the Engineering Science program (Aerospace option)
-            </li>
-          </ul>
-        </Position>
-      </div>
-    </WorkSection>
-
-    <WorkSection>
-      <SectionTitle>Interests & Activities</SectionTitle>
-      <div>
-        <Position>
-          <h4>
-            Current Side Project: Zoundboards
-          </h4>
-          <ul>
-            <li>A platform for creating and sharing soundboards</li>
-            <li>
-              Building it with React and Redux, and hoping to leverage React Native soon
-            </li>
-          </ul>
-        </Position>
-
-        <Position>
-          <h4>
-            Avid Podcast Listener
-          </h4>
-          <ul>
-            <li>
-              Favourites: EconTalk, Planet Money, This American Life, 99%
-              Invisible, On The Grid, Javascript Jabber, Software Engineering
-              Daily
-            </li>
-          </ul>
-        </Position>
-      </div>
-    </WorkSection>
+    {SECTIONS.map(({ title, positions }, index) => (
+      <WorkSection key={index}>
+        <SectionTitle>{title}</SectionTitle>
+        <div>
+          {positions.map(({ role, company, start, end, details }, index) => (
+            <Position key={index}>
+              <h4>
+                {role}
+                {company && <Company>{company}</Company>}
+              </h4>
+              {start && <Duration>{start} – {end || "present"}</Duration>}
+              <ul>
+                {details.map((detail, index) => (
+                  <li
+                    key={index}
+                    dangerouslySetInnerHTML={{ __html: detail }}
+                  />
+                ))}
+              </ul>
+            </Position>
+          ))}
+        </div>
+      </WorkSection>
+    ))}
   </div>
 );
 
