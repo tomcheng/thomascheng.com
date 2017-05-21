@@ -69,6 +69,7 @@ const TriggerContainer = styled.div`
   top: 50%;
   width: 250px;
   z-index: 1010;
+  user-select: none;
 `;
 
 const Trigger = styled.div`
