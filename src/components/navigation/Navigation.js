@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Container from "../common/Container";
 
@@ -37,7 +37,7 @@ const HeaderContainer = styled(Container)`
   height: 100%;
 `;
 
-const MobileLink = styled(Link)`
+const MobileLink = styled(NavLink)`
   @media (min-width: 768px) {
     display: none
   }
@@ -48,7 +48,7 @@ const HomeIcon = styled.i`
   color: #333;
 `;
 
-const DesktopLink = styled(Link)`
+const DesktopLink = styled(NavLink)`
   @media (max-width: 767px) {
     display: none;
   }
@@ -98,7 +98,7 @@ const NavItem = styled.div`
   }
 `;
 
-const NavLink = styled(Link)`
+const StyledNavLink = styled(NavLink)`
   opacity: 0.2;
   color: #333;
   display: block;
@@ -114,7 +114,7 @@ const NavLink = styled(Link)`
   }
 `;
 
-const NavLinkHome = styled(NavLink)`
+const NavLinkHome = styled(StyledNavLink)`
   color: #333;
   opacity: 1;
 
@@ -138,7 +138,7 @@ const Navigation = ({ location }) => {
   const isHome = location.pathname === "/";
   const isResume = location.pathname === "/resume";
 
-  const LinkComponent = isHome ? NavLinkHome : NavLink;
+  const LinkComponent = isHome ? NavLinkHome : StyledNavLink;
   return (
     <Header>
       <HeaderContainer>
@@ -161,7 +161,7 @@ const Navigation = ({ location }) => {
           ? <Nav>
               {LINKS.map((link, i) => (
                 <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
-                  <LinkComponent to={link.path} activeClassName="active">
+                  <LinkComponent to={link.path}>
                     <NavText>
                       {link.title}
                     </NavText>
