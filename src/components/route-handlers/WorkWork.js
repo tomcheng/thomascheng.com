@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import withResponsiveness
   from "../../higher-order-components/withResponsiveness";
 import BeforeAfter from "../common/BeforeAfter";
@@ -156,8 +157,8 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
 );
 
 WorkWork.propTypes = {
-  isMdAndUp: React.PropTypes.bool.isRequired,
-  isMobile: React.PropTypes.bool.isRequired,
+  isMdAndUp: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool.isRequired,
 };
 
 export default withResponsiveness(WorkWork);

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import withResponsiveness
   from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
@@ -73,7 +74,7 @@ const PIECES = [
 
 class AcademicWork extends React.Component {
   static propTypes = {
-    isMobile: React.PropTypes.bool.isRequired,
+    isMobile: PropTypes.bool.isRequired,
   };
 
   getImages = (slug, imageCount) => {

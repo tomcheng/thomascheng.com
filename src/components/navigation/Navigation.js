@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router";
 import styled from "styled-components";
 import Container from "../common/Container";
@@ -175,8 +176,8 @@ const Navigation = ({ location }) => {
 };
 
 Navigation.propTypes = {
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
 

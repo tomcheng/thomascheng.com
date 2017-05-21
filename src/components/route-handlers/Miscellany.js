@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import withResponsiveness
   from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
@@ -48,7 +49,7 @@ const Miscellany = ({ isMobile }) => (
 );
 
 Miscellany.propTypes = {
-  isMobile: React.PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool.isRequired,
 };
 
 export default withResponsiveness(Miscellany);

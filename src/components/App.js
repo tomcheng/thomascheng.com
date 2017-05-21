@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Navigation from "./navigation/Navigation";
 import Container from "./common/Container";
 
@@ -10,9 +11,9 @@ const App = ({ children, location }) => (
 );
 
 App.propTypes = {
-  children: React.PropTypes.element.isRequired,
-  location: React.PropTypes.shape({
-    pathname: React.PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
 

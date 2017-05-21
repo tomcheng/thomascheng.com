@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
 import styled from "styled-components";
 import Animations from "../../utils/animations.js";
@@ -79,10 +80,10 @@ const Image = styled.img`
 
 class BeforeAfter extends React.Component {
   static propTypes = {
-    after: React.PropTypes.object.isRequired,
-    before: React.PropTypes.object.isRequired,
-    slug: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired,
+    after: PropTypes.object.isRequired,
+    before: PropTypes.object.isRequired,
+    slug: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
   };
 
   state = {
@@ -304,7 +305,7 @@ const BeforeAfterSlider = ({ ratio }) => (
 );
 
 BeforeAfterSlider.propTypes = {
-  ratio: React.PropTypes.number.isRequired,
+  ratio: PropTypes.number.isRequired,
 };
 
 export default BeforeAfter;

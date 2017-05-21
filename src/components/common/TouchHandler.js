@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class TouchHandler extends Component {
   static propTypes = {
-    children: React.PropTypes.any.isRequired,
-    stopPropagation: React.PropTypes.bool,
-    onDrag: React.PropTypes.func,
-    onDragRelease: React.PropTypes.func,
-    onTap: React.PropTypes.func,
+    children: PropTypes.any.isRequired,
+    stopPropagation: PropTypes.bool,
+    onDrag: PropTypes.func,
+    onDragRelease: PropTypes.func,
+    onTap: PropTypes.func,
   };
 
   state = {

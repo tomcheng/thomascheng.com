@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -12,8 +13,8 @@ const Image = styled.img`
 
 class RandomImage extends React.Component {
   static propTypes = {
-    images: React.PropTypes.array.isRequired,
-    className: React.PropTypes.string,
+    images: PropTypes.array.isRequired,
+    className: PropTypes.string,
   };
 
   constructor(props) {

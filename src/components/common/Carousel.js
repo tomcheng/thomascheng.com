@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 import { findDOMNode } from "react-dom";
 import Animations from "../../utils/animations.js";
@@ -102,13 +103,13 @@ const ReturnIndicator = styled.i`
 
 class Carousel extends React.Component {
   static propTypes = {
-    height: React.PropTypes.number.isRequired,
-    images: React.PropTypes.array.isRequired,
-    slug: React.PropTypes.string.isRequired,
-    width: React.PropTypes.number.isRequired,
-    description: React.PropTypes.string,
-    isMobile: React.PropTypes.bool,
-    title: React.PropTypes.string,
+    height: PropTypes.number.isRequired,
+    images: PropTypes.array.isRequired,
+    slug: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    description: PropTypes.string,
+    isMobile: PropTypes.bool,
+    title: PropTypes.string,
   };
 
   state = {
