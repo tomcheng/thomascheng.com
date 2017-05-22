@@ -182,7 +182,7 @@ class Carousel extends React.Component {
   };
 
   handleDrag = evt => {
-    const { deltaX, direction, preventDefault } = evt;
+    const { deltaX, direction } = evt;
     const {
       isDragging,
       isDraggingHorizontally,
@@ -194,7 +194,6 @@ class Carousel extends React.Component {
     const imageCount = images.length;
 
     if (isDragging && isDraggingHorizontally) {
-      preventDefault();
       let dragOffset = deltaX;
       if (
         scrollPosAtDragStart + deltaX > 0 ||
@@ -314,7 +313,7 @@ class Carousel extends React.Component {
     const imageHeight = Math.round(height / width * imageWidth);
 
     return (
-      <div className="carousel">
+      <div style={{ touchAction: "pan-y" }}>
         {description
           ? <NudgeBottom>
               <h4>{title}</h4>

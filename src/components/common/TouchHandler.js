@@ -10,6 +10,13 @@ class TouchHandler extends Component {
     onTap: PropTypes.func,
   };
 
+  static defaultProps = {
+    onDrag: () => {},
+    onDragRelease: () => {},
+    onTap: () => {},
+    stopPropagation: false,
+  };
+
   state = {
     start: null,
     last: null,
@@ -123,12 +130,5 @@ class TouchHandler extends Component {
     );
   }
 }
-
-TouchHandler.defaultProps = {
-  onDrag: () => {},
-  onDragRelease: () => {},
-  onTap: () => {},
-  stopPropagation: false,
-};
 
 export default TouchHandler;
