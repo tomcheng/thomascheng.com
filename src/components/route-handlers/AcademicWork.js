@@ -12,69 +12,69 @@ const PIECES = [
     title: "Typography Booklet",
     width: 704,
     height: 468,
-    imageCount: 4,
+    imageCount: 4
   },
   {
     slug: "futura",
     title: "Futura Type Specimen",
     width: 704,
     height: 468,
-    imageCount: 4,
+    imageCount: 4
   },
   {
     slug: "heart",
     title: "Meat Typography",
     width: 704,
     height: 468,
-    imageCount: 1,
+    imageCount: 1
   },
   {
     slug: "influential",
     title: "Influential Typographers Book Design",
     width: 704,
     height: 468,
-    imageCount: 2,
+    imageCount: 2
   },
   {
     slug: "diabetes",
     title: "Fast Food Typography",
     width: 704,
     height: 468,
-    imageCount: 1,
+    imageCount: 1
   },
   {
     slug: "food-economy",
     title: "Food Economy Magazine Layout",
     width: 704,
     height: 426,
-    imageCount: 2,
+    imageCount: 2
   },
   {
     slug: "durer",
     title: "Albrecht Durer Brochure",
     width: 704,
     height: 468,
-    imageCount: 2,
+    imageCount: 2
   },
   {
     slug: "robot",
     title: "Robot Games Flyer",
     width: 704,
     height: 563,
-    imageCount: 1,
+    imageCount: 1
   },
   {
     slug: "pez",
     title: "Wall o' Pez",
     width: 704,
     height: 468,
-    imageCount: 1,
-  },
+    imageCount: 1
+  }
 ];
 
 class AcademicWork extends React.Component {
   static propTypes = {
-    isMobile: PropTypes.bool.isRequired,
+    isMobile: PropTypes.bool.isRequired
   };
 
   getImages = (slug, imageCount) => {

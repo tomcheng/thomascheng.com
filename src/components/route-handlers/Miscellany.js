@@ -10,7 +10,7 @@ const PHOTOCOPIED_FACES = [
   require("../../images/photocopied-faces/pcface4.jpg"),
   require("../../images/photocopied-faces/pcface2.jpg"),
   require("../../images/photocopied-faces/pcface3.jpg"),
-  require("../../images/photocopied-faces/pcface7.jpg"),
+  require("../../images/photocopied-faces/pcface7.jpg")
 ];
 
 const PROCESSING_IMAGES = [
@@ -19,7 +19,7 @@ const PROCESSING_IMAGES = [
   require("../../images/processing-faces/discowoman.jpg"),
   require("../../images/processing-faces/circlewoman.jpg"),
   require("../../images/processing-faces/stripeman.jpg"),
-  require("../../images/processing-faces/radiating.jpg"),
+  require("../../images/processing-faces/radiating.jpg")
 ];
 
 const Miscellany = ({ isMobile }) => (
@@ -49,7 +49,7 @@ const Miscellany = ({ isMobile }) => (
 );
 
 Miscellany.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool.isRequired
 };
 
 export default withResponsiveness(Miscellany);

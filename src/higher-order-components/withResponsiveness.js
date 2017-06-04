@@ -5,7 +5,7 @@ const withResponsiveness = Target =>
   class extends React.Component {
     state = {
       isMobile: window.innerWidth <= breakpoints.xs.max,
-      isMdAndUp: window.innerWidth > breakpoints.md.min,
+      isMdAndUp: window.innerWidth > breakpoints.md.min
     };
 
     componentDidMount() {
@@ -21,7 +21,8 @@ const withResponsiveness = Target =>
       const isMdAndUp = window.innerWidth > breakpoints.md.min;
 
       if (
-        isMobile !== this.state.isMobile || isMdAndUp !== this.state.isMdAndUp
+        isMobile !== this.state.isMobile ||
+        isMdAndUp !== this.state.isMdAndUp
       ) {
         this.setState({ isMobile, isMdAndUp });
       }

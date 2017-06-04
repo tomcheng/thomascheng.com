@@ -5,10 +5,10 @@ import withResponsiveness
 import HomeMobile from "./HomeMobile.js";
 import HomeDesktop from "./HomeDesktop.js";
 
-const Home = ({ isMobile }) => isMobile ? <HomeMobile /> : <HomeDesktop />;
+const Home = ({ isMobile }) => (isMobile ? <HomeMobile /> : <HomeDesktop />);
 
 Home.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool.isRequired
 };
 
 export default withResponsiveness(Home);

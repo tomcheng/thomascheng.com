@@ -51,7 +51,7 @@ const Animations = {
       }
     };
     animationLoop();
-  },
+  }
 };
 
 export default Animations;

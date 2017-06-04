@@ -15,7 +15,7 @@ const HomeDesktop = () => (
       require("../../images/logos/logo_3.jpg"),
       require("../../images/logos/logo_4.jpg"),
       require("../../images/logos/logo_5.jpg"),
-      require("../../images/logos/logo_6.jpg"),
+      require("../../images/logos/logo_6.jpg")
     ]}
   />
 );

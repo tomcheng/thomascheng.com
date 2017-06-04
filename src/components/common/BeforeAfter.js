@@ -83,7 +83,7 @@ class BeforeAfter extends React.Component {
     after: PropTypes.object.isRequired,
     before: PropTypes.object.isRequired,
     slug: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
   };
 
   state = {
@@ -91,7 +91,7 @@ class BeforeAfter extends React.Component {
     ratio: 1,
     dragStartPosition: null,
     isDragging: false,
-    isDraggingHorizontally: false,
+    isDraggingHorizontally: false
   };
 
   componentDidMount() {
@@ -118,7 +118,7 @@ class BeforeAfter extends React.Component {
       easing: cubicInOut,
       onUpdate: ratio => {
         this.setState({ ratio });
-      },
+      }
     });
   };
 
@@ -131,7 +131,7 @@ class BeforeAfter extends React.Component {
       easing: cubicInOut,
       onUpdate: ratio => {
         this.setState({ ratio });
-      },
+      }
     });
   };
 
@@ -149,7 +149,7 @@ class BeforeAfter extends React.Component {
         isDragging: true,
         ratioAtDragStart: this.state.ratio,
         dragStartPosition: x,
-        isDraggingHorizontally: direction === "left" || direction === "right",
+        isDraggingHorizontally: direction === "left" || direction === "right"
       });
     } else if (this.state.isDraggingHorizontally) {
       preventDefault();
@@ -158,7 +158,7 @@ class BeforeAfter extends React.Component {
           this.state.ratioAtDragStart + deltaX / (this.state.width * 0.7 + 1),
           0,
           1
-        ),
+        )
       });
     }
   };
@@ -169,7 +169,7 @@ class BeforeAfter extends React.Component {
         isDragging: true,
         ratioAtDragStart: this.state.ratio,
         dragStartPosition: x,
-        isDraggingHorizontally: direction === "left" || direction === "right",
+        isDraggingHorizontally: direction === "left" || direction === "right"
       });
     } else if (this.state.isDraggingHorizontally) {
       preventDefault();
@@ -178,7 +178,7 @@ class BeforeAfter extends React.Component {
           this.state.ratioAtDragStart + deltaX / (SLIDER_WIDTH * 0.5),
           0,
           1
-        ),
+        )
       });
     }
   };
@@ -188,7 +188,7 @@ class BeforeAfter extends React.Component {
       isDragging: false,
       dragStartPosition: null,
       ratioAtDragStart: null,
-      isDraggingHorizontally: false,
+      isDraggingHorizontally: false
     });
     if (this.state.ratio < 0.5) {
       this.switchToBefore();
@@ -305,7 +305,7 @@ const BeforeAfterSlider = ({ ratio }) => (
 );
 
 BeforeAfterSlider.propTypes = {
-  ratio: PropTypes.number.isRequired,
+  ratio: PropTypes.number.isRequired
 };
 
 export default BeforeAfter;

@@ -1,31 +1,30 @@
-const bezToEasing = bezArray =>
-  x => {
-    const polyBez = (p1, p2) => {
-      const A = [null, null];
-      const B = [null, null];
-      const C = [null, null];
-      const bezCoOrd = (t, ax) => {
-        C[ax] = 3 * p1[ax];
-        B[ax] = 3 * (p2[ax] - p1[ax]) - C[ax];
-        A[ax] = 1 - C[ax] - B[ax];
-        return t * (C[ax] + t * (B[ax] + t * A[ax]));
-      };
-      const xDeriv = t => C[0] + t * (2 * B[0] + 3 * A[0] * t);
-      const xForT = t => {
-        let x = t;
-        let i = 0;
-        let z;
-        while (++i < 14) {
-          z = bezCoOrd(x, 0) - t;
-          if (Math.abs(z) < 1e-3) break;
-          x -= z / xDeriv(x);
-        }
-        return x;
-      };
-      return t => bezCoOrd(xForT(t), 1);
+const bezToEasing = bezArray => x => {
+  const polyBez = (p1, p2) => {
+    const A = [null, null];
+    const B = [null, null];
+    const C = [null, null];
+    const bezCoOrd = (t, ax) => {
+      C[ax] = 3 * p1[ax];
+      B[ax] = 3 * (p2[ax] - p1[ax]) - C[ax];
+      A[ax] = 1 - C[ax] - B[ax];
+      return t * (C[ax] + t * (B[ax] + t * A[ax]));
     };
-    return polyBez([bezArray[0], bezArray[1]], [bezArray[2], bezArray[3]])(x);
+    const xDeriv = t => C[0] + t * (2 * B[0] + 3 * A[0] * t);
+    const xForT = t => {
+      let x = t;
+      let i = 0;
+      let z;
+      while (++i < 14) {
+        z = bezCoOrd(x, 0) - t;
+        if (Math.abs(z) < 1e-3) break;
+        x -= z / xDeriv(x);
+      }
+      return x;
+    };
+    return t => bezCoOrd(xForT(t), 1);
   };
+  return polyBez([bezArray[0], bezArray[1]], [bezArray[2], bezArray[3]])(x);
+};
 
 export const bounceOut = x => {
   if (x < 1 / 2.75) {

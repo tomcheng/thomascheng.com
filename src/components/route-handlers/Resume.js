@@ -11,8 +11,8 @@ const WORK_HISTORY = [
     details: [
       "Architected the frontend of a revamped version of LookBookHQ's platform",
       "Created the data processing pipeline with Elixir, using the Event Sourcing pattern",
-      "Worked with Ruby and Ruby on Rails for the backend",
-    ],
+      "Worked with Ruby and Ruby on Rails for the backend"
+    ]
   },
   {
     role: "Frontend Developer / Product Designer",
@@ -24,8 +24,8 @@ const WORK_HISTORY = [
       "Optimized the application was for touch devices and lower-end iPads",
       "Worked closely with backend developers to determine appropriate data structures and API contracts",
       "Overhauled the UI/UX to make the application easier use",
-      "Wrote scalable CSS using SMACSS principles",
-    ],
+      "Wrote scalable CSS using SMACSS principles"
+    ]
   },
   {
     role: "UX Designer",
@@ -37,8 +37,8 @@ const WORK_HISTORY = [
       "Created a Style Guideline used by the entire development team",
       "Wrote a User Experience Principles Guideline used by the design team",
       "Developed quick UI prototypes in Backbone and conducted weekly user tests",
-      "Worked on a new version of FreshBooks developed in Ember",
-    ],
+      "Worked on a new version of FreshBooks developed in Ember"
+    ]
   },
   {
     role: "Frontend Developer & Designer",
@@ -48,8 +48,8 @@ const WORK_HISTORY = [
     details: [
       "Developed responsive websites and functional prototypes",
       "Designed interfaces for web and mobile applications",
-      "Projects include: <em>My City Lives</em>, <em>The Lunch Lady</em>, and <em>Tea Sparrow</em>",
-    ],
+      "Projects include: <em>My City Lives</em>, <em>The Lunch Lady</em>, and <em>Tea Sparrow</em>"
+    ]
   },
   {
     role: "Freelance Developer & Designer",
@@ -58,8 +58,8 @@ const WORK_HISTORY = [
     end: "March 2011",
     details: [
       "Managed projects from concept to wireframes and mockups to development and deployment",
-      "Clients include: <em>Centre for Social Innovation</em>, <em>The MOWAT Centre for Policy Innovation</em>, <em>The Rosenberg Fund for Children</em> and <em>Toronto Brigantine Inc.</em>",
-    ],
+      "Clients include: <em>Centre for Social Innovation</em>, <em>The MOWAT Centre for Policy Innovation</em>, <em>The Rosenberg Fund for Children</em> and <em>Toronto Brigantine Inc.</em>"
+    ]
   },
   {
     role: "Developer & Designer",
@@ -68,9 +68,9 @@ const WORK_HISTORY = [
     end: "December 2010",
     details: [
       "Worked closely with clients to create print material & websites suitable to their audience",
-      "Projects include: <em>Neighbourhood Arts Network</em>, <em>Corporate Knights</em> and <em>Alex Osterwalder</em>",
-    ],
-  },
+      "Projects include: <em>Neighbourhood Arts Network</em>, <em>Corporate Knights</em> and <em>Alex Osterwalder</em>"
+    ]
+  }
 ];
 
 const EDUCATION = [
@@ -81,16 +81,16 @@ const EDUCATION = [
     end: "May 2009",
     details: [
       "Finished two years of a four-year program before starting work full-time",
-      "Studied fundamentals of design history, design principles and typography",
-    ],
+      "Studied fundamentals of design history, design principles and typography"
+    ]
   },
   {
     role: "Bachelor of Applied Science & Engineering",
     company: "University of Toronto",
     start: "September 2000",
     end: "May 2005",
-    details: ["Graduated the Engineering Science program (Aerospace option)"],
-  },
+    details: ["Graduated the Engineering Science program (Aerospace option)"]
+  }
 ];
 
 const INTERESTS = [
@@ -98,29 +98,29 @@ const INTERESTS = [
     role: "Current Side Project: Zoundboards",
     details: [
       "A platform for creating and sharing soundboards",
-      "Building it with React and Redux, and hoping to leverage React Native soon",
-    ],
+      "Building it with React and Redux, and hoping to leverage React Native soon"
+    ]
   },
   {
     role: "Avid Podcast Listener",
     details: [
-      "Favourites: EconTalk, Planet Money, This American Life, Radiolab, 99% Invisible, Software Engineering Daily",
-    ],
-  },
+      "Favourites: EconTalk, Planet Money, This American Life, Radiolab, 99% Invisible, Software Engineering Daily"
+    ]
+  }
 ];
 
 const SECTIONS = [
   {
     title: "Employment History",
-    positions: WORK_HISTORY,
+    positions: WORK_HISTORY
   },
   {
     title: "Education",
-    positions: EDUCATION,
+    positions: EDUCATION
   },
   {
     title: "Interests & Activities",
-    positions: INTERESTS,
+    positions: INTERESTS
   }
 ];
 

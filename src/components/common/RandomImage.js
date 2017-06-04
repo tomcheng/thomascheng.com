@@ -8,26 +8,26 @@ const Container = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  display: ${props => props.visible ? "block" : "none"}
+  display: ${props => (props.visible ? "block" : "none")}
 `;
 
 class RandomImage extends React.Component {
   static propTypes = {
     images: PropTypes.array.isRequired,
-    className: PropTypes.string,
+    className: PropTypes.string
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      imageShown: Math.floor(Math.random() * this.props.images.length),
+      imageShown: Math.floor(Math.random() * this.props.images.length)
     };
   }
 
   handleClick = () => {
     this.setState({
-      imageShown: (this.state.imageShown + 1) % this.props.images.length,
+      imageShown: (this.state.imageShown + 1) % this.props.images.length
     });
   };
 

@@ -32,7 +32,7 @@ class PageFooter extends React.Component {
       easing: cubicInOut,
       onUpdate: pos => {
         this.bodyEl.scrollTop = pos;
-      },
+      }
     });
   };
 

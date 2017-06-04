@@ -39,7 +39,7 @@ const IMAGES = [
   require("../../images/home/squareman2.jpg"),
   require("../../images/home/stripeman.jpg"),
   require("../../images/home/strippedfaces.jpg"),
-  require("../../images/home/twofonts-low-res.jpg"),
+  require("../../images/home/twofonts-low-res.jpg")
 ];
 
 const shuffleArray = array => {
@@ -75,17 +75,17 @@ const TriggerContainer = styled.div`
 const Trigger = styled.div`
   font-family: Raleway, sans-serif;
   transition: all .06s ease-in;
-  color: ${props => props.isFlashing ? "#fff" : "#333"};
+  color: ${props => (props.isFlashing ? "#fff" : "#333")};
   font-weight: 900;
   text-transform: uppercase;
   font-size: 16px;
   letter-spacing: .5px;
-  border-bottom: 8px solid ${props => props.isFlashing ? "#fff" : "#333"};
+  border-bottom: 8px solid ${props => (props.isFlashing ? "#fff" : "#333")};
   display: inline-block;
   padding: 0 10px 5px;
   margin-bottom: 15px;
   position: relative;
-  transform: scale3d(${props => props.isFlashing ? "1.2, 1.2, 1" : "1, 1, 1"});
+  transform: scale3d(${props => (props.isFlashing ? "1.2, 1.2, 1" : "1, 1, 1")});
 `;
 
 const Subtitle = styled.div`
@@ -101,12 +101,12 @@ const Message = styled.div`
   text-align: center;
   top: 20%;
   transition: opacity .05s ease-in-out;
-  opacity: ${props => props.show ? 1 : 0};
+  opacity: ${props => (props.show ? 1 : 0)};
 `;
 
 const MessagePart = styled.span`
   transition: opacity .05s ease-in-out;
-  opacity: ${props => props.show ? 1 : 0};
+  opacity: ${props => (props.show ? 1 : 0)};
 `;
 
 const Images = styled.div`
@@ -117,7 +117,7 @@ const Images = styled.div`
   bottom: 0;
   pointer-events: none;
   transition: background-color 0.1s ease-in-out;
-  background-color: rgba(240, 240, 240, ${props => props.isShowing ? 1 : 0});
+  background-color: rgba(240, 240, 240, ${props => (props.isShowing ? 1 : 0)});
 `;
 
 const Image = styled.div`
@@ -128,14 +128,14 @@ const Image = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
   backgroundImage: url(${props => props.image});
-  opacity: ${props => props.show ? 1 : 0};
+  opacity: ${props => (props.show ? 1 : 0)};
 `;
 
 class HomeMobile extends React.Component {
   state = {
     currentFrame: 0,
     isPressed: false,
-    images: shuffleArray(IMAGES),
+    images: shuffleArray(IMAGES)
   };
 
   handleTouchStart = evt => {
@@ -144,7 +144,7 @@ class HomeMobile extends React.Component {
     this.setState({
       isPressed: true,
       currentFrame: 0,
-      images: shuffleArray(IMAGES),
+      images: shuffleArray(IMAGES)
     });
   };
 
@@ -157,21 +157,20 @@ class HomeMobile extends React.Component {
     const isFlashing = isPressed && currentFrame <= images.length;
     const isFinishedFlashing = currentFrame > images.length;
     const isFinishedShowing = currentFrame > images.length + BOTH_FRAMES_LEAVE;
-    const showFirstFrame = isFinishedFlashing &&
+    const showFirstFrame =
+      isFinishedFlashing &&
       currentFrame >= images.length + FIRST_FRAME_ENTER &&
       currentFrame <= images.length + BOTH_FRAMES_LEAVE;
-    const showSecondFrame = isFinishedFlashing &&
+    const showSecondFrame =
+      isFinishedFlashing &&
       currentFrame >= images.length + SECOND_FRAME_ENTER &&
       currentFrame <= images.length + BOTH_FRAMES_LEAVE;
     const isShowing = (isPressed || isFinishedFlashing) && !isFinishedShowing;
 
     if ((isPressed || isFinishedFlashing) && !isFinishedShowing) {
-      setTimeout(
-        () => {
-          this.setState({ currentFrame: currentFrame + 1 });
-        },
-        60
-      );
+      setTimeout(() => {
+        this.setState({ currentFrame: currentFrame + 1 });
+      }, 60);
     }
 
     return (

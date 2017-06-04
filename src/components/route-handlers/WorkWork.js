@@ -15,14 +15,14 @@ const QCLOUD = [
     slug: "forms",
     title: "Forms Page Redesign",
     beforeDimensions: [1024, 768],
-    afterDimensions: [1024, 768],
+    afterDimensions: [1024, 768]
   },
   {
     slug: "form-creation",
     title: "Form Creation Redesign",
     beforeDimensions: [1024, 768],
-    afterDimensions: [1024, 768],
-  },
+    afterDimensions: [1024, 768]
+  }
 ];
 
 const FRESHBOOKS = [
@@ -30,20 +30,20 @@ const FRESHBOOKS = [
     slug: "dashboard",
     title: "Dashboard Redesign",
     beforeDimensions: [840, 449],
-    afterDimensions: [840, 710],
+    afterDimensions: [840, 710]
   },
   {
     slug: "reports",
     title: "Reports Page Redesign",
     beforeDimensions: [1077, 334],
-    afterDimensions: [840, 594],
+    afterDimensions: [840, 594]
   },
   {
     slug: "client",
     title: "Client Page Redesign",
     beforeDimensions: [840, 714],
-    afterDimensions: [840, 651],
-  },
+    afterDimensions: [840, 651]
+  }
 ];
 
 const WorkWork = ({ isMobile, isMdAndUp }) => (
@@ -63,14 +63,14 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
               comparison.slug +
               "-before.png"),
             width: comparison.beforeDimensions[0],
-            height: comparison.beforeDimensions[1],
+            height: comparison.beforeDimensions[1]
           }}
           after={{
             url: require("../../images/qcloud/" +
               comparison.slug +
               "-after.png"),
             width: comparison.afterDimensions[0],
-            height: comparison.afterDimensions[1],
+            height: comparison.afterDimensions[1]
           }}
           description={comparison.description}
           title={comparison.title}
@@ -86,14 +86,14 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
             ? require("../../images/qcloud/sheet-filling-landscape-before.png")
             : require("../../images/qcloud/sheet-filling-before.png"),
           width: isMdAndUp ? 1024 : 768,
-          height: isMdAndUp ? 768 : 640,
+          height: isMdAndUp ? 768 : 640
         }}
         after={{
           url: isMdAndUp
             ? require("../../images/qcloud/sheet-filling-landscape-after.png")
             : require("../../images/qcloud/sheet-filling-after.png"),
           width: isMdAndUp ? 1024 : 768,
-          height: isMdAndUp ? 768 : 640,
+          height: isMdAndUp ? 768 : 640
         }}
         description={
           "Make form filling more obvious and less error-prone " +
@@ -122,7 +122,7 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
           require("../../images/freshbooks/styleguide-1.png"),
           require("../../images/freshbooks/styleguide-2.png"),
           require("../../images/freshbooks/styleguide-3.png"),
-          require("../../images/freshbooks/styleguide-4.png"),
+          require("../../images/freshbooks/styleguide-4.png")
         ]}
         width={1080}
         height={660}
@@ -137,14 +137,14 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
               comparison.slug +
               "-before.png"),
             width: comparison.beforeDimensions[0],
-            height: comparison.beforeDimensions[1],
+            height: comparison.beforeDimensions[1]
           }}
           after={{
             url: require("../../images/freshbooks/" +
               comparison.slug +
               "-after.png"),
             width: comparison.afterDimensions[0],
-            height: comparison.afterDimensions[1],
+            height: comparison.afterDimensions[1]
           }}
           description={comparison.description}
           title={comparison.title}
@@ -158,7 +158,7 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
 
 WorkWork.propTypes = {
   isMdAndUp: PropTypes.bool.isRequired,
-  isMobile: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool.isRequired
 };
 
 export default withResponsiveness(WorkWork);

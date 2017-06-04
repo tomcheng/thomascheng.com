@@ -8,7 +8,7 @@ const LINKS = [
   { title: "Work", path: "/work" },
   { title: "Academic Work", path: "/academic-work" },
   { title: "Miscellany", path: "/miscellany" },
-  { title: "Contact", path: "/contact", hiddenOnMobile: true },
+  { title: "Contact", path: "/contact", hiddenOnMobile: true }
 ];
 
 const Header = styled.div`
@@ -84,7 +84,7 @@ const NavItem = styled.div`
   letter-spacing: .5px;
 
   @media (max-width: 767px) {
-    display: ${props => props.hiddenOnMobile ? "none" : "block"};
+    display: ${props => (props.hiddenOnMobile ? "none" : "block")};
   }
   @media (min-width: 768px) {
     font-size: 13px;
@@ -177,8 +177,8 @@ const Navigation = ({ location }) => {
 
 Navigation.propTypes = {
   location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default Navigation;

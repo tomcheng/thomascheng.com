@@ -10,7 +10,7 @@ import {
   cubicInOut,
   elasticOut,
   returnHome,
-  sineIn,
+  sineIn
 } from "../../utils/easings.js";
 import { constrain } from "../../utils/math.js";
 import TouchHandler from "./TouchHandler.js";
@@ -59,9 +59,9 @@ const wiggle = keyframes`
 const Container = styled.div`
   overflow: hidden;
   position: relative;
-  margin-left: ${props => props.isMobile ? -MOBILE_PADDING + "px" : 0};
-  margin-right: ${props => props.isMobile ? -MOBILE_PADDING + "px" : 0};
-  animation-name: ${props => props.shouldWiggle ? wiggle : ""};
+  margin-left: ${props => (props.isMobile ? -MOBILE_PADDING + "px" : 0)};
+  margin-right: ${props => (props.isMobile ? -MOBILE_PADDING + "px" : 0)};
+  animation-name: ${props => (props.shouldWiggle ? wiggle : "")};
   animation-duration: .5s;
   animation-iteration-count: 1;
   animation-timing-function: ease-out;
@@ -74,8 +74,8 @@ const List = styled.div`
 
 const Item = styled.div`
   width: ${props => props.frameWidth};
-  padding-left: ${props => props.isMobile ? MOBILE_PADDING + "px" : "0"};
-  padding-right: ${props => props.isMobile ? MOBILE_PADDING + "px" : "0"};
+  padding-left: ${props => (props.isMobile ? MOBILE_PADDING + "px" : "0")};
+  padding-right: ${props => (props.isMobile ? MOBILE_PADDING + "px" : "0")};
 `;
 
 const Image = styled.img`
@@ -109,7 +109,7 @@ class Carousel extends React.Component {
     width: PropTypes.number.isRequired,
     description: PropTypes.string,
     isMobile: PropTypes.bool,
-    title: PropTypes.string,
+    title: PropTypes.string
   };
 
   state = {
@@ -119,7 +119,7 @@ class Carousel extends React.Component {
     scrollPos: 0,
     scrollPosAtDragStart: null,
     shouldWiggle: false,
-    frameWidth: 1000,
+    frameWidth: 1000
   };
 
   componentDidMount() {
@@ -139,7 +139,7 @@ class Carousel extends React.Component {
 
     this.setState({
       frameWidth: Math.max(frameWidth, 1),
-      scrollPos: -frameWidth * currentPane,
+      scrollPos: -frameWidth * currentPane
     });
   };
 
@@ -177,7 +177,7 @@ class Carousel extends React.Component {
       easing,
       onUpdate: scrollPos => {
         this.setState({ scrollPos });
-      },
+      }
     });
   };
 
@@ -188,7 +188,7 @@ class Carousel extends React.Component {
       isDraggingHorizontally,
       scrollPos,
       scrollPosAtDragStart,
-      frameWidth,
+      frameWidth
     } = this.state;
     const { images } = this.props;
     const imageCount = images.length;
@@ -211,7 +211,7 @@ class Carousel extends React.Component {
       this.setState({
         isDragging: true,
         isDraggingHorizontally: direction === "left" || direction === "right",
-        scrollPosAtDragStart: scrollPos,
+        scrollPosAtDragStart: scrollPos
       });
     }
   };
@@ -233,7 +233,8 @@ class Carousel extends React.Component {
       } else if (scrollPos < -frameWidth * (imageCount - 1)) {
         // scrollPosed out of bounds at end
         if (
-          Math.abs(deltaX) > frameWidth * RETURN_THRESHOLD && imageCount > 1
+          Math.abs(deltaX) > frameWidth * RETURN_THRESHOLD &&
+          imageCount > 1
         ) {
           this.animateToPane(0, 120 * imageCount, cubicOut);
         } else {
@@ -263,7 +264,7 @@ class Carousel extends React.Component {
     this.setState({
       isDragging: false,
       isDraggingHorizontally: false,
-      scrollPosAtDragStart: null,
+      scrollPosAtDragStart: null
     });
   };
 
@@ -274,12 +275,9 @@ class Carousel extends React.Component {
 
     if (imageCount === 1) {
       this.setState({ shouldWiggle: true });
-      setTimeout(
-        () => {
-          this.setState({ shouldWiggle: false });
-        },
-        500
-      );
+      setTimeout(() => {
+        this.setState({ shouldWiggle: false });
+      }, 500);
     }
 
     if (nextPane === 0) {
@@ -300,12 +298,10 @@ class Carousel extends React.Component {
     const { description, images, title, isMobile, height, width } = this.props;
     const { scrollPos, frameWidth, shouldWiggle } = this.state;
     const imageCount = images.length;
-    const indicatorFinalPosition = frameWidth *
-      DRAG_CONSTANT *
-      RETURN_THRESHOLD *
-      0.8;
-    const amountDraggedPastEnd = (-scrollPos / frameWidth - (imageCount - 1)) /
-      DRAG_CONSTANT;
+    const indicatorFinalPosition =
+      frameWidth * DRAG_CONSTANT * RETURN_THRESHOLD * 0.8;
+    const amountDraggedPastEnd =
+      (-scrollPos / frameWidth - (imageCount - 1)) / DRAG_CONSTANT;
     const indicatorProgress = sineIn(
       constrain(amountDraggedPastEnd / RETURN_THRESHOLD, 0, 1)
     );
@@ -344,7 +340,7 @@ class Carousel extends React.Component {
               style={{
                 width: frameWidth * imageCount,
                 WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
-                transform: "translate3d(" + scrollPos + "px, 0, 0)",
+                transform: "translate3d(" + scrollPos + "px, 0, 0)"
               }}
             >
               {images.map((image, index) => (
@@ -370,7 +366,7 @@ class Carousel extends React.Component {
 Carousel.defaultProps = {
   description: null,
   title: "",
-  isMobile: false,
+  isMobile: false
 };
 
 export default Carousel;

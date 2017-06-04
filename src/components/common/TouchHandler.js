@@ -7,21 +7,21 @@ class TouchHandler extends Component {
     stopPropagation: PropTypes.bool,
     onDrag: PropTypes.func,
     onDragRelease: PropTypes.func,
-    onTap: PropTypes.func,
+    onTap: PropTypes.func
   };
 
   static defaultProps = {
     onDrag: () => {},
     onDragRelease: () => {},
     onTap: () => {},
-    stopPropagation: false,
+    stopPropagation: false
   };
 
   state = {
     start: null,
     last: null,
     hasDragged: false,
-    isTouched: false,
+    isTouched: false
   };
 
   getCurrentTime = () => new Date().getTime();
@@ -36,19 +36,16 @@ class TouchHandler extends Component {
     this.setState({
       start: { x, y, time },
       last: { x, y, time },
-      isTouched: true,
+      isTouched: true
     });
 
     if (this.cancelIsTouched) {
       clearTimeout(this.cancelIsTouched);
     }
 
-    this.cancelIsTouched = setTimeout(
-      () => {
-        this.setState({ isTouched: false });
-      },
-      1000
-    );
+    this.cancelIsTouched = setTimeout(() => {
+      this.setState({ isTouched: false });
+    }, 1000);
   };
 
   handleTouchMove = evt => {
@@ -77,7 +74,7 @@ class TouchHandler extends Component {
       direction,
       x,
       y,
-      preventDefault: evt.preventDefault.bind(evt),
+      preventDefault: evt.preventDefault.bind(evt)
     });
 
     if (!hasDragged) {
@@ -104,7 +101,7 @@ class TouchHandler extends Component {
     this.setState({
       start: null,
       last: null,
-      hasDragged: false,
+      hasDragged: false
     });
   };
 
