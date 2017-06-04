@@ -33,7 +33,7 @@ const Header = styled.div`
 const HeaderContainer = styled(Container)`
   display: flex;
   justify-content: space-between;
-  alignItems: center;
+  align-items: center;
   height: 100%;
 `;
 
