@@ -151,7 +151,8 @@ const Navigation = ({ location }) => {
           </Name>
           {isResume
             ? <Position>
-                thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St, Toronto, ON, M5T 3K7
+                thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St,
+                Toronto, ON, M5T 3K7
               </Position>
             : <Position>
                 Front-End Developer & Designer
@@ -159,7 +160,7 @@ const Navigation = ({ location }) => {
         </DesktopLink>
         {!isResume
           ? <Nav>
-              {LINKS.map((link, i) => (
+              {LINKS.map((link, i) =>
                 <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
                   <LinkComponent to={link.path}>
                     <NavText>
@@ -167,7 +168,7 @@ const Navigation = ({ location }) => {
                     </NavText>
                   </LinkComponent>
                 </NavItem>
-              ))}
+              )}
             </Nav>
           : null}
       </HeaderContainer>

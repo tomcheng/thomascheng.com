@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import withResponsiveness
-  from "../../higher-order-components/withResponsiveness";
+import withResponsiveness from "../../higher-order-components/withResponsiveness";
 import BeforeAfter from "../common/BeforeAfter";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
@@ -46,16 +45,18 @@ const FRESHBOOKS = [
   }
 ];
 
-const WorkWork = ({ isMobile, isMdAndUp }) => (
+const WorkWork = ({ isMobile, isMdAndUp }) =>
   <div>
     <NudgeBottom>
       <SectionTitle>QCloud</SectionTitle>
     </NudgeBottom>
     <PushBottom>
-      QCloud is a quality control application for packagers and manufacturers. The application was
-      redesigned to make workflows simpler and less error prone while adopting a more modern aesthetic.
+      QCloud is a quality control application for packagers and manufacturers.
+      The application was
+      redesigned to make workflows simpler and less error prone while adopting a
+      more modern aesthetic.
     </PushBottom>
-    {QCLOUD.map((comparison, i) => (
+    {QCLOUD.map((comparison, i) =>
       <PushBottom key={comparison.slug}>
         <BeforeAfter
           before={{
@@ -78,7 +79,7 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
           showBrowserChrome
         />
       </PushBottom>
-    ))}
+    )}
     <PushBottom>
       <BeforeAfter
         before={{
@@ -97,7 +98,7 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
         }}
         description={
           "Make form filling more obvious and less error-prone " +
-            "by using buttons instead of dropdowns for Pass/Fail checks."
+          "by using buttons instead of dropdowns for Pass/Fail checks."
         }
         title="Sheet Filling"
         slug="sheet-filling"
@@ -111,8 +112,10 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
       <SectionTitle>FreshBooks</SectionTitle>
     </NudgeBottom>
     <PushBottom>
-      FreshBooks is an invoicing/accounting solution for small business owners. A style guide was
-      developed and a consistent visual language was applied throughout the application.
+      FreshBooks is an invoicing/accounting solution for small business owners.
+      A style guide was
+      developed and a consistent visual language was applied throughout the
+      application.
     </PushBottom>
     <PushBottom>
       <Carousel
@@ -129,7 +132,7 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
         isMobile={isMobile}
       />
     </PushBottom>
-    {FRESHBOOKS.map((comparison, i) => (
+    {FRESHBOOKS.map((comparison, i) =>
       <PushBottom key={comparison.slug}>
         <BeforeAfter
           before={{
@@ -151,10 +154,9 @@ const WorkWork = ({ isMobile, isMdAndUp }) => (
           slug={comparison.slug}
         />
       </PushBottom>
-    ))}
+    )}
     <PageFooter />
-  </div>
-);
+  </div>;
 
 WorkWork.propTypes = {
   isMdAndUp: PropTypes.bool.isRequired,

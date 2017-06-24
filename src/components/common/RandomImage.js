@@ -37,9 +37,9 @@ class RandomImage extends React.Component {
 
     return (
       <Container onClick={this.handleClick} className={className}>
-        {images.map((image, i) => (
+        {images.map((image, i) =>
           <Image key={image} visible={imageShown === i} src={image} />
-        ))}
+        )}
       </Container>
     );
   }

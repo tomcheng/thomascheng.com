@@ -11,7 +11,7 @@ import Resume from "./route-handlers/Resume";
 import NotFound from "./NotFound/NotFoundComponent";
 import Container from "./common/Container";
 
-const App = ({ location }) => (
+const App = ({ location }) =>
   <Container>
     <Navigation location={location} />
     <Switch>
@@ -23,8 +23,7 @@ const App = ({ location }) => (
       <Route exact path="/resume" component={Resume} />
       <Route path="/" component={NotFound} />
     </Switch>
-  </Container>
-);
+  </Container>;
 
 App.propTypes = {
   location: PropTypes.shape({

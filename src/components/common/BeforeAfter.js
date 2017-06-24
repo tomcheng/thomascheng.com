@@ -289,10 +289,11 @@ const Indicator = styled.div`
   background-clip: padding-box;
   background-color: #fff;
   border: 1px solid #e0e0e0;
-  transform: translate3d(${props => props.ratio * (SLIDER_WIDTH * 0.5 + 1)}px, 0, 0);
+  transform: translate3d(${props =>
+    props.ratio * (SLIDER_WIDTH * 0.5 + 1)}px, 0, 0);
 `;
 
-const BeforeAfterSlider = ({ ratio }) => (
+const BeforeAfterSlider = ({ ratio }) =>
   <Slider>
     <Indicator ratio={ratio} />
     <SliderOption opacity={0.2 + 0.8 * (1 - ratio)}>
@@ -301,8 +302,7 @@ const BeforeAfterSlider = ({ ratio }) => (
     <SliderOption opacity={0.2 + 0.8 * ratio}>
       After
     </SliderOption>
-  </Slider>
-);
+  </Slider>;
 
 BeforeAfterSlider.propTypes = {
   ratio: PropTypes.number.isRequired

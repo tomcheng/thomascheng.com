@@ -98,7 +98,8 @@ const ReturnIndicator = styled.i`
   top: 50%;
   width: 20px;
   opacity: ${props => props.indicatorProgress};
-  transform: translate3d(-${props => props.indicatorProgress * props.indicatorFinalPosition}px, 0, 0);
+  transform: translate3d(-${props =>
+    props.indicatorProgress * props.indicatorFinalPosition}px, 0, 0);
 `;
 
 class Carousel extends React.Component {
@@ -343,11 +344,11 @@ class Carousel extends React.Component {
                 transform: "translate3d(" + scrollPos + "px, 0, 0)"
               }}
             >
-              {images.map((image, index) => (
+              {images.map((image, index) =>
                 <Item key={index} frameWidth={frameWidth} isMobile={isMobile}>
                   <Image src={image} width={imageWidth} height={imageHeight} />
                 </Item>
-              ))}
+              )}
             </List>
           </TouchHandler>
           {imageCount > 1

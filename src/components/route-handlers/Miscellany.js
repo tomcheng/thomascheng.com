@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import withResponsiveness
-  from "../../higher-order-components/withResponsiveness";
+import withResponsiveness from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import PushBottom from "../common/PushBottom";
@@ -22,7 +21,7 @@ const PROCESSING_IMAGES = [
   require("../../images/processing-faces/radiating.jpg")
 ];
 
-const Miscellany = ({ isMobile }) => (
+const Miscellany = ({ isMobile }) =>
   <div>
     <PushBottom>
       <Carousel
@@ -45,8 +44,7 @@ const Miscellany = ({ isMobile }) => (
       />
     </PushBottom>
     <PageFooter />
-  </div>
-);
+  </div>;
 
 Miscellany.propTypes = {
   isMobile: PropTypes.bool.isRequired

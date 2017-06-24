@@ -85,7 +85,8 @@ const Trigger = styled.div`
   padding: 0 10px 5px;
   margin-bottom: 15px;
   position: relative;
-  transform: scale3d(${props => (props.isFlashing ? "1.2, 1.2, 1" : "1, 1, 1")});
+  transform: scale3d(${props =>
+    props.isFlashing ? "1.2, 1.2, 1" : "1, 1, 1"});
 `;
 
 const Subtitle = styled.div`
@@ -178,13 +179,13 @@ class HomeMobile extends React.Component {
         <TriggerContainer>
           <div>
             <Images isShowing={isShowing}>
-              {images.map((image, i) => (
+              {images.map((image, i) =>
                 <Image
                   key={image}
                   image={image}
                   show={isPressed && i === currentFrame}
                 />
-              ))}
+              )}
             </Images>
             <Message show={showFirstFrame}>
               Thank you.&nbsp;

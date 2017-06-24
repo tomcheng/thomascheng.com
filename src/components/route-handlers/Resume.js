@@ -186,7 +186,7 @@ const Duration = styled.div`
   margin-bottom: 10px;
 `;
 
-const Resume = () => (
+const Resume = () =>
   <div>
     <WorkSection>
       <SectionTitle>Knowledge & Skills</SectionTitle>
@@ -200,11 +200,11 @@ const Resume = () => (
       </ul>
     </WorkSection>
 
-    {SECTIONS.map(({ title, positions }, index) => (
+    {SECTIONS.map(({ title, positions }, index) =>
       <WorkSection key={index}>
         <SectionTitle>{title}</SectionTitle>
         <div>
-          {positions.map(({ role, company, start, end, details }, index) => (
+          {positions.map(({ role, company, start, end, details }, index) =>
             <Position key={index}>
               <h4>
                 {role}
@@ -212,19 +212,18 @@ const Resume = () => (
               </h4>
               {start && <Duration>{start} – {end || "present"}</Duration>}
               <ul>
-                {details.map((detail, index) => (
+                {details.map((detail, index) =>
                   <li
                     key={index}
                     dangerouslySetInnerHTML={{ __html: detail }}
                   />
-                ))}
+                )}
               </ul>
             </Position>
-          ))}
+          )}
         </div>
       </WorkSection>
-    ))}
-  </div>
-);
+    )}
+  </div>;
 
 export default Resume;

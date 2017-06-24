@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import withResponsiveness
-  from "../../higher-order-components/withResponsiveness";
+import withResponsiveness from "../../higher-order-components/withResponsiveness";
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import PushBottom from "../common/PushBottom";
@@ -94,7 +93,7 @@ class AcademicWork extends React.Component {
 
     return (
       <div>
-        {PIECES.map((piece, i) => (
+        {PIECES.map((piece, i) =>
           <PushBottom key={piece.slug}>
             <Carousel
               description={piece.description}
@@ -106,7 +105,7 @@ class AcademicWork extends React.Component {
               width={piece.width}
             />
           </PushBottom>
-        ))}
+        )}
         <PageFooter />
       </div>
     );
