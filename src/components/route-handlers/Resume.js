@@ -202,15 +202,23 @@ const Resume = () =>
 
     {SECTIONS.map(({ title, positions }, index) =>
       <WorkSection key={index}>
-        <SectionTitle>{title}</SectionTitle>
+        <SectionTitle>
+          {title}
+        </SectionTitle>
         <div>
           {positions.map(({ role, company, start, end, details }, index) =>
             <Position key={index}>
               <h4>
                 {role}
-                {company && <Company>{company}</Company>}
+                {company &&
+                  <Company>
+                    {company}
+                  </Company>}
               </h4>
-              {start && <Duration>{start} – {end || "present"}</Duration>}
+              {start &&
+                <Duration>
+                  {start} – {end || "present"}
+                </Duration>}
               <ul>
                 {details.map((detail, index) =>
                   <li

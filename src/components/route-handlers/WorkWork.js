@@ -52,9 +52,8 @@ const WorkWork = ({ isMobile, isMdAndUp }) =>
     </NudgeBottom>
     <PushBottom>
       QCloud is a quality control application for packagers and manufacturers.
-      The application was
-      redesigned to make workflows simpler and less error prone while adopting a
-      more modern aesthetic.
+      The application was redesigned to make workflows simpler and less error
+      prone while adopting a more modern aesthetic.
     </PushBottom>
     {QCLOUD.map((comparison, i) =>
       <PushBottom key={comparison.slug}>
@@ -113,9 +112,8 @@ const WorkWork = ({ isMobile, isMdAndUp }) =>
     </NudgeBottom>
     <PushBottom>
       FreshBooks is an invoicing/accounting solution for small business owners.
-      A style guide was
-      developed and a consistent visual language was applied throughout the
-      application.
+      A style guide was developed and a consistent visual language was applied
+      throughout the application.
     </PushBottom>
     <PushBottom>
       <Carousel

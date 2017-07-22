@@ -2,13 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const Container = styled.div`
-  cursor: pointer;
-`;
+const Container = styled.div`cursor: pointer;`;
 
 const Image = styled.img`
   width: 100%;
-  display: ${props => (props.visible ? "block" : "none")}
+  display: ${props => (props.visible ? "block" : "none")};
 `;
 
 class RandomImage extends React.Component {

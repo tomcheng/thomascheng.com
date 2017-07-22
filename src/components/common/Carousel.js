@@ -98,8 +98,11 @@ const ReturnIndicator = styled.i`
   top: 50%;
   width: 20px;
   opacity: ${props => props.indicatorProgress};
-  transform: translate3d(-${props =>
-    props.indicatorProgress * props.indicatorFinalPosition}px, 0, 0);
+  transform: translate3d(
+    -${props => props.indicatorProgress * props.indicatorFinalPosition}px,
+    0,
+    0
+  );
 `;
 
 class Carousel extends React.Component {
@@ -313,7 +316,9 @@ class Carousel extends React.Component {
       <div style={{ touchAction: "pan-y" }}>
         {description
           ? <NudgeBottom>
-              <h4>{title}</h4>
+              <h4>
+                {title}
+              </h4>
               <NudgeBottom>
                 {description}
               </NudgeBottom>
@@ -322,7 +327,9 @@ class Carousel extends React.Component {
               </NudgeBottom>
             </NudgeBottom>
           : <HeaderWithTitleOnly>
-              <h4>{title}</h4>
+              <h4>
+                {title}
+              </h4>
               {this.getCounter()}
             </HeaderWithTitleOnly>}
         <Container

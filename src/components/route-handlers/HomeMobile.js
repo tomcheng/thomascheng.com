@@ -85,8 +85,9 @@ const Trigger = styled.div`
   padding: 0 10px 5px;
   margin-bottom: 15px;
   position: relative;
-  transform: scale3d(${props =>
-    props.isFlashing ? "1.2, 1.2, 1" : "1, 1, 1"});
+  transform: scale3d(
+    ${props => (props.isFlashing ? "1.2, 1.2, 1" : "1, 1, 1")}
+  );
 `;
 
 const Subtitle = styled.div`
@@ -189,9 +190,7 @@ class HomeMobile extends React.Component {
             </Images>
             <Message show={showFirstFrame}>
               Thank you.&nbsp;
-              <MessagePart show={showSecondFrame}>
-                Come again.
-              </MessagePart>
+              <MessagePart show={showSecondFrame}>Come again.</MessagePart>
             </Message>
             <Trigger
               isFlashing={isFlashing}
@@ -202,12 +201,13 @@ class HomeMobile extends React.Component {
             </Trigger>
           </div>
           <Subtitle>
-            <em>UI/UX Designer &<br />Front-End Developer</em>
+            <em>
+              UI/UX Designer &<br />Front-End Developer
+            </em>
           </Subtitle>
         </TriggerContainer>
         <Footer>
-          Contact:
-          {" "}
+          Contact:{" "}
           <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
         </Footer>
       </div>

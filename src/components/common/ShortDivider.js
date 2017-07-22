@@ -5,7 +5,7 @@ const ShortDivider = styled.div`
   border-bottom: 1px solid #ddd;
   @media (min-width: 992px) {
     margin-top: 35px;
-    margin-bottom: 30px
+    margin-bottom: 30px;
   }
 `;
 

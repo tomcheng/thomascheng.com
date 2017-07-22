@@ -4,7 +4,7 @@ import NudgeBottom from "../common/NudgeBottom";
 
 const Container = styled.div`
   text-align: center;
-  margin-top: 25px;  
+  margin-top: 25px;
 `;
 
 const Contact = () =>

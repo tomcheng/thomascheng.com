@@ -129,7 +129,7 @@ const NavText = styled.span`
   @media (min-width: 768px) {
     .active &,
     &:hover {
-      border-bottom: 3px solid #333
+      border-bottom: 3px solid #333;
     }
   }
 `;
@@ -146,17 +146,13 @@ const Navigation = ({ location }) => {
           <HomeIcon className="fa fa-home" />
         </MobileLink>
         <DesktopLink to="/">
-          <Name>
-            Thomas Cheng
-          </Name>
+          <Name>Thomas Cheng</Name>
           {isResume
             ? <Position>
                 thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St,
                 Toronto, ON, M5T 3K7
               </Position>
-            : <Position>
-                Front-End Developer & Designer
-              </Position>}
+            : <Position>Front-End Developer & Designer</Position>}
         </DesktopLink>
         {!isResume
           ? <Nav>

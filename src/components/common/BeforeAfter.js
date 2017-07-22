@@ -64,9 +64,7 @@ const OuterWrapperAfter = styled.div`
   background-color: #fff;
 `;
 
-const InnerWrapperAfter = styled.div`
-  width: ${props => props.width}px;
-`;
+const InnerWrapperAfter = styled.div`width: ${props => props.width}px;`;
 
 const Image = styled.img`
   background-clip: padding-box;
@@ -200,18 +198,20 @@ class BeforeAfter extends React.Component {
   render() {
     const { before, after, title } = this.props;
     const { width, ratio } = this.state;
-    const beforeHeight = before.width < width
-      ? before.height
-      : before.height / before.width * width;
-    const afterHeight = after.width < width
-      ? after.height
-      : after.height / after.width * width;
+    const beforeHeight =
+      before.width < width
+        ? before.height
+        : before.height / before.width * width;
+    const afterHeight =
+      after.width < width ? after.height : after.height / after.width * width;
     const height = Math.ceil(Math.max(beforeHeight, afterHeight));
 
     return (
       <div>
         <Header>
-          <h4>{title}</h4>
+          <h4>
+            {title}
+          </h4>
           <SliderContainer>
             <TouchHandler
               onDrag={this.handleDragSlider}
@@ -289,19 +289,18 @@ const Indicator = styled.div`
   background-clip: padding-box;
   background-color: #fff;
   border: 1px solid #e0e0e0;
-  transform: translate3d(${props =>
-    props.ratio * (SLIDER_WIDTH * 0.5 + 1)}px, 0, 0);
+  transform: translate3d(
+    ${props => props.ratio * (SLIDER_WIDTH * 0.5 + 1)}px,
+    0,
+    0
+  );
 `;
 
 const BeforeAfterSlider = ({ ratio }) =>
   <Slider>
     <Indicator ratio={ratio} />
-    <SliderOption opacity={0.2 + 0.8 * (1 - ratio)}>
-      Before
-    </SliderOption>
-    <SliderOption opacity={0.2 + 0.8 * ratio}>
-      After
-    </SliderOption>
+    <SliderOption opacity={0.2 + 0.8 * (1 - ratio)}>Before</SliderOption>
+    <SliderOption opacity={0.2 + 0.8 * ratio}>After</SliderOption>
   </Slider>;
 
 BeforeAfterSlider.propTypes = {
