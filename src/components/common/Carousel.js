@@ -10,6 +10,7 @@ import {
   elasticOut,
   sineIn
 } from "../../utils/easings.js";
+import breakpoints from "../../utils/breakpoints";
 import NudgeBottom from "./NudgeBottom";
 import { constrain } from "../../utils/math.js";
 import TouchHandler from "./TouchHandler.js";
@@ -78,7 +79,7 @@ const Item = styled.div`
 const Image = styled.img`
   display: block;
 
-  @media (max-width: 767px) {
+  @media (max-width: ${breakpoints.xs.max}px) {
     border-radius: 3px;
     background-clip: padding-box;
   }

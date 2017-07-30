@@ -31,7 +31,6 @@ class ScrollIntoView extends Component {
         start: window.scrollY,
         end: window.scrollY + top - 100,
         onUpdate: scrollTop => {
-          console.log("scrollTop:", scrollTop);
           window.scrollTo(0, scrollTop);
         }
       });
@@ -43,7 +42,6 @@ class ScrollIntoView extends Component {
         start: window.scrollY,
         end: window.scrollY + top + height - windowHeight + 100,
         onUpdate: scrollTop => {
-          console.log("scrollTop:", scrollTop);
           window.scrollTo(0, scrollTop);
         }
       });
