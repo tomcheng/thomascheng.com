@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Container from "../common/Container";
+import breakpoints from "../../utils/breakpoints";
 
 const LINKS = [
   { title: "Work", path: "/work" },
@@ -20,10 +21,10 @@ const Header = styled.div`
   position: fixed;
   width: 100%;
 
-  @media (max-width: 767px) {
+  @media (max-width: ${breakpoints.xs.max}px) {
     height: 45px;
   }
-  @media (min-width: 768px) {
+  @media (min-width: ${breakpoints.sm.min}px) {
     height: 70px;
     display: flex;
     align-items: center;
@@ -38,7 +39,7 @@ const HeaderContainer = styled(Container)`
 `;
 
 const MobileLink = styled(NavLink)`
-  @media (min-width: 768px) {
+  @media (min-width: ${breakpoints.sm.min}px) {
     display: none
   }
 `;
@@ -49,7 +50,7 @@ const HomeIcon = styled.i`
 `;
 
 const DesktopLink = styled(NavLink)`
-  @media (max-width: 767px) {
+  @media (max-width: ${breakpoints.xs.max}px) {
     display: none;
   }
 `;
@@ -83,18 +84,15 @@ const NavItem = styled.div`
   text-transform: uppercase;
   letter-spacing: .5px;
 
-  @media (max-width: 767px) {
+  @media (max-width: ${breakpoints.xs.max}px) {
     display: ${props => (props.hiddenOnMobile ? "none" : "block")};
   }
-  @media (min-width: 768px) {
+  @media (min-width: ${breakpoints.sm.min}px) {
     font-size: 13px;
     text-transform: none;
     font-weight: 400;
     line-height: 19px;
     letter-spacing: 0;
-  }
-  @media (min-width: 992px) {
-    font-size: 14px;
   }
 `;
 
@@ -126,7 +124,7 @@ const NavLinkHome = styled(StyledNavLink)`
 const NavText = styled.span`
   padding-bottom: 3px;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${breakpoints.sm.min}px) {
     .active &,
     &:hover {
       border-bottom: 3px solid #333;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import breakpoints from "../../utils/breakpoints";
 
 const Container = styled.div`
   padding-left: 15px;
@@ -6,8 +7,9 @@ const Container = styled.div`
   margin-right: auto;
   margin-left: auto;
 
-  @media (min-width: 768px) {
-    width: 750px;
+  @media (min-width: ${breakpoints.sm.min}px) {
+    box-sizing: content-box;
+    width: 704px;
   }
 `;
 

@@ -1,10 +1,10 @@
 export default {
   xs: {
     min: 0,
-    max: 767
+    max: 733
   },
   sm: {
-    min: 768,
+    min: 734,
     max: 991
   },
   md: {
