@@ -21,6 +21,12 @@ const QCLOUD = [
     title: "Form Creation Redesign",
     beforeDimensions: [1024, 768],
     afterDimensions: [1024, 768]
+  },
+  {
+    slug: "sheet-filling",
+    title: "Sheet Filling",
+    beforeDimensions: [768, 640],
+    afterDimensions: [768, 640]
   }
 ];
 
@@ -45,7 +51,7 @@ const FRESHBOOKS = [
   }
 ];
 
-const WorkWork = ({ isMobile, isMdAndUp }) =>
+const WorkWork = ({ isMobile }) =>
   <div>
     <NudgeBottom>
       <SectionTitle>QCloud</SectionTitle>
@@ -79,34 +85,7 @@ const WorkWork = ({ isMobile, isMdAndUp }) =>
         />
       </PushBottom>
     )}
-    <PushBottom>
-      <BeforeAfter
-        before={{
-          url: isMdAndUp
-            ? require("../../images/qcloud/sheet-filling-landscape-before.png")
-            : require("../../images/qcloud/sheet-filling-before.png"),
-          width: isMdAndUp ? 1024 : 768,
-          height: isMdAndUp ? 768 : 640
-        }}
-        after={{
-          url: isMdAndUp
-            ? require("../../images/qcloud/sheet-filling-landscape-after.png")
-            : require("../../images/qcloud/sheet-filling-after.png"),
-          width: isMdAndUp ? 1024 : 768,
-          height: isMdAndUp ? 768 : 640
-        }}
-        description={
-          "Make form filling more obvious and less error-prone " +
-          "by using buttons instead of dropdowns for Pass/Fail checks."
-        }
-        title="Sheet Filling"
-        slug="sheet-filling"
-        showBrowserChrome
-      />
-    </PushBottom>
-
     <ShortDivider />
-
     <NudgeBottom>
       <SectionTitle>FreshBooks</SectionTitle>
     </NudgeBottom>
@@ -157,7 +136,6 @@ const WorkWork = ({ isMobile, isMdAndUp }) =>
   </div>;
 
 WorkWork.propTypes = {
-  isMdAndUp: PropTypes.bool.isRequired,
   isMobile: PropTypes.bool.isRequired
 };
 

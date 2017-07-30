@@ -4,8 +4,7 @@ import breakpoints from "../utils/breakpoints";
 const withResponsiveness = Target =>
   class extends React.Component {
     state = {
-      isMobile: window.innerWidth <= breakpoints.xs.max,
-      isMdAndUp: window.innerWidth > breakpoints.md.min
+      isMobile: window.innerWidth <= breakpoints.xs.max
     };
 
     componentDidMount() {
@@ -18,13 +17,9 @@ const withResponsiveness = Target =>
 
     handleResize = () => {
       const isMobile = window.innerWidth <= breakpoints.xs.max;
-      const isMdAndUp = window.innerWidth > breakpoints.md.min;
 
-      if (
-        isMobile !== this.state.isMobile ||
-        isMdAndUp !== this.state.isMdAndUp
-      ) {
-        this.setState({ isMobile, isMdAndUp });
+      if (isMobile !== this.state.isMobile) {
+        this.setState({ isMobile });
       }
     };
 
