@@ -1,16 +1,16 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import withResponsiveness from "../../higher-order-components/withResponsiveness";
-import ShortDivider from "../common/ShortDivider";
-import PushBottom from "../common/PushBottom";
-import NudgeBottom from "../common/NudgeBottom";
-import SectionTitle from "../common/SectionTitle";
+import ShortDivider from "./ShortDivider";
+import PushBottom from "./PushBottom";
+import NudgeBottom from "./NudgeBottom";
+import SectionTitle from "./SectionTitle";
 import Carousel from "./Carousel";
 import PageFooter from "./PageFooter";
 import ArrowKeys from "./ArrowKeys";
 import { constrain } from "../../utils/math.js";
 
-class CarouselPage extends React.Component {
+class CarouselPage extends Component {
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
     groups: PropTypes.arrayOf(
