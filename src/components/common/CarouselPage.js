@@ -73,8 +73,13 @@ class CarouselPage extends React.Component {
     }
   };
 
-  handleClickPiece = index => {
-    this.setState({ activeIndex: index });
+  handleClickPiece = ({ groupIndex, pieceIndex }) => {
+    const { groups } = this.props;
+    let previewPieces = 0;
+    for (let i = 0; i < groupIndex; i++) {
+      previewPieces += groups[i].pieces.length;
+    }
+    this.setState({ activeIndex: previewPieces + pieceIndex });
   };
 
   isActive = ({ groupIndex, pieceIndex }) => {
@@ -120,7 +125,7 @@ class CarouselPage extends React.Component {
               <PushBottom
                 key={piece.slug}
                 onClick={() => {
-                  this.handleClickPiece(pieceIndex);
+                  this.handleClickPiece({ groupIndex, pieceIndex });
                 }}
               >
                 <Carousel
