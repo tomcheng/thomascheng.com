@@ -1,26 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
 import withResponsiveness from "../../higher-order-components/withResponsiveness";
+import ShortDivider from "../common/ShortDivider";
+import PushBottom from "../common/PushBottom";
+import NudgeBottom from "../common/NudgeBottom";
+import SectionTitle from "../common/SectionTitle";
 import Carousel from "./Carousel";
 import PageFooter from "./PageFooter";
-import PushBottom from "./PushBottom";
 import ArrowKeys from "./ArrowKeys";
 import { constrain } from "../../utils/math.js";
 
 class CarouselPage extends React.Component {
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
-    groups: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      description: PropTypes.string,
-      pieces: PropTypes.arrayOf(PropTypes.shape({
-        images: PropTypes.arrayOf(PropTypes.string).isRequired,
-        height: PropTypes.number.isRequired,
-        slug: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        width: PropTypes.number.isRequired
-      })).isRequired,
-    })).isRequired,
+    groups: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        description: PropTypes.string,
+        pieces: PropTypes.arrayOf(
+          PropTypes.shape({
+            images: PropTypes.arrayOf(PropTypes.string).isRequired,
+            height: PropTypes.number.isRequired,
+            slug: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            width: PropTypes.number.isRequired
+          })
+        ).isRequired
+      })
+    ).isRequired
   };
 
   state = { activeIndex: 0, keyboardUsed: false };
@@ -36,7 +43,10 @@ class CarouselPage extends React.Component {
   handleKeyDown = evt => {
     const { groups } = this.props;
     const { code, shiftKey } = evt;
-    const pieces = groups.reduce((pieces, group) => pieces.concat(group.pieces), []);
+    const pieces = groups.reduce(
+      (pieces, group) => pieces.concat(group.pieces),
+      []
+    );
 
     if (
       ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Space"].includes(
@@ -67,23 +77,50 @@ class CarouselPage extends React.Component {
     this.setState({ activeIndex: index });
   };
 
+  isActive = ({ groupIndex, pieceIndex }) => {
+    const { groups } = this.props;
+    const { activeIndex } = this.state;
+    let piecesChecked = 0;
+
+    for (let i = 0; i < groups.length; i++) {
+      if (i === groupIndex) {
+        return activeIndex === piecesChecked + pieceIndex;
+      }
+
+      piecesChecked += groups[i].pieces.length;
+    }
+  };
+
   render() {
     const { isMobile, groups } = this.props;
-    const { activeIndex, keyboardUsed } = this.state;
+    const { keyboardUsed } = this.state;
 
     return (
       <div>
-        {!keyboardUsed && !isMobile &&
-        <div style={{ position: "fixed", bottom: 10, right: 10 }}>
-          <ArrowKeys />
-        </div>}
-        {groups.map((group, i) => (
-          <div key={i}>
-            {group.pieces.map((piece, i) =>
+        {!keyboardUsed &&
+          !isMobile &&
+          <div style={{ position: "fixed", bottom: 10, right: 10 }}>
+            <ArrowKeys />
+          </div>}
+        {groups.map((group, groupIndex) =>
+          <div key={groupIndex}>
+            {groupIndex !== 0 && <ShortDivider />}
+            {group.title &&
+              <NudgeBottom>
+                <SectionTitle>
+                  {group.title}
+                </SectionTitle>
+              </NudgeBottom>}
+            {group.description &&
+              <PushBottom>
+                {group.description}
+              </PushBottom>}
+
+            {group.pieces.map((piece, pieceIndex) =>
               <PushBottom
                 key={piece.slug}
                 onClick={() => {
-                  this.handleClickPiece(i);
+                  this.handleClickPiece(pieceIndex);
                 }}
               >
                 <Carousel
@@ -94,13 +131,13 @@ class CarouselPage extends React.Component {
                   width={piece.width}
                   height={piece.height}
                   isMobile={isMobile}
-                  isActive={i === activeIndex}
+                  isActive={this.isActive({ groupIndex, pieceIndex })}
                   showActiveIndicator={keyboardUsed}
                 />
               </PushBottom>
             )}
           </div>
-        ))}
+        )}
         <PageFooter />
       </div>
     );
