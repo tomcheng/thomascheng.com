@@ -129,7 +129,6 @@ const Image = styled.div`
   height: 100%;
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url(${props => props.image});
   opacity: ${props => (props.show ? 1 : 0)};
 `;
 
@@ -183,8 +182,8 @@ class HomeMobile extends React.Component {
               {images.map((image, i) =>
                 <Image
                   key={image}
-                  image={image}
                   show={isPressed && i === currentFrame}
+                  style={{ backgroundImage: `url('${image}')` }}
                 />
               )}
             </Images>

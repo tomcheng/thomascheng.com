@@ -69,7 +69,6 @@ const List = styled.div`
 `;
 
 const Item = styled.div`
-  width: ${props => props.frameWidth};
   padding-left: ${props => (props.isMobile ? MOBILE_PADDING + "px" : "0")};
   padding-right: ${props => (props.isMobile ? MOBILE_PADDING + "px" : "0")};
 `;
@@ -354,7 +353,7 @@ class Carousel extends React.Component {
               }}
             >
               {images.map((image, index) =>
-                <Item key={index} frameWidth={frameWidth} isMobile={isMobile}>
+                <Item key={index} isMobile={isMobile} style={{ width: frameWidth }}>
                   <Image src={image} width={imageWidth} height={imageHeight} />
                 </Item>
               )}
