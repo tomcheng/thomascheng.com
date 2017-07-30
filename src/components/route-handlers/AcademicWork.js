@@ -4,6 +4,7 @@ import withResponsiveness from "../../higher-order-components/withResponsiveness
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import PushBottom from "../common/PushBottom";
+import { constrain } from "../../utils/math.js";
 
 const PIECES = [
   {
@@ -82,7 +83,7 @@ class AcademicWork extends React.Component {
     window.addEventListener("keydown", this.handleKeyDown);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener("keydown", this.handleKeyDown);
   }
 
@@ -90,15 +91,25 @@ class AcademicWork extends React.Component {
     switch (evt.code) {
       case "ArrowDown":
         evt.preventDefault();
-        this.setState(state => ({ ...state, activeIndex: state.activeIndex + 1 }));
+        this.setState(state => ({
+          ...state,
+          activeIndex: constrain(state.activeIndex + 1, 0, PIECES.length - 1)
+        }));
         break;
       case "ArrowUp":
         evt.preventDefault();
-        this.setState(state => ({ ...state, activeIndex: state.activeIndex - 1 }));
+        this.setState(state => ({
+          ...state,
+          activeIndex: constrain(state.activeIndex - 1, 0, PIECES.length - 1)
+        }));
         break;
       default:
         break;
     }
+  };
+
+  handleHover = index => {
+    this.setState({ activeIndex: index });
   };
 
   getImages = (slug, imageCount) => {
@@ -115,13 +126,17 @@ class AcademicWork extends React.Component {
 
   render() {
     const { isMobile } = this.props;
-    const { activeIndex: activeIndexRaw } = this.state;
-    const activeIndex = activeIndexRaw % PIECES.length;
+    const { activeIndex } = this.state;
 
     return (
       <div>
         {PIECES.map((piece, i) =>
-          <PushBottom key={piece.slug}>
+          <PushBottom
+            key={piece.slug}
+            onClick={() => {
+              this.handleHover(i);
+            }}
+          >
             <Carousel
               title={piece.title}
               description={piece.description}

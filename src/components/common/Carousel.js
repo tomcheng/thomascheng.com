@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 import { findDOMNode } from "react-dom";
 import Animations from "../../utils/animations.js";
-import NudgeBottom from "./NudgeBottom";
 import {
   bounceOut,
   cubicOut,
@@ -11,8 +10,11 @@ import {
   elasticOut,
   sineIn
 } from "../../utils/easings.js";
+import NudgeBottom from "./NudgeBottom";
 import { constrain } from "../../utils/math.js";
 import TouchHandler from "./TouchHandler.js";
+import ScrollIntoView from "./ScrollIntoView";
+import ActiveIndicator from "./ActiveIndicator";
 
 const MOBILE_PADDING = 15;
 const DRAG_CONSTANT = 0.2; // amount of slow down dragging past bounds
@@ -362,9 +364,10 @@ class Carousel extends React.Component {
     const imageHeight = Math.round(height / width * imageWidth);
 
     return (
-      <div style={{ touchAction: "pan-y" }}>
-        {description
-          ? <NudgeBottom>
+      <ScrollIntoView isActive={isActive}>
+        <div style={{ touchAction: "pan-y" }}>
+          {description
+            ? <NudgeBottom>
               <h4>
                 {title}
               </h4>
@@ -375,52 +378,55 @@ class Carousel extends React.Component {
                 {this.renderCounter()}
               </NudgeBottom>
             </NudgeBottom>
-          : <HeaderWithTitleOnly>
+            : <HeaderWithTitleOnly>
               <h4>
                 {title}
               </h4>
               {this.renderCounter()}
             </HeaderWithTitleOnly>}
-        <Container
-          ref={el => {
-            this.wrapper = el;
-          }}
-          isMobile={isMobile}
-          isActive={isActive}
-          shouldWiggle={shouldWiggle}
-        >
-          <TouchHandler
-            onDrag={this.handleDrag}
-            onDragRelease={this.handleDragRelease}
-            onTap={this.goToNextPane}
-          >
-            <List
-              style={{
-                width: frameWidth * imageCount,
-                WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
-                transform: "translate3d(" + scrollPos + "px, 0, 0)"
+          <ActiveIndicator isActive={isActive} isMobile={isMobile}>
+            <Container
+              ref={el => {
+                this.wrapper = el;
               }}
+              isMobile={isMobile}
+              isActive={isActive}
+              shouldWiggle={shouldWiggle}
             >
-              {images.map((image, index) =>
-                <Item
-                  key={index}
-                  isMobile={isMobile}
-                  style={{ width: frameWidth }}
+              <TouchHandler
+                onDrag={this.handleDrag}
+                onDragRelease={this.handleDragRelease}
+                onTap={this.goToNextPane}
+              >
+                <List
+                  style={{
+                    width: frameWidth * imageCount,
+                    WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
+                    transform: "translate3d(" + scrollPos + "px, 0, 0)"
+                  }}
                 >
-                  <Image src={image} width={imageWidth} height={imageHeight} />
-                </Item>
-              )}
-            </List>
-          </TouchHandler>
-          {imageCount > 1
-            ? <ReturnIndicator
-                className="fa fa-arrow-left"
-                indicatorProgress={indicatorProgress}
-                indicatorFinalPosition={indicatorFinalPosition}
-              />
-            : null}
-        </Container>
-      </div>
+                  {images.map((image, index) =>
+                    <Item
+                      key={index}
+                      isMobile={isMobile}
+                      style={{ width: frameWidth }}
+                    >
+                      <Image src={image} width={imageWidth} height={imageHeight} />
+                    </Item>
+                  )}
+                </List>
+              </TouchHandler>
+              {imageCount > 1
+                ? <ReturnIndicator
+                  className="fa fa-arrow-left"
+                  indicatorProgress={indicatorProgress}
+                  indicatorFinalPosition={indicatorFinalPosition}
+                />
+                : null}
+            </Container>
+          </ActiveIndicator>
+        </div>
+      </ScrollIntoView>
     );
   }
 }
