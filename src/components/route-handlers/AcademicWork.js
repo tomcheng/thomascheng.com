@@ -76,6 +76,31 @@ class AcademicWork extends React.Component {
     isMobile: PropTypes.bool.isRequired
   };
 
+  state = { activeIndex: 0 };
+
+  componentDidMount() {
+    window.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown = evt => {
+    switch (evt.code) {
+      case "ArrowDown":
+        evt.preventDefault();
+        this.setState(state => ({ ...state, activeIndex: state.activeIndex + 1 }));
+        break;
+      case "ArrowUp":
+        evt.preventDefault();
+        this.setState(state => ({ ...state, activeIndex: state.activeIndex - 1 }));
+        break;
+      default:
+        break;
+    }
+  };
+
   getImages = (slug, imageCount) => {
     const images = [];
 
@@ -90,19 +115,22 @@ class AcademicWork extends React.Component {
 
   render() {
     const { isMobile } = this.props;
+    const { activeIndex: activeIndexRaw } = this.state;
+    const activeIndex = activeIndexRaw % PIECES.length;
 
     return (
       <div>
         {PIECES.map((piece, i) =>
           <PushBottom key={piece.slug}>
             <Carousel
-              description={piece.description}
-              height={piece.height}
-              images={this.getImages(piece.slug, piece.imageCount)}
-              isMobile={isMobile}
-              slug={piece.slug}
               title={piece.title}
+              description={piece.description}
+              images={this.getImages(piece.slug, piece.imageCount)}
+              slug={piece.slug}
               width={piece.width}
+              height={piece.height}
+              isMobile={isMobile}
+              isActive={i === activeIndex}
             />
           </PushBottom>
         )}

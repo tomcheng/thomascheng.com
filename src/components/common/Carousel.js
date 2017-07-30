@@ -9,7 +9,6 @@ import {
   cubicOut,
   cubicInOut,
   elasticOut,
-  returnHome,
   sineIn
 } from "../../utils/easings.js";
 import { constrain } from "../../utils/math.js";
@@ -55,6 +54,7 @@ const wiggle = keyframes`
 const Container = styled.div`
   overflow: hidden;
   position: relative;
+  cursor: pointer;
   margin-left: ${props => (props.isMobile ? -MOBILE_PADDING + "px" : 0)};
   margin-right: ${props => (props.isMobile ? -MOBILE_PADDING + "px" : 0)};
   animation-name: ${props => (props.shouldWiggle ? wiggle : "")};
@@ -104,10 +104,11 @@ class Carousel extends React.Component {
   static propTypes = {
     height: PropTypes.number.isRequired,
     images: PropTypes.array.isRequired,
+    isActive: PropTypes.bool.isRequired,
+    isMobile: PropTypes.bool.isRequired,
     slug: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     description: PropTypes.string,
-    isMobile: PropTypes.bool,
     title: PropTypes.string
   };
 
@@ -125,9 +126,10 @@ class Carousel extends React.Component {
     this.setDimensions();
     window.addEventListener("resize", this.setDimensions);
     window.addEventListener("orientationchange", this.setDimensions);
+    window.addEventListener("keydown", this.handleKeyDown);
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.isMobile !== prevProps.isMobile) {
       this.setDimensions();
     }
@@ -136,6 +138,7 @@ class Carousel extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.setDimensions);
     window.removeEventListener("orientationchange", this.setDimensions);
+    window.removeEventListener("keydown", this.handleKeyDown);
   }
 
   setDimensions = () => {
@@ -146,6 +149,23 @@ class Carousel extends React.Component {
       frameWidth: Math.max(frameWidth, 1),
       scrollPos: -frameWidth * currentPane
     });
+  };
+
+  handleKeyDown = evt => {
+    if (!this.props.isActive) {
+      return;
+    }
+
+    switch (evt.code) {
+      case "ArrowRight":
+        this.goToNextPane();
+        break;
+      case "ArrowLeft":
+        this.goToPrevPane();
+        break;
+      default:
+        break;
+    }
   };
 
   getCurrentPane = () => {
@@ -233,10 +253,10 @@ class Carousel extends React.Component {
 
     if (isDraggingHorizontally) {
       if (scrollPos > 0 || imageCount === 1) {
-        // scrollPosed out of bounds at start
+        // scrollPos out of bounds at start
         this.animateToPane(currentPane, 600, elasticOut);
       } else if (scrollPos < -frameWidth * (imageCount - 1)) {
-        // scrollPosed out of bounds at end
+        // scrollPos out of bounds at end
         if (
           Math.abs(deltaX) > frameWidth * RETURN_THRESHOLD &&
           imageCount > 1
@@ -254,7 +274,6 @@ class Carousel extends React.Component {
             destinationPane = this.getPrevPane();
           }
         }
-        destinationPane = constrain(destinationPane, 0, imageCount - 1);
         distanceToScroll = Math.abs(-frameWidth * destinationPane - scrollPos);
         duration = constrain(
           Math.abs(distanceToScroll / velocityX * 3),
@@ -273,34 +292,63 @@ class Carousel extends React.Component {
     });
   };
 
-  handleAdvanceToNextPane = () => {
+  goToNextPane = () => {
     const imageCount = this.props.images.length;
     const currentPane = this.getCurrentPane();
-    const nextPane = currentPane === imageCount - 1 ? 0 : currentPane + 1;
+    const nextPane = (currentPane + 1) % imageCount;
 
     if (imageCount === 1) {
       this.setState({ shouldWiggle: true });
       setTimeout(() => {
         this.setState({ shouldWiggle: false });
       }, 500);
+      return;
     }
 
     if (nextPane === 0) {
-      this.animateToPane(0, 150 * imageCount, returnHome);
+      this.animateToPane(0, 150 * imageCount, cubicInOut);
     } else {
       this.animateToPane(nextPane, 350, cubicInOut);
     }
   };
 
-  getCounter = () =>
+  goToPrevPane = () => {
+    const imageCount = this.props.images.length;
+    const currentPane = this.getCurrentPane();
+    const prevPane = currentPane === 0 ? imageCount - 1 : currentPane - 1;
+
+    if (imageCount === 1) {
+      this.setState({ shouldWiggle: true });
+      setTimeout(() => {
+        this.setState({ shouldWiggle: false });
+      }, 500);
+      return;
+    }
+
+    if (currentPane === 0) {
+      this.animateToPane(prevPane, 150 * imageCount, cubicInOut);
+    } else {
+      this.animateToPane(prevPane, 350, cubicInOut);
+    }
+  };
+
+  renderCounter = () =>
     this.props.images.length > 1
-      ? <Counter onClick={this.handleAdvanceToNextPane}>
+      ? <Counter onClick={this.goToNextPane}>
           {this.getCurrentPane() + 1}&nbsp;of&nbsp;{this.props.images.length}
         </Counter>
       : null;
 
   render() {
-    const { description, images, title, isMobile, height, width } = this.props;
+    const {
+      description,
+      images,
+      title,
+      isMobile,
+      isActive,
+      height,
+      width
+    } = this.props;
     const { scrollPos, frameWidth, shouldWiggle } = this.state;
     const imageCount = images.length;
     const indicatorFinalPosition =
@@ -324,26 +372,27 @@ class Carousel extends React.Component {
                 {description}
               </NudgeBottom>
               <NudgeBottom>
-                {this.getCounter()}
+                {this.renderCounter()}
               </NudgeBottom>
             </NudgeBottom>
           : <HeaderWithTitleOnly>
               <h4>
                 {title}
               </h4>
-              {this.getCounter()}
+              {this.renderCounter()}
             </HeaderWithTitleOnly>}
         <Container
           ref={el => {
             this.wrapper = el;
           }}
           isMobile={isMobile}
+          isActive={isActive}
           shouldWiggle={shouldWiggle}
         >
           <TouchHandler
             onDrag={this.handleDrag}
             onDragRelease={this.handleDragRelease}
-            onTap={this.handleAdvanceToNextPane}
+            onTap={this.goToNextPane}
           >
             <List
               style={{
@@ -353,7 +402,11 @@ class Carousel extends React.Component {
               }}
             >
               {images.map((image, index) =>
-                <Item key={index} isMobile={isMobile} style={{ width: frameWidth }}>
+                <Item
+                  key={index}
+                  isMobile={isMobile}
+                  style={{ width: frameWidth }}
+                >
                   <Image src={image} width={imageWidth} height={imageHeight} />
                 </Item>
               )}
