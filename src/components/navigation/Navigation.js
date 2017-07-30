@@ -150,7 +150,7 @@ const Navigation = ({ location }) => {
                 thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St,
                 Toronto, ON, M5T 3K7
               </Position>
-            : <Position>Front-End Developer & Designer</Position>}
+            : <Position>Developer & Designer</Position>}
         </DesktopLink>
         {!isResume
           ? <Nav>

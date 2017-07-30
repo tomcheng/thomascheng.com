@@ -201,7 +201,7 @@ class HomeMobile extends React.Component {
           </div>
           <Subtitle>
             <em>
-              UI/UX Designer &<br />Front-End Developer
+              Developer & Designer
             </em>
           </Subtitle>
         </TriggerContainer>
