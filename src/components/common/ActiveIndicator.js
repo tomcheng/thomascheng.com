@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 const Indicator = styled.div`
   position: absolute; 
   top: 50%;
-  margin-top: -9px;
-  left: -20px;
-  font-size: 18px;
-  line-height: 18px;
-  color: #21C434;
+  margin-top: -8px;
+  left: -16px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #333;
   transition: opacity 0.15s ease-in-out;
   opacity: ${props => props.isActive ? "1" : "0"};
 `;

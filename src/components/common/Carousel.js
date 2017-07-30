@@ -109,6 +109,7 @@ class Carousel extends React.Component {
     images: PropTypes.array.isRequired,
     isActive: PropTypes.bool.isRequired,
     isMobile: PropTypes.bool.isRequired,
+    showActiveIndicator: PropTypes.bool.isRequired,
     slug: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     description: PropTypes.string,
@@ -350,7 +351,8 @@ class Carousel extends React.Component {
       isMobile,
       isActive,
       height,
-      width
+      width,
+      showActiveIndicator
     } = this.props;
     const { scrollPos, frameWidth, shouldWiggle } = this.state;
     const imageCount = images.length;
@@ -385,7 +387,7 @@ class Carousel extends React.Component {
               </h4>
               {this.renderCounter()}
             </HeaderWithTitleOnly>}
-          <ActiveIndicator isActive={isActive} isMobile={isMobile}>
+          <ActiveIndicator isActive={isActive && showActiveIndicator} isMobile={isMobile}>
             <Container
               ref={el => {
                 this.wrapper = el;

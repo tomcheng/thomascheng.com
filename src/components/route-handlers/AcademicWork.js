@@ -4,6 +4,7 @@ import withResponsiveness from "../../higher-order-components/withResponsiveness
 import Carousel from "../common/Carousel";
 import PageFooter from "../common/PageFooter";
 import PushBottom from "../common/PushBottom";
+import ArrowKeys from "../common/ArrowKeys";
 import { constrain } from "../../utils/math.js";
 
 const PIECES = [
@@ -77,7 +78,7 @@ class AcademicWork extends React.Component {
     isMobile: PropTypes.bool.isRequired
   };
 
-  state = { activeIndex: 0 };
+  state = { activeIndex: 0, keyboardUsed: false };
 
   componentDidMount() {
     window.addEventListener("keydown", this.handleKeyDown);
@@ -88,23 +89,30 @@ class AcademicWork extends React.Component {
   }
 
   handleKeyDown = evt => {
-    switch (evt.code) {
-      case "ArrowDown":
-        evt.preventDefault();
-        this.setState(state => ({
-          ...state,
-          activeIndex: constrain(state.activeIndex + 1, 0, PIECES.length - 1)
-        }));
-        break;
-      case "ArrowUp":
-        evt.preventDefault();
-        this.setState(state => ({
-          ...state,
-          activeIndex: constrain(state.activeIndex - 1, 0, PIECES.length - 1)
-        }));
-        break;
-      default:
-        break;
+    const { code, shiftKey } = evt;
+
+    if (
+      ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Space"].includes(
+        code
+      )
+    ) {
+      evt.preventDefault();
+      this.setState(state => ({
+        ...state,
+        keyboardUsed: true
+      }));
+    }
+
+    if (code === "ArrowDown" || (code === "Space" && !shiftKey)) {
+      this.setState(state => ({
+        ...state,
+        activeIndex: constrain(state.activeIndex + 1, 0, PIECES.length - 1)
+      }));
+    } else if (code === "ArrowUp" || (code === "Space" && shiftKey)) {
+      this.setState(state => ({
+        ...state,
+        activeIndex: constrain(state.activeIndex - 1, 0, PIECES.length - 1)
+      }));
     }
   };
 
@@ -126,10 +134,14 @@ class AcademicWork extends React.Component {
 
   render() {
     const { isMobile } = this.props;
-    const { activeIndex } = this.state;
+    const { activeIndex, keyboardUsed } = this.state;
 
     return (
       <div>
+        {!keyboardUsed && !isMobile &&
+          <div style={{ position: "fixed", bottom: 10, right: 10 }}>
+            <ArrowKeys />
+          </div>}
         {PIECES.map((piece, i) =>
           <PushBottom
             key={piece.slug}
@@ -146,6 +158,7 @@ class AcademicWork extends React.Component {
               height={piece.height}
               isMobile={isMobile}
               isActive={i === activeIndex}
+              showActiveIndicator={keyboardUsed}
             />
           </PushBottom>
         )}
