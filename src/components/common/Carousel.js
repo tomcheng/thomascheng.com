@@ -35,10 +35,6 @@ const Counter = styled.div`
   align-self: flex-end;
   min-width: 45px;
   text-align: right;
-
-  @media (min-width: 992px) {
-    font-size: 13px;
-  }
 `;
 
 const wiggle = keyframes`
@@ -130,6 +126,12 @@ class Carousel extends React.Component {
     this.setDimensions();
     window.addEventListener("resize", this.setDimensions);
     window.addEventListener("orientationchange", this.setDimensions);
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.isMobile !== prevProps.isMobile) {
+      this.setDimensions();
+    }
   }
 
   componentWillUnmount() {
