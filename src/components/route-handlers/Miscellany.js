@@ -23,6 +23,14 @@ const Miscellany = () =>
             image: require("../../images/miscellaneous/blockturnal.png")
           },
           {
+            type: "link",
+            title: "Insult Institute",
+            url: "https://insultinstitute.org",
+            width: 704,
+            height: 468,
+            image: require("../../images/miscellaneous/insultinstitute.png")
+          },
+          {
             type: "carousel",
             title: "Photocopied Faces",
             width: 704,
