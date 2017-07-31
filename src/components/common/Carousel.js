@@ -110,7 +110,6 @@ class Carousel extends React.Component {
     isActive: PropTypes.bool.isRequired,
     isMobile: PropTypes.bool.isRequired,
     showActiveIndicator: PropTypes.bool.isRequired,
-    slug: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     description: PropTypes.string,
     title: PropTypes.string
@@ -199,7 +198,7 @@ class Carousel extends React.Component {
 
   animateToPane = (pane, duration, easing) => {
     Animations.animate({
-      name: "horizontalPan-" + this.props.slug,
+      name: "horizontalPan-" + this.props.title,
       start: this.state.scrollPos,
       end: -this.state.frameWidth * pane,
       duration,
@@ -235,7 +234,7 @@ class Carousel extends React.Component {
     }
 
     if (!isDragging) {
-      Animations.stop("horizontalPan-" + this.props.slug);
+      Animations.stop("horizontalPan-" + this.props.title);
 
       this.setState({
         isDragging: true,

@@ -7,7 +7,7 @@ const AcademicWork = () =>
       {
         pieces: [
           {
-            slug: "guide",
+            type: "carousel",
             title: "Typography Booklet",
             width: 704,
             height: 468,
@@ -19,7 +19,7 @@ const AcademicWork = () =>
             ]
           },
           {
-            slug: "futura",
+            type: "carousel",
             title: "Futura Type Specimen",
             width: 704,
             height: 468,
@@ -31,14 +31,14 @@ const AcademicWork = () =>
             ]
           },
           {
-            slug: "heart",
+            type: "carousel",
             title: "Meat Typography",
             width: 704,
             height: 468,
             images: [require("../../images/academic-work/heart-1.jpg")]
           },
           {
-            slug: "influential",
+            type: "carousel",
             title: "Influential Typographers Book Design",
             width: 704,
             height: 468,
@@ -48,14 +48,14 @@ const AcademicWork = () =>
             ]
           },
           {
-            slug: "diabetes",
+            type: "carousel",
             title: "Fast Food Typography",
             width: 704,
             height: 468,
             images: [require("../../images/academic-work/diabetes-1.jpg")]
           },
           {
-            slug: "food-economy",
+            type: "carousel",
             title: "Food Economy Magazine Layout",
             width: 704,
             height: 426,
@@ -65,7 +65,7 @@ const AcademicWork = () =>
             ]
           },
           {
-            slug: "durer",
+            type: "carousel",
             title: "Albrecht Durer Brochure",
             width: 704,
             height: 468,
@@ -75,14 +75,14 @@ const AcademicWork = () =>
             ]
           },
           {
-            slug: "robot",
+            type: "carousel",
             title: "Robot Games Flyer",
             width: 704,
             height: 563,
             images: [require("../../images/academic-work/robot-1.jpg")]
           },
           {
-            slug: "pez",
+            type: "carousel",
             title: "Wall o' Pez",
             width: 704,
             height: 468,

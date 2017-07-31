@@ -12,8 +12,8 @@ const WorkWork = ({ isMobile }) =>
           "adopting a more modern aesthetic.",
         pieces: [
           {
+            type: "carousel",
             title: "QCloud Redesign",
-            slug: "qcloud",
             width: 1024,
             height: 768,
             images: [
@@ -32,8 +32,8 @@ const WorkWork = ({ isMobile }) =>
           "throughout the application.",
         pieces: [
           {
+            type: "carousel",
             title: "Style Guide",
-            slug: "style-guide",
             width: 1080,
             height: 660,
             images: [
@@ -44,8 +44,8 @@ const WorkWork = ({ isMobile }) =>
             ]
           },
           {
+            type: "carousel",
             title: "Web App Redesign",
-            slug: "web-app-redesign",
             width: 840,
             height: 710,
             images: [

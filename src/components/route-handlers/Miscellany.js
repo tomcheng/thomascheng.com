@@ -7,7 +7,15 @@ const Miscellany = () =>
       {
         pieces: [
           {
-            slug: "photocopied-faces",
+            type: "link",
+            title: "Blockturnal",
+            url: "https://blockturnal.com",
+            width: 704,
+            height: 468,
+            image: require("../../images/miscellaneous/blockturnal.png")
+          },
+          {
+            type: "carousel",
             title: "Photocopied Faces",
             width: 704,
             height: 468,
@@ -19,7 +27,7 @@ const Miscellany = () =>
             ]
           },
           {
-            slug: "processing-faces",
+            type: "carousel",
             title: "Experiments with Processing",
             width: 704,
             height: 468,

@@ -6,6 +6,7 @@ import PushBottom from "./PushBottom";
 import NudgeBottom from "./NudgeBottom";
 import SectionTitle from "./SectionTitle";
 import Carousel from "./Carousel";
+import LinkPiece from "./LinkPiece";
 import PageFooter from "./PageFooter";
 import ArrowKeys from "./ArrowKeys";
 import { constrain } from "../../utils/math.js";
@@ -18,13 +19,23 @@ class CarouselPage extends Component {
         title: PropTypes.string,
         description: PropTypes.string,
         pieces: PropTypes.arrayOf(
-          PropTypes.shape({
-            images: PropTypes.arrayOf(PropTypes.string).isRequired,
-            height: PropTypes.number.isRequired,
-            slug: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            width: PropTypes.number.isRequired
-          })
+          PropTypes.oneOfType([
+            PropTypes.shape({
+              type: PropTypes.oneOf(["carousel"]).isRequired,
+              images: PropTypes.arrayOf(PropTypes.string).isRequired,
+              height: PropTypes.number.isRequired,
+              title: PropTypes.string.isRequired,
+              width: PropTypes.number.isRequired
+            }),
+            PropTypes.shape({
+              type: PropTypes.oneOf(["link"]).isRequired,
+              title: PropTypes.string.isRequired,
+              url: PropTypes.string.isRequired,
+              image: PropTypes.string.isRequired,
+              height: PropTypes.number.isRequired,
+              width: PropTypes.number.isRequired
+            })
+          ])
         ).isRequired
       })
     ).isRequired
@@ -121,26 +132,47 @@ class CarouselPage extends Component {
                 {group.description}
               </PushBottom>}
 
-            {group.pieces.map((piece, pieceIndex) =>
-              <PushBottom
-                key={piece.slug}
-                onClick={() => {
-                  this.handleClickPiece({ groupIndex, pieceIndex });
-                }}
-              >
-                <Carousel
-                  title={piece.title}
-                  description={piece.description}
-                  images={piece.images}
-                  slug={piece.slug}
-                  width={piece.width}
-                  height={piece.height}
-                  isMobile={isMobile}
-                  isActive={this.isActive({ groupIndex, pieceIndex })}
-                  showActiveIndicator={keyboardUsed}
-                />
-              </PushBottom>
-            )}
+            {group.pieces.map((piece, pieceIndex) => {
+              switch (piece.type) {
+                case "carousel":
+                  return (
+                    <PushBottom
+                      key={piece.title}
+                      onClick={() => {
+                        this.handleClickPiece({ groupIndex, pieceIndex });
+                      }}
+                    >
+                      <Carousel
+                        title={piece.title}
+                        description={piece.description}
+                        images={piece.images}
+                        width={piece.width}
+                        height={piece.height}
+                        isMobile={isMobile}
+                        isActive={this.isActive({ groupIndex, pieceIndex })}
+                        showActiveIndicator={keyboardUsed}
+                      />
+                    </PushBottom>
+                  );
+                case "link":
+                  return (
+                    <PushBottom key={piece.title}>
+                      <LinkPiece
+                        title={piece.title}
+                        image={piece.image}
+                        url={piece.url}
+                        width={piece.width}
+                        height={piece.height}
+                        isMobile={isMobile}
+                        isActive={this.isActive({ groupIndex, pieceIndex })}
+                        showActiveIndicator={keyboardUsed}
+                      />
+                    </PushBottom>
+                  );
+                default:
+                  return null;
+              }
+            })}
           </div>
         )}
         <PageFooter />
