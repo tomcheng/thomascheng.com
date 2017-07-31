@@ -8,6 +8,14 @@ const Miscellany = () =>
         pieces: [
           {
             type: "link",
+            title: "Zen Hues",
+            url: "https://zenhues.com",
+            width: 704,
+            height: 468,
+            image: require("../../images/miscellaneous/zenhues.png")
+          },
+          {
+            type: "link",
             title: "Blockturnal",
             url: "https://blockturnal.com",
             width: 704,
