@@ -1,13 +1,14 @@
 {
   "main.css": "static/css/main.538dd0bd.css",
   "main.css.map": "static/css/main.538dd0bd.css.map",
-  "main.js": "static/js/main.795c037b.js",
-  "main.js.map": "static/js/main.795c037b.js.map",
+  "main.js": "static/js/main.93498f15.js",
+  "main.js.map": "static/js/main.93498f15.js.map",
   "static/media/3Dproj2-low-res.jpg": "static/media/3Dproj2-low-res.0f1eaf00.jpg",
   "static/media/DSC_4252_small-low-res.jpg": "static/media/DSC_4252_small-low-res.991fcaa3.jpg",
   "static/media/DSC_4757_small-low-res.jpg": "static/media/DSC_4757_small-low-res.a6241e1e.jpg",
   "static/media/DSC_5209_small-low-res.jpg": "static/media/DSC_5209_small-low-res.9eb793a7.jpg",
   "static/media/DSC_5230_small-low-res.jpg": "static/media/DSC_5230_small-low-res.02588e14.jpg",
+  "static/media/blockturnal.png": "static/media/blockturnal.90efad59.png",
   "static/media/circleboy.jpg": "static/media/circleboy.325113dc.jpg",
   "static/media/circlewoman.jpg": "static/media/circlewoman.63feda27.jpg",
   "static/media/client-after.png": "static/media/client-after.45ae89a8.png",
@@ -75,5 +76,6 @@
   "static/media/styleguide-3.png": "static/media/styleguide-3.7356694e.png",
   "static/media/styleguide-4.png": "static/media/styleguide-4.eab7ab8e.png",
   "static/media/timer-after.png": "static/media/timer-after.50f57607.png",
-  "static/media/twofonts-low-res.jpg": "static/media/twofonts-low-res.76c26515.jpg"
+  "static/media/twofonts-low-res.jpg": "static/media/twofonts-low-res.76c26515.jpg",
+  "static/media/zenhues.png": "static/media/zenhues.185e7eeb.png"
 }
