@@ -103,7 +103,7 @@ const ReturnIndicator = styled.i`
   );
 `;
 
-class Carousel extends React.Component {
+class CarouselLayout extends React.Component {
   static propTypes = {
     height: PropTypes.number.isRequired,
     images: PropTypes.array.isRequired,
@@ -433,10 +433,4 @@ class Carousel extends React.Component {
   }
 }
 
-Carousel.defaultProps = {
-  description: null,
-  title: "",
-  isMobile: false
-};
-
-export default Carousel;
+export default CarouselLayout;

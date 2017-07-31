@@ -5,7 +5,7 @@ import ShortDivider from "./ShortDivider";
 import PushBottom from "./PushBottom";
 import NudgeBottom from "./NudgeBottom";
 import SectionTitle from "./SectionTitle";
-import Carousel from "./Carousel";
+import CarouselLayout from "./CarouselLayout";
 import LinkPiece from "./LinkPiece";
 import PageFooter from "./PageFooter";
 import ArrowKeys from "./ArrowKeys";
@@ -142,7 +142,7 @@ class CarouselPage extends Component {
                         this.handleClickPiece({ groupIndex, pieceIndex });
                       }}
                     >
-                      <Carousel
+                      <CarouselLayout
                         title={piece.title}
                         description={piece.description}
                         images={piece.images}
