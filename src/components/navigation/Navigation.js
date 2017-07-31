@@ -6,8 +6,8 @@ import Container from "../common/Container";
 import breakpoints from "../../utils/breakpoints";
 
 const LINKS = [
-  { title: "Work", path: "/work" },
-  { title: "Academic Work", path: "/academic-work" },
+  { title: "UI/UX", path: "/ui-ux" },
+  { title: "Print", path: "/print" },
   { title: "Miscellany", path: "/miscellany" },
   { title: "Contact", path: "/contact", hiddenOnMobile: true }
 ];
