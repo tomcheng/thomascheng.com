@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import Navigation from "./navigation/Navigation";
 import Home from "./route-handlers/Home";
 import AcademicWork from "./route-handlers/AcademicWork";
-import WorkWork from "./route-handlers/WorkWork";
+import UiUx from "./route-handlers/UiUx";
 import Miscellany from "./route-handlers/Miscellany";
 import Contact from "./route-handlers/Contact";
 import NotFound from "./NotFound/NotFoundComponent";
@@ -15,9 +15,9 @@ const App = ({ location }) =>
     <Navigation location={location} />
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/ui-ux" component={WorkWork} />
+      <Route exact path="/ui-ux" component={UiUx} />
       <Route exact path="/print" component={AcademicWork} />
-      <Route exact path="/miscellany" component={Miscellany} />
+      <Route exact path="/miscellaneous" component={Miscellany} />
       <Route exact path="/contact" component={Contact} />
       <Route path="/" component={NotFound} />
     </Switch>
