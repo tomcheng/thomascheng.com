@@ -35,17 +35,20 @@ class CarouselLayout extends React.Component {
     title: PropTypes.string
   };
 
+  state = { currentPane: 0 };
+
   renderCounter = () =>
     <Counter onClick={this.handleClickCounter}>
-      {`${this.getCurrentPane()} of ${this.props.images.length}`}
+      {`${this.state.currentPane + 1} of ${this.props.images.length}`}
     </Counter>;
 
   handleClickCounter = () => {
     this.carouselEl.goToNextPane();
   };
 
-  getCurrentPane = () =>
-    this.carouselEl ? this.carouselEl.getCurrentPane() + 1 : 1;
+  handleUpdatePane = pane => {
+    this.setState({ currentPane: pane });
+  };
 
   render() {
     const { description, title, isActive, ...other } = this.props;
@@ -74,6 +77,7 @@ class CarouselLayout extends React.Component {
           <Carousel
             {...other}
             isActive={isActive}
+            onUpdatePane={this.handleUpdatePane}
             ref={el => {
               this.carouselEl = el;
             }}

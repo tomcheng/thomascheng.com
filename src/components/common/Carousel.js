@@ -90,7 +90,8 @@ class Carousel extends React.Component {
     isActive: PropTypes.bool.isRequired,
     isMobile: PropTypes.bool.isRequired,
     showActiveIndicator: PropTypes.bool.isRequired,
-    width: PropTypes.number.isRequired
+    width: PropTypes.number.isRequired,
+    onUpdatePane: PropTypes.func
   };
 
   state = {
@@ -110,9 +111,16 @@ class Carousel extends React.Component {
     window.addEventListener("keydown", this.handleKeyDown);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
+    const { onUpdatePane } = this.props;
+    const currentPane = this.getCurrentPane();
+
     if (this.props.isMobile !== prevProps.isMobile) {
       this.setDimensions();
+    }
+
+    if (onUpdatePane && currentPane !== this.getCurrentPane(prevState)) {
+      onUpdatePane(currentPane);
     }
   }
 
@@ -149,8 +157,8 @@ class Carousel extends React.Component {
     }
   };
 
-  getCurrentPane = () => {
-    const { scrollPos, frameWidth } = this.state;
+  getCurrentPane = (state = this.state) => {
+    const { scrollPos, frameWidth } = state;
     const imageCount = this.props.images.length;
 
     return constrain(
