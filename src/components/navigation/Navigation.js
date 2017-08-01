@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Container from "../common/Container";
+import Logo from "../common/Logo";
 import breakpoints from "../../utils/breakpoints";
 
 const LINKS = [
@@ -42,11 +43,6 @@ const MobileLink = styled(NavLink)`
   @media (min-width: ${breakpoints.sm.min}px) {
     display: none
   }
-`;
-
-const HomeIcon = styled.i`
-  font-size: 24px;
-  color: #333;
 `;
 
 const DesktopLink = styled(NavLink)`
@@ -140,8 +136,8 @@ const Navigation = ({ location }) => {
   return (
     <Header>
       <HeaderContainer>
-        <MobileLink to="/">
-          <HomeIcon className="fa fa-home" />
+        <MobileLink to="/" exact>
+          <Logo />
         </MobileLink>
         <DesktopLink to="/">
           <Name>Thomas Cheng</Name>
