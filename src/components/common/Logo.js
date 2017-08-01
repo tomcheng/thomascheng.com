@@ -7,8 +7,8 @@ const Logo = () =>
     style={{ display: "block" }}
     x={0}
     y={0}
-    width={36}
-    height={24}
+    width={30}
+    height={20}
     viewBox="0 0 50 35"
     preserveAspectRatio
   >
