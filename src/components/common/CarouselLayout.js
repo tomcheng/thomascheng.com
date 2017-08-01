@@ -38,6 +38,7 @@ class CarouselLayout extends React.Component {
   state = { currentPane: 0 };
 
   renderCounter = () =>
+    this.props.images.length > 1 &&
     <Counter onClick={this.handleClickCounter}>
       {`${this.state.currentPane + 1} of ${this.props.images.length}`}
     </Counter>;
