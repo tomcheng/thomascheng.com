@@ -6,19 +6,19 @@ const Miscellany = () =>
     pieces={[
       {
         type: "link",
-        title: "Zen Hues",
-        url: "https://zenhues.com",
-        width: 704,
-        height: 468,
-        image: require("../../images/miscellaneous/zenhues.png")
-      },
-      {
-        type: "link",
         title: "Voronoia",
         url: "https://voronoia.com",
         width: 704,
         height: 468,
         image: require("../../images/miscellaneous/voronoia.png")
+      },
+      {
+        type: "link",
+        title: "Zen Hues",
+        url: "https://zenhues.com",
+        width: 704,
+        height: 468,
+        image: require("../../images/miscellaneous/zenhues.png")
       },
       {
         type: "link",
