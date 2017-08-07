@@ -14,6 +14,14 @@ const Miscellany = () =>
       },
       {
         type: "link",
+        title: "Voronoia",
+        url: "https://voronoia.com",
+        width: 704,
+        height: 468,
+        image: require("../../images/miscellaneous/voronoia.png")
+      },
+      {
+        type: "link",
         title: "Blockturnal",
         url: "https://blockturnal.com",
         width: 704,
