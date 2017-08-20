@@ -10,7 +10,6 @@ const Logo = () =>
     width={30}
     height={20}
     viewBox="0 0 50 35"
-    preserveAspectRatio
   >
     <g>
       <path
