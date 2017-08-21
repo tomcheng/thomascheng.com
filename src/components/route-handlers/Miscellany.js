@@ -6,6 +6,14 @@ const Miscellany = () =>
     pieces={[
       {
         type: "link",
+        title: "Quotes",
+        url: "https://bunchofquotes.com",
+        width: 704,
+        height: 468,
+        image: require("../../images/miscellaneous/bunch-of-quotes.png")
+      },
+      {
+        type: "link",
         title: "Voronoia",
         url: "https://voronoia.com",
         width: 704,
