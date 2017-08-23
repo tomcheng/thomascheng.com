@@ -4,7 +4,7 @@ import RandomImage from "../common/RandomImage.js";
 
 const RandomImageHome = styled(RandomImage)`
   margin-top: 25px;
-  background-color: red;
+  background-color: #ddd;
 `;
 
 const HomeDesktop = () =>
