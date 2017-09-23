@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.538dd0bd.css",
   "main.css.map": "static/css/main.538dd0bd.css.map",
-  "main.js": "static/js/main.ec455306.js",
-  "main.js.map": "static/js/main.ec455306.js.map",
+  "main.js": "static/js/main.dbbc017e.js",
+  "main.js.map": "static/js/main.dbbc017e.js.map",
   "static/media/3Dproj2-low-res.jpg": "static/media/3Dproj2-low-res.0f1eaf00.jpg",
   "static/media/DSC_4252_small-low-res.jpg": "static/media/DSC_4252_small-low-res.991fcaa3.jpg",
   "static/media/DSC_4757_small-low-res.jpg": "static/media/DSC_4757_small-low-res.a6241e1e.jpg",
@@ -67,6 +67,7 @@
   "static/media/reports-after.png": "static/media/reports-after.3299988d.png",
   "static/media/robot-1.jpg": "static/media/robot-1.9a0a1a52.jpg",
   "static/media/robotgames-low-res.jpg": "static/media/robotgames-low-res.c80bbd10.jpg",
+  "static/media/roshamboai.png": "static/media/roshamboai.ac97aefb.png",
   "static/media/scanface1.jpg": "static/media/scanface1.9bc0f3fe.jpg",
   "static/media/sheet-filling-landscape-after.png": "static/media/sheet-filling-landscape-after.d64c3f97.png",
   "static/media/squareman.jpg": "static/media/squareman.edf639a5.jpg",
