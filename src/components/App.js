@@ -17,7 +17,7 @@ const App = ({ location }) =>
       <Route exact path="/" component={Home} />
       <Route exact path="/ui-ux" component={UiUx} />
       <Route exact path="/print" component={AcademicWork} />
-      <Route exact path="/miscellaneous" component={Miscellany} />
+      <Route exact path="/apps" component={Miscellany} />
       <Route exact path="/contact" component={Contact} />
       <Route path="/" component={NotFound} />
     </Switch>
