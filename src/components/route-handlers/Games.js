@@ -1,7 +1,7 @@
 import React from "react";
 import CarouselPage from "../common/CarouselPage";
 
-const Miscellany = () =>
+const Games = () =>
   <CarouselPage
     pieces={[
       {
@@ -63,4 +63,4 @@ const Miscellany = () =>
     ]}
   />;
 
-export default Miscellany;
+export default Games;
