@@ -7,7 +7,7 @@ import Logo from "../common/Logo";
 import breakpoints from "../../utils/breakpoints";
 
 const LINKS = [
-  { title: "Apps/Games", path: "/apps" },
+  { title: "Apps & Games", path: "/apps" },
   { title: "UI/UX", path: "/ui-ux" },
   { title: "Print", path: "/print" },
   { title: "Contact", path: "/contact", hiddenOnMobile: true }
