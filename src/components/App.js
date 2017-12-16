@@ -11,7 +11,7 @@ import Contact from "./route-handlers/Contact";
 import NotFound from "./NotFound/NotFoundComponent";
 import Container from "./common/Container";
 
-const App = ({ location }) =>
+const App = ({ location }) => (
   <Container>
     <Navigation location={location} />
     <Switch>
@@ -23,7 +23,8 @@ const App = ({ location }) =>
       <Route exact path="/contact" component={Contact} />
       <Route path="/" component={NotFound} />
     </Switch>
-  </Container>;
+  </Container>
+);
 
 App.propTypes = {
   location: PropTypes.shape({

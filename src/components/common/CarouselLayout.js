@@ -38,10 +38,11 @@ class CarouselLayout extends React.Component {
   state = { currentPane: 0 };
 
   renderCounter = () =>
-    this.props.images.length > 1 &&
-    <Counter onClick={this.handleClickCounter}>
-      {`${this.state.currentPane + 1} of ${this.props.images.length}`}
-    </Counter>;
+    this.props.images.length > 1 && (
+      <Counter onClick={this.handleClickCounter}>
+        {`${this.state.currentPane + 1} of ${this.props.images.length}`}
+      </Counter>
+    );
 
   handleClickCounter = () => {
     this.carouselEl.goToNextPane();
@@ -57,24 +58,18 @@ class CarouselLayout extends React.Component {
     return (
       <ScrollIntoView isActive={isActive}>
         <div style={{ touchAction: "pan-y" }}>
-          {description
-            ? <NudgeBottom>
-                <h4>
-                  {title}
-                </h4>
-                <NudgeBottom>
-                  {description}
-                </NudgeBottom>
-                <NudgeBottom>
-                  {this.renderCounter()}
-                </NudgeBottom>
-              </NudgeBottom>
-            : <HeaderWithTitleOnly>
-                <h4>
-                  {title}
-                </h4>
-                {this.renderCounter()}
-              </HeaderWithTitleOnly>}
+          {description ? (
+            <NudgeBottom>
+              <h4>{title}</h4>
+              <NudgeBottom>{description}</NudgeBottom>
+              <NudgeBottom>{this.renderCounter()}</NudgeBottom>
+            </NudgeBottom>
+          ) : (
+            <HeaderWithTitleOnly>
+              <h4>{title}</h4>
+              {this.renderCounter()}
+            </HeaderWithTitleOnly>
+          )}
           <Carousel
             {...other}
             isActive={isActive}

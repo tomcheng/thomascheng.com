@@ -69,9 +69,7 @@ class LinkPiece extends Component {
         >
           <NudgeBottom>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h4>
-                {title}
-              </h4>
+              <h4>{title}</h4>
               <a href={url} target="_blank" rel="noopener noreferrer">
                 {displayUrl(url)}
               </a>

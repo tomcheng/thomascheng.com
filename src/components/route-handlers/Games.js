@@ -1,7 +1,7 @@
 import React from "react";
 import CarouselPage from "../common/CarouselPage";
 
-const Games = () =>
+const Games = () => (
   <CarouselPage
     pieces={[
       {
@@ -37,6 +37,7 @@ const Games = () =>
         image: require("../../images/miscellaneous/blockturnal.png")
       }
     ]}
-  />;
+  />
+);
 
 export default Games;

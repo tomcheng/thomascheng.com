@@ -1,7 +1,7 @@
 import React from "react";
 import CarouselPage from "../common/CarouselPage";
 
-const Apps = () =>
+const Apps = () => (
   <CarouselPage
     pieces={[
       {
@@ -29,6 +29,7 @@ const Apps = () =>
         image: require("../../images/miscellaneous/insultinstitute.png")
       }
     ]}
-  />;
+  />
+);
 
 export default Apps;

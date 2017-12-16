@@ -11,14 +11,14 @@ const Key = styled.div`
   height: 25px;
   justify-content: center;
   align-items: center;
-  border: 2px solid rgba(0,0,0,0.1);
+  border: 2px solid rgba(0, 0, 0, 0.1);
   margin: 2px;
   border-radius: 3px;
-  color: rgba(0,0,0,0.2);
+  color: rgba(0, 0, 0, 0.2);
   font-size: 14px;
 `;
 
-const ArrowKeys = () =>
+const ArrowKeys = () => (
   <div>
     <Row>
       <Key>
@@ -36,6 +36,7 @@ const ArrowKeys = () =>
         <i className="fa fa-angle-right" />
       </Key>
     </Row>
-  </div>;
+  </div>
+);
 
 export default ArrowKeys;

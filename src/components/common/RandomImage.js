@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-const Container = styled.div`cursor: pointer;`;
+const Container = styled.div`
+  cursor: pointer;
+`;
 
 const Image = styled.img`
   width: 100%;
@@ -35,9 +37,9 @@ class RandomImage extends React.Component {
 
     return (
       <Container onClick={this.handleClick} className={className}>
-        {images.map((image, i) =>
+        {images.map((image, i) => (
           <Image key={image} visible={imageShown === i} src={image} />
-        )}
+        ))}
       </Container>
     );
   }

@@ -82,10 +82,11 @@ class CarouselPage extends Component {
     return (
       <div>
         {!keyboardUsed &&
-          !isMobile &&
-          <div style={{ position: "fixed", bottom: 10, right: 10 }}>
-            <ArrowKeys />
-          </div>}
+          !isMobile && (
+            <div style={{ position: "fixed", bottom: 10, right: 10 }}>
+              <ArrowKeys />
+            </div>
+          )}
         {pieces.map((piece, index) => {
           switch (piece.type) {
             case "carousel":

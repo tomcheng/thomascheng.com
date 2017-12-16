@@ -1,7 +1,7 @@
 import React from "react";
 import CarouselPage from "../common/CarouselPage";
 
-const UiUx = ({ isMobile }) =>
+const UiUx = ({ isMobile }) => (
   <CarouselPage
     pieces={[
       {
@@ -40,6 +40,7 @@ const UiUx = ({ isMobile }) =>
         ]
       }
     ]}
-  />;
+  />
+);
 
 export default UiUx;

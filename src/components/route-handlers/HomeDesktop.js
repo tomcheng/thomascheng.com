@@ -7,7 +7,7 @@ const RandomImageHome = styled(RandomImage)`
   background-color: #ddd;
 `;
 
-const HomeDesktop = () =>
+const HomeDesktop = () => (
   <RandomImageHome
     images={[
       require("../../images/logos/logo_1.jpg"),
@@ -17,6 +17,7 @@ const HomeDesktop = () =>
       require("../../images/logos/logo_5.jpg"),
       require("../../images/logos/logo_6.jpg")
     ]}
-  />;
+  />
+);
 
 export default HomeDesktop;

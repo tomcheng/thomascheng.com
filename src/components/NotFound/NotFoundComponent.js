@@ -1,11 +1,12 @@
 import React from "react";
 
-const NotFound = () =>
+const NotFound = () => (
   <div>
     <h2>404. Not found.</h2>
     <p>
       <a href="/">Go to home page</a>
     </p>
-  </div>;
+  </div>
+);
 
 export default NotFound;

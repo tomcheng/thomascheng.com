@@ -1,7 +1,7 @@
 import React from "react";
 import CarouselPage from "../common/CarouselPage";
 
-const AcademicWork = () =>
+const AcademicWork = () => (
   <CarouselPage
     pieces={[
       {
@@ -113,6 +113,7 @@ const AcademicWork = () =>
         images: [require("../../images/academic-work/pez-1.jpg")]
       }
     ]}
-  />;
+  />
+);
 
 export default AcademicWork;

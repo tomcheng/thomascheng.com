@@ -15,7 +15,7 @@ const LINKS = [
 ];
 
 const Header = styled.div`
-  background-color: rgba(255, 255, 255, .96);
+  background-color: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid #e0e0e0;
   top: 0;
   z-index: 1000;
@@ -42,7 +42,7 @@ const HeaderContainer = styled(Container)`
 
 const MobileLink = styled(NavLink)`
   @media (min-width: ${breakpoints.sm.min}px) {
-    display: none
+    display: none;
   }
 `;
 
@@ -79,7 +79,7 @@ const NavItem = styled.div`
   font-weight: 700;
   line-height: 19px;
   text-transform: uppercase;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
 
   @media (max-width: ${breakpoints.xs.max}px) {
     display: ${props => (props.hiddenOnMobile ? "none" : "block")};
@@ -100,11 +100,12 @@ const StyledNavLink = styled(NavLink)`
   line-height: 40px;
   padding: 1px 7px 0;
   vertical-align: center;
-  
+
   &.active {
     opacity: 1;
   }
-  &:hover, &:active {
+  &:hover,
+  &:active {
     color: #333;
   }
 `;
@@ -113,7 +114,8 @@ const NavLinkHome = styled(StyledNavLink)`
   color: #333;
   opacity: 1;
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     color: #333;
   }
 `;
@@ -142,26 +144,26 @@ const Navigation = ({ location }) => {
         </MobileLink>
         <DesktopLink to="/">
           <Name>Thomas Cheng</Name>
-          {isResume
-            ? <Position>
-                thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St,
-                Toronto, ON, M5T 3K7
-              </Position>
-            : <Position>Developer & Designer</Position>}
+          {isResume ? (
+            <Position>
+              thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St,
+              Toronto, ON, M5T 3K7
+            </Position>
+          ) : (
+            <Position>Developer & Designer</Position>
+          )}
         </DesktopLink>
-        {!isResume
-          ? <Nav>
-              {LINKS.map((link, i) =>
-                <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
-                  <LinkComponent to={link.path}>
-                    <NavText>
-                      {link.title}
-                    </NavText>
-                  </LinkComponent>
-                </NavItem>
-              )}
-            </Nav>
-          : null}
+        {!isResume ? (
+          <Nav>
+            {LINKS.map((link, i) => (
+              <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
+                <LinkComponent to={link.path}>
+                  <NavText>{link.title}</NavText>
+                </LinkComponent>
+              </NavItem>
+            ))}
+          </Nav>
+        ) : null}
       </HeaderContainer>
     </Header>
   );

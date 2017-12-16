@@ -74,12 +74,12 @@ const TriggerContainer = styled.div`
 
 const Trigger = styled.div`
   font-family: Raleway, sans-serif;
-  transition: all .06s ease-in;
+  transition: all 0.06s ease-in;
   color: ${props => (props.isFlashing ? "#fff" : "#333")};
   font-weight: 900;
   text-transform: uppercase;
   font-size: 16px;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   border-bottom: 8px solid ${props => (props.isFlashing ? "#fff" : "#333")};
   display: inline-block;
   padding: 0 10px 5px;
@@ -102,12 +102,12 @@ const Message = styled.div`
   width: 100%;
   text-align: center;
   top: 20%;
-  transition: opacity .05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
   opacity: ${props => (props.show ? 1 : 0)};
 `;
 
 const MessagePart = styled.span`
-  transition: opacity .05s ease-in-out;
+  transition: opacity 0.05s ease-in-out;
   opacity: ${props => (props.show ? 1 : 0)};
 `;
 
@@ -179,13 +179,13 @@ class HomeMobile extends React.Component {
         <TriggerContainer>
           <div>
             <Images isShowing={isShowing}>
-              {images.map((image, i) =>
+              {images.map((image, i) => (
                 <Image
                   key={image}
                   show={isPressed && i === currentFrame}
                   style={{ backgroundImage: `url('${image}')` }}
                 />
-              )}
+              ))}
             </Images>
             <Message show={showFirstFrame}>
               Thank you.&nbsp;
@@ -200,9 +200,7 @@ class HomeMobile extends React.Component {
             </Trigger>
           </div>
           <Subtitle>
-            <em>
-              Developer & Designer
-            </em>
+            <em>Developer & Designer</em>
           </Subtitle>
         </TriggerContainer>
         <Footer>

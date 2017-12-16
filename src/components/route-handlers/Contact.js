@@ -7,13 +7,14 @@ const Container = styled.div`
   margin-top: 25px;
 `;
 
-const Contact = () =>
+const Contact = () => (
   <Container>
     <NudgeBottom>
       <h4>Thank you for your interest.</h4>
     </NudgeBottom>
     The best way to contact me is by email:&nbsp;
     <a href="mailto:info@thomascheng.com">info@thomascheng.com</a>
-  </Container>;
+  </Container>
+);
 
 export default Contact;

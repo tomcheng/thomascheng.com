@@ -41,7 +41,7 @@ const Container = styled.div`
   margin-left: ${props => (props.isMobile ? -MOBILE_PADDING + "px" : 0)};
   margin-right: ${props => (props.isMobile ? -MOBILE_PADDING + "px" : 0)};
   animation-name: ${props => (props.shouldWiggle ? wiggle : "")};
-  animation-duration: .5s;
+  animation-duration: 0.5s;
   animation-iteration-count: 1;
   animation-timing-function: ease-out;
 `;
@@ -367,7 +367,7 @@ class Carousel extends React.Component {
                 transform: "translate3d(" + scrollPos + "px, 0, 0)"
               }}
             >
-              {images.map((image, index) =>
+              {images.map((image, index) => (
                 <Item
                   key={index}
                   isMobile={isMobile}
@@ -375,16 +375,16 @@ class Carousel extends React.Component {
                 >
                   <Image src={image} width={imageWidth} height={imageHeight} />
                 </Item>
-              )}
+              ))}
             </List>
           </TouchHandler>
-          {imageCount > 1
-            ? <ReturnIndicator
-                className="fa fa-arrow-left"
-                indicatorProgress={indicatorProgress}
-                indicatorFinalPosition={indicatorFinalPosition}
-              />
-            : null}
+          {imageCount > 1 ? (
+            <ReturnIndicator
+              className="fa fa-arrow-left"
+              indicatorProgress={indicatorProgress}
+              indicatorFinalPosition={indicatorFinalPosition}
+            />
+          ) : null}
         </Container>
       </ActiveIndicator>
     );
