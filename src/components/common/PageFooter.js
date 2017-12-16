@@ -18,7 +18,7 @@ const FooterIcon = styled.i`
 
 class PageFooter extends React.Component {
   componentDidMount() {
-    this.bodyEl = document.getElementsByTagName("body")[0];
+    this.bodyEl = document.getElementsByTagName("html")[0];
   }
 
   handleClick = () => {
