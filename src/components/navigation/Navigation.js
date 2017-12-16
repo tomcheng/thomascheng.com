@@ -9,8 +9,7 @@ import breakpoints from "../../utils/breakpoints";
 const LINKS = [
   { title: "Games", path: "/games" },
   { title: "Apps", path: "/apps" },
-  { title: "UI/UX", path: "/ui-ux" },
-  { title: "Print", path: "/print" },
+  { title: "Design", path: "/design" },
   { title: "Contact", path: "/contact", hiddenOnMobile: true }
 ];
 
