@@ -19,7 +19,7 @@
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-router-dom": "4.2.2",
-    "styled-components": "2.3.0"
+    "styled-components": "2.4.0"
   },
   "devDependencies": {
     "gh-pages": "1.1.0",
