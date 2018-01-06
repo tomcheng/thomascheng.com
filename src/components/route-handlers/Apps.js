@@ -6,14 +6,6 @@ const Apps = () => (
     pieces={[
       {
         type: "link",
-        title: "Quotes",
-        url: "https://bunchofquotes.com",
-        width: 704,
-        height: 468,
-        image: require("../../images/miscellaneous/bunch-of-quotes.png")
-      },
-      {
-        type: "link",
         title: "Notorist",
         url: "https://notorist.com",
         width: 704,
@@ -27,6 +19,14 @@ const Apps = () => (
         width: 704,
         height: 468,
         image: require("../../images/miscellaneous/insultinstitute.png")
+      },
+      {
+        type: "link",
+        title: "Quotes",
+        url: "https://bunchofquotes.com",
+        width: 704,
+        height: 468,
+        image: require("../../images/miscellaneous/bunch-of-quotes.png")
       }
     ]}
   />

@@ -6,22 +6,6 @@ const Games = () => (
     pieces={[
       {
         type: "link",
-        title: "Roshambo AI",
-        url: "https://roshamboai.com",
-        width: 704,
-        height: 468,
-        image: require("../../images/miscellaneous/roshamboai.png")
-      },
-      {
-        type: "link",
-        title: "Voronoia",
-        url: "https://voronoia.com",
-        width: 704,
-        height: 468,
-        image: require("../../images/miscellaneous/voronoia.png")
-      },
-      {
-        type: "link",
         title: "Zen Hues",
         url: "https://zenhues.com",
         width: 704,
@@ -35,6 +19,22 @@ const Games = () => (
         width: 704,
         height: 468,
         image: require("../../images/miscellaneous/blockturnal.png")
+      },
+      {
+        type: "link",
+        title: "Voronoia",
+        url: "https://voronoia.com",
+        width: 704,
+        height: 468,
+        image: require("../../images/miscellaneous/voronoia.png")
+      },
+      {
+        type: "link",
+        title: "Roshambo AI",
+        url: "https://roshamboai.com",
+        width: 704,
+        height: 468,
+        image: require("../../images/miscellaneous/roshamboai.png")
       }
     ]}
   />
