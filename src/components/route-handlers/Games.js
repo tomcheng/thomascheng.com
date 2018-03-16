@@ -14,6 +14,14 @@ const Games = () => (
       },
       {
         type: "link",
+        title: "Bunch of Quotes",
+        url: "https://bunchofquotes.com",
+        width: 704,
+        height: 468,
+        image: require("../../images/miscellaneous/bunch-of-quotes.png")
+      },
+      {
+        type: "link",
         title: "Blockturnal",
         url: "https://blockturnal.com",
         width: 704,

@@ -19,14 +19,6 @@ const Apps = () => (
         width: 704,
         height: 468,
         image: require("../../images/miscellaneous/insultinstitute.png")
-      },
-      {
-        type: "link",
-        title: "Quotes",
-        url: "https://bunchofquotes.com",
-        width: 704,
-        height: 468,
-        image: require("../../images/miscellaneous/bunch-of-quotes.png")
       }
     ]}
   />
