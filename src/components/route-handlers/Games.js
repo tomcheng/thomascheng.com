@@ -6,6 +6,14 @@ const Games = () => (
     pieces={[
       {
         type: "link",
+        title: "Dumpling Run",
+        url: "https://dumplingrun.com",
+        width: 704,
+        height: 468,
+        image: require("../../images/miscellaneous/dumpling-run.png")
+      },
+      {
+        type: "link",
         title: "Zen Hues",
         url: "https://zenhues.com",
         width: 704,
