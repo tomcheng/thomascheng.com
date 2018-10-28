@@ -154,7 +154,7 @@ const Navigation = ({ location }) => {
         </DesktopLink>
         {!isResume ? (
           <Nav>
-            {LINKS.map((link, i) => (
+            {LINKS.map(link => (
               <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
                 <LinkComponent to={link.path}>
                   <NavText>{link.title}</NavText>
