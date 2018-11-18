@@ -324,7 +324,7 @@ self.__precacheManifest = [
     "url": "/static/media/insultinstitute.0307b693.png"
   },
   {
-    "revision": "dc4bcb5ad3e0a0ccf90b7e5a58d7289d",
+    "revision": "dc65490d58058251a75af9ad8145167d",
     "url": "/index.html"
   }
 ];
