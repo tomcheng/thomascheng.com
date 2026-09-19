@@ -244,9 +244,11 @@ The contact line above is the sole instance, and it lives in `Navigation.js`.
    reader needs a way to reply, not a home address.
 3. `/resume` carries `noindex` to keep it out of search results — a request
    crawlers honor, not a guarantee, which is why decision 2 does the real work.
-4. The remaining address is `info@thomascheng.com`, matching the live contact
-   page. The old line used `thomascheng81@gmail.com`; the site owner should
-   confirm which is wanted, as the 2018 details may simply be stale.
+4. The remaining address stays `thomascheng81@gmail.com`, as originally written
+   — confirmed by the site owner on 2026-09-19. This intentionally differs from
+   the `info@thomascheng.com` on `/contact`: the resume routes to a personal
+   address, the public contact page to a site address. Not an inconsistency to
+   "fix" later.
 
 ## Risks
 
