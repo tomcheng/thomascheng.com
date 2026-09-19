@@ -3,4 +3,4 @@ node_modules/
 client/dist/
 npm-debug.log
 .idea/*
-build/
+dist/

@@ -1,5 +1,6 @@
 import React from "react";
 import CarouselPage from "../common/CarouselPage";
+import img0 from "../../images/miscellaneous/insultinstitute.png";
 
 const Apps = () => (
   <CarouselPage
@@ -10,7 +11,7 @@ const Apps = () => (
         url: "https://insultinstitute.org",
         width: 704,
         height: 468,
-        image: require("../../images/miscellaneous/insultinstitute.png")
+        image: img0
       }
     ]}
   />

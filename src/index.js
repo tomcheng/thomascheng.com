@@ -9,7 +9,13 @@ import ScrollToTop from "./components/ScrollToTop";
 
 const rootEl = document.getElementById("root");
 
-FastClick.attach(rootEl);
+// fastclick's CJS export IS the attach() factory itself (module.exports =
+// FastClick.attach), not the FastClick class. Under CRA/webpack this got
+// minified in a way that accidentally rebound the default export to the
+// class (which also happens to expose a static .attach), so
+// `FastClick.attach(...)` "worked" there. Vite's ESM interop reports the
+// module's real shape, where `FastClick` is already the attach factory.
+FastClick(rootEl);
 
 ReactDOM.render(
   <Router>

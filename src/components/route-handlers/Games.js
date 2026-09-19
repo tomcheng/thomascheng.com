@@ -1,5 +1,12 @@
 import React from "react";
 import CarouselPage from "../common/CarouselPage";
+import img0 from "../../images/miscellaneous/socks.png";
+import img1 from "../../images/miscellaneous/dumpling-run.png";
+import img2 from "../../images/miscellaneous/zenhues.png";
+import img3 from "../../images/miscellaneous/bunch-of-quotes.png";
+import img4 from "../../images/miscellaneous/blockturnal.png";
+import img5 from "../../images/miscellaneous/voronoia.png";
+import img6 from "../../images/miscellaneous/roshamboai.png";
 
 const Games = () => (
   <CarouselPage
@@ -10,7 +17,7 @@ const Games = () => (
         url: "https://gameswithstrangers.com",
         width: 704,
         height: 468,
-        image: require("../../images/miscellaneous/socks.png")
+        image: img0
       },
       {
         type: "link",
@@ -18,7 +25,7 @@ const Games = () => (
         url: "https://dumplingrun.com",
         width: 704,
         height: 468,
-        image: require("../../images/miscellaneous/dumpling-run.png")
+        image: img1
       },
       {
         type: "link",
@@ -26,7 +33,7 @@ const Games = () => (
         url: "https://zenhues.com",
         width: 704,
         height: 468,
-        image: require("../../images/miscellaneous/zenhues.png")
+        image: img2
       },
       {
         type: "link",
@@ -34,7 +41,7 @@ const Games = () => (
         url: "https://bunchofquotes.com",
         width: 704,
         height: 468,
-        image: require("../../images/miscellaneous/bunch-of-quotes.png")
+        image: img3
       },
       {
         type: "link",
@@ -42,7 +49,7 @@ const Games = () => (
         url: "https://blockturnal.com",
         width: 704,
         height: 468,
-        image: require("../../images/miscellaneous/blockturnal.png")
+        image: img4
       },
       {
         type: "link",
@@ -50,7 +57,7 @@ const Games = () => (
         url: "https://voronoia.com",
         width: 704,
         height: 468,
-        image: require("../../images/miscellaneous/voronoia.png")
+        image: img5
       },
       {
         type: "link",
@@ -58,7 +65,7 @@ const Games = () => (
         url: "https://roshamboai.com",
         width: 704,
         height: 468,
-        image: require("../../images/miscellaneous/roshamboai.png")
+        image: img6
       }
     ]}
   />

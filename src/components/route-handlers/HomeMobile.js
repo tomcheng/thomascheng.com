@@ -1,45 +1,79 @@
 import React from "react";
 import styled from "styled-components";
+import img0 from "../../images/home/3Dproj2-low-res.jpg";
+import img1 from "../../images/home/circleboy.jpg";
+import img2 from "../../images/home/circlewoman.jpg";
+import img3 from "../../images/home/diabetes-low-res.jpg";
+import img4 from "../../images/home/diagonal-stripe-man.jpg";
+import img5 from "../../images/home/discowoman.jpg";
+import img6 from "../../images/home/DSC_4252_small-low-res.jpg";
+import img7 from "../../images/home/DSC_4757_small-low-res.jpg";
+import img8 from "../../images/home/DSC_5209_small-low-res.jpg";
+import img9 from "../../images/home/DSC_5211_small-low-res.jpg";
+import img10 from "../../images/home/DSC_5230_small-low-res.jpg";
+import img11 from "../../images/home/durer-low-res.jpg";
+import img12 from "../../images/home/foodbrochure-low-res.jpg";
+import img13 from "../../images/home/futura-1-low-res.jpg";
+import img14 from "../../images/home/futura-5-low-res.jpg";
+import img15 from "../../images/home/guide-1-low-res.jpg";
+import img16 from "../../images/home/iheartyou-low-res.jpg";
+import img17 from "../../images/home/influential-low-res.jpg";
+import img18 from "../../images/home/localfood-low-res.jpg";
+import img19 from "../../images/home/localfood2-low-res.jpg";
+import img20 from "../../images/home/localfood3-low-res.jpg";
+import img21 from "../../images/home/officers.jpg";
+import img22 from "../../images/home/pcface1.jpg";
+import img23 from "../../images/home/pcface2.jpg";
+import img24 from "../../images/home/pcface4.jpg";
+import img25 from "../../images/home/pcface5.jpg";
+import img26 from "../../images/home/radiating.jpg";
+import img27 from "../../images/home/robotgames-low-res.jpg";
+import img28 from "../../images/home/scanface1.jpg";
+import img29 from "../../images/home/squareman.jpg";
+import img30 from "../../images/home/squareman2.jpg";
+import img31 from "../../images/home/stripeman.jpg";
+import img32 from "../../images/home/strippedfaces.jpg";
+import img33 from "../../images/home/twofonts-low-res.jpg";
 
 const FIRST_FRAME_ENTER = 2;
 const SECOND_FRAME_ENTER = 8;
 const BOTH_FRAMES_LEAVE = 16;
 
 const IMAGES = [
-  require("../../images/home/3Dproj2-low-res.jpg"),
-  require("../../images/home/circleboy.jpg"),
-  require("../../images/home/circlewoman.jpg"),
-  require("../../images/home/diabetes-low-res.jpg"),
-  require("../../images/home/diagonal-stripe-man.jpg"),
-  require("../../images/home/discowoman.jpg"),
-  require("../../images/home/DSC_4252_small-low-res.jpg"),
-  require("../../images/home/DSC_4757_small-low-res.jpg"),
-  require("../../images/home/DSC_5209_small-low-res.jpg"),
-  require("../../images/home/DSC_5211_small-low-res.jpg"),
-  require("../../images/home/DSC_5230_small-low-res.jpg"),
-  require("../../images/home/durer-low-res.jpg"),
-  require("../../images/home/foodbrochure-low-res.jpg"),
-  require("../../images/home/futura-1-low-res.jpg"),
-  require("../../images/home/futura-5-low-res.jpg"),
-  require("../../images/home/guide-1-low-res.jpg"),
-  require("../../images/home/iheartyou-low-res.jpg"),
-  require("../../images/home/influential-low-res.jpg"),
-  require("../../images/home/localfood-low-res.jpg"),
-  require("../../images/home/localfood2-low-res.jpg"),
-  require("../../images/home/localfood3-low-res.jpg"),
-  require("../../images/home/officers.jpg"),
-  require("../../images/home/pcface1.jpg"),
-  require("../../images/home/pcface2.jpg"),
-  require("../../images/home/pcface4.jpg"),
-  require("../../images/home/pcface5.jpg"),
-  require("../../images/home/radiating.jpg"),
-  require("../../images/home/robotgames-low-res.jpg"),
-  require("../../images/home/scanface1.jpg"),
-  require("../../images/home/squareman.jpg"),
-  require("../../images/home/squareman2.jpg"),
-  require("../../images/home/stripeman.jpg"),
-  require("../../images/home/strippedfaces.jpg"),
-  require("../../images/home/twofonts-low-res.jpg")
+  img0,
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+  img13,
+  img14,
+  img15,
+  img16,
+  img17,
+  img18,
+  img19,
+  img20,
+  img21,
+  img22,
+  img23,
+  img24,
+  img25,
+  img26,
+  img27,
+  img28,
+  img29,
+  img30,
+  img31,
+  img32,
+  img33
 ];
 
 const shuffleArray = array => {

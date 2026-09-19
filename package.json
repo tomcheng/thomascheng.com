@@ -4,14 +4,10 @@
   "private": true,
   "description": "Thomas Cheng's Portfolio",
   "main": "index.js",
-  "homepage": "https://thomascheng.com",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "fastclick": "1.0.6",
@@ -21,14 +17,14 @@
     "react-router-dom": "4.3.1",
     "styled-components": "4.1.1"
   },
-  "devDependencies": {
-    "gh-pages": "2.0.1",
-    "react-scripts": "2.1.1"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.3.0"
+  }
 }

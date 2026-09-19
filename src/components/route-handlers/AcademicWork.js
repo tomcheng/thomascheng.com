@@ -1,5 +1,33 @@
 import React from "react";
 import CarouselPage from "../common/CarouselPage";
+import img0 from "../../images/academic-work/guide-1.jpg";
+import img1 from "../../images/academic-work/guide-2.jpg";
+import img2 from "../../images/academic-work/guide-3.jpg";
+import img3 from "../../images/academic-work/guide-4.jpg";
+import img4 from "../../images/academic-work/futura-1.jpg";
+import img5 from "../../images/academic-work/futura-2.jpg";
+import img6 from "../../images/academic-work/futura-3.jpg";
+import img7 from "../../images/academic-work/futura-4.jpg";
+import img8 from "../../images/academic-work/heart-1.jpg";
+import img9 from "../../images/academic-work/influential-1.jpg";
+import img10 from "../../images/academic-work/influential-2.jpg";
+import img11 from "../../images/academic-work/diabetes-1.jpg";
+import img12 from "../../images/academic-work/food-economy-1.jpg";
+import img13 from "../../images/academic-work/food-economy-2.jpg";
+import img14 from "../../images/academic-work/durer-1.jpg";
+import img15 from "../../images/academic-work/durer-2.jpg";
+import img16 from "../../images/academic-work/robot-1.jpg";
+import img17 from "../../images/photocopied-faces/pcface4.jpg";
+import img18 from "../../images/photocopied-faces/pcface2.jpg";
+import img19 from "../../images/photocopied-faces/pcface3.jpg";
+import img20 from "../../images/photocopied-faces/pcface7.jpg";
+import img21 from "../../images/processing-faces/diagonal-stripe-man.jpg";
+import img22 from "../../images/processing-faces/squareman.png";
+import img23 from "../../images/processing-faces/discowoman.jpg";
+import img24 from "../../images/processing-faces/circlewoman.jpg";
+import img25 from "../../images/processing-faces/stripeman.jpg";
+import img26 from "../../images/processing-faces/radiating.jpg";
+import img27 from "../../images/academic-work/pez-1.jpg";
 
 const AcademicWork = () => (
   <CarouselPage
@@ -10,10 +38,10 @@ const AcademicWork = () => (
         width: 704,
         height: 468,
         images: [
-          require("../../images/academic-work/guide-1.jpg"),
-          require("../../images/academic-work/guide-2.jpg"),
-          require("../../images/academic-work/guide-3.jpg"),
-          require("../../images/academic-work/guide-4.jpg")
+          img0,
+          img1,
+          img2,
+          img3
         ]
       },
       {
@@ -22,10 +50,10 @@ const AcademicWork = () => (
         width: 704,
         height: 468,
         images: [
-          require("../../images/academic-work/futura-1.jpg"),
-          require("../../images/academic-work/futura-2.jpg"),
-          require("../../images/academic-work/futura-3.jpg"),
-          require("../../images/academic-work/futura-4.jpg")
+          img4,
+          img5,
+          img6,
+          img7
         ]
       },
       {
@@ -33,7 +61,7 @@ const AcademicWork = () => (
         title: "Meat Typography",
         width: 704,
         height: 468,
-        images: [require("../../images/academic-work/heart-1.jpg")]
+        images: [img8]
       },
       {
         type: "carousel",
@@ -41,8 +69,8 @@ const AcademicWork = () => (
         width: 704,
         height: 468,
         images: [
-          require("../../images/academic-work/influential-1.jpg"),
-          require("../../images/academic-work/influential-2.jpg")
+          img9,
+          img10
         ]
       },
       {
@@ -50,7 +78,7 @@ const AcademicWork = () => (
         title: "Fast Food Typography",
         width: 704,
         height: 468,
-        images: [require("../../images/academic-work/diabetes-1.jpg")]
+        images: [img11]
       },
       {
         type: "carousel",
@@ -58,8 +86,8 @@ const AcademicWork = () => (
         width: 704,
         height: 426,
         images: [
-          require("../../images/academic-work/food-economy-1.jpg"),
-          require("../../images/academic-work/food-economy-2.jpg")
+          img12,
+          img13
         ]
       },
       {
@@ -68,8 +96,8 @@ const AcademicWork = () => (
         width: 704,
         height: 468,
         images: [
-          require("../../images/academic-work/durer-1.jpg"),
-          require("../../images/academic-work/durer-2.jpg")
+          img14,
+          img15
         ]
       },
       {
@@ -77,7 +105,7 @@ const AcademicWork = () => (
         title: "Robot Games Flyer",
         width: 704,
         height: 563,
-        images: [require("../../images/academic-work/robot-1.jpg")]
+        images: [img16]
       },
       {
         type: "carousel",
@@ -85,10 +113,10 @@ const AcademicWork = () => (
         width: 704,
         height: 468,
         images: [
-          require("../../images/photocopied-faces/pcface4.jpg"),
-          require("../../images/photocopied-faces/pcface2.jpg"),
-          require("../../images/photocopied-faces/pcface3.jpg"),
-          require("../../images/photocopied-faces/pcface7.jpg")
+          img17,
+          img18,
+          img19,
+          img20
         ]
       },
       {
@@ -97,12 +125,12 @@ const AcademicWork = () => (
         width: 704,
         height: 468,
         images: [
-          require("../../images/processing-faces/diagonal-stripe-man.jpg"),
-          require("../../images/processing-faces/squareman.png"),
-          require("../../images/processing-faces/discowoman.jpg"),
-          require("../../images/processing-faces/circlewoman.jpg"),
-          require("../../images/processing-faces/stripeman.jpg"),
-          require("../../images/processing-faces/radiating.jpg")
+          img21,
+          img22,
+          img23,
+          img24,
+          img25,
+          img26
         ]
       },
       {
@@ -110,7 +138,7 @@ const AcademicWork = () => (
         title: "Wall o' Pez",
         width: 704,
         height: 468,
-        images: [require("../../images/academic-work/pez-1.jpg")]
+        images: [img27]
       }
     ]}
   />
