@@ -69,15 +69,18 @@ const FOUNTAIN_CLEARANCE = 14;
 const MAX_STRAY_DOTS = 3;
 
 // When the last period has drained from a page with nothing else left on it,
-// the page lets out a quiet sigh: it fades in, stays a while, and fades out.
+// the page lets out a quiet sigh, halfway between the top of the page and the
+// top of the funnel: it fades in, stays a while, and fades out.
 // Anything new turning up cuts it short.
-const SIGH_TEXT = "Aah...";
-const SIGH_FONT = `22px ${FONT_FAMILY}`;
-const SIGH_OPACITY = 0.5;
-const SIGH_HEIGHT = 0.36;
-const SIGH_FADE_IN_MS = 900;
-const SIGH_HOLD_MS = 3000;
-const SIGH_FADE_OUT_MS = 1200;
+const SIGHS = ["aah", "nice", "feels good", "ooh", "oh yeah", "mmm", "aw yiss"];
+const SIGH_FONT = `italic 22px ${FONT_FAMILY}`;
+const SIGH_OPACITY = 0.62;
+// A beat of empty page first, so the sigh follows the last period down
+// rather than landing on top of it.
+const SIGH_DELAY_MS = 350;
+const SIGH_FADE_IN_MS = 500;
+const SIGH_HOLD_MS = 1000;
+const SIGH_FADE_OUT_MS = 650;
 
 // Every period is the same size whatever letter it came from. They are packed
 // a hair closer than touching, so the honeycomb starts out very slightly
@@ -175,8 +178,10 @@ export const createLettersWorld = (
   let accumulator = 0;
   let destroyed = false;
   let stepCost = 0;
-  // Milliseconds into the sigh, or null when the page is not sighing.
+  // Milliseconds into the sigh (negative while it waits to start), or null
+  // when the page is not sighing.
   let sighAge: number | null = null;
+  let sighText = "";
 
   // --- World geometry -------------------------------------------------------
 
@@ -634,12 +639,17 @@ export const createLettersWorld = (
         if (gone) physics.removeRigidBody(dot.body);
         return !gone;
       });
-      if (dots.length === 0 && letters.length === 0) sighAge = 0;
+      if (dots.length === 0 && letters.length === 0) {
+        // Any of them but the one it said last time.
+        const others = SIGHS.filter(text => text !== sighText);
+        sighText = others[Math.floor(Math.random() * others.length)];
+        sighAge = -SIGH_DELAY_MS;
+      }
     }
   };
 
   const sighOpacity = (age: number) => {
-    if (age < SIGH_FADE_IN_MS) return age / SIGH_FADE_IN_MS;
+    if (age < SIGH_FADE_IN_MS) return Math.max(0, age) / SIGH_FADE_IN_MS;
     const leaving = age - SIGH_FADE_IN_MS - SIGH_HOLD_MS;
     return leaving < 0 ? 1 : Math.max(0, 1 - leaving / SIGH_FADE_OUT_MS);
   };
@@ -695,8 +705,10 @@ export const createLettersWorld = (
       ctx.globalAlpha = SIGH_OPACITY * sighOpacity(sighAge);
       ctx.font = SIGH_FONT;
       ctx.textAlign = "center";
-      ctx.fillText(SIGH_TEXT, width / 2, height * SIGH_HEIGHT);
+      ctx.textBaseline = "middle";
+      ctx.fillText(sighText, width / 2, funnelTop / 2);
       ctx.textAlign = "start";
+      ctx.textBaseline = "alphabetic";
       ctx.globalAlpha = 1;
     }
 
@@ -859,6 +871,9 @@ export const createLettersWorld = (
   resizeObserver.observe(canvas);
   measure();
   draw();
+
+  // The canvas only gets the italic if something has asked for it by then.
+  void document.fonts.load(SIGH_FONT, SIGHS.join("")).catch(() => undefined);
 
   // Shapes traced before the webfont arrives would be of the fallback face.
   document.fonts.addEventListener("loadingdone", clearGlyphShapes);
