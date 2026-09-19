@@ -1,4 +1,5 @@
 import CarouselPage from "../common/CarouselPage";
+import imgCardGames from "../../images/miscellaneous/card-games.jpg";
 import img0 from "../../images/miscellaneous/socks.png";
 import img1 from "../../images/miscellaneous/dumpling-run.png";
 import img2 from "../../images/miscellaneous/zenhues.png";
@@ -10,6 +11,14 @@ import img6 from "../../images/miscellaneous/roshamboai.png";
 const Games = () => (
   <CarouselPage
     pieces={[
+      {
+        type: "link",
+        title: "Card Games",
+        url: "https://cardgames.life",
+        width: 704,
+        height: 468,
+        image: imgCardGames
+      },
       {
         type: "link",
         title: "Socks",
