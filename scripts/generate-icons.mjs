@@ -8,12 +8,7 @@ const ASCENT = 1536;
 const UPM = 1792;
 
 const ICONS = {
-  "arrow-left": "f060",
   "hand-o-up": "f0a6",
-  "angle-left": "f104",
-  "angle-right": "f105",
-  "angle-up": "f106",
-  "angle-down": "f107",
 };
 
 const src = readFileSync(FONT, "utf8");

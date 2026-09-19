@@ -27,7 +27,6 @@ type CarouselLayoutProps = {
   images: string[];
   isActive: boolean;
   isMobile: boolean;
-  showActiveIndicator: boolean;
   width: number;
   description?: string;
   title?: string;
@@ -81,7 +80,6 @@ class CarouselLayout extends React.Component<
           )}
           <Carousel
             {...other}
-            isActive={isActive}
             onUpdatePane={this.handleUpdatePane}
             ref={el => {
               this.carouselEl = el;

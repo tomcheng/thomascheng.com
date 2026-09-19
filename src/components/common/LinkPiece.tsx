@@ -3,7 +3,6 @@ import styled from "styled-components";
 import breakpoints from "../../utils/breakpoints";
 import NudgeBottom from "./NudgeBottom";
 import ScrollIntoView from "./ScrollIntoView";
-import ActiveIndicator from "./ActiveIndicator";
 
 const displayUrl = (url: string) => url.replace(/^https?:\/\//, "");
 
@@ -21,7 +20,6 @@ type LinkPieceProps = {
   image: string;
   isActive: boolean;
   isMobile: boolean;
-  showActiveIndicator: boolean;
   title: string;
   url: string;
   width: number;
@@ -57,9 +55,7 @@ class LinkPiece extends Component<LinkPieceProps, LinkPieceState> {
       height,
       image,
       url,
-      isActive,
-      showActiveIndicator,
-      isMobile
+      isActive
     } = this.props;
     const { containerWidth } = this.state;
     const imageWidth = containerWidth;
@@ -79,19 +75,14 @@ class LinkPiece extends Component<LinkPieceProps, LinkPieceState> {
               </a>
             </div>
           </NudgeBottom>
-          <ActiveIndicator
-            isActive={isActive && showActiveIndicator}
-            isMobile={isMobile}
-          >
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              <Image
-                src={image}
-                width={imageWidth}
-                height={imageHeight}
-                style={{ width: "100%" }}
-              />
-            </a>
-          </ActiveIndicator>
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            <Image
+              src={image}
+              width={imageWidth}
+              height={imageHeight}
+              style={{ width: "100%" }}
+            />
+          </a>
         </div>
       </ScrollIntoView>
     );

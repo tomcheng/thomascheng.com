@@ -14,7 +14,6 @@ import TouchHandler, {
   type DragEvent,
   type DragReleaseEvent
 } from "./TouchHandler";
-import ActiveIndicator from "./ActiveIndicator";
 import Icon from "./Icon";
 
 const MOBILE_PADDING = 15;
@@ -23,6 +22,9 @@ const DRAG_CONSTANT = 0.2; // amount of slow down dragging past bounds
 // releasing wraps back to the first. Also drives the return arrow's fade-in and
 // travel, so the arrow reaching full opacity always coincides with the trigger.
 const RETURN_THRESHOLD = 0.35;
+// How far the return indicator slides in from the right edge, as a multiple of
+// the damped drag distance. Higher means it travels further in before stopping.
+const INDICATOR_TRAVEL = 1.4;
 
 const wiggle = keyframes`
   100%, from {
@@ -88,15 +90,13 @@ const ReturnIndicator = styled(Icon)<{
     -${props => props.$indicatorProgress * props.$indicatorFinalPosition}px,
     0,
     0
-  );
+  ) scaleX(-1) rotate(90deg);
 `;
 
 type CarouselProps = {
   height: number;
   images: string[];
-  isActive: boolean;
   isMobile: boolean;
-  showActiveIndicator: boolean;
   width: number;
   onUpdatePane?: (pane: number) => void;
 };
@@ -132,7 +132,6 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
     this.setDimensions();
     window.addEventListener("resize", this.setDimensions);
     window.addEventListener("orientationchange", this.setDimensions);
-    window.addEventListener("keydown", this.handleKeyDown);
   }
 
   componentDidUpdate(prevProps: CarouselProps, prevState: CarouselState) {
@@ -151,7 +150,6 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
   componentWillUnmount() {
     window.removeEventListener("resize", this.setDimensions);
     window.removeEventListener("orientationchange", this.setDimensions);
-    window.removeEventListener("keydown", this.handleKeyDown);
   }
 
   setDimensions = () => {
@@ -162,23 +160,6 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
       frameWidth: Math.max(frameWidth, 1),
       scrollPos: -frameWidth * currentPane
     });
-  };
-
-  handleKeyDown = (evt: KeyboardEvent) => {
-    if (!this.props.isActive) {
-      return;
-    }
-
-    switch (evt.code) {
-      case "ArrowRight":
-        this.goToNextPane();
-        break;
-      case "ArrowLeft":
-        this.goToPrevPane();
-        break;
-      default:
-        break;
-    }
   };
 
   getCurrentPane = (state: CarouselState = this.state) => {
@@ -350,12 +331,11 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
   };
 
   render() {
-    const { images, isMobile, isActive, height, width, showActiveIndicator } =
-      this.props;
+    const { images, isMobile, height, width } = this.props;
     const { scrollPos, frameWidth, shouldWiggle } = this.state;
     const imageCount = images.length;
     const indicatorFinalPosition =
-      frameWidth * DRAG_CONSTANT * RETURN_THRESHOLD * 0.8;
+      frameWidth * DRAG_CONSTANT * RETURN_THRESHOLD * INDICATOR_TRAVEL;
     const amountDraggedPastEnd =
       (-scrollPos / frameWidth - (imageCount - 1)) / DRAG_CONSTANT;
     const indicatorProgress = sineIn(
@@ -365,49 +345,44 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
     const imageHeight = Math.round((height / width) * imageWidth);
 
     return (
-      <ActiveIndicator
-        isActive={isActive && showActiveIndicator}
-        isMobile={isMobile}
+      <Container
+        ref={el => {
+          this.wrapper = el;
+        }}
+        $isMobile={isMobile}
+        $shouldWiggle={shouldWiggle}
       >
-        <Container
-          ref={el => {
-            this.wrapper = el;
-          }}
-          $isMobile={isMobile}
-          $shouldWiggle={shouldWiggle}
+        <TouchHandler
+          onDrag={this.handleDrag}
+          onDragRelease={this.handleDragRelease}
+          onTap={this.goToNextPane}
         >
-          <TouchHandler
-            onDrag={this.handleDrag}
-            onDragRelease={this.handleDragRelease}
-            onTap={this.goToNextPane}
+          <List
+            style={{
+              width: frameWidth * imageCount,
+              WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
+              transform: "translate3d(" + scrollPos + "px, 0, 0)"
+            }}
           >
-            <List
-              style={{
-                width: frameWidth * imageCount,
-                WebkitTransform: "translate3d(" + scrollPos + "px, 0, 0)",
-                transform: "translate3d(" + scrollPos + "px, 0, 0)"
-              }}
-            >
-              {images.map((image, index) => (
-                <Item
-                  key={index}
-                  $isMobile={isMobile}
-                  style={{ width: frameWidth }}
-                >
-                  <Image src={image} width={imageWidth} height={imageHeight} />
-                </Item>
-              ))}
-            </List>
-          </TouchHandler>
-          {imageCount > 1 ? (
-            <ReturnIndicator
-              name="arrow-left"
-              $indicatorProgress={indicatorProgress}
-              $indicatorFinalPosition={indicatorFinalPosition}
-            />
-          ) : null}
-        </Container>
-      </ActiveIndicator>
+            {images.map((image, index) => (
+              <Item
+                key={index}
+                $isMobile={isMobile}
+                style={{ width: frameWidth }}
+              >
+                <Image src={image} width={imageWidth} height={imageHeight} />
+              </Item>
+            ))}
+          </List>
+        </TouchHandler>
+        {imageCount > 1 ? (
+          <ReturnIndicator
+            name="hand-o-up"
+            $indicatorProgress={indicatorProgress}
+            $indicatorFinalPosition={indicatorFinalPosition}
+          />
+        ) : null}
+      </Container>
     );
   }
 }
