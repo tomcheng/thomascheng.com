@@ -603,7 +603,9 @@ Compare all five routes at 375/768/1440 against the Task 1 screenshots. Check ma
 
 - [ ] **Step 6: Verify the wiggle animation**
 
-On `/apps` — a single-image carousel — click it. It should shake horizontally once. That exercises the `keyframes` interpolation in `Container`, the styled-components feature most likely to break across this upgrade.
+On **`/design`**, click one of the four single-image carousels — "Meat Typography", "Fast Food Typography", "Robot Games Flyer", or "Wall o' Pez". It should shake horizontally once. That exercises the `keyframes` interpolation in `Container`, the styled-components feature most likely to break across this upgrade.
+
+(An earlier draft of this plan said `/apps`. That was wrong: `Apps.js` renders a single `type: "link"` piece, which is a `LinkPiece` with no `Carousel` and no keyframes. Verified 2026-09-19.)
 
 - [ ] **Step 7: Commit**
 
@@ -1411,7 +1413,7 @@ After Task 11, before merging, run the spec's full *Verification* checklist agai
 - [ ] Carousel advances by click, arrow key, and drag/swipe
 - [ ] Fling still decelerates smoothly; rubber-band at both ends feels right
 - [ ] Two carousels on `/design` animate independently
-- [ ] Single-image carousel on `/apps` wiggles on click
+- [ ] A single-image carousel on `/design` ("Meat Typography", "Fast Food Typography", "Robot Games Flyer", "Wall o' Pez") wiggles on click — **not** `/apps`, which has no carousel
 - [ ] `/nonsense` renders NotFound
 - [ ] A deep link typed into the address bar loads
 - [ ] `#/games` redirects to `/games`
