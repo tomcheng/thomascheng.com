@@ -19,7 +19,10 @@ import Icon from "./Icon";
 
 const MOBILE_PADDING = 15;
 const DRAG_CONSTANT = 0.2; // amount of slow down dragging past bounds
-const RETURN_THRESHOLD = 0.6; // amount dragging past end to return to first image
+// Fraction of the frame width you must drag past the last image before
+// releasing wraps back to the first. Also drives the return arrow's fade-in and
+// travel, so the arrow reaching full opacity always coincides with the trigger.
+const RETURN_THRESHOLD = 0.35;
 
 const wiggle = keyframes`
   100%, from {

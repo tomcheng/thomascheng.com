@@ -8,6 +8,9 @@ import ArrowKeys from "./ArrowKeys";
 import { constrain } from "../../utils/math";
 import type { Piece } from "../../types/piece";
 
+// Minimum pieces before the scroll-to-top footer is worth showing.
+const MIN_PIECES_FOR_FOOTER = 3;
+
 type CarouselPageProps = {
   isMobile: boolean;
   pieces: Piece[];
@@ -114,7 +117,10 @@ class CarouselPage extends Component<CarouselPageProps, CarouselPageState> {
               return null;
           }
         })}
-        <PageFooter />
+        {/* The footer is a scroll-to-top control, so it only earns its place
+            on a page long enough to scroll. Below three pieces there is
+            nowhere to scroll back from. */}
+        {pieces.length >= MIN_PIECES_FOR_FOOTER && <PageFooter />}
       </div>
     );
   }
