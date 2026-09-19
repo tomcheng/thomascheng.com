@@ -130,10 +130,19 @@ const NavText = styled.span`
   }
 `;
 
+// GitHub Pages 301-redirects "/resume" to "/resume/", so a trailing slash
+// must not change which page this renders as. Only strip it when there is
+// more than just the root slash, so "/" is left untouched.
+const normalizePathname = (pathname: string) =>
+  pathname.length > 1 && pathname.endsWith("/")
+    ? pathname.slice(0, -1)
+    : pathname;
+
 const Navigation = () => {
   const { pathname } = useLocation();
-  const isHome = pathname === "/";
-  const isResume = pathname === "/resume";
+  const normalizedPathname = normalizePathname(pathname);
+  const isHome = normalizedPathname === "/";
+  const isResume = normalizedPathname === "/resume";
 
   const LinkComponent = isHome ? NavLinkHome : StyledNavLink;
   return (
