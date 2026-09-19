@@ -27,6 +27,9 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
+      # Experiments deploy from Cloudflare Pages, not from here; this only
+      # proves each still builds. The portfolio build below replaces dist/.
+      - run: SITE=letterfall npm run build
       - run: npm run build
       - uses: actions/upload-pages-artifact@v5
         if: github.ref == 'refs/heads/master'

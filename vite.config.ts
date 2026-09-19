@@ -1,14 +1,15 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
-import { copyFileSync, mkdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
-import { ROUTES, STANDALONE_ROUTES } from "./src/routes";
+import { fileURLToPath } from "node:url";
+import { ROUTES } from "./src/routes";
 
 // GitHub Pages has no SPA rewrite rule, and respects the file it finds
 // (or falls back to 404.html) for the HTTP status it returns. Every route
-// in ROUTES and STANDALONE_ROUTES gets its own real `<route>/index.html` --
-// a byte-identical copy of the built app shell -- so those known paths are served with a 200
+// in ROUTES gets its own real `<route>/index.html` -- a byte-identical copy
+// of the built app shell -- so those known paths are served with a 200
 // instead of everything, including real pages, coming back as a 404.
 // 404.html (also a copy of the same shell) remains the fallback for
 // genuinely unknown paths, which keeps the deep-link trick working for
@@ -23,7 +24,7 @@ function spa404() {
     closeBundle() {
       const shell = resolve(dist, "index.html");
       copyFileSync(shell, resolve(dist, "404.html"));
-      for (const route of [...ROUTES, ...STANDALONE_ROUTES]) {
+      for (const route of ROUTES) {
         if (route === "/") continue;
         const dir = resolve(dist, route.slice(1));
         mkdirSync(dir, { recursive: true });
@@ -33,42 +34,23 @@ function spa404() {
   };
 }
 
-// The same app is also deployed on its own domain, letterfall.app, where it
-// shows Letterfall at every path (see LETTERFALL_HOSTS in src/routes.ts).
-// That deployment sets SITE=letterfall at build time so that what the HTML
-// says about itself -- the tab title before the app mounts, and everything a
-// link preview is built from -- is about Letterfall, not the portfolio.
-function siteMeta() {
-  const letterfall = {
-    title: "Letterfall",
-    description:
-      "Hold a finger down and letters pour out from under it. Tap one to pop it.",
-    url: "https://letterfall.app/",
-  };
+const repoRoot = fileURLToPath(new URL(".", import.meta.url));
+
+// experiments/ holds standalone sites that share this repo's tooling but not
+// the portfolio's code or its domain (see experiments/README.md). SITE=<name>
+// builds or serves that one experiment alone, with its folder as the site
+// root; the output still lands in dist/, so every deployment of this repo is
+// configured identically apart from that one variable.
+function experimentConfig(site: string) {
+  const root = resolve(repoRoot, "experiments", site);
+  if (!existsSync(resolve(root, "index.html"))) {
+    throw new Error(`SITE=${site}: no experiments/${site}/index.html`);
+  }
   return {
-    name: "site-meta",
-    transformIndexHtml(html: string) {
-      if (process.env.SITE !== "letterfall") return html;
-      const content = (value: string) => `content="${value}"`;
-      return html
-        .replace(/<title>[^<]*<\/title>/, `<title>${letterfall.title}</title>`)
-        .replace(
-          /(<meta name="description" )content="[^"]*"/,
-          `$1${content(letterfall.description)}`
-        )
-        .replace(
-          /(<meta property="og:url" )content="[^"]*"/,
-          `$1${content(letterfall.url)}`
-        )
-        .replace(
-          /(<meta property="og:title" )content="[^"]*"/,
-          `$1${content(letterfall.title)}`
-        )
-        .replace(
-          /(<meta property="og:description" )content="[^"]*"/,
-          `$1${content(letterfall.description)}`
-        );
-    },
+    root,
+    base: "/",
+    plugins: [react()],
+    build: { outDir: resolve(repoRoot, "dist"), emptyOutDir: true },
   };
 }
 
@@ -88,11 +70,12 @@ export default defineConfig(({ mode }) => {
   // insensitive to NODE_ENV) to automatic.
   process.env.NODE_ENV = mode;
 
+  if (process.env.SITE) return experimentConfig(process.env.SITE);
+
   return {
     base: "/",
     plugins: [
       react(),
-      siteMeta(),
       spa404(),
       // Lossy re-compression only, at build time; source files in src/images
       // stay untouched in git. Quality kept high -- this is a design

@@ -10,7 +10,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
+    "format": "prettier --write \"{src,experiments}/**/*.{ts,tsx,css}\""
   },
   "dependencies": {
     "@dimforge/rapier2d-compat": "^0.20.0",
