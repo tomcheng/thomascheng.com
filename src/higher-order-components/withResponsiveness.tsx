@@ -8,7 +8,10 @@ type WithResponsivenessState = { isMobile: boolean };
 function withResponsiveness<P extends WithResponsivenessProps>(
   Target: React.ComponentType<P>
 ): React.ComponentType<Omit<P, "isMobile">> {
-  return class extends React.Component<Omit<P, "isMobile">, WithResponsivenessState> {
+  return class extends React.Component<
+    Omit<P, "isMobile">,
+    WithResponsivenessState
+  > {
     state: WithResponsivenessState = {
       isMobile: window.innerWidth <= breakpoints.xs.max
     };

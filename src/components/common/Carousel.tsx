@@ -10,7 +10,10 @@ import {
 } from "../../utils/easings";
 import breakpoints from "../../utils/breakpoints";
 import { constrain } from "../../utils/math";
-import TouchHandler, { type DragEvent, type DragReleaseEvent } from "./TouchHandler";
+import TouchHandler, {
+  type DragEvent,
+  type DragReleaseEvent
+} from "./TouchHandler";
 import ActiveIndicator from "./ActiveIndicator";
 import Icon from "./Icon";
 
@@ -200,7 +203,11 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
     return constrain(Math.ceil(-scrollPos / frameWidth), 0, imageCount - 1);
   };
 
-  animateToPane = (pane: number, duration: number, easing: (x: number) => number) => {
+  animateToPane = (
+    pane: number,
+    duration: number,
+    easing: (x: number) => number
+  ) => {
     Animations.animate({
       name: this.animationName,
       start: this.state.scrollPos,
@@ -283,7 +290,7 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
         }
         distanceToScroll = Math.abs(-frameWidth * destinationPane - scrollPos);
         duration = constrain(
-          Math.abs(distanceToScroll / velocityX * 3),
+          Math.abs((distanceToScroll / velocityX) * 3),
           200,
           400
         );
@@ -340,14 +347,8 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
   };
 
   render() {
-    const {
-      images,
-      isMobile,
-      isActive,
-      height,
-      width,
-      showActiveIndicator
-    } = this.props;
+    const { images, isMobile, isActive, height, width, showActiveIndicator } =
+      this.props;
     const { scrollPos, frameWidth, shouldWiggle } = this.state;
     const imageCount = images.length;
     const indicatorFinalPosition =
@@ -358,7 +359,7 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
       constrain(amountDraggedPastEnd / RETURN_THRESHOLD, 0, 1)
     );
     const imageWidth = isMobile ? frameWidth - 2 * MOBILE_PADDING : frameWidth;
-    const imageHeight = Math.round(height / width * imageWidth);
+    const imageHeight = Math.round((height / width) * imageWidth);
 
     return (
       <ActiveIndicator

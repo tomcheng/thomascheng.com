@@ -37,7 +37,10 @@ type CarouselLayoutState = {
   currentPane: number;
 };
 
-class CarouselLayout extends React.Component<CarouselLayoutProps, CarouselLayoutState> {
+class CarouselLayout extends React.Component<
+  CarouselLayoutProps,
+  CarouselLayoutState
+> {
   state: CarouselLayoutState = { currentPane: 0 };
 
   carouselEl: Carousel | null = null;

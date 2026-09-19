@@ -6,6 +6,7 @@ type HomeProps = {
   isMobile: boolean;
 };
 
-const Home = ({ isMobile }: HomeProps) => (isMobile ? <HomeMobile /> : <HomeDesktop />);
+const Home = ({ isMobile }: HomeProps) =>
+  isMobile ? <HomeMobile /> : <HomeDesktop />;
 
 export default withResponsiveness(Home);

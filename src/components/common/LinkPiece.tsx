@@ -63,7 +63,7 @@ class LinkPiece extends Component<LinkPieceProps, LinkPieceState> {
     } = this.props;
     const { containerWidth } = this.state;
     const imageWidth = containerWidth;
-    const imageHeight = Math.round(height / width * containerWidth);
+    const imageHeight = Math.round((height / width) * containerWidth);
     return (
       <ScrollIntoView isActive={isActive}>
         <div

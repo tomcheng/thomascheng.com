@@ -13,16 +13,7 @@ const RandomImageHome = styled(RandomImage)`
 `;
 
 const HomeDesktop = () => (
-  <RandomImageHome
-    images={[
-      img0,
-      img1,
-      img2,
-      img3,
-      img4,
-      img5
-    ]}
-  />
+  <RandomImageHome images={[img0, img1, img2, img3, img4, img5]} />
 );
 
 export default HomeDesktop;

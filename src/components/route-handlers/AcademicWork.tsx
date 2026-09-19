@@ -36,24 +36,14 @@ const AcademicWork = () => (
         title: "Typography Booklet",
         width: 704,
         height: 468,
-        images: [
-          img0,
-          img1,
-          img2,
-          img3
-        ]
+        images: [img0, img1, img2, img3]
       },
       {
         type: "carousel",
         title: "Futura Type Specimen",
         width: 704,
         height: 468,
-        images: [
-          img4,
-          img5,
-          img6,
-          img7
-        ]
+        images: [img4, img5, img6, img7]
       },
       {
         type: "carousel",
@@ -67,10 +57,7 @@ const AcademicWork = () => (
         title: "Influential Typographers Book Design",
         width: 704,
         height: 468,
-        images: [
-          img9,
-          img10
-        ]
+        images: [img9, img10]
       },
       {
         type: "carousel",
@@ -84,20 +71,14 @@ const AcademicWork = () => (
         title: "Food Economy Magazine Layout",
         width: 704,
         height: 426,
-        images: [
-          img12,
-          img13
-        ]
+        images: [img12, img13]
       },
       {
         type: "carousel",
         title: "Albrecht Durer Brochure",
         width: 704,
         height: 468,
-        images: [
-          img14,
-          img15
-        ]
+        images: [img14, img15]
       },
       {
         type: "carousel",
@@ -111,26 +92,14 @@ const AcademicWork = () => (
         title: "Photocopied Faces",
         width: 704,
         height: 468,
-        images: [
-          img17,
-          img18,
-          img19,
-          img20
-        ]
+        images: [img17, img18, img19, img20]
       },
       {
         type: "carousel",
         title: "Experiments with Processing",
         width: 704,
         height: 468,
-        images: [
-          img21,
-          img22,
-          img23,
-          img24,
-          img25,
-          img26
-        ]
+        images: [img21, img22, img23, img24, img25, img26]
       },
       {
         type: "carousel",

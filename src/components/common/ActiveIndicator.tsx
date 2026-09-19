@@ -19,7 +19,11 @@ type ActiveIndicatorProps = {
   isMobile: boolean;
 };
 
-const ActiveIndicator = ({ isActive, isMobile, children }: ActiveIndicatorProps) => (
+const ActiveIndicator = ({
+  isActive,
+  isMobile,
+  children
+}: ActiveIndicatorProps) => (
   <div style={{ position: "relative" }}>
     {!isMobile && <Indicator $isActive={isActive}>•</Indicator>}
     {children}

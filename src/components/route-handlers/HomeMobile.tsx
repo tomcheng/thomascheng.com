@@ -172,7 +172,10 @@ type HomeMobileState = {
   images: string[];
 };
 
-class HomeMobile extends React.Component<Record<string, never>, HomeMobileState> {
+class HomeMobile extends React.Component<
+  Record<string, never>,
+  HomeMobileState
+> {
   state: HomeMobileState = {
     currentFrame: 0,
     isPressed: false,
