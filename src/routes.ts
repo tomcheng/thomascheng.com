@@ -12,13 +12,6 @@
  * Add a route here once and both consumers pick it up -- there is nowhere
  * else a route path should be listed.
  */
-export const ROUTES = [
-  "/",
-  "/games",
-  "/apps",
-  "/design",
-  "/contact",
-  "/resume",
-] as const;
+export const ROUTES = ["/", "/games", "/apps", "/design", "/contact"] as const;
 
 export type RoutePath = (typeof ROUTES)[number];

@@ -6,7 +6,6 @@ import AcademicWork from "./route-handlers/AcademicWork";
 import Games from "./route-handlers/Games";
 import Apps from "./route-handlers/Apps";
 import Contact from "./route-handlers/Contact";
-import Resume from "./route-handlers/Resume";
 import NotFound from "./NotFound/NotFoundComponent";
 import Container from "./common/Container";
 import { ROUTES, type RoutePath } from "../routes";
@@ -18,8 +17,7 @@ const routeElements: Record<RoutePath, ReactNode> = {
   "/games": <Games />,
   "/apps": <Apps />,
   "/design": <AcademicWork />,
-  "/contact": <Contact />,
-  "/resume": <Resume />,
+  "/contact": <Contact />
 };
 
 const App = () => (

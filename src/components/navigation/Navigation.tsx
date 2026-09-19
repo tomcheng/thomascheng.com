@@ -142,7 +142,6 @@ const Navigation = () => {
   const { pathname } = useLocation();
   const normalizedPathname = normalizePathname(pathname);
   const isHome = normalizedPathname === "/";
-  const isResume = normalizedPathname === "/resume";
 
   const LinkComponent = isHome ? NavLinkHome : StyledNavLink;
   return (
@@ -153,27 +152,17 @@ const Navigation = () => {
         </MobileLink>
         <DesktopLink to="/">
           <Name>Thomas Cheng</Name>
-          {isResume ? (
-            <Position>
-              <a href="mailto:thomascheng81@gmail.com">
-                thomascheng81@gmail.com
-              </a>
-            </Position>
-          ) : (
-            <Position>Developer & Designer</Position>
-          )}
+          <Position>Developer &amp; Designer</Position>
         </DesktopLink>
-        {!isResume ? (
-          <Nav>
-            {LINKS.map(link => (
-              <NavItem key={link.title} $hiddenOnMobile={link.hiddenOnMobile}>
-                <LinkComponent to={link.path}>
-                  <NavText>{link.title}</NavText>
-                </LinkComponent>
-              </NavItem>
-            ))}
-          </Nav>
-        ) : null}
+        <Nav>
+          {LINKS.map(link => (
+            <NavItem key={link.title} $hiddenOnMobile={link.hiddenOnMobile}>
+              <LinkComponent to={link.path}>
+                <NavText>{link.title}</NavText>
+              </LinkComponent>
+            </NavItem>
+          ))}
+        </Nav>
       </HeaderContainer>
     </Header>
   );

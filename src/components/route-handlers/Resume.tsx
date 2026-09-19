@@ -1,3 +1,17 @@
+/**
+ * NOT ROUTED, ON PURPOSE.
+ *
+ * This page is deliberately unreachable: it is absent from `src/routes.ts`, so
+ * nothing imports this file, it is excluded from the bundle, and /resume
+ * returns a genuine 404. Kept in the repository because the content is worth
+ * having if it is ever refreshed -- it is NOT dead code to delete.
+ *
+ * To bring it back: add "/resume" to ROUTES in src/routes.ts (the compiler will
+ * then require an entry in App.tsx's route map). Note that the nav's
+ * resume-specific header, which showed a contact email instead of the tagline,
+ * was removed so the address would stop shipping in the bundle -- restore it
+ * from git history if you want that behaviour back.
+ */
 import { useEffect } from "react";
 import styled from "styled-components";
 import OriginalSectionTitle from "../common/SectionTitle";
