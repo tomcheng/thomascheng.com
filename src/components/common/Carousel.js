@@ -93,6 +93,8 @@ class Carousel extends React.Component {
     onUpdatePane: PropTypes.func
   };
 
+  static nextId = 0;
+
   state = {
     dragDirection: null,
     isDragging: false,
@@ -102,6 +104,8 @@ class Carousel extends React.Component {
     shouldWiggle: false,
     frameWidth: 1000
   };
+
+  animationName = `horizontalPan-${Carousel.nextId++}`;
 
   componentDidMount() {
     this.setDimensions();
@@ -183,7 +187,7 @@ class Carousel extends React.Component {
 
   animateToPane = (pane, duration, easing) => {
     Animations.animate({
-      name: "horizontalPan-" + this.props.title,
+      name: this.animationName,
       start: this.state.scrollPos,
       end: -this.state.frameWidth * pane,
       duration,
@@ -219,7 +223,7 @@ class Carousel extends React.Component {
     }
 
     if (!isDragging) {
-      Animations.stop("horizontalPan-" + this.props.title);
+      Animations.stop(this.animationName);
 
       this.setState({
         isDragging: true,
