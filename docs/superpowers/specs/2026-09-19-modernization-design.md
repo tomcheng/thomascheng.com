@@ -44,7 +44,7 @@ improvement to keep.
 | Question | Decision | Rationale |
 |---|---|---|
 | Scope | Infra + web-platform fixes | Design unchanged |
-| Build tool | Vite 7 | Static client-side SPA; Next.js adds a framework this site would not use |
+| Build tool | Vite 8 | Static client-side SPA; Next.js adds a framework this site would not use |
 | Hosting | GitHub Pages + Actions | Keeps existing DNS; no manual dashboard step |
 | Types | TypeScript, strict | React 19 ignores `propTypes`; existing declarations give the shapes |
 | Verification | Manual browser check per phase | Five static pages; no committed suite to maintain |
@@ -92,6 +92,16 @@ browser check in *Verification* passes.
   `Games.js` 7, `HomeDesktop.js` 6, `Apps.js` 1.
 - `.nvmrc` → Node 22. `public/CNAME` must survive into the build output.
 - React stays at 16.6 through this phase.
+
+> **Amended 2026-09-19, during planning: Phases 2 and 3 must land as a single
+> commit.** React 19 removes legacy context (`contextTypes` /
+> `childContextTypes`) and the unprefixed `componentWillMount` /
+> `componentWillReceiveProps`. `react-router` 4.3.1 uses all three —
+> `node_modules/react-router/Router.js:72,92,113,116` and
+> `Route.js:90,98,147,154` — and legacy context is *how* it passes location
+> down, so it breaks rather than warns. react-router 7 in turn requires React
+> 18+. Neither can move first. They are kept as separate phases below for
+> readability; the implementation plan merges them into its Task 3.
 
 ### Phase 2 — React 16.6 → 19
 
@@ -147,6 +157,10 @@ regress, and it gets a deliberate side-by-side check against the reference build
 - Convert ~30 source files to `.ts`/`.tsx`, `strict: true`.
 - Existing `propTypes` declarations supply the prop shapes; delete them and the
   `prop-types` dependency once converted.
+- **Pin TypeScript to 6.0.3, not the current 7.0.2.** `typescript-eslint@8.70.0`
+  declares `peerDependencies.typescript: ">=4.8.4 <6.1.0"`, and no released
+  `typescript-eslint` supports TS 7. Typed linting on a codebase this size is
+  worth more than being one major ahead. Revisit when support ships.
 
 ### Phase 5b — Carousel animation-name collision (bug fix)
 
@@ -187,10 +201,17 @@ behavior change: it makes something work that is currently broken.
 - Add `<meta name="description">` and OpenGraph/Twitter card tags. The site
   currently has none, so shared links render blank.
 - Add `<meta name="robots" content="noindex">` on `/resume` only.
-- Compress the ~150 images in `src/images/` and serve AVIF/WebP with the
-  original JPEG/PNG as fallback, via a Vite image plugin so the transform runs
-  at build time and the sources stay untouched in git. Dimensions and visual
-  quality must not change.
+- Compress the ~150 images in `src/images/` via a Vite image plugin, so the
+  transform runs at build time and the sources stay untouched in git.
+  Dimensions and visual quality must not change; quality settings stay high
+  because artifacts in a design portfolio's work samples are a regression.
+
+  **Amended 2026-09-19, during planning:** an earlier draft also called for
+  AVIF/WebP with JPEG/PNG fallback. That requires `<picture>` elements in
+  `Carousel`, `RandomImage`, and `LinkPiece`, which contradicts the constraint
+  that `Carousel` receives only three edits. Re-compression alone captures most
+  of the saving with none of the markup churn. Modern formats are deferred to
+  *Out of scope* below.
 
 ### Phase 7 — Tooling and CI
 
@@ -282,3 +303,11 @@ surface, not a sign of tangled responsibilities.
 exactly three places — `findDOMNode` removal (Phase 2), transient props
 (Phase 4), and the animation-name fix (Phase 5b). Its behavior is the part of
 this site most worth preserving exactly.
+
+## Future work, deliberately excluded
+
+- **AVIF/WebP with `<picture>` fallback.** Worthwhile, but it means markup
+  changes in three components including `Carousel`. Better done as its own
+  change once the stack is stable.
+- **Splitting `Carousel.js`.** Not indicated — see the note above.
+- **TypeScript 7.** Blocked on `typescript-eslint` support.
