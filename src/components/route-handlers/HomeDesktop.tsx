@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import RandomImage from "../common/RandomImage.js";
+import RandomImage from "../common/RandomImage";
 import img0 from "../../images/logos/logo_1.jpg";
 import img1 from "../../images/logos/logo_2.jpg";
 import img2 from "../../images/logos/logo_3.jpg";

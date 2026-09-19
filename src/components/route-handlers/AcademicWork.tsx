@@ -1,4 +1,3 @@
-import React from "react";
 import CarouselPage from "../common/CarouselPage";
 import img0 from "../../images/academic-work/guide-1.jpg";
 import img1 from "../../images/academic-work/guide-2.jpg";

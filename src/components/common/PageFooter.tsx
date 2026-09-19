@@ -17,12 +17,17 @@ const FooterIcon = styled.i`
 `;
 
 class PageFooter extends React.Component {
+  bodyEl: HTMLElement | null = null;
+
   componentDidMount() {
     this.bodyEl = document.getElementsByTagName("html")[0];
   }
 
   handleClick = () => {
-    const initialPosition = this.bodyEl.scrollTop;
+    const { bodyEl } = this;
+    if (!bodyEl) return;
+
+    const initialPosition = bodyEl.scrollTop;
 
     Animations.animate({
       name: "body-scroll",
@@ -31,7 +36,7 @@ class PageFooter extends React.Component {
       duration: 500,
       easing: cubicInOut,
       onUpdate: pos => {
-        this.bodyEl.scrollTop = pos;
+        bodyEl.scrollTop = pos;
       }
     });
   };

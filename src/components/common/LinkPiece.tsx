@@ -1,12 +1,11 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { Component } from "react";
 import styled from "styled-components";
 import breakpoints from "../../utils/breakpoints";
 import NudgeBottom from "./NudgeBottom";
 import ScrollIntoView from "./ScrollIntoView";
 import ActiveIndicator from "./ActiveIndicator";
 
-const displayUrl = url => url.replace(/^https?:\/\//, "");
+const displayUrl = (url: string) => url.replace(/^https?:\/\//, "");
 
 const Image = styled.img`
   display: block;
@@ -17,21 +16,25 @@ const Image = styled.img`
   }
 `;
 
-class LinkPiece extends Component {
-  static propTypes = {
-    height: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    isMobile: PropTypes.bool.isRequired,
-    showActiveIndicator: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    width: PropTypes.number.isRequired
-  };
+type LinkPieceProps = {
+  height: number;
+  image: string;
+  isActive: boolean;
+  isMobile: boolean;
+  showActiveIndicator: boolean;
+  title: string;
+  url: string;
+  width: number;
+};
 
-  state = { containerWidth: 0 };
+type LinkPieceState = {
+  containerWidth: number;
+};
 
-  containerEl = null;
+class LinkPiece extends Component<LinkPieceProps, LinkPieceState> {
+  state: LinkPieceState = { containerWidth: 0 };
+
+  containerEl: HTMLDivElement | null = null;
 
   componentDidMount() {
     this.setDimensions();
@@ -43,6 +46,7 @@ class LinkPiece extends Component {
   }
 
   setDimensions = () => {
+    if (!this.containerEl) return;
     this.setState({ containerWidth: this.containerEl.offsetWidth });
   };
 

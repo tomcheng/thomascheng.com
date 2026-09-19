@@ -1,17 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
-import Animations from "../../utils/animations.js";
+import Animations from "../../utils/animations";
 import {
   bounceOut,
   cubicOut,
   cubicInOut,
   elasticOut,
   sineIn
-} from "../../utils/easings.js";
+} from "../../utils/easings";
 import breakpoints from "../../utils/breakpoints";
-import { constrain } from "../../utils/math.js";
-import TouchHandler from "./TouchHandler.js";
+import { constrain } from "../../utils/math";
+import TouchHandler, { type DragEvent, type DragReleaseEvent } from "./TouchHandler";
 import ActiveIndicator from "./ActiveIndicator";
 
 const MOBILE_PADDING = 15;
@@ -33,7 +32,7 @@ const wiggle = keyframes`
   }
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ $isMobile: boolean; $shouldWiggle: boolean }>`
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -50,7 +49,7 @@ const List = styled.div`
   user-select: none;
 `;
 
-const Item = styled.div`
+const Item = styled.div<{ $isMobile: boolean }>`
   padding-left: ${props => (props.$isMobile ? MOBILE_PADDING + "px" : "0")};
   padding-right: ${props => (props.$isMobile ? MOBILE_PADDING + "px" : "0")};
 `;
@@ -64,7 +63,10 @@ const Image = styled.img`
   }
 `;
 
-const ReturnIndicator = styled.i`
+const ReturnIndicator = styled.i<{
+  $indicatorProgress: number;
+  $indicatorFinalPosition: number;
+}>`
   font-size: 20px;
   height: 20px;
   line-height: 20px;
@@ -82,20 +84,30 @@ const ReturnIndicator = styled.i`
   );
 `;
 
-class Carousel extends React.Component {
-  static propTypes = {
-    height: PropTypes.number.isRequired,
-    images: PropTypes.array.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    isMobile: PropTypes.bool.isRequired,
-    showActiveIndicator: PropTypes.bool.isRequired,
-    width: PropTypes.number.isRequired,
-    onUpdatePane: PropTypes.func
-  };
+type CarouselProps = {
+  height: number;
+  images: string[];
+  isActive: boolean;
+  isMobile: boolean;
+  showActiveIndicator: boolean;
+  width: number;
+  onUpdatePane?: (pane: number) => void;
+};
 
+type CarouselState = {
+  dragDirection: null;
+  isDragging: boolean;
+  isDraggingHorizontally: boolean;
+  scrollPos: number;
+  scrollPosAtDragStart: number | null;
+  shouldWiggle: boolean;
+  frameWidth: number;
+};
+
+class Carousel extends React.Component<CarouselProps, CarouselState> {
   static nextId = 0;
 
-  state = {
+  state: CarouselState = {
     dragDirection: null,
     isDragging: false,
     isDraggingHorizontally: false,
@@ -104,6 +116,8 @@ class Carousel extends React.Component {
     shouldWiggle: false,
     frameWidth: 1000
   };
+
+  wrapper: HTMLDivElement | null = null;
 
   animationName = `horizontalPan-${Carousel.nextId++}`;
 
@@ -114,7 +128,7 @@ class Carousel extends React.Component {
     window.addEventListener("keydown", this.handleKeyDown);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: CarouselProps, prevState: CarouselState) {
     const { onUpdatePane } = this.props;
     const currentPane = this.getCurrentPane();
 
@@ -134,7 +148,7 @@ class Carousel extends React.Component {
   }
 
   setDimensions = () => {
-    const frameWidth = this.wrapper.offsetWidth;
+    const frameWidth = this.wrapper!.offsetWidth;
     const currentPane = this.getCurrentPane();
 
     this.setState({
@@ -143,7 +157,7 @@ class Carousel extends React.Component {
     });
   };
 
-  handleKeyDown = evt => {
+  handleKeyDown = (evt: KeyboardEvent) => {
     if (!this.props.isActive) {
       return;
     }
@@ -160,7 +174,7 @@ class Carousel extends React.Component {
     }
   };
 
-  getCurrentPane = (state = this.state) => {
+  getCurrentPane = (state: CarouselState = this.state) => {
     const { scrollPos, frameWidth } = state;
     const imageCount = this.props.images.length;
 
@@ -185,7 +199,7 @@ class Carousel extends React.Component {
     return constrain(Math.ceil(-scrollPos / frameWidth), 0, imageCount - 1);
   };
 
-  animateToPane = (pane, duration, easing) => {
+  animateToPane = (pane: number, duration: number, easing: (x: number) => number) => {
     Animations.animate({
       name: this.animationName,
       start: this.state.scrollPos,
@@ -198,7 +212,7 @@ class Carousel extends React.Component {
     });
   };
 
-  handleDrag = evt => {
+  handleDrag = (evt: DragEvent) => {
     const { deltaX, direction } = evt;
     const {
       isDragging,
@@ -213,13 +227,13 @@ class Carousel extends React.Component {
     if (isDragging && isDraggingHorizontally) {
       let dragOffset = deltaX;
       if (
-        scrollPosAtDragStart + deltaX > 0 ||
-        scrollPosAtDragStart + deltaX < -frameWidth * (imageCount - 1)
+        scrollPosAtDragStart! + deltaX > 0 ||
+        scrollPosAtDragStart! + deltaX < -frameWidth * (imageCount - 1)
       ) {
         dragOffset *= DRAG_CONSTANT;
       }
 
-      this.setState({ scrollPos: scrollPosAtDragStart + dragOffset });
+      this.setState({ scrollPos: scrollPosAtDragStart! + dragOffset });
     }
 
     if (!isDragging) {
@@ -233,7 +247,7 @@ class Carousel extends React.Component {
     }
   };
 
-  handleDragRelease = evt => {
+  handleDragRelease = (evt: DragReleaseEvent) => {
     const { deltaX, velocityX } = evt;
     const { isDraggingHorizontally, scrollPos, frameWidth } = this.state;
     const { images } = this.props;

@@ -1,23 +1,26 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Container = styled.div`
   cursor: pointer;
 `;
 
-const Image = styled.img`
+const Image = styled.img<{ $visible: boolean }>`
   width: 100%;
   display: ${props => (props.$visible ? "block" : "none")};
 `;
 
-class RandomImage extends React.Component {
-  static propTypes = {
-    images: PropTypes.array.isRequired,
-    className: PropTypes.string
-  };
+type RandomImageProps = {
+  images: string[];
+  className?: string;
+};
 
-  constructor(props) {
+type RandomImageState = {
+  imageShown: number;
+};
+
+class RandomImage extends React.Component<RandomImageProps, RandomImageState> {
+  constructor(props: RandomImageProps) {
     super(props);
 
     this.state = {

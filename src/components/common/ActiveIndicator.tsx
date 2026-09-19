@@ -1,8 +1,7 @@
-import React from "react";
+import type { ReactNode } from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-const Indicator = styled.div`
+const Indicator = styled.div<{ $isActive: boolean }>`
   position: absolute;
   top: 50%;
   margin-top: -8px;
@@ -14,17 +13,17 @@ const Indicator = styled.div`
   opacity: ${props => (props.$isActive ? "1" : "0")};
 `;
 
-const ActiveIndicator = ({ isActive, isMobile, children }) => (
+type ActiveIndicatorProps = {
+  children: ReactNode;
+  isActive: boolean;
+  isMobile: boolean;
+};
+
+const ActiveIndicator = ({ isActive, isMobile, children }: ActiveIndicatorProps) => (
   <div style={{ position: "relative" }}>
     {!isMobile && <Indicator $isActive={isActive}>•</Indicator>}
     {children}
   </div>
 );
-
-ActiveIndicator.propTypes = {
-  children: PropTypes.node.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  isMobile: PropTypes.bool.isRequired
-};
 
 export default ActiveIndicator;

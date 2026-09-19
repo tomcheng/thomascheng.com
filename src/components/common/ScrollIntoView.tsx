@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Animations from "../../utils/animations.js";
-import { cubicInOut } from "../../utils/easings.js";
+import { Component, type ReactNode } from "react";
+import Animations from "../../utils/animations";
+import { cubicInOut } from "../../utils/easings";
 
-class ScrollIntoView extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-    isActive: PropTypes.bool.isRequired
-  };
+type ScrollIntoViewProps = {
+  children: ReactNode;
+  isActive: boolean;
+};
 
-  containerEl = null;
+class ScrollIntoView extends Component<ScrollIntoViewProps> {
+  containerEl: HTMLDivElement | null = null;
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: ScrollIntoViewProps) {
     const { isActive } = this.props;
 
     if (prevProps.isActive || !isActive) {
       return;
     }
 
+    if (!this.containerEl) return;
     const { top, height } = this.containerEl.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     const outOfViewTop = top < 100;

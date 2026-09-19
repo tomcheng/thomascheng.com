@@ -76,7 +76,7 @@ const IMAGES = [
   img33
 ];
 
-const shuffleArray = array => {
+const shuffleArray = (array: string[]) => {
   for (var i = array.length - 1; i > 0; i--) {
     var j = Math.floor(Math.random() * (i + 1));
     var temp = array[i];
@@ -106,7 +106,7 @@ const TriggerContainer = styled.div`
   user-select: none;
 `;
 
-const Trigger = styled.div`
+const Trigger = styled.div<{ $isFlashing: boolean }>`
   font-family: Raleway, sans-serif;
   transition: all 0.06s ease-in;
   color: ${props => (props.$isFlashing ? "#fff" : "#333")};
@@ -130,7 +130,7 @@ const Subtitle = styled.div`
   }
 `;
 
-const Message = styled.div`
+const Message = styled.div<{ $show: boolean }>`
   left: 0;
   position: fixed;
   width: 100%;
@@ -140,12 +140,12 @@ const Message = styled.div`
   opacity: ${props => (props.$show ? 1 : 0)};
 `;
 
-const MessagePart = styled.span`
+const MessagePart = styled.span<{ $show: boolean }>`
   transition: opacity 0.05s ease-in-out;
   opacity: ${props => (props.$show ? 1 : 0)};
 `;
 
-const Images = styled.div`
+const Images = styled.div<{ $isShowing: boolean }>`
   position: fixed;
   left: 0;
   right: 0;
@@ -156,7 +156,7 @@ const Images = styled.div`
   background-color: rgba(240, 240, 240, ${props => (props.$isShowing ? 1 : 0)});
 `;
 
-const Image = styled.div`
+const Image = styled.div<{ $show: boolean }>`
   background-size: cover;
   position: absolute;
   width: 100%;
@@ -166,14 +166,20 @@ const Image = styled.div`
   opacity: ${props => (props.$show ? 1 : 0)};
 `;
 
-class HomeMobile extends React.Component {
-  state = {
+type HomeMobileState = {
+  currentFrame: number;
+  isPressed: boolean;
+  images: string[];
+};
+
+class HomeMobile extends React.Component<{}, HomeMobileState> {
+  state: HomeMobileState = {
     currentFrame: 0,
     isPressed: false,
     images: shuffleArray(IMAGES)
   };
 
-  handleTouchStart = evt => {
+  handleTouchStart = (evt: React.TouchEvent<HTMLDivElement>) => {
     evt.preventDefault();
 
     this.setState({

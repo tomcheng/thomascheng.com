@@ -1,7 +1,18 @@
-const Animations = {
-  props: { animations: {} },
+type AnimationState = { raf?: number };
 
-  registerStart(name) {
+type AnimateOptions = {
+  name: string;
+  start: number;
+  end: number;
+  duration: number;
+  easing: (x: number) => number;
+  onUpdate: (value: number) => void;
+};
+
+const Animations = {
+  props: { animations: {} as Record<string, AnimationState> },
+
+  registerStart(name: string) {
     const { animations } = this.props;
 
     if (animations[name]) {
@@ -17,7 +28,7 @@ const Animations = {
     return new Date().getTime();
   },
 
-  stop(name) {
+  stop(name: string) {
     const { animations } = this.props;
 
     if (animations[name]) {
@@ -28,7 +39,7 @@ const Animations = {
     }
   },
 
-  animate({ name, start, end, duration, easing, onUpdate }) {
+  animate({ name, start, end, duration, easing, onUpdate }: AnimateOptions) {
     const { animations } = this.props;
     const startTime = this.getCurrentTime();
     let timePassed;

@@ -1,11 +1,12 @@
-import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Container from "../common/Container";
 import Logo from "../common/Logo";
 import breakpoints from "../../utils/breakpoints";
 
-const LINKS = [
+type Link = { title: string; path: string; hiddenOnMobile?: boolean };
+
+const LINKS: Link[] = [
   { title: "Games", path: "/games" },
   { title: "Apps", path: "/apps" },
   { title: "Design", path: "/design" },
@@ -71,7 +72,7 @@ const Nav = styled.div`
   justify-content: flex-end;
 `;
 
-const NavItem = styled.div`
+const NavItem = styled.div<{ $hiddenOnMobile?: boolean }>`
   color: #333;
   font-size: 11px;
   font-weight: 700;

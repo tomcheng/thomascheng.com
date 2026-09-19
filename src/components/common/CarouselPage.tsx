@@ -1,38 +1,25 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { Component } from "react";
 import withResponsiveness from "../../higher-order-components/withResponsiveness";
 import PushBottom from "./PushBottom";
 import CarouselLayout from "./CarouselLayout";
 import LinkPiece from "./LinkPiece";
 import PageFooter from "./PageFooter";
 import ArrowKeys from "./ArrowKeys";
-import { constrain } from "../../utils/math.js";
+import { constrain } from "../../utils/math";
+import type { Piece } from "../../types/piece";
 
-class CarouselPage extends Component {
-  static propTypes = {
-    isMobile: PropTypes.bool.isRequired,
-    pieces: PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        PropTypes.shape({
-          type: PropTypes.oneOf(["carousel"]).isRequired,
-          images: PropTypes.arrayOf(PropTypes.string).isRequired,
-          height: PropTypes.number.isRequired,
-          title: PropTypes.string.isRequired,
-          width: PropTypes.number.isRequired
-        }),
-        PropTypes.shape({
-          type: PropTypes.oneOf(["link"]).isRequired,
-          title: PropTypes.string.isRequired,
-          url: PropTypes.string.isRequired,
-          image: PropTypes.string.isRequired,
-          height: PropTypes.number.isRequired,
-          width: PropTypes.number.isRequired
-        })
-      ])
-    ).isRequired
-  };
+type CarouselPageProps = {
+  isMobile: boolean;
+  pieces: Piece[];
+};
 
-  state = { activeIndex: 0, keyboardUsed: false };
+type CarouselPageState = {
+  activeIndex: number;
+  keyboardUsed: boolean;
+};
+
+class CarouselPage extends Component<CarouselPageProps, CarouselPageState> {
+  state: CarouselPageState = { activeIndex: 0, keyboardUsed: false };
 
   componentDidMount() {
     window.addEventListener("keydown", this.handleKeyDown);
@@ -42,7 +29,7 @@ class CarouselPage extends Component {
     window.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  handleKeyDown = evt => {
+  handleKeyDown = (evt: KeyboardEvent) => {
     const { pieces } = this.props;
     const { code, shiftKey } = evt;
 
@@ -71,7 +58,7 @@ class CarouselPage extends Component {
     }
   };
 
-  handleClickPiece = index => {
+  handleClickPiece = (index: number) => {
     this.setState({ activeIndex: index });
   };
 

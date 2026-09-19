@@ -1,8 +1,15 @@
-import React from "react";
 import styled from "styled-components";
 import OriginalSectionTitle from "../common/SectionTitle";
 
-const WORK_HISTORY = [
+type ResumePosition = {
+  role: string;
+  company?: string | null;
+  start?: string | null;
+  end?: string | null;
+  details: string[];
+};
+
+const WORK_HISTORY: ResumePosition[] = [
   {
     role: "Senior Developer (Full Stack)",
     company: "LookBookHQ",
@@ -73,7 +80,7 @@ const WORK_HISTORY = [
   }
 ];
 
-const EDUCATION = [
+const EDUCATION: ResumePosition[] = [
   {
     role: "Bachelor of Design Program",
     company: "York University & Sheridan College",
@@ -93,7 +100,7 @@ const EDUCATION = [
   }
 ];
 
-const INTERESTS = [
+const INTERESTS: ResumePosition[] = [
   {
     role: "Current Side Project: Zoundboards",
     details: [

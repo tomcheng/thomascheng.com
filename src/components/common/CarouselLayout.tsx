@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import NudgeBottom from "./NudgeBottom";
 import ScrollIntoView from "./ScrollIntoView";
@@ -23,19 +22,25 @@ const Counter = styled.div`
   text-align: right;
 `;
 
-class CarouselLayout extends React.Component {
-  static propTypes = {
-    height: PropTypes.number.isRequired,
-    images: PropTypes.array.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    isMobile: PropTypes.bool.isRequired,
-    showActiveIndicator: PropTypes.bool.isRequired,
-    width: PropTypes.number.isRequired,
-    description: PropTypes.string,
-    title: PropTypes.string
-  };
+type CarouselLayoutProps = {
+  height: number;
+  images: string[];
+  isActive: boolean;
+  isMobile: boolean;
+  showActiveIndicator: boolean;
+  width: number;
+  description?: string;
+  title?: string;
+};
 
-  state = { currentPane: 0 };
+type CarouselLayoutState = {
+  currentPane: number;
+};
+
+class CarouselLayout extends React.Component<CarouselLayoutProps, CarouselLayoutState> {
+  state: CarouselLayoutState = { currentPane: 0 };
+
+  carouselEl: Carousel | null = null;
 
   renderCounter = () =>
     this.props.images.length > 1 && (
@@ -45,10 +50,11 @@ class CarouselLayout extends React.Component {
     );
 
   handleClickCounter = () => {
+    if (!this.carouselEl) return;
     this.carouselEl.goToNextPane();
   };
 
-  handleUpdatePane = pane => {
+  handleUpdatePane = (pane: number) => {
     this.setState({ currentPane: pane });
   };
 
