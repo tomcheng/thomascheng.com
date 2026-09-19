@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { copyFileSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -36,7 +37,19 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: "/",
-    plugins: [react(), spa404()],
+    plugins: [
+      react(),
+      spa404(),
+      // Lossy re-compression only, at build time; source files in src/images
+      // stay untouched in git. Quality kept high -- this is a design
+      // portfolio and visible artifacts in the work samples would be a
+      // regression, not a win.
+      ViteImageOptimizer({
+        jpg: { quality: 88 },
+        jpeg: { quality: 88 },
+        png: { quality: 90 },
+      }),
+    ],
     // Vite seeds the bundle's `process.env.NODE_ENV` from the ambient NODE_ENV
     // whenever one is set, so a shell exporting NODE_ENV=development makes
     // `vite build` emit React's development build. Under React 19 that is fatal,
