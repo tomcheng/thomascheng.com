@@ -1,4 +1,3 @@
-import "./styles/font-awesome.css";
 import "./styles/main.css";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";

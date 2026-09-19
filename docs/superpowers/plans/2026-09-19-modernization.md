@@ -43,7 +43,7 @@ React 19 removes legacy context (`contextTypes` / `childContextTypes`) and the u
 | `.github/workflows/deploy.yml` | Build and deploy to Pages on push to `master` |
 | `public/robots.txt` | Disallows `/resume` |
 
-**Deleted:** `src/styles/font-awesome.css` (1,793 lines), `src/fonts/` (6 files, ~4 MB), `.eslintrc`, `public/index.html`.
+**Deleted:** `src/styles/font-awesome.css` (1,793 lines), `src/fonts/` — five binary font formats, ~4 MB (the `.svg` is *moved* to `scripts/`, not deleted: it is the generator's only source) — `.eslintrc`, `public/index.html`.
 
 **Modified:** `package.json`, `.gitignore`, `.nvmrc`, and the 30 files under `src/` (all renamed to `.ts`/`.tsx` in Task 6).
 
@@ -1037,12 +1037,19 @@ Keep the declaration body as it is, then update the JSX:
             />
 ```
 
-- [ ] **Step 6: Delete the font and its stylesheet**
+- [ ] **Step 6: Delete the font binaries, but KEEP the generator's source**
+
+`fontawesome-webfont.svg` is the only file the generator can read path data from. Deleting it would freeze the icon set: adding a seventh icon later would mean hunting down a Font Awesome 4 font again. Keep it as a tooling asset next to the script that consumes it.
+
+It costs **zero bundle bytes** — Vite only emits assets that something imports, and once `font-awesome.css` is gone nothing imports any font file. The ~4 MB saving comes from the five binary formats, which have no re-use value.
 
 ```bash
+git mv src/fonts/fontawesome-webfont.svg scripts/fontawesome-webfont.svg
 git rm -r src/fonts
 git rm src/styles/font-awesome.css
 ```
+
+Then update the `FONT` constant at the top of `scripts/generate-icons.mjs` to point at its new location, and re-run the generator once to prove it still works from there.
 
 Remove the import from the top of `src/index.tsx`:
 

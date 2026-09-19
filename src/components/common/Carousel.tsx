@@ -12,6 +12,7 @@ import breakpoints from "../../utils/breakpoints";
 import { constrain } from "../../utils/math";
 import TouchHandler, { type DragEvent, type DragReleaseEvent } from "./TouchHandler";
 import ActiveIndicator from "./ActiveIndicator";
+import Icon from "./Icon";
 
 const MOBILE_PADDING = 15;
 const DRAG_CONSTANT = 0.2; // amount of slow down dragging past bounds
@@ -63,7 +64,7 @@ const Image = styled.img`
   }
 `;
 
-const ReturnIndicator = styled.i<{
+const ReturnIndicator = styled(Icon)<{
   $indicatorProgress: number;
   $indicatorFinalPosition: number;
 }>`
@@ -396,7 +397,7 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
           </TouchHandler>
           {imageCount > 1 ? (
             <ReturnIndicator
-              className="fa fa-arrow-left"
+              name="arrow-left"
               $indicatorProgress={indicatorProgress}
               $indicatorFinalPosition={indicatorFinalPosition}
             />

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Icon from "./Icon";
 
 const Row = styled.div`
   display: flex;
@@ -21,18 +22,18 @@ const ArrowKeys = () => (
   <div>
     <Row>
       <Key>
-        <i className="fa fa-angle-up" />
+        <Icon name="angle-up" />
       </Key>
     </Row>
     <Row>
       <Key>
-        <i className="fa fa-angle-left" />
+        <Icon name="angle-left" />
       </Key>
       <Key>
-        <i className="fa fa-angle-down" />
+        <Icon name="angle-down" />
       </Key>
       <Key>
-        <i className="fa fa-angle-right" />
+        <Icon name="angle-right" />
       </Key>
     </Row>
   </div>

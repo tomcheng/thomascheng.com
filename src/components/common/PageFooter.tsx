@@ -2,13 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import Animations from "../../utils/animations";
 import { cubicInOut } from "../../utils/easings";
+import Icon from "./Icon";
 
 const Footer = styled.div`
   text-align: center;
   margin-bottom: 15px;
 `;
 
-const FooterIcon = styled.i`
+const FooterIcon = styled(Icon)`
+  /* The global \`* { box-sizing: border-box }\` rule would otherwise clamp
+     this SVG's content box to 0 (18px intrinsic size minus 30px of padding),
+     making the icon invisible. The old font icon was unaffected because an
+     auto-width <i> isn't sized via an explicit width/height at all. */
+  box-sizing: content-box;
   font-size: 18px;
   padding: 5px;
   cursor: pointer;
@@ -44,7 +50,7 @@ class PageFooter extends React.Component {
   render() {
     return (
       <Footer>
-        <FooterIcon className="fa fa-hand-o-up" onClick={this.handleClick} />
+        <FooterIcon name="hand-o-up" onClick={this.handleClick} />
       </Footer>
     );
   }
