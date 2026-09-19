@@ -11,10 +11,10 @@ class ScrollIntoView extends Component {
 
   containerEl = null;
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { isActive } = this.props;
 
-    if (isActive || !nextProps.isActive) {
+    if (prevProps.isActive || !isActive) {
       return;
     }
 

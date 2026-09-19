@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Container from "../common/Container";
 import Logo from "../common/Logo";
@@ -130,23 +129,25 @@ const NavText = styled.span`
   }
 `;
 
-const Navigation = ({ location }) => {
-  const isHome = location.pathname === "/";
-  const isResume = location.pathname === "/resume";
+const Navigation = () => {
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+  const isResume = pathname === "/resume";
 
   const LinkComponent = isHome ? NavLinkHome : StyledNavLink;
   return (
     <Header>
       <HeaderContainer>
-        <MobileLink to="/" exact>
+        <MobileLink to="/">
           <Logo />
         </MobileLink>
         <DesktopLink to="/">
           <Name>Thomas Cheng</Name>
           {isResume ? (
             <Position>
-              thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St,
-              Toronto, ON, M5T 3K7
+              <a href="mailto:thomascheng81@gmail.com">
+                thomascheng81@gmail.com
+              </a>
             </Position>
           ) : (
             <Position>Developer & Designer</Position>
@@ -166,12 +167,6 @@ const Navigation = ({ location }) => {
       </HeaderContainer>
     </Header>
   );
-};
-
-Navigation.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired
-  }).isRequired
 };
 
 export default Navigation;

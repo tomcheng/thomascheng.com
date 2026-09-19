@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
-import { findDOMNode } from "react-dom";
 import Animations from "../../utils/animations.js";
 import {
   bounceOut,
@@ -131,7 +130,7 @@ class Carousel extends React.Component {
   }
 
   setDimensions = () => {
-    const frameWidth = findDOMNode(this.wrapper).offsetWidth;
+    const frameWidth = this.wrapper.offsetWidth;
     const currentPane = this.getCurrentPane();
 
     this.setState({
