@@ -85,7 +85,7 @@ browser check in *Verification* passes.
 
 ### Phase 1 — CRA → Vite
 
-- Replace `react-scripts` with Vite 7 + `@vitejs/plugin-react`.
+- Replace `react-scripts` with Vite 8 + `@vitejs/plugin-react`.
 - Move `index.html` from `public/` to the project root (Vite convention).
 - **76 `require()` calls for images become ESM imports.** `require` does not
   exist in Vite. Distribution: `HomeMobile.js` 34, `AcademicWork.js` 28,
@@ -192,7 +192,7 @@ behavior change: it makes something work that is currently broken.
 
 ### Phase 6 — Platform cleanup
 
-- **Font Awesome 4 → 6 inline SVGs.** A 1,793-line CSS file and ~4 MB of
+- **Font Awesome 4 → 6 inline SVGs.** A 1,793-line CSS file and ~702 KB of
   `.otf`/`.ttf`/`.eot`/`.woff`/`.svg` binaries currently serve six icons:
   `fa-hand-o-up`, `fa-arrow-left`, `fa-angle-up`, `fa-angle-left`,
   `fa-angle-down`, `fa-angle-right`.

@@ -43,7 +43,7 @@ React 19 removes legacy context (`contextTypes` / `childContextTypes`) and the u
 | `.github/workflows/deploy.yml` | Build and deploy to Pages on push to `master` |
 | `public/robots.txt` | Disallows `/resume` |
 
-**Deleted:** `src/styles/font-awesome.css` (1,793 lines), `src/fonts/` — five binary font formats, ~4 MB (the `.svg` is *moved* to `scripts/`, not deleted: it is the generator's only source) — `.eslintrc`, `public/index.html`.
+**Deleted:** `src/styles/font-awesome.css` (1,793 lines), `src/fonts/` — five binary font formats, ~396 KB (the 306 KB `.svg` is *moved* to `scripts/`, not deleted: it is the generator's only source) — `.eslintrc`, `public/index.html`.
 
 **Modified:** `package.json`, `.gitignore`, `.nvmrc`, and the 30 files under `src/` (all renamed to `.ts`/`.tsx` in Task 6).
 
@@ -869,7 +869,7 @@ Pins TypeScript to 6.0.3 because typescript-eslint has no TS 7 support."
 
 ### Task 7: Replace Font Awesome with inline SVG
 
-A 1,793-line stylesheet and ~4 MB of font binaries currently serve six icons. Rather than transcribing path data by hand — which invites subtly wrong glyphs — generate the component from the font already in the repo, then delete the font.
+A 1,793-line stylesheet and ~702 KB of font binaries currently serve six icons. Rather than transcribing path data by hand — which invites subtly wrong glyphs — generate the component from the font already in the repo, then delete the font.
 
 **Files:**
 - Create: `scripts/generate-icons.mjs`, `src/components/common/Icon.tsx`
@@ -1041,7 +1041,7 @@ Keep the declaration body as it is, then update the JSX:
 
 `fontawesome-webfont.svg` is the only file the generator can read path data from. Deleting it would freeze the icon set: adding a seventh icon later would mean hunting down a Font Awesome 4 font again. Keep it as a tooling asset next to the script that consumes it.
 
-It costs **zero bundle bytes** — Vite only emits assets that something imports, and once `font-awesome.css` is gone nothing imports any font file. The ~4 MB saving comes from the five binary formats, which have no re-use value.
+It costs **zero bundle bytes** — Vite only emits assets that something imports, and once `font-awesome.css` is gone nothing imports any font file. The saving comes from the five binary formats, which have no re-use value.
 
 ```bash
 git mv src/fonts/fontawesome-webfont.svg scripts/fontawesome-webfont.svg
@@ -1081,7 +1081,7 @@ npm run build && npm run preview
 du -sh dist
 ```
 
-Expected: meaningfully smaller — roughly 4 MB of fonts are gone.
+Expected: roughly 700 KB smaller. `font-awesome.css` referenced several formats, so `dist` carried the `.ttf`, `.svg` and others; all of them stop being emitted once nothing imports them.
 
 - [ ] **Step 10: Commit**
 
@@ -1089,7 +1089,7 @@ Expected: meaningfully smaller — roughly 4 MB of fonts are gone.
 git add -A
 git commit -m "perf: replace Font Awesome with six inline SVG icons
 
-Drops a 1793-line stylesheet and ~4MB of font binaries that served six
+Drops a 1793-line stylesheet and ~700KB of bundled font binaries that served six
 icons. Paths are generated from the vendored SVG font by
 scripts/generate-icons.mjs rather than transcribed by hand."
 ```
