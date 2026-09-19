@@ -1,5 +1,6 @@
 import RAPIER, { type RigidBody, type World } from "@dimforge/rapier2d-compat";
 import {
+  FONT_FAMILY,
   REFERENCE_FONT,
   REFERENCE_SIZE,
   clearGlyphShapes,
@@ -66,6 +67,17 @@ const MAX_POPS_PER_STEP = 3;
 // edge of the finger, and no more than a few loose periods.
 const FOUNTAIN_CLEARANCE = 14;
 const MAX_STRAY_DOTS = 3;
+
+// When the last period has drained from a page with nothing else left on it,
+// the page lets out a quiet sigh: it fades in, stays a while, and fades out.
+// Anything new turning up cuts it short.
+const SIGH_TEXT = "Aah...";
+const SIGH_FONT = `22px ${FONT_FAMILY}`;
+const SIGH_OPACITY = 0.5;
+const SIGH_HEIGHT = 0.36;
+const SIGH_FADE_IN_MS = 900;
+const SIGH_HOLD_MS = 3000;
+const SIGH_FADE_OUT_MS = 1200;
 
 // Every period is the same size whatever letter it came from. They are packed
 // a hair closer than touching, so the honeycomb starts out very slightly
@@ -163,6 +175,8 @@ export const createLettersWorld = (
   let accumulator = 0;
   let destroyed = false;
   let stepCost = 0;
+  // Milliseconds into the sigh, or null when the page is not sighing.
+  let sighAge: number | null = null;
 
   // --- World geometry -------------------------------------------------------
 
@@ -620,7 +634,25 @@ export const createLettersWorld = (
         if (gone) physics.removeRigidBody(dot.body);
         return !gone;
       });
+      if (dots.length === 0 && letters.length === 0) sighAge = 0;
     }
+  };
+
+  const sighOpacity = (age: number) => {
+    if (age < SIGH_FADE_IN_MS) return age / SIGH_FADE_IN_MS;
+    const leaving = age - SIGH_FADE_IN_MS - SIGH_HOLD_MS;
+    return leaving < 0 ? 1 : Math.max(0, 1 - leaving / SIGH_FADE_OUT_MS);
+  };
+
+  const sigh = (elapsed: number) => {
+    if (sighAge === null) return;
+    const fadeOutAt = SIGH_FADE_IN_MS + SIGH_HOLD_MS;
+    if (sighAge < fadeOutAt && letters.length + dots.length > 0) {
+      // Interrupted: leave from however far it had got, not from full.
+      sighAge = fadeOutAt + (1 - sighOpacity(sighAge)) * SIGH_FADE_OUT_MS;
+    }
+    sighAge += elapsed;
+    if (sighAge >= fadeOutAt + SIGH_FADE_OUT_MS) sighAge = null;
   };
 
   const draw = () => {
@@ -656,6 +688,16 @@ export const createLettersWorld = (
       const sin = Math.sin(angle) * scale * pop * dpr;
       ctx.setTransform(cos, sin, -sin, cos, at.x * dpr, at.y * dpr);
       ctx.fillText(char, -centre.x, -centre.y);
+    }
+
+    if (sighAge !== null) {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalAlpha = SIGH_OPACITY * sighOpacity(sighAge);
+      ctx.font = SIGH_FONT;
+      ctx.textAlign = "center";
+      ctx.fillText(SIGH_TEXT, width / 2, height * SIGH_HEIGHT);
+      ctx.textAlign = "start";
+      ctx.globalAlpha = 1;
     }
 
     if (debug) drawDebug();
@@ -706,6 +748,7 @@ export const createLettersWorld = (
       time - lastFrameTime,
       STEP_MS * MAX_STEPS_PER_FRAME
     );
+    sigh(Math.min(time - lastFrameTime, 100));
     lastFrameTime = time;
     const started = performance.now();
     while (accumulator >= STEP_MS) {
