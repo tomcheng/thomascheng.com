@@ -1,12 +1,18 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
-import { copyFileSync } from "node:fs";
+import { copyFileSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { ROUTES } from "./src/routes";
 
-// GitHub Pages has no SPA rewrite rule. Serving the app shell as the 404
-// document makes a deep link like /design boot the app, which then routes
-// client-side to the right page.
+// GitHub Pages has no SPA rewrite rule, and respects the file it finds
+// (or falls back to 404.html) for the HTTP status it returns. Every route
+// in ROUTES gets its own real `<route>/index.html` -- a byte-identical copy
+// of the built app shell -- so those known paths are served with a 200
+// instead of everything, including real pages, coming back as a 404.
+// 404.html (also a copy of the same shell) remains the fallback for
+// genuinely unknown paths, which keeps the deep-link trick working for
+// them while correctly reporting 404.
 function spa404() {
   let dist = "";
   return {
@@ -15,7 +21,14 @@ function spa404() {
       dist = resolve(config.root, config.build.outDir);
     },
     closeBundle() {
-      copyFileSync(resolve(dist, "index.html"), resolve(dist, "404.html"));
+      const shell = resolve(dist, "index.html");
+      copyFileSync(shell, resolve(dist, "404.html"));
+      for (const route of ROUTES) {
+        if (route === "/") continue;
+        const dir = resolve(dist, route.slice(1));
+        mkdirSync(dir, { recursive: true });
+        copyFileSync(shell, resolve(dir, "index.html"));
+      }
     },
   };
 }
