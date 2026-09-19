@@ -47,7 +47,7 @@ improvement to keep.
 | Build tool | Vite 7 | Static client-side SPA; Next.js adds a framework this site would not use |
 | Hosting | GitHub Pages + Actions | Keeps existing DNS; no manual dashboard step |
 | Types | TypeScript, strict | React 19 ignores `propTypes`; existing declarations give the shapes |
-| Verification | Playwright smoke tests | Committed suite; no pixel diffing |
+| Verification | Manual browser check per phase | Five static pages; no committed suite to maintain |
 | Strategy | Incremental, one concern per commit | Isolates the cause when something breaks |
 
 ### Non-goals
@@ -72,23 +72,16 @@ changes most likely to shift layout silently.
 
 ## Phases
 
-Each phase ends with: the site builds, the dev server runs, and the Playwright
-suite passes. Phase 3 changes the URL scheme, so that phase's commit updates the
-test suite's paths alongside the router change; every other phase must leave the
-tests untouched. A phase that requires editing a test to pass is a phase that
-changed behavior, and the edit needs justifying.
+Each phase ends with: the site builds, the dev server runs, and the manual
+browser check in *Verification* passes.
 
 ### Phase 0 — Safety net
 
 - Commit `package-lock.json`.
-- Build the current CRA site with the legacy OpenSSL flag; capture screenshots
-  of all five routes at 375 / 768 / 1440 px. These are working reference
-  material, not a committed test.
-- Write the Playwright smoke suite and prove it passes against the CRA build
-  before the stack moves underneath it.
-
-Tests must pass against the *old* site first. A test suite written against the
-new build only proves the new build is self-consistent.
+- Build the current CRA site with the legacy OpenSSL flag and keep the output
+  as the reference build.
+- Capture screenshots of all five routes at 375 / 768 / 1440 px from that build.
+  Working reference material, not committed to the repository.
 
 ### Phase 1 — CRA → Vite
 
@@ -103,14 +96,24 @@ new build only proves the new build is self-consistent.
 ### Phase 2 — React 16.6 → 19
 
 - `ReactDOM.render` → `createRoot` (`src/index.js:14`).
-- `findDOMNode` → callback ref (`src/components/common/Carousel.js:134`).
-  Removed in React 19.
+- `findDOMNode` → direct ref access (`src/components/common/Carousel.js:134`).
+  Removed in React 19. The fix is a one-liner: `Carousel.js:351` already holds a
+  callback ref to the `Container`, and styled-components forwards refs to the
+  underlying DOM node, so `this.wrapper` *is* the element. `findDOMNode` has
+  been redundant here for years — it becomes `this.wrapper.offsetWidth`.
 - `componentWillReceiveProps` → `componentDidUpdate`
   (`src/components/common/ScrollIntoView.js:14`). The method compares previous
   and next `isActive` to trigger a scroll animation; `componentDidUpdate` with
   `prevProps` expresses the same intent without the deprecated lifecycle.
 - Remove `fastclick`. It works around a 300 ms tap delay that browsers stopped
   exhibiting around 2015; on current browsers it causes double-fire bugs.
+
+**Watch item:** `Carousel.animateToPane` calls `setState` once per animation
+frame from a `requestAnimationFrame` callback (`Carousel.js:193`). React 16 flushed
+those synchronously; React 18+ auto-batches updates originating outside event
+handlers. One `rAF` tick still yields one render, so this should be visually
+identical — but it is the single most likely place for carousel smoothness to
+regress, and it gets a deliberate side-by-side check against the reference build.
 
 ### Phase 3 — Router 4 → 7, and clean URLs
 
@@ -122,8 +125,10 @@ new build only proves the new build is self-consistent.
   tradeoff of staying on Pages.
 - **Back-compat:** a boot-time redirect rewrites legacy `#/games` URLs to
   `/games` so existing inbound links keep working.
-- Remove the dead `/resume` branch in `Navigation.js:135,146,155`. See
-  *Security and privacy* below.
+- Add the `/resume` route, reachable by direct URL only. It is deliberately
+  absent from the nav `LINKS` list, so the existing `isResume` branches in
+  `Navigation.js:135,146,155` become live rather than dead. See *Security and
+  privacy* below for the contact-line change and `noindex`.
 
 ### Phase 4 — styled-components 4 → 6
 
@@ -143,6 +148,34 @@ new build only proves the new build is self-consistent.
 - Existing `propTypes` declarations supply the prop shapes; delete them and the
   `prop-types` dependency once converted.
 
+### Phase 5b — Carousel animation-name collision (bug fix)
+
+Found while reading the code for this spec. `CarouselLayout.js:56` destructures
+`title` out of props:
+
+```js
+const { description, title, isActive, ...other } = this.props;
+```
+
+so `title` never reaches `<Carousel {...other}>`. `Carousel` names its animation
+after it (`Carousel.js:187`, `:223`):
+
+```js
+name: "horizontalPan-" + this.props.title   // → "horizontalPan-undefined"
+```
+
+Every carousel therefore registers under the identical name, and
+`Animations.registerStart` stops any existing animation with that name before
+starting a new one (`utils/animations.js:5-7`). `/design` renders **11**
+carousels, so flinging one while another is still gliding cancels the first
+mid-animation.
+
+**Fix:** give each `Carousel` instance a unique id at construction and use that
+as the animation name. Not `title` — two pieces could legitimately share one.
+
+Kept in its own commit, separate from the mechanical upgrades, because it is a
+behavior change: it makes something work that is currently broken.
+
 ### Phase 6 — Platform cleanup
 
 - **Font Awesome 4 → 6 inline SVGs.** A 1,793-line CSS file and ~4 MB of
@@ -153,6 +186,7 @@ new build only proves the new build is self-consistent.
   meta. Blocking zoom is an accessibility failure (WCAG 1.4.4).
 - Add `<meta name="description">` and OpenGraph/Twitter card tags. The site
   currently has none, so shared links render blank.
+- Add `<meta name="robots" content="noindex">` on `/resume` only.
 - Compress the ~150 images in `src/images/` and serve AVIF/WebP with the
   original JPEG/PNG as fallback, via a Vite image plugin so the transform runs
   at build time and the sources stay untouched in git. Dimensions and visual
@@ -163,24 +197,31 @@ new build only proves the new build is self-consistent.
 - ESLint flat config (`eslint.config.js`) + `typescript-eslint` + Prettier,
   replacing the orphaned `.eslintrc`. Add `lint` and `format` scripts.
 - GitHub Actions: build and deploy to Pages on push to `master`, replacing the
-  manual `gh-pages` CLI. Run lint, typecheck, and Playwright on pull requests.
+  manual `gh-pages` CLI. Run lint and typecheck on pull requests.
 
 ## Verification
 
-Playwright smoke tests, run in CI:
+No test suite is committed. The site is five static pages, and a suite here
+would be maintenance weight rather than protection. Verification is a manual
+browser pass at the end of every phase, against this checklist:
 
-- Each of `/`, `/games`, `/apps`, `/design`, `/contact` loads and renders its
-  distinguishing content.
+- Each of `/`, `/games`, `/apps`, `/design`, `/contact`, `/resume` loads and
+  renders its content.
 - Navigation moves between routes and marks the active link.
-- Carousel advances by click, by arrow key, and by touch swipe.
+- Carousel advances by click, by arrow key, and by drag/swipe; the fling still
+  decelerates smoothly and the rubber-band at both ends still feels right.
+- Two carousels on `/design` animate independently without cancelling each
+  other (see Phase 5b).
 - An unknown path renders the NotFound component.
-- A deep link loads directly (not just via client-side navigation) — this is
-  what proves the `404.html` fallback works.
+- A deep link loads directly, not only via client-side navigation — this is what
+  proves the `404.html` fallback works.
 - A legacy `#/games` URL redirects to `/games`.
+- Rendering matches the Phase 0 screenshots at 375 / 768 / 1440 px.
 
-Per the agreed scope there is **no pixel-diffing**. The screenshot baseline from
-Phase 0 is checked by eye at each phase. This is the known weak point: a subtle
-layout shift from the styled-components upgrade could pass unnoticed.
+**Known weakness, accepted:** checking by eye catches layout breakage but can
+miss a few pixels of drift, and nothing guards against regressions after this
+work ships. The styled-components v4→v6 phase is where that risk concentrates,
+which is why it is isolated in its own commit and can be reverted alone.
 
 ## Security and privacy
 
@@ -191,21 +232,21 @@ home street address:
 thomascheng81@gmail.com | 647-772-3277 | 502-160 Baldwin St, Toronto, ON, M5T 3K7
 ```
 
-No route in `App.js` reaches this branch today, so the data is in the repository
-and in the shipped bundle but not on any reachable page.
-
 `Resume.js` itself contains no personal data — only work history and education.
 The contact line above is the sole instance, and it lives in `Navigation.js`.
 
-**Decision: leave `/resume` unrouted, delete the dead branch in
-`Navigation.js`, and leave `Resume.js` in place unchanged.** An earlier
-draft proposed wiring the route up because `Resume.js` appears complete; reading
-what it renders reverses that. Publishing a home address is not a default to
-adopt silently. The git history retains it if the owner wants it back, and
-routing it later is a small change.
+**Decisions:**
 
-Note the branch also uses a different address (`thomascheng81@gmail.com`) than
-the live contact page (`info@thomascheng.com`).
+1. `/resume` becomes reachable by direct URL, but is not linked from the nav.
+2. **The phone number and street address are removed from that line, leaving the
+   email.** Not linking a page is not access control: an unlinked page is fully
+   public to anyone with the URL and to any crawler that finds it. A resume
+   reader needs a way to reply, not a home address.
+3. `/resume` carries `noindex` to keep it out of search results — a request
+   crawlers honor, not a guarantee, which is why decision 2 does the real work.
+4. The remaining address is `info@thomascheng.com`, matching the live contact
+   page. The old line used `thomascheng81@gmail.com`; the site owner should
+   confirm which is wanted, as the 2018 details may simply be stale.
 
 ## Risks
 
@@ -213,12 +254,29 @@ the live contact page (`info@thomascheng.com`).
 |---|---|
 | URL scheme changes; pages re-indexed | Hash-redirect preserves inbound links; five pages is a small surface |
 | styled-components v6 shifts layout silently | Isolated to its own phase and commit; screenshot check |
-| 76 image imports converted by hand | Smoke tests assert images render; a missed import fails the build in Vite, not at runtime |
+| 76 image imports converted by hand | A missed import fails the Vite build rather than breaking at runtime; screenshots confirm every image still renders |
 | Deep links return HTTP 404 status | Accepted cost of GitHub Pages; page renders correctly |
 | TypeScript conversion touches every file | Last phase, after behavior is verified stable |
+| Carousel feel degrades under React 18+ batching | Called out as a watch item in Phase 2; checked by hand against the reference build |
+| No regression protection after this ships | Accepted; see *Verification* |
 
-## Out of scope, worth noting later
+## Note on `Carousel.js`
 
-- `Carousel.js` is 394 lines and mixes touch handling, animation, keyboard
-  input, and layout. It is the most likely source of future bugs. Splitting it
-  is a refactor, not a modernization, and is deliberately excluded here.
+An earlier draft of this spec listed `Carousel.js` as the codebase's weakest
+point on the strength of its 394 lines. Reading it does not support that, and
+the claim is withdrawn.
+
+It is a deliberately tuned component: per-situation easings in
+`handleDragRelease` (`elasticOut` past the start, `bounceOut` past the end,
+`cubicOut` for a velocity fling, `cubicInOut` for keyboard), fling duration
+derived from pointer velocity and clamped to 200–400 ms (`:266`), rubber-band
+resistance past the bounds via `DRAG_CONSTANT`, a drag-past-end-to-wrap gesture
+with a proportionally fading indicator, and `translate3d` throughout to keep
+compositing on the GPU. The pane arithmetic is three small pure functions over a
+shared `constrain` helper. The length is inherent to a physics-driven drag
+surface, not a sign of tangled responsibilities.
+
+**Therefore: no refactor, and the minimum possible edits.** It changes in
+exactly three places — `findDOMNode` removal (Phase 2), transient props
+(Phase 4), and the animation-name fix (Phase 5b). Its behavior is the part of
+this site most worth preserving exactly.
