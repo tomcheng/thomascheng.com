@@ -20,6 +20,11 @@ const FooterIcon = styled(Icon)`
   cursor: pointer;
   color: #333;
   padding: 15px;
+  /* An inline SVG defaults to \`vertical-align: baseline\`, which reserves
+     space below it for descenders and grows the footer's line box (48px ->
+     54px) versus the old font icon. \`top\` removes that reserved space
+     without moving the icon itself. */
+  vertical-align: top;
 `;
 
 class PageFooter extends React.Component {
