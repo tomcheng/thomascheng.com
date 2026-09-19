@@ -47,7 +47,13 @@ img {
 a:hover {
   color: #22527b;
 }
-a:focus {
+/* :focus-visible, not :focus — the browser then shows this ring for keyboard
+   navigation but not for taps or clicks. The original rule predated the
+   selector and fired on any focus, including touch-derived focus, which put a
+   ring around links after tapping them on mobile.
+   Browsers without :focus-visible support drop this rule and fall back to their
+   own default focus ring, so keyboard users are never left with no indicator. */
+a:focus-visible {
   outline: dotted thin;
   outline: -webkit-focus-ring-color auto 5px;
   outline-offset: -2px;
