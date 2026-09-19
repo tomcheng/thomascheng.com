@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import OriginalSectionTitle from "../common/SectionTitle";
 
@@ -193,49 +194,61 @@ const Duration = styled.div`
   margin-bottom: 10px;
 `;
 
-const Resume = () => (
-  <div>
-    <WorkSection>
-      <SectionTitle>Knowledge & Skills</SectionTitle>
-      <ul>
-        <li>Languages: Javascript, Elixir, Ruby</li>
-        <li>HTML, CSS (LESS and SASS)</li>
-        <li>Version control with Git</li>
-        <li>UX/UI Design</li>
-        <li>Wireframing, prototyping and user-testing</li>
-        <li>Adobe Illustrator, Photoshop & InDesign</li>
-      </ul>
-    </WorkSection>
+const Resume = () => {
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex";
+    document.head.appendChild(meta);
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
 
-    {SECTIONS.map(({ title, positions }, index) => (
-      <WorkSection key={index}>
-        <SectionTitle>{title}</SectionTitle>
-        <div>
-          {positions.map(({ role, company, start, end, details }, index) => (
-            <Position key={index}>
-              <h4>
-                {role}
-                {company && <Company>{company}</Company>}
-              </h4>
-              {start && (
-                <Duration>
-                  {start} – {end || "present"}
-                </Duration>
-              )}
-              <ul>
-                {details.map((detail, index) => (
-                  <li
-                    key={index}
-                    dangerouslySetInnerHTML={{ __html: detail }}
-                  />
-                ))}
-              </ul>
-            </Position>
-          ))}
-        </div>
+  return (
+    <div>
+      <WorkSection>
+        <SectionTitle>Knowledge & Skills</SectionTitle>
+        <ul>
+          <li>Languages: Javascript, Elixir, Ruby</li>
+          <li>HTML, CSS (LESS and SASS)</li>
+          <li>Version control with Git</li>
+          <li>UX/UI Design</li>
+          <li>Wireframing, prototyping and user-testing</li>
+          <li>Adobe Illustrator, Photoshop & InDesign</li>
+        </ul>
       </WorkSection>
-    ))}
-  </div>
-);
+
+      {SECTIONS.map(({ title, positions }, index) => (
+        <WorkSection key={index}>
+          <SectionTitle>{title}</SectionTitle>
+          <div>
+            {positions.map(({ role, company, start, end, details }, index) => (
+              <Position key={index}>
+                <h4>
+                  {role}
+                  {company && <Company>{company}</Company>}
+                </h4>
+                {start && (
+                  <Duration>
+                    {start} – {end || "present"}
+                  </Duration>
+                )}
+                <ul>
+                  {details.map((detail, index) => (
+                    <li
+                      key={index}
+                      dangerouslySetInnerHTML={{ __html: detail }}
+                    />
+                  ))}
+                </ul>
+              </Position>
+            ))}
+          </div>
+        </WorkSection>
+      ))}
+    </div>
+  );
+};
 
 export default Resume;
