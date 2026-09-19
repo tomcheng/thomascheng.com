@@ -8,7 +8,7 @@ const Apps = () => (
       {
         type: "link",
         title: "Letterfall",
-        url: "https://thomascheng.com/letterfall",
+        url: "https://letterfall.app",
         width: 704,
         height: 468,
         image: imgLetterfall
