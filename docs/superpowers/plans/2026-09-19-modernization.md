@@ -14,7 +14,7 @@
 
 - **No test suite is committed.** The site owner chose manual verification. Every task's gate is a build/typecheck command plus a named browser check. Do not add Vitest, Playwright, or Jest.
 - **Visual output must not change.** Any rendering difference from the Task 1 baseline is a regression to fix, not an improvement to keep. Two intentional exceptions: the `/resume` contact line (Task 3) and icon rendering (Task 7), which must still match in size, weight, and position.
-- **Carousel feel is the highest-value thing being preserved.** `Carousel.js` gets exactly three edits — Tasks 3, 4, and 5 — and no refactor. See the spec's *Note on `Carousel.js`*.
+- **Carousel feel is the highest-value thing being preserved.** `Carousel.js` gets exactly three *behavior-affecting* edits — Tasks 3, 4, and 5 — and no refactor. Tasks 6 and 7 also touch the file, but only non-behaviorally (type annotations; swapping the `ReturnIndicator` element from `<i>` to `<Icon>`). Any change to its easing curves, durations, drag constants, or pane arithmetic is out of scope in every task. See the spec's *Note on `Carousel.js`*.
 - Pinned versions: `vite@8.3.0`, `@vitejs/plugin-react@6.1.1`, `react@19.3.0`, `react-dom@19.3.0`, `react-router-dom@7.18.4`, `styled-components@6.5.3`, `typescript@6.0.3`, `eslint@10.11.0`, `typescript-eslint@8.70.0`, `prettier@3.9.8`.
 - **TypeScript is pinned to 6.0.3, not the latest 7.0.2.** `typescript-eslint@8.70.0` declares `peerDependencies.typescript: ">=4.8.4 <6.1.0"`, and no released `typescript-eslint` supports TS 7. Typed linting on a small codebase is worth more than being one major ahead. Revisit when `typescript-eslint` ships TS 7 support.
 - Node 22 (`.nvmrc`). The CNAME `thomascheng.com` must survive into every build.
@@ -54,8 +54,9 @@ React 19 removes legacy context (`contextTypes` / `childContextTypes`) and the u
 Nothing here changes the site. It creates the thing every later task is checked against. Do not skip it — without the baseline, "looks the same" is unverifiable.
 
 **Files:**
-- Modify: `.gitignore`
 - Commit: `package-lock.json` (currently untracked)
+
+(`.gitignore` is not touched here — that happens in Task 2 Step 10.)
 
 - [ ] **Step 1: Create the working branch**
 
@@ -425,15 +426,17 @@ Per the spec's *Security and privacy* section: an unlinked page is still fully p
             </Position>
 ```
 
-- [ ] **Step 7: Convert `NavLink` active styling**
+- [ ] **Step 7: Remove the stray `exact` prop from `MobileLink`**
 
-v7 removed `activeClassName`. The stylesheet keys off `.active` (see the `.active &` selector in `NavItem`). Replace any `activeClassName="active"` with:
+Verified before dispatch: `Navigation.js` contains **no** `activeClassName`. The `.active &` selector in `NavItem` works because react-router v4's `NavLink` applies the class `active` by default — and v7 does the same, merging it with the className styled-components passes in. **So do not add a `className` function**; that would override the default and break the underline.
+
+The only change needed is on line 141, which passes `exact` — removed in v7, and it would be forwarded to the DOM as an unknown attribute:
 
 ```jsx
-className={({ isActive }) => (isActive ? "active" : "")}
+        <MobileLink to="/">
 ```
 
-and delete any `exact` prop. If no `activeClassName` is present, determine how the active state is applied before moving on — the nav underline depends on it.
+The nav underline is verified by hand in Step 14; if it has stopped working, the cause is this step.
 
 - [ ] **Step 8: Remove `findDOMNode` from `Carousel.js`**
 
@@ -1126,7 +1129,7 @@ The site has none, so shared links render blank. Add inside `<head>`:
   }, []);
 ```
 
-Import `useEffect` from React. If `Resume` is not currently a function component, convert it to one — it is a static render with no state.
+Import `useEffect` from React. Verified before dispatch: `Resume` is already a function component (`Resume.js:189`), so no conversion is needed.
 
 - [ ] **Step 4: Build and verify**
 
@@ -1238,7 +1241,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 
 export default tseslint.config(
-  { ignores: ["dist", "scripts", "eslint.config.js"] },
+  { ignores: ["dist", "scripts", "*.config.js", "*.config.ts"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
