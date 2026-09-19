@@ -41,7 +41,6 @@ export const bounceOut = (x: number) => {
 };
 
 export const cubicInOut = (x: number) => {
-  // eslint-disable-next-line no-cond-assign
   if ((x *= 2) < 1) {
     return 1 / 2 * x * x * x;
   }
