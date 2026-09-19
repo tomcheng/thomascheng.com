@@ -19,7 +19,6 @@ type LinkPieceProps = {
   height: number;
   image: string;
   isActive: boolean;
-  isMobile: boolean;
   title: string;
   url: string;
   width: number;
@@ -49,14 +48,7 @@ class LinkPiece extends Component<LinkPieceProps, LinkPieceState> {
   };
 
   render() {
-    const {
-      title,
-      width,
-      height,
-      image,
-      url,
-      isActive
-    } = this.props;
+    const { title, width, height, image, url, isActive } = this.props;
     const { containerWidth } = this.state;
     const imageWidth = containerWidth;
     const imageHeight = Math.round((height / width) * containerWidth);

@@ -61,7 +61,6 @@ class CarouselPage extends Component<CarouselPageProps, CarouselPageState> {
                     url={piece.url}
                     width={piece.width}
                     height={piece.height}
-                    isMobile={isMobile}
                     isActive={index === activeIndex}
                   />
                 </PushBottom>
