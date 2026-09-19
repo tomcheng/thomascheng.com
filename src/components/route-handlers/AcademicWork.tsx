@@ -96,7 +96,7 @@ const AcademicWork = () => (
       },
       {
         type: "carousel",
-        title: "Experiments with Processing",
+        title: "Fun with Processing",
         width: 704,
         height: 468,
         images: [img21, img22, img23, img24, img25, img26]
