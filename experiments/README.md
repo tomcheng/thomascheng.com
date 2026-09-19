@@ -7,6 +7,7 @@ thomascheng.com except the tooling (TypeScript, ESLint, Prettier, Vite).
 | Experiment | Domain |
 | --- | --- |
 | `letterfall` | [letterfall.app](https://letterfall.app) |
+| `letterbug` | none (not deployed) |
 
 ## How it works
 
