@@ -1409,6 +1409,42 @@ Also confirm with them that `Settings → Pages → Custom domain` still reads `
 
 ---
 
+### Task 12: Real 200s for known routes (added 2026-09-19, post-Task-11)
+
+**Why this was missed.** The spec accepted "unknown paths return HTTP 404 with a
+correctly rendered page" as the cost of staying on GitHub Pages, describing it as
+"slightly untidy for crawlers". That understated it: Google respects status
+codes, so a page returning 404 is typically not indexed. Since *every* deep link
+falls through to `404.html`, the real pages return 404 too — which defeats one of
+the stated reasons for moving off hash URLs in the first place.
+
+**The fix.** The routes are a fixed, known list. Emit a real file per route so
+Pages serves each with 200, and keep `404.html` for genuinely unknown paths,
+which then correctly return 404 instead of everything doing so indiscriminately.
+
+```
+dist/index.html          /          200
+dist/games/index.html    /games     200
+dist/apps/index.html     /apps      200
+dist/design/index.html   /design    200
+dist/contact/index.html  /contact   200
+dist/resume/index.html   /resume    200
+dist/404.html            /nonsense  404
+```
+
+**Single source of truth is mandatory.** A hardcoded list in `vite.config.ts`
+would silently drift from `App.tsx` the first time a route is added, and the
+failure is invisible — the page still renders, just with a 404 status. Export the
+route paths from one module that both the router and the build config import.
+
+**Files:** create `src/routes.ts`; modify `src/components/App.tsx` and the
+`spa404` plugin in `vite.config.ts`.
+
+**Verification:** assert the actual HTTP status per path — 200 for each of the
+six known routes, 404 for an unknown one. Rendering must be unchanged.
+
+---
+
 ## Final verification
 
 After Task 11, before merging, run the spec's full *Verification* checklist against `npm run preview`:
