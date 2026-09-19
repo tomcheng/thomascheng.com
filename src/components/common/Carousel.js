@@ -37,9 +37,9 @@ const Container = styled.div`
   overflow: hidden;
   position: relative;
   cursor: pointer;
-  margin-left: ${props => (props.isMobile ? -MOBILE_PADDING + "px" : 0)};
-  margin-right: ${props => (props.isMobile ? -MOBILE_PADDING + "px" : 0)};
-  animation-name: ${props => (props.shouldWiggle ? wiggle : "")};
+  margin-left: ${props => (props.$isMobile ? -MOBILE_PADDING + "px" : 0)};
+  margin-right: ${props => (props.$isMobile ? -MOBILE_PADDING + "px" : 0)};
+  animation-name: ${props => (props.$shouldWiggle ? wiggle : "")};
   animation-duration: 0.5s;
   animation-iteration-count: 1;
   animation-timing-function: ease-out;
@@ -51,8 +51,8 @@ const List = styled.div`
 `;
 
 const Item = styled.div`
-  padding-left: ${props => (props.isMobile ? MOBILE_PADDING + "px" : "0")};
-  padding-right: ${props => (props.isMobile ? MOBILE_PADDING + "px" : "0")};
+  padding-left: ${props => (props.$isMobile ? MOBILE_PADDING + "px" : "0")};
+  padding-right: ${props => (props.$isMobile ? MOBILE_PADDING + "px" : "0")};
 `;
 
 const Image = styled.img`
@@ -74,9 +74,9 @@ const ReturnIndicator = styled.i`
   text-align: center;
   top: 50%;
   width: 20px;
-  opacity: ${props => props.indicatorProgress};
+  opacity: ${props => props.$indicatorProgress};
   transform: translate3d(
-    -${props => props.indicatorProgress * props.indicatorFinalPosition}px,
+    -${props => props.$indicatorProgress * props.$indicatorFinalPosition}px,
     0,
     0
   );
@@ -350,9 +350,8 @@ class Carousel extends React.Component {
           ref={el => {
             this.wrapper = el;
           }}
-          isMobile={isMobile}
-          isActive={isActive}
-          shouldWiggle={shouldWiggle}
+          $isMobile={isMobile}
+          $shouldWiggle={shouldWiggle}
         >
           <TouchHandler
             onDrag={this.handleDrag}
@@ -369,7 +368,7 @@ class Carousel extends React.Component {
               {images.map((image, index) => (
                 <Item
                   key={index}
-                  isMobile={isMobile}
+                  $isMobile={isMobile}
                   style={{ width: frameWidth }}
                 >
                   <Image src={image} width={imageWidth} height={imageHeight} />
@@ -380,8 +379,8 @@ class Carousel extends React.Component {
           {imageCount > 1 ? (
             <ReturnIndicator
               className="fa fa-arrow-left"
-              indicatorProgress={indicatorProgress}
-              indicatorFinalPosition={indicatorFinalPosition}
+              $indicatorProgress={indicatorProgress}
+              $indicatorFinalPosition={indicatorFinalPosition}
             />
           ) : null}
         </Container>

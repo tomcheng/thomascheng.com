@@ -109,18 +109,18 @@ const TriggerContainer = styled.div`
 const Trigger = styled.div`
   font-family: Raleway, sans-serif;
   transition: all 0.06s ease-in;
-  color: ${props => (props.isFlashing ? "#fff" : "#333")};
+  color: ${props => (props.$isFlashing ? "#fff" : "#333")};
   font-weight: 900;
   text-transform: uppercase;
   font-size: 16px;
   letter-spacing: 0.5px;
-  border-bottom: 8px solid ${props => (props.isFlashing ? "#fff" : "#333")};
+  border-bottom: 8px solid ${props => (props.$isFlashing ? "#fff" : "#333")};
   display: inline-block;
   padding: 0 10px 5px;
   margin-bottom: 15px;
   position: relative;
   transform: scale3d(
-    ${props => (props.isFlashing ? "1.2, 1.2, 1" : "1, 1, 1")}
+    ${props => (props.$isFlashing ? "1.2, 1.2, 1" : "1, 1, 1")}
   );
 `;
 
@@ -137,12 +137,12 @@ const Message = styled.div`
   text-align: center;
   top: 20%;
   transition: opacity 0.05s ease-in-out;
-  opacity: ${props => (props.show ? 1 : 0)};
+  opacity: ${props => (props.$show ? 1 : 0)};
 `;
 
 const MessagePart = styled.span`
   transition: opacity 0.05s ease-in-out;
-  opacity: ${props => (props.show ? 1 : 0)};
+  opacity: ${props => (props.$show ? 1 : 0)};
 `;
 
 const Images = styled.div`
@@ -153,7 +153,7 @@ const Images = styled.div`
   bottom: 0;
   pointer-events: none;
   transition: background-color 0.1s ease-in-out;
-  background-color: rgba(240, 240, 240, ${props => (props.isShowing ? 1 : 0)});
+  background-color: rgba(240, 240, 240, ${props => (props.$isShowing ? 1 : 0)});
 `;
 
 const Image = styled.div`
@@ -163,7 +163,7 @@ const Image = styled.div`
   height: 100%;
   background-repeat: no-repeat;
   background-position: center center;
-  opacity: ${props => (props.show ? 1 : 0)};
+  opacity: ${props => (props.$show ? 1 : 0)};
 `;
 
 class HomeMobile extends React.Component {
@@ -212,21 +212,21 @@ class HomeMobile extends React.Component {
       <div>
         <TriggerContainer>
           <div>
-            <Images isShowing={isShowing}>
+            <Images $isShowing={isShowing}>
               {images.map((image, i) => (
                 <Image
                   key={image}
-                  show={isPressed && i === currentFrame}
+                  $show={isPressed && i === currentFrame}
                   style={{ backgroundImage: `url('${image}')` }}
                 />
               ))}
             </Images>
-            <Message show={showFirstFrame}>
+            <Message $show={showFirstFrame}>
               Thank you.&nbsp;
-              <MessagePart show={showSecondFrame}>Come again.</MessagePart>
+              <MessagePart $show={showSecondFrame}>Come again.</MessagePart>
             </Message>
             <Trigger
-              isFlashing={isFlashing}
+              $isFlashing={isFlashing}
               onTouchStart={this.handleTouchStart}
               onTouchEnd={this.handleTouchEnd}
             >

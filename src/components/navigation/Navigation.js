@@ -80,7 +80,7 @@ const NavItem = styled.div`
   letter-spacing: 0.5px;
 
   @media (max-width: ${breakpoints.xs.max}px) {
-    display: ${props => (props.hiddenOnMobile ? "none" : "block")};
+    display: ${props => (props.$hiddenOnMobile ? "none" : "block")};
   }
   @media (min-width: ${breakpoints.sm.min}px) {
     font-size: 13px;
@@ -156,7 +156,7 @@ const Navigation = () => {
         {!isResume ? (
           <Nav>
             {LINKS.map(link => (
-              <NavItem key={link.title} hiddenOnMobile={link.hiddenOnMobile}>
+              <NavItem key={link.title} $hiddenOnMobile={link.hiddenOnMobile}>
                 <LinkComponent to={link.path}>
                   <NavText>{link.title}</NavText>
                 </LinkComponent>

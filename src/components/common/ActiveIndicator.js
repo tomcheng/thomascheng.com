@@ -11,12 +11,12 @@ const Indicator = styled.div`
   line-height: 16px;
   color: #333;
   transition: opacity 0.15s ease-in-out;
-  opacity: ${props => (props.isActive ? "1" : "0")};
+  opacity: ${props => (props.$isActive ? "1" : "0")};
 `;
 
 const ActiveIndicator = ({ isActive, isMobile, children }) => (
   <div style={{ position: "relative" }}>
-    {!isMobile && <Indicator isActive={isActive}>•</Indicator>}
+    {!isMobile && <Indicator $isActive={isActive}>•</Indicator>}
     {children}
   </div>
 );

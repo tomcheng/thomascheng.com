@@ -8,7 +8,7 @@ const Container = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  display: ${props => (props.visible ? "block" : "none")};
+  display: ${props => (props.$visible ? "block" : "none")};
 `;
 
 class RandomImage extends React.Component {
@@ -38,7 +38,7 @@ class RandomImage extends React.Component {
     return (
       <Container onClick={this.handleClick} className={className}>
         {images.map((image, i) => (
-          <Image key={image} visible={imageShown === i} src={image} />
+          <Image key={image} $visible={imageShown === i} src={image} />
         ))}
       </Container>
     );
