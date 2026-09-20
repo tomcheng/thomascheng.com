@@ -22,6 +22,11 @@ portfolio code, and the portfolio's build contains no experiments.
 ```sh
 SITE=letterfall npm run dev     # http://localhost:5173/
 SITE=letterfall npm run build
+
+# On a phone: over https, which sensors and the like insist on, and reachable
+# from the local network. The certificate is self-signed, so the phone warns
+# about it once.
+HTTPS=1 SITE=letterfall npm run dev -- --host
 ```
 
 ## Adding one

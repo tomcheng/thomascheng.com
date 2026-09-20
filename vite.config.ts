@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { VitePWA } from "vite-plugin-pwa";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -56,6 +57,10 @@ function experimentConfig(site: string) {
     base: "/",
     plugins: [
       react(),
+      // HTTPS=1 serves over https with a throwaway self-signed certificate.
+      // A phone only lets a page at its motion sensors (among other things)
+      // over https, and that includes the dev server on the local network.
+      ...(process.env.HTTPS ? [basicSsl()] : []),
       ...(installable
         ? [
             VitePWA({

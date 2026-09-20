@@ -8,6 +8,7 @@ import {
   inkSampler,
   type Point
 } from "./glyphShapes";
+import { watchMotion } from "./motion";
 
 const BACKGROUND = "#fcfcfa";
 const INK = "#0a0a0a";
@@ -17,12 +18,28 @@ const CHARACTERS =
 // The world is simulated in CSS pixels; this tells the solver how many of
 // them make up its notional metre, which sets its tolerances to match.
 const PIXELS_PER_METRE = 100;
-const GRAVITY = 1400;
+// In px/s². True to life it would be some 55,000 (a phone's screen is about
+// 5,700px to the metre), which no solver could keep hairline serifs apart
+// under; but the further short of that it falls, the more everything seems
+// to be sinking through syrup, and the more so now that the phone can be
+// tipped and shaken like a real box. These were settled by feel, on a phone:
+// the letters as heavy as still reads as letters falling, and the periods
+// lighter than that, so that a popped letter can be watched draining away.
+const GRAVITY = 1960;
+const DOT_GRAVITY = 1400;
+// The speeds things are thrown at were chosen under a gravity of 1400; under
+// any other they are scaled so that whatever is thrown still goes as far.
+const LAUNCH = Math.sqrt(GRAVITY / 1400);
+const DOT_LAUNCH = Math.sqrt(DOT_GRAVITY / 1400);
 // Two physics steps per 60Hz frame: hairline serifs are only a few pixels
 // thick, and halving how far anything moves per step is what keeps them from
 // slipping through one another.
 const STEP_MS = 1000 / 120;
 const MAX_STEPS_PER_FRAME = 6;
+// Tipping or shaking the phone swings gravity about. A pile that has dozed
+// off does not notice that by itself, so it is woken whenever gravity has
+// moved this far (as a fraction of its usual strength) since the last time.
+const GRAVITY_WAKE_CHANGE = 0.06;
 
 const MIN_SIZE = 46;
 const MAX_SIZE = 156;
@@ -119,6 +136,10 @@ const SHOULDER_RADIUS = 24;
 const FILLET_RADIUS = 48;
 const CORNER_STEPS = 8;
 const WALL_THICKNESS = 400;
+// There is a roof, this far above the top of the screen as a fraction of the
+// screen's height: with the phone turned upside down the letters fall up out
+// of sight and heap against it, and come back down when it is righted.
+const ROOF_HEADROOM = 0.25;
 const WALL_MARGIN = 7;
 
 type Letter = {
@@ -223,6 +244,8 @@ export const createLettersWorld = (
   // when the page is not sighing.
   let sighAge: number | null = null;
   let sighText = "";
+  const motion = watchMotion(canvas);
+  let wokenAt = { x: 0, y: 1 };
 
   // --- World geometry -------------------------------------------------------
 
@@ -337,7 +360,16 @@ export const createLettersWorld = (
       return body;
     };
 
+    const roof = fixed(width / 2, -height * ROOF_HEADROOM - WALL_THICKNESS / 2);
+    physics.createCollider(
+      RAPIER.ColliderDesc.cuboid(width / 2 + WALL_THICKNESS, WALL_THICKNESS / 2)
+        .setFriction(0.2)
+        .setRestitution(0.05),
+      roof
+    );
+
     boundaries = [
+      roof,
       wall(-WALL_THICKNESS / 2),
       wall(width + WALL_THICKNESS / 2),
       funnel(-1),
@@ -410,7 +442,7 @@ export const createLettersWorld = (
       );
       if (blocked) continue;
 
-      const speed = randomBetween(300, 640);
+      const speed = randomBetween(300, 640) * LAUNCH;
       const thumbVelocity = thumb.body.linvel();
       const body = physics.createRigidBody(
         RAPIER.RigidBodyDesc.dynamic()
@@ -572,12 +604,12 @@ export const createLettersWorld = (
         // Outwards from the middle of the letter, with a little lift: a pop,
         // not a blast.
         const away = Math.atan2(offsetY, offsetX) + randomBetween(-0.6, 0.6);
-        const speed = randomBetween(70, 240);
+        const speed = randomBetween(70, 240) * DOT_LAUNCH;
         dots.push({
           body: dot,
           holdMs: DOT_HOLD_MS + randomBetween(0, 16),
           burstX: drift.x * 0.5 + Math.cos(away) * speed,
-          burstY: drift.y * 0.5 + Math.sin(away) * speed - 110
+          burstY: drift.y * 0.5 + Math.sin(away) * speed - 110 * DOT_LAUNCH
         });
       }
     }
@@ -669,6 +701,15 @@ export const createLettersWorld = (
       }
     }
 
+    const pull = motion.pull();
+    physics.gravity = { x: pull.x * GRAVITY, y: pull.y * GRAVITY };
+    if (
+      Math.hypot(pull.x - wokenAt.x, pull.y - wokenAt.y) > GRAVITY_WAKE_CHANGE
+    ) {
+      wokenAt = pull;
+      wakeAll();
+    }
+
     physics.step();
 
     const drained = height + 40;
@@ -698,7 +739,7 @@ export const createLettersWorld = (
       if (dot.holdMs <= 0) continue;
       dot.holdMs -= STEP_MS;
       if (dot.holdMs > 0) continue;
-      dot.body.setGravityScale(1, true);
+      dot.body.setGravityScale(DOT_GRAVITY / GRAVITY, true);
       dot.body.setLinvel({ x: dot.burstX, y: dot.burstY }, true);
     }
     if (anyDrained) {
@@ -968,6 +1009,7 @@ export const createLettersWorld = (
     destroy: () => {
       destroyed = true;
       cancelAnimationFrame(frame);
+      motion.destroy();
       resizeObserver.disconnect();
       window.removeEventListener("keydown", onDebugKey);
       document.fonts.removeEventListener("loadingdone", clearGlyphShapes);
