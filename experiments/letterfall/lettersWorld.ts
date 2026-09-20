@@ -112,10 +112,12 @@ const FUNNEL_FRICTION = 0.02;
 const MAX_FUNNEL_FRACTION = 0.4;
 const NECK_WIDTH = 38;
 const NECK_LENGTH = 30;
-// The shoulders, where each slope turns down into the neck, are rounded off,
-// as an arc of this many straight steps.
+// Both corners of each slope are rounded off: the shoulder, where it turns
+// down into the neck, and the fillet, where it sweeps up into the side wall.
+// Each is an arc of this many straight steps.
 const SHOULDER_RADIUS = 24;
-const SHOULDER_STEPS = 8;
+const FILLET_RADIUS = 48;
+const CORNER_STEPS = 8;
 const WALL_THICKNESS = 400;
 const WALL_MARGIN = 7;
 
@@ -155,6 +157,41 @@ const clamp = (value: number, min: number, max: number) =>
 
 const randomBetween = (min: number, max: number) =>
   min + Math.random() * (max - min);
+
+/**
+ * The arc that rounds off a corner, as [x, y] points running from the edge
+ * that leaves the corner along unit vector `a` round to the one along `b`.
+ */
+const roundCorner = (
+  [x, y]: number[],
+  a: number[],
+  b: number[],
+  radius: number
+) => {
+  // Half the corner's angle, and how far along each edge the arc starts.
+  const half = Math.acos(a[0] * b[0] + a[1] * b[1]) / 2;
+  const tangent = radius / Math.tan(half);
+  const bisector = Math.hypot(a[0] + b[0], a[1] + b[1]);
+  const reach = radius / Math.sin(half);
+  const centreX = x + ((a[0] + b[0]) / bisector) * reach;
+  const centreY = y + ((a[1] + b[1]) / bisector) * reach;
+  const from = Math.atan2(
+    y + a[1] * tangent - centreY,
+    x + a[0] * tangent - centreX
+  );
+  const to = Math.atan2(
+    y + b[1] * tangent - centreY,
+    x + b[0] * tangent - centreX
+  );
+  const sweep = Math.atan2(Math.sin(to - from), Math.cos(to - from));
+  return Array.from({ length: CORNER_STEPS + 1 }, (_, i) => {
+    const angle = from + (sweep * i) / CORNER_STEPS;
+    return [
+      centreX + Math.cos(angle) * radius,
+      centreY + Math.sin(angle) * radius
+    ];
+  });
+};
 
 export const createLettersWorld = (
   canvas: HTMLCanvasElement,
@@ -207,42 +244,30 @@ export const createLettersWorld = (
   };
 
   /**
-   * The visible outline of one side of the funnel, as [x, y] points. The
-   * shoulder, where the slope turns down into the neck, is rounded off.
+   * One side of the funnel, as [x, y] points: the sharp corner where the
+   * slope would meet the wall, the fillet and the shoulder that round off
+   * the slope's two ends, and the two feet at the bottom of the screen. The
+   * drawn outline is the fillet, the shoulder and the feet, in that order.
    */
   const funnelSide = (side: -1 | 1) => {
     const wallX = side < 0 ? 0 : width;
     const neckX = width / 2 + (side * NECK_WIDTH) / 2;
-
-    // Unit vector from the shoulder's corner back up the slope; the neck
-    // runs straight down from it.
+    // Unit vector up the slope, from the neck to the wall.
     const run = wallX - neckX;
     const rise = funnelTop - neckTop;
     const slopeLength = Math.hypot(run, rise);
-    const upX = run / slopeLength;
-    const upY = rise / slopeLength;
-    // Half the corner's angle, and how far along each edge the arc starts.
-    const half = Math.acos(upY) / 2;
-    const tangent = SHOULDER_RADIUS / Math.tan(half);
-    const bisector = Math.hypot(upX, upY + 1);
-    const reach = SHOULDER_RADIUS / Math.sin(half);
-    const centreX = neckX + (upX / bisector) * reach;
-    const centreY = neckTop + ((upY + 1) / bisector) * reach;
-    const from = Math.atan2(
-      neckTop + upY * tangent - centreY,
-      neckX + upX * tangent - centreX
-    );
-    const to = Math.atan2(neckTop + tangent - centreY, neckX - centreX);
-    const sweep = Math.atan2(Math.sin(to - from), Math.cos(to - from));
-    const shoulder = Array.from({ length: SHOULDER_STEPS + 1 }, (_, i) => {
-      const angle = from + (sweep * i) / SHOULDER_STEPS;
-      return [
-        centreX + Math.cos(angle) * SHOULDER_RADIUS,
-        centreY + Math.sin(angle) * SHOULDER_RADIUS
-      ];
-    });
+    const up = [run / slopeLength, rise / slopeLength];
+    const down = [-up[0], -up[1]];
 
-    return [[wallX, funnelTop], ...shoulder, [neckX, height], [wallX, height]];
+    return {
+      corner: [wallX, funnelTop],
+      fillet: roundCorner([wallX, funnelTop], [0, -1], down, FILLET_RADIUS),
+      shoulder: roundCorner([neckX, neckTop], up, [0, 1], SHOULDER_RADIUS),
+      feet: [
+        [neckX, height],
+        [wallX, height]
+      ]
+    };
   };
 
   const layout = () => {
@@ -272,24 +297,35 @@ export const createLettersWorld = (
     // on well past the wall and the bottom of the screen so that nothing can
     // be squeezed out through it. Slippery, so that letters slide down to the
     // middle like a pinball outlane, and periods never settle on the slope.
+    // The fillet is hollow, which no convex block can be, so it is stacked
+    // on top as a slab from each step of its arc back into the wall.
     const funnel = (side: -1 | 1) => {
-      const outline = funnelSide(side);
-      const [wallFoot, neckFoot] = [outline.at(-1)!, outline.at(-2)!];
-      const outer = wallFoot[0] + side * WALL_THICKNESS;
+      const { corner, fillet, shoulder, feet } = funnelSide(side);
+      const outer = corner[0] + side * WALL_THICKNESS;
       const below = height + WALL_THICKNESS;
       const body = fixed();
-      const block = RAPIER.ColliderDesc.convexHull(
-        new Float32Array([
-          outer,
-          funnelTop,
-          ...outline.flat(),
-          neckFoot[0],
-          below,
-          outer,
-          below
-        ])
-      );
-      if (block) {
+      const hulls = [
+        [
+          [outer, corner[1]],
+          corner,
+          ...shoulder,
+          [feet[0][0], below],
+          [outer, below]
+        ],
+        ...fillet
+          .slice(1)
+          .map((to, i) => [
+            fillet[i],
+            to,
+            [outer, to[1]],
+            [outer, fillet[i][1]]
+          ])
+      ];
+      for (const hull of hulls) {
+        const block = RAPIER.ColliderDesc.convexHull(
+          new Float32Array(hull.flat())
+        );
+        if (!block) continue;
         physics.createCollider(
           block
             .setFriction(FUNNEL_FRICTION)
@@ -704,7 +740,8 @@ export const createLettersWorld = (
     ctx.fillStyle = INK;
     ctx.beginPath();
     for (const side of [-1, 1] as const) {
-      funnelSide(side).forEach(([x, y], i) =>
+      const { fillet, shoulder, feet } = funnelSide(side);
+      [...fillet, ...shoulder, ...feet].forEach(([x, y], i) =>
         i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)
       );
       ctx.closePath();
