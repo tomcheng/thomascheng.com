@@ -34,5 +34,9 @@ SITE=letterfall npm run build
    `npm run build`, output directory `dist`, environment variable
    `SITE=<name>`. Attach the domain under the project's Custom domains tab.
    With no `404.html` in the output, Pages serves `index.html` for every path.
+   To make it installable, put a `manifest.webmanifest` in its `public/`
+   folder and link it from `index.html`: the build then adds a service worker
+   that keeps the whole site for offline use. Anything it needs offline has to
+   be served from the site itself (Letterfall hosts its own fonts for this).
 3. Add a row to the table above, and a build step for it in
    `.github/workflows/deploy.yml` so CI catches it breaking.

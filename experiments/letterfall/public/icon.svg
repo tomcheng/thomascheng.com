@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- The page, and a Lora "L" caught mid-fall: tilted, and a little below
+       centre. It sits inside the middle 80%, so a maskable crop loses nothing.
+       PNGs are rendered from this by scripts/generate-letterfall-icons.mjs. -->
+  <rect width="512" height="512" fill="#fcfcfa"/>
+  <path
+    transform="translate(272 290) rotate(12) scale(0.4) translate(-306 350)"
+    fill="#0a0a0a"
+    d="M551 0L55 0L55-33Q93-35 107-50.5Q121-66 122.5-93.5Q124-121 124-156L124-588Q124-608 125-626.5Q126-645 127-660Q109-659 91-658Q73-657 55-656L55-700L280-700L280-667Q243-666 228.5-650Q214-634 212.5-607Q211-580 211-544L211-115Q211-88 210.5-69Q210-50 208-37L395-40Q458-41 490.5-80Q523-119 523-207L557-207Z"/>
+</svg>

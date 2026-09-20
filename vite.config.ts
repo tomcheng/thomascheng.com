@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import { VitePWA } from "vite-plugin-pwa";
 import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -46,10 +47,31 @@ function experimentConfig(site: string) {
   if (!existsSync(resolve(root, "index.html"))) {
     throw new Error(`SITE=${site}: no experiments/${site}/index.html`);
   }
+  // An experiment that ships a web app manifest is installable, so it also
+  // gets a service worker that keeps the whole site for offline use. The
+  // manifest itself stays a plain file in the experiment's public/ folder.
+  const installable = existsSync(resolve(root, "public/manifest.webmanifest"));
   return {
     root,
     base: "/",
-    plugins: [react()],
+    plugins: [
+      react(),
+      ...(installable
+        ? [
+            VitePWA({
+              manifest: false,
+              registerType: "autoUpdate",
+              workbox: {
+                globPatterns: [
+                  "**/*.{html,js,css,woff2,png,svg,webmanifest}",
+                ],
+                // The physics engine's WebAssembly is inlined in the bundle.
+                maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+              },
+            }),
+          ]
+        : []),
+    ],
     build: { outDir: resolve(repoRoot, "dist"), emptyOutDir: true },
   };
 }
