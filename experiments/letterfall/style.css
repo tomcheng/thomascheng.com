@@ -44,3 +44,29 @@ body {
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Tucked into the corner of the neck's right-hand lip, on the dark of the
+   funnel; lettersWorld says where that is. The padding is only there to make
+   it easier to hit. */
+.nutrient {
+  position: fixed;
+  left: calc(var(--lip-x, 50%) + 10px);
+  top: calc(var(--lip-y, 100%) + 14px);
+  margin: 0;
+  padding: 6px 4px;
+  border: 0;
+  background: none;
+  color: #fcfcfa;
+  font:
+    11px/1 ui-monospace,
+    "SF Mono",
+    Menlo,
+    Consolas,
+    monospace;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}

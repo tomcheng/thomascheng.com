@@ -128,7 +128,7 @@ const FUNNEL_SLOPE = Math.tan((17 * Math.PI) / 180);
 const FUNNEL_FRICTION = 0.02;
 const MAX_FUNNEL_FRACTION = 0.4;
 const NECK_WIDTH = 38;
-const NECK_LENGTH = 30;
+const NECK_LENGTH = 54;
 // Both corners of each slope are rounded off: the shoulder, where it turns
 // down into the neck, and the fillet, where it sweeps up into the side wall.
 // Each is an arc of this many straight steps.
@@ -216,7 +216,14 @@ const roundCorner = (
 
 export const createLettersWorld = (
   canvas: HTMLCanvasElement,
-  { debug = false } = {}
+  {
+    debug = false,
+    onDrain
+  }: {
+    debug?: boolean;
+    /** Told how many things have just gone down the funnel, as they go. */
+    onDrain?: (count: number) => void;
+  } = {}
 ) => {
   const ctx = canvas.getContext("2d")!;
   let world: World | null = null;
@@ -263,6 +270,11 @@ export const createLettersWorld = (
       height * MAX_FUNNEL_FRACTION
     );
     funnelTop = neckTop - drop;
+    // For whatever is laid out against the funnel from outside the canvas
+    // (the count, which sits at the right-hand lip of the neck).
+    const around = canvas.parentElement?.style;
+    around?.setProperty("--lip-x", `${width / 2 + NECK_WIDTH / 2}px`);
+    around?.setProperty("--lip-y", `${neckTop}px`);
     letterCap = Math.round(clamp((width * height) / 2600, 80, 300));
   };
 
@@ -714,7 +726,7 @@ export const createLettersWorld = (
 
     const drained = height + 40;
     const gone = letters.filter(l => l.body.translation().y > drained + 120);
-    let anyGone = gone.length > 0;
+    let goneCount = gone.length;
     if (gone.length) {
       for (const letter of gone) removeLetter(physics, letter);
       letters = letters.filter(letter => !gone.includes(letter));
@@ -743,14 +755,16 @@ export const createLettersWorld = (
       dot.body.setLinvel({ x: dot.burstX, y: dot.burstY }, true);
     }
     if (anyDrained) {
+      const before = dots.length;
       dots = dots.filter(dot => {
         const gone = dot.body.translation().y > drained;
         if (gone) physics.removeRigidBody(dot.body);
         return !gone;
       });
-      anyGone = true;
+      goneCount += before - dots.length;
     }
-    if (anyGone && !dots.length && !letters.length && sighAge === null) {
+    if (goneCount) onDrain?.(goneCount);
+    if (goneCount && !dots.length && !letters.length && sighAge === null) {
       // Any of them but the one it said last time.
       const others = SIGHS.filter(text => text !== sighText);
       sighText = others[Math.floor(Math.random() * others.length)];
