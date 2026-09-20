@@ -112,6 +112,10 @@ const FUNNEL_FRICTION = 0.02;
 const MAX_FUNNEL_FRACTION = 0.4;
 const NECK_WIDTH = 38;
 const NECK_LENGTH = 30;
+// The shoulders, where each slope turns down into the neck, are rounded off,
+// as an arc of this many straight steps.
+const SHOULDER_RADIUS = 24;
+const SHOULDER_STEPS = 8;
 const WALL_THICKNESS = 400;
 const WALL_MARGIN = 7;
 
@@ -202,16 +206,43 @@ export const createLettersWorld = (
     letterCap = Math.round(clamp((width * height) / 2600, 80, 300));
   };
 
-  /** The visible outline of one side of the funnel, as [x, y] corners. */
+  /**
+   * The visible outline of one side of the funnel, as [x, y] points. The
+   * shoulder, where the slope turns down into the neck, is rounded off.
+   */
   const funnelSide = (side: -1 | 1) => {
     const wallX = side < 0 ? 0 : width;
     const neckX = width / 2 + (side * NECK_WIDTH) / 2;
-    return [
-      [wallX, funnelTop],
-      [neckX, neckTop],
-      [neckX, height],
-      [wallX, height]
-    ];
+
+    // Unit vector from the shoulder's corner back up the slope; the neck
+    // runs straight down from it.
+    const run = wallX - neckX;
+    const rise = funnelTop - neckTop;
+    const slopeLength = Math.hypot(run, rise);
+    const upX = run / slopeLength;
+    const upY = rise / slopeLength;
+    // Half the corner's angle, and how far along each edge the arc starts.
+    const half = Math.acos(upY) / 2;
+    const tangent = SHOULDER_RADIUS / Math.tan(half);
+    const bisector = Math.hypot(upX, upY + 1);
+    const reach = SHOULDER_RADIUS / Math.sin(half);
+    const centreX = neckX + (upX / bisector) * reach;
+    const centreY = neckTop + ((upY + 1) / bisector) * reach;
+    const from = Math.atan2(
+      neckTop + upY * tangent - centreY,
+      neckX + upX * tangent - centreX
+    );
+    const to = Math.atan2(neckTop + tangent - centreY, neckX - centreX);
+    const sweep = Math.atan2(Math.sin(to - from), Math.cos(to - from));
+    const shoulder = Array.from({ length: SHOULDER_STEPS + 1 }, (_, i) => {
+      const angle = from + (sweep * i) / SHOULDER_STEPS;
+      return [
+        centreX + Math.cos(angle) * SHOULDER_RADIUS,
+        centreY + Math.sin(angle) * SHOULDER_RADIUS
+      ];
+    });
+
+    return [[wallX, funnelTop], ...shoulder, [neckX, height], [wallX, height]];
   };
 
   const layout = () => {
@@ -242,17 +273,17 @@ export const createLettersWorld = (
     // be squeezed out through it. Slippery, so that letters slide down to the
     // middle like a pinball outlane, and periods never settle on the slope.
     const funnel = (side: -1 | 1) => {
-      const [top, shoulder] = funnelSide(side);
-      const outer = top[0] + side * WALL_THICKNESS;
+      const outline = funnelSide(side);
+      const [wallFoot, neckFoot] = [outline.at(-1)!, outline.at(-2)!];
+      const outer = wallFoot[0] + side * WALL_THICKNESS;
       const below = height + WALL_THICKNESS;
       const body = fixed();
       const block = RAPIER.ColliderDesc.convexHull(
         new Float32Array([
           outer,
-          top[1],
-          ...top,
-          ...shoulder,
-          shoulder[0],
+          funnelTop,
+          ...outline.flat(),
+          neckFoot[0],
           below,
           outer,
           below
