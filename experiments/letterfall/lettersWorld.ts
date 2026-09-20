@@ -68,10 +68,10 @@ const MAX_POPS_PER_STEP = 3;
 const FOUNTAIN_CLEARANCE = 14;
 const MAX_STRAY_DOTS = 3;
 
-// When the last period has drained from a page with nothing else left on it,
-// the page lets out a quiet sigh, halfway between the top of the page and the
-// top of the funnel: it fades in, stays a while, and fades out.
-// Anything new turning up cuts it short.
+// When the last thing on the page has drained, letter or period, the page
+// lets out a quiet sigh, halfway between the top of the page and the top of
+// the funnel: it fades in, stays a while, and fades out. Once begun it runs
+// its course, whatever is poured in under it.
 const SIGHS = ["aah", "nice", "feels good", "ooh", "oh yeah", "mmm", "aw yiss"];
 const SIGH_FONT = `italic 22px ${FONT_FAMILY}`;
 const SIGH_OPACITY = 0.62;
@@ -673,6 +673,7 @@ export const createLettersWorld = (
 
     const drained = height + 40;
     const gone = letters.filter(l => l.body.translation().y > drained + 120);
+    let anyGone = gone.length > 0;
     if (gone.length) {
       for (const letter of gone) removeLetter(physics, letter);
       letters = letters.filter(letter => !gone.includes(letter));
@@ -706,12 +707,13 @@ export const createLettersWorld = (
         if (gone) physics.removeRigidBody(dot.body);
         return !gone;
       });
-      if (dots.length === 0 && letters.length === 0) {
-        // Any of them but the one it said last time.
-        const others = SIGHS.filter(text => text !== sighText);
-        sighText = others[Math.floor(Math.random() * others.length)];
-        sighAge = -SIGH_DELAY_MS;
-      }
+      anyGone = true;
+    }
+    if (anyGone && !dots.length && !letters.length && sighAge === null) {
+      // Any of them but the one it said last time.
+      const others = SIGHS.filter(text => text !== sighText);
+      sighText = others[Math.floor(Math.random() * others.length)];
+      sighAge = -SIGH_DELAY_MS;
     }
   };
 
@@ -723,13 +725,10 @@ export const createLettersWorld = (
 
   const sigh = (elapsed: number) => {
     if (sighAge === null) return;
-    const fadeOutAt = SIGH_FADE_IN_MS + SIGH_HOLD_MS;
-    if (sighAge < fadeOutAt && letters.length + dots.length > 0) {
-      // Interrupted: leave from however far it had got, not from full.
-      sighAge = fadeOutAt + (1 - sighOpacity(sighAge)) * SIGH_FADE_OUT_MS;
-    }
     sighAge += elapsed;
-    if (sighAge >= fadeOutAt + SIGH_FADE_OUT_MS) sighAge = null;
+    if (sighAge >= SIGH_FADE_IN_MS + SIGH_HOLD_MS + SIGH_FADE_OUT_MS) {
+      sighAge = null;
+    }
   };
 
   const draw = () => {
